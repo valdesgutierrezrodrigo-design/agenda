@@ -186,13 +186,17 @@
     .modal-box { background: #F8FAFC; border: 1px solid var(--border-subtle); padding: 6px 10px; border-radius: var(--radius-sm); font-size: 8pt; line-height: 1.35; white-space: pre-wrap; word-break: break-word; }
     .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 
-    .modal-assistant { background: var(--surface); color: var(--text-main); max-width: 420px; width: 100%; border-radius: var(--radius-md); padding: 16px; display: flex; flex-direction: column; gap: 8px; max-height: 90vh; overflow-y: auto; position: relative; z-index: 1001; }
+    .modal-assistant { background: var(--surface); color: var(--text-main); max-width: 460px; width: 100%; border-radius: var(--radius-md); padding: 16px; display: flex; flex-direction: column; gap: 8px; max-height: 90vh; overflow-y: auto; position: relative; z-index: 1001; }
     .modal-assistant label { font-size: 7.5pt; color: #475569; display: block; margin-bottom: 2px; font-weight: 700; }
     .modal-assistant input, .modal-assistant textarea, .modal-assistant select { width: 100%; background: #F8FAFC; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 6px 8px; font-size: 8pt; outline: none; }
     
     .checkbox-container { display: flex; align-items: center; gap: 6px; margin-top: 3px; }
     .checkbox-container input { width: 13px; height: 13px; cursor: pointer; }
     .aviso-duplicado { background: var(--prio-alta-bg); border: 1px solid var(--prio-alta-border); color: #991B1B; padding: 5px 8px; border-radius: var(--radius-sm); font-size: 7pt; display: none; margin-top: 3px; }
+
+    .ia-results-list { display: flex; flex-direction: column; gap: 6px; max-height: 280px; overflow-y: auto; margin: 6px 0; }
+    .ia-item-card { background: #F8FAFC; border-left: 3.5px solid #F59E0B; padding: 6px 8px; border-radius: 4px; font-size: 7.5pt; display: flex; flex-direction: column; gap: 2px; border: 1px solid var(--border-subtle); }
+    .ia-item-header { display: flex; justify-content: space-between; font-weight: 700; color: #1E293B; }
 
     .bitacora-modal { max-width: 540px; width: 100%; max-height: 88vh; background: var(--surface); border-radius: var(--radius-md); padding: 16px; display: flex; flex-direction: column; gap: 8px; position: relative; z-index: 1001; }
     .bitacora-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
@@ -360,16 +364,6 @@
         </div>
       </div>
 
-      <div id="fArchivosContainer">
-        <label>Respaldos Adjuntos (PDF o Capturas)</label>
-        <div style="display:flex; align-items:center; gap:5px;">
-          <input type="file" id="fArchivosManuales" multiple accept="image/*,application/pdf" style="display:none;" onchange="actualizarContadorArchivosManuales(this)">
-          <button type="button" class="icon-btn" onclick="document.getElementById('fArchivosManuales').click()">📎 Subir Archivo</button>
-          <span id="lblArchivosSeleccionados" style="font-size:7pt; color:var(--text-muted);">0 archivo(s)</span>
-        </div>
-        <div id="fArchivosPreviosLista" style="font-size:7pt; margin-top:2px;"></div>
-      </div>
-
       <div><label>Síntesis</label><textarea id="fDetalle" rows="2" placeholder="Resumen clave..."></textarea></div>
       <div><label>Acción Requerida</label><textarea id="fAccion" rows="2" placeholder="Ej: Notificar, Solicitar informe..."></textarea></div>
       <button type="button" id="btnGuardarEvento" class="icon-btn btn-nuevo" style="margin-top:3px; justify-content:center;" onclick="guardarEventoManual()">GUARDAR EVENTO</button>
@@ -383,9 +377,8 @@
         <span style="font-weight:800; font-size:10.5pt;">★ Asistente AIA</span>
         <button type="button" class="icon-btn" onclick="cerrarModalIA()">✕</button>
       </div>
-      <p style="font-size:7.5pt; color:var(--text-muted);">Sube un documento o pega tu captura con <b>Ctrl + V</b>.</p>
+      <p style="font-size:7.5pt; color:var(--text-muted);">Sube una imagen o PDF, o pega tu captura con <b>Ctrl + V</b>.</p>
       
-      <!-- Input oculto para cargar archivos -->
       <input type="file" id="inputArchivoIA" accept="image/*,application/pdf" style="display:none;" onchange="procesarArchivoSeleccionado(this)">
       
       <div style="display:flex; gap:5px; margin:4px 0;">
@@ -393,10 +386,12 @@
         <button type="button" id="btnPegarIA" class="icon-btn" style="flex:1;">📋 Pegar</button>
       </div>
 
-      <div id="iaEstado" style="font-size:8pt; color:#B45309; font-weight:bold; text-align:center; padding:6px; display:none; background:#FEF3C7; border-radius:6px;">Analizando documento...</div>
+      <div id="iaEstado" style="font-size:7.5pt; color:#B45309; font-weight:bold; text-align:center; padding:6px; display:none; background:#FEF3C7; border-radius:6px;">Analizando documento con Gemini...</div>
       
       <div id="iaContenedorResultados" style="display:none;">
+        <div style="font-size:8pt; font-weight:800; margin-top:6px; color:#1E293B;">Eventos detectados:</div>
         <div class="ia-results-list" id="iaListaEventos"></div>
+        <button type="button" id="btnAgendarTodoIA" class="icon-btn btn-nuevo" style="width:100%; margin-top:6px; justify-content:center;" onclick="guardarEventosDetectadosIA()">AGENDAR TODOS</button>
       </div>
     </div>
   </div>
@@ -416,8 +411,9 @@
   </div>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbyEnuZQjGdKpm2iypjvn2XbOoSt7WcYIino-dAOjMH0tnU-r5L-umFsh9dFDtKNMCff/exec";
-    
+    const API_URL = "https://script.google.com/macros/s/AKfycbymkdEKYUq9kWeOuu5sUGwo5UhK1f5OUbP1eiD80TPv6ZlF1bLKilK6R3Taigke5aHn/exec";
+    const GEMINI_API_KEY = "AQ.Ab8RN6LB-NIAelTRt0J4ebdrjfUDyA5BWDPD1N3taArdmJGeFA";
+
     const holidaysChile = { 
       "2026-01-01": "Año Nuevo", "2026-04-03": "Viernes Santo", "2026-05-01": "Día del Trabajador",
       "2026-05-21": "Glorias Navales", "2026-06-21": "Pueblos Indígenas", "2026-06-29": "San Pedro y San Pablo",
@@ -427,6 +423,7 @@
     };
 
     let tasks = [];
+    let eventosDetectadosIA = [];
     let selectedPriority = "Media";
     let selectedCategory = "Laboral";
     let currentScopeFilter = "todos";
@@ -454,6 +451,13 @@
       if (mIso) return mIso[1] + "-" + mIso[2].padStart(2, '0') + "-" + mIso[3].padStart(2, '0');
       var mSlash = str.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/);
       if (mSlash) return mSlash[3] + "-" + mSlash[2].padStart(2, '0') + "-" + mSlash[1].padStart(2, '0');
+      var meses = { ene:'01', feb:'02', mar:'03', abr:'04', may:'05', jun:'06', jul:'07', ago:'08', sep:'09', oct:'10', nov:'11', dic:'12', enero:'01', febrero:'02', marzo:'03', abril:'04', mayo:'05', junio:'06', julio:'07', agosto:'08', septiembre:'09', octubre:'10', noviembre:'11', diciembre:'12' };
+      var mTexto = str.match(/(\d{1,2})\s+de\s+([a-zA-Z]+)(?:\s+de)?\s+(\d{4})/i);
+      if (mTexto) {
+        var dia = mTexto[1].padStart(2, '0');
+        var mesNum = meses[mTexto[2].toLowerCase()] || meses[mTexto[2].toLowerCase().substring(0, 3)];
+        if (mesNum) return mTexto[3] + "-" + mesNum + "-" + dia;
+      }
       return null;
     }
 
@@ -478,6 +482,17 @@
       return (txt || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
     }
 
+    function verificarDuplicado(asunto, fecha, ignorarId = null) {
+      if (!asunto || !fecha) return null;
+      const asuntoNorm = normalizarTexto(asunto);
+      return tasks.find(t => {
+        if (ignorarId && t.id === ignorarId) return false;
+        if (t.date !== fecha) return false;
+        const subNorm = normalizarTexto(t.subject);
+        return subNorm === asuntoNorm || subNorm.includes(asuntoNorm) || asuntoNorm.includes(subNorm);
+      });
+    }
+
     function getMonday(d) {
       const date = new Date(d);
       const day = date.getDay();
@@ -491,13 +506,9 @@
     const monthNames = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
 
     function inferirCategoria(row) {
-      if (row[8]) {
-        const val = String(row[8]).trim().toLowerCase();
-        if (val.includes("personal") || val.includes("casa") || val.includes("familia")) return "Personal";
-      }
-      const textoCompleto = `${row[4] || ''} ${row[5] || ''} ${row[6] || ''}`.toLowerCase();
+      const texto = `${row.asunto || row[4] || ''} ${row.remitente || row[5] || ''} ${row.sintesis || row[6] || ''}`.toLowerCase();
       const palabrasPersonales = ["veterinario", "mascota", "ramon", "ramona", "jackson", "compra personal", "medico personal", "dentista", "casa", "familia"];
-      if (palabrasPersonales.some(p => textoCompleto.includes(p))) return "Personal";
+      if (palabrasPersonales.some(p => texto.includes(p))) return "Personal";
       return "Laboral";
     }
 
@@ -506,52 +517,50 @@
       if (btn) btn.textContent = "⏳...";
       try {
         const res = await fetch(API_URL);
-        const json = await res.json();
-        const rawRows = Array.isArray(json) ? json : (json.datos || []);
+        const data = await res.json();
+        const rawRows = Array.isArray(data) ? data : (data.datos || []);
         
         if (Array.isArray(rawRows) && rawRows.length > 0) {
           const remoteTasks = [];
           const vistos = new Set();
 
           rawRows.forEach((row, idx) => {
-            if (Array.isArray(row)) {
-              if (idx === 0 && String(row[0]).toLowerCase().includes("fecha")) return;
-              const fDoc = row[1];
-              const fValida = parsearFecha(fDoc);
-              if (!fValida) return;
+            const fDoc = row.fechaDoc || (Array.isArray(row) ? row[1] : null);
+            const fValida = parsearFecha(fDoc);
+            if (!fValida) return;
 
-              const asunto = String(row[4] || "(Sin asunto)").trim();
-              const claveUnica = `${fValida}_${normalizarTexto(asunto)}`;
-              if (vistos.has(claveUnica)) return;
-              vistos.add(claveUnica);
+            const asunto = String(row.asunto || (Array.isArray(row) ? row[4] : "(Sin asunto)")).trim();
+            const claveUnica = `${fValida}_${normalizarTexto(asunto)}`;
+            if (vistos.has(claveUnica)) return;
+            vistos.add(claveUnica);
 
-              let infoHora = extraerHora(fDoc);
-              if (!infoHora.tieneHora) {
-                infoHora = extraerHora(String(row[4] || '') + " " + String(row[6] || '') + " " + String(row[7] || ''));
-              }
-
-              const estado = String(row[3] || "").trim().toLowerCase();
-              const isManaged = (estado === "finalizado" || estado === "gestionado" || estado === "realizado");
-              const categoria = inferirCategoria(row);
-
-              remoteTasks.push({
-                id: "remote_" + (idx + 1),
-                fila: (idx + 1),
-                date: fValida,
-                isAnnual: false,
-                time: infoHora.horaStr,
-                timeMinutos: infoHora.minutos,
-                tieneHora: infoHora.tieneHora,
-                subject: asunto,
-                sender: row[5] || "General",
-                detail: row[6] || "",
-                accion: row[7] || "",
-                priority: row[2] || "Media",
-                category: categoria,
-                status: isManaged ? "managed" : "pending",
-                respaldos: []
-              });
+            let infoHora = extraerHora(fDoc);
+            if (!infoHora.tieneHora) {
+              const infoExtra = `${asunto} ${row.sintesis || (Array.isArray(row) ? row[6] : '')}`;
+              infoHora = extraerHora(infoExtra);
             }
+
+            const estado = String(row.estado || (Array.isArray(row) ? row[3] : "")).trim().toLowerCase();
+            const isManaged = (estado === "finalizado" || estado === "gestionado" || estado === "realizado");
+            const cat = inferirCategoria(row);
+
+            remoteTasks.push({
+              id: row.fila || "remote_" + (idx + 1),
+              fila: row.fila || (idx + 1),
+              date: fValida,
+              isAnnual: false,
+              time: infoHora.horaStr,
+              timeMinutos: infoHora.minutos,
+              tieneHora: infoHora.tieneHora,
+              subject: asunto,
+              sender: row.remitente || (Array.isArray(row) ? row[5] : "General"),
+              detail: row.sintesis || (Array.isArray(row) ? row[6] : ""),
+              accion: row.accionReq || (Array.isArray(row) ? row[7] : ""),
+              priority: row.prioridad || (Array.isArray(row) ? row[2] : "Media"),
+              category: cat,
+              status: isManaged ? "managed" : "pending",
+              respaldos: []
+            });
           });
 
           if (remoteTasks.length > 0) {
@@ -561,7 +570,7 @@
           }
         }
       } catch (err) {
-        console.warn(err);
+        console.warn("Aviso sync:", err);
       } finally {
         if (btn) btn.innerHTML = "🔄 Sync";
         const sub = document.getElementById("full-date-subtitle");
@@ -706,7 +715,6 @@
       document.getElementById("fDetalle").value = "";
       document.getElementById("fAccion").value = "";
       document.getElementById("avisoDuplicadoManual").style.display = "none";
-      document.getElementById("lblArchivosSeleccionados").textContent = "0 archivo(s)";
       selectPriority("Media");
       selectCategory("Laboral");
     }
@@ -741,11 +749,6 @@
       }
       const existe = tasks.some(t => t.date === fecha && normalizarTexto(t.subject) === asunto && t.id !== editEventId);
       aviso.style.display = existe ? "block" : "none";
-    }
-
-    function actualizarContadorArchivosManuales(input) {
-      const count = input.files ? input.files.length : 0;
-      document.getElementById("lblArchivosSeleccionados").textContent = `${count} archivo(s)`;
     }
 
     function guardarEventoManual() {
@@ -879,7 +882,7 @@
       }
     });
 
-    // --- MODALES: MASCOTAS, BITÁCORA, RESPALDO ---
+    // --- MASCOTAS, BITÁCORA Y RESPALDO ---
     function abrirModalMascotas() {
       const modal = document.getElementById("modalMascotasOverlay");
       const list = document.getElementById("mascotasList");
@@ -956,41 +959,32 @@
       dlAnchor.remove();
     }
 
-    // --- MODAL AIA: FUNCIONAMIENTO COMPLETO DE BOTONES ---
+    // --- ASISTENTE AIA: PROCESAMIENTO CON GEMINI ---
     function abrirModalIA() { 
+      document.getElementById("iaContenedorResultados").style.display = "none";
+      document.getElementById("iaEstado").style.display = "none";
+      document.getElementById("iaListaEventos").innerHTML = "";
+      eventosDetectadosIA = [];
       document.getElementById("modalIAOverlay").style.display = "flex"; 
     }
 
     function cerrarModalIA() { 
       document.getElementById("modalIAOverlay").style.display = "none"; 
-      const estado = document.getElementById("iaEstado");
-      if (estado) estado.style.display = "none";
     }
 
-    function procesarArchivoOImagen(archivoOData, nombre = "Archivo") {
-      const estado = document.getElementById("iaEstado");
-      if (estado) {
-        estado.textContent = `Procesando: ${nombre}...`;
-        estado.style.display = "block";
-      }
-      console.log("Recibido para procesar en AIA:", archivoOData);
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => { const res = reader.result; resolve(res.substring(res.indexOf(',') + 1)); };
+        reader.onerror = reject; reader.readAsDataURL(file);
+      });
     }
 
-    function procesarArchivoSeleccionado(input) {
-      if (input.files && input.files[0]) {
-        procesarArchivoOImagen(input.files[0], input.files[0].name);
-      }
-    }
-
-    // Vinculación de los botones Cargar y Pegar
     const btnCargar = document.getElementById("btnCargarIA");
     if (btnCargar) {
       btnCargar.onclick = () => {
         const inp = document.getElementById("inputArchivoIA");
-        if (inp) {
-          inp.value = ""; // permite seleccionar el mismo archivo si es necesario
-          inp.click();
-        }
+        if (inp) { inp.value = ""; inp.click(); }
       };
     }
 
@@ -999,33 +993,25 @@
       btnPegar.onclick = async () => {
         try {
           if (!navigator.clipboard || !navigator.clipboard.read) {
-            alert("Usa el atajo de teclado Ctrl + V para pegar capturas.");
+            alert("Presiona Ctrl + V directamente para pegar capturas.");
             return;
           }
           const items = await navigator.clipboard.read();
-          let encontrado = false;
-
           for (const item of items) {
             const imgType = item.types.find(t => t.startsWith("image/"));
             if (imgType) {
               const blob = await item.getType(imgType);
-              procesarArchivoOImagen(blob, "Captura pegada");
-              encontrado = true;
-              break;
+              ejecutarLlamadaGeminiIA(blob, imgType);
+              return;
             }
           }
-
-          if (!encontrado) {
-            alert("No hay ninguna imagen en el portapapeles. Copia una captura y vuelve a intentar.");
-          }
+          alert("No se encontró imagen en el portapapeles. Copia con Windows + Shift + S y vuelve a intentar.");
         } catch (err) {
-          console.warn("Aviso portapapeles:", err);
-          alert("Pega la imagen directamente presionando Ctrl + V.");
+          alert("Presiona Ctrl + V sobre esta ventana para pegar la imagen.");
         }
       };
     }
 
-    // Detección directa de Ctrl + V en la ventana
     window.addEventListener("paste", (e) => {
       const modalIA = document.getElementById("modalIAOverlay");
       if (modalIA && modalIA.style.display === "flex") {
@@ -1033,12 +1019,147 @@
         for (let i = 0; i < items.length; i++) {
           if (items[i].type.indexOf("image") !== -1) {
             const blob = items[i].getAsFile();
-            procesarArchivoOImagen(blob, "Captura pegada (Ctrl+V)");
+            ejecutarLlamadaGeminiIA(blob, items[i].type);
             break;
           }
         }
       }
     });
+
+    function procesarArchivoSeleccionado(input) {
+      if (input.files && input.files[0]) {
+        const file = input.files[0];
+        ejecutarLlamadaGeminiIA(file, file.type || "application/pdf");
+      }
+    }
+
+    async function ejecutarLlamadaGeminiIA(archivoBlob, mimeType) {
+      const elEstado = document.getElementById("iaEstado");
+      elEstado.style.display = "block";
+      elEstado.textContent = "⏳ Analizando con Gemini IA...";
+      document.getElementById("iaContenedorResultados").style.display = "none";
+
+      try {
+        const base64Data = await fileToBase64(archivoBlob);
+        const tipoReal = (mimeType && mimeType.includes("pdf")) ? "application/pdf" : "image/png";
+
+        const promptInstruccion = 
+          "Eres un asistente directivo pedagógico. Analiza la imagen o documento.\n" +
+          "Identifica todos los eventos, fechas o hitos (como Simce, reuniones, plazos).\n" +
+          "Si contiene múltiples cursos o fechas, genera un elemento individual por cada evento.\n" +
+          "Responde ÚNICA Y EXCLUSIVAMENTE con un arreglo JSON válido sin Markdown:\n" +
+          "[\n  {\n    \"asunto\": \"Título breve\",\n    \"organizador\": \"Entidad\",\n    \"fecha\": \"YYYY-MM-DD\",\n    \"hora\": \"09:00\",\n    \"prioridad\": \"Alta\",\n    \"sintesis\": \"Resumen ejecutivo\",\n    \"accion\": \"Acción\"\n  }\n]";
+
+        const payload = {
+          contents: [{ parts: [{ text: promptInstruccion }, { inlineData: { mimeType: tipoReal, data: base64Data } }] }],
+          generationConfig: { responseMimeType: "application/json" }
+        };
+
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+          method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload)
+        });
+
+        const jsonResp = await res.json();
+        if (jsonResp.error) throw new Error(jsonResp.error.message || "Error al conectar con IA.");
+
+        const textoGenerado = jsonResp.candidates[0].content.parts[0].text;
+        const eventos = JSON.parse(textoGenerado);
+
+        eventosDetectadosIA = Array.isArray(eventos) ? eventos : [eventos];
+        renderizarEventosDetectados(eventosDetectadosIA);
+        elEstado.style.display = "none";
+
+      } catch (err) {
+        console.error(err);
+        elEstado.textContent = "❌ Error: " + err.message;
+      }
+    }
+
+    function renderizarEventosDetectados(lista) {
+      const contenedor = document.getElementById("iaContenedorResultados");
+      const listaDiv = document.getElementById("iaListaEventos");
+      listaDiv.innerHTML = "";
+
+      if (!lista || lista.length === 0) {
+        listaDiv.innerHTML = "<div style='font-size:7.5pt; color:#94A3B8;'>No se detectaron eventos.</div>";
+        contenedor.style.display = "block";
+        return;
+      }
+
+      lista.forEach((ev) => {
+        const fKey = parsearFecha(ev.fecha) || "";
+        const dup = verificarDuplicado(ev.asunto, fKey);
+        const item = document.createElement("div");
+        item.className = "ia-item-card";
+        
+        let avisoDupHtml = dup ? `<div style="color:#DC2626; font-size:6.8pt; font-weight:bold;">⚠️ Ya agendado: "${dup.subject}"</div>` : '';
+
+        item.innerHTML = `
+          <div class="ia-item-header"><span>📌 ${ev.asunto}</span><span>📅 ${ev.fecha || 'Sin fecha'}</span></div>
+          <div style="font-size:7pt; color:#475569;">👤 ${ev.organizador || 'General'} | ⏰ ${ev.hora || '09:00'} | Prioridad: ${ev.prioridad || 'Media'}</div>
+          <div style="font-size:7pt; color:#64748B;">📝 ${ev.sintesis || ''}</div>
+          ${avisoDupHtml}
+        `;
+        listaDiv.appendChild(item);
+      });
+
+      document.getElementById("btnAgendarTodoIA").textContent = `AGENDAR LOS ${lista.length} EVENTOS`;
+      contenedor.style.display = "block";
+    }
+
+    async function guardarEventosDetectadosIA() {
+      if (!eventosDetectadosIA || eventosDetectadosIA.length === 0) return;
+      const btn = document.getElementById("btnAgendarTodoIA");
+      btn.disabled = true; 
+      btn.textContent = "⏳ AGENDANDO Y GUARDANDO...";
+      const baseId = Date.now();
+
+      eventosDetectadosIA.forEach((ev, idx) => {
+        const fKey = parsearFecha(ev.fecha) || formatDateKey(new Date());
+        const hora = ev.hora || "09:00";
+        const partesH = hora.split(":");
+        const mins = parseInt(partesH[0]) * 60 + parseInt(partesH[1] || 0);
+
+        tasks.push({
+          id: baseId + idx,
+          date: fKey,
+          time: hora,
+          timeMinutos: mins,
+          tieneHora: Boolean(hora),
+          isAnnual: false,
+          subject: ev.asunto || "Compromiso IA",
+          sender: ev.organizador || "General",
+          detail: ev.sintesis || "",
+          accion: ev.accion || "Gestionar",
+          priority: ev.prioridad || "Media",
+          category: inferirCategoria(ev),
+          status: "pending",
+          respaldos: []
+        });
+      });
+
+      localStorage.setItem("agenda_tdah_local", JSON.stringify(tasks));
+      renderCalendar();
+      cerrarModalIA();
+
+      // Guardado asíncrono en Google Sheets
+      for (const ev of eventosDetectadosIA) {
+        const fKey = parsearFecha(ev.fecha) || formatDateKey(new Date());
+        try {
+          await fetch(API_URL, {
+            method: "POST", mode: "no-cors", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              accion: "crear_evento", fechaDoc: fKey, hora: ev.hora || "09:00", asunto: ev.asunto,
+              remitente: ev.organizador || "General", prioridad: ev.prioridad || "Media",
+              sintesis: ev.sintesis || "", accionReq: ev.accion || "Gestionar", archivos: [], anual: "No"
+            })
+          });
+        } catch (e) {}
+      }
+
+      btn.disabled = false; 
+      btn.textContent = "AGENDAR TODOS";
+    }
 
     // --- RELOJ Y NAVEGACIÓN ---
     function updateLiveClock() {
