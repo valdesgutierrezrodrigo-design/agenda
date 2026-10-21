@@ -179,14 +179,14 @@
     .card-sender { font-size: 6.2pt; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .empty-text { font-size: 7pt; color: #94A3B8; text-align: center; margin-top: 14px; font-weight: 500; }
 
-    .modal-overlay { position: fixed; inset: 0; background: rgba(30, 41, 59, 0.45); display: none; align-items: center; justify-content: center; padding: 12px; z-index: 100; backdrop-filter: blur(3px); }
-    .modal-detail-card { background: var(--surface); max-width: 480px; width: 100%; max-height: 90vh; border-radius: var(--radius-md); padding: 16px; display: flex; flex-direction: column; gap: 9px; overflow-y: auto; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(30, 41, 59, 0.45); display: none; align-items: center; justify-content: center; padding: 12px; z-index: 1000; backdrop-filter: blur(3px); }
+    .modal-detail-card { background: var(--surface); max-width: 480px; width: 100%; max-height: 90vh; border-radius: var(--radius-md); padding: 16px; display: flex; flex-direction: column; gap: 9px; overflow-y: auto; position: relative; z-index: 1001; }
     .modal-field { display: flex; flex-direction: column; gap: 3px; }
     .modal-label { font-size: 7pt; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
     .modal-box { background: #F8FAFC; border: 1px solid var(--border-subtle); padding: 6px 10px; border-radius: var(--radius-sm); font-size: 8pt; line-height: 1.35; white-space: pre-wrap; word-break: break-word; }
     .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 
-    .modal-assistant { background: var(--surface); color: var(--text-main); max-width: 420px; width: 100%; border-radius: var(--radius-md); padding: 16px; display: flex; flex-direction: column; gap: 8px; max-height: 90vh; overflow-y: auto; }
+    .modal-assistant { background: var(--surface); color: var(--text-main); max-width: 420px; width: 100%; border-radius: var(--radius-md); padding: 16px; display: flex; flex-direction: column; gap: 8px; max-height: 90vh; overflow-y: auto; position: relative; z-index: 1001; }
     .modal-assistant label { font-size: 7.5pt; color: #475569; display: block; margin-bottom: 2px; font-weight: 700; }
     .modal-assistant input, .modal-assistant textarea, .modal-assistant select { width: 100%; background: #F8FAFC; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 6px 8px; font-size: 8pt; outline: none; }
     
@@ -194,7 +194,7 @@
     .checkbox-container input { width: 13px; height: 13px; cursor: pointer; }
     .aviso-duplicado { background: var(--prio-alta-bg); border: 1px solid var(--prio-alta-border); color: #991B1B; padding: 5px 8px; border-radius: var(--radius-sm); font-size: 7pt; display: none; margin-top: 3px; }
 
-    .bitacora-modal { max-width: 540px; width: 100%; max-height: 88vh; background: var(--surface); border-radius: var(--radius-md); padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+    .bitacora-modal { max-width: 540px; width: 100%; max-height: 88vh; background: var(--surface); border-radius: var(--radius-md); padding: 16px; display: flex; flex-direction: column; gap: 8px; position: relative; z-index: 1001; }
     .bitacora-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
     .bitacora-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; border-radius: var(--radius-sm); background: #FAFBFD; border: 1px solid var(--border-subtle); cursor: pointer; }
   </style>
@@ -381,15 +381,20 @@
     <div class="modal-assistant">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <span style="font-weight:800; font-size:10.5pt;">★ Asistente AIA</span>
-        <button class="icon-btn" onclick="cerrarModalIA()">✕</button>
+        <button type="button" class="icon-btn" onclick="cerrarModalIA()">✕</button>
       </div>
       <p style="font-size:7.5pt; color:var(--text-muted);">Sube un documento o pega tu captura con <b>Ctrl + V</b>.</p>
+      
+      <!-- Input oculto para cargar archivos -->
+      <input type="file" id="inputArchivoIA" accept="image/*,application/pdf" style="display:none;" onchange="procesarArchivoSeleccionado(this)">
+      
       <div style="display:flex; gap:5px; margin:4px 0;">
-        <input type="file" id="inputArchivoIA" accept="image/*,application/pdf" style="display:none;" onchange="procesarArchivoSeleccionado(this)">
-        <button type="button" class="icon-btn" style="flex:1;" onclick="document.getElementById('inputArchivoIA').click()">📁 Cargar</button>
-        <button type="button" class="icon-btn" style="flex:1;" onclick="pegarDesdePortapapeles()">📋 Pegar</button>
+        <button type="button" id="btnCargarIA" class="icon-btn" style="flex:1;">📁 Cargar</button>
+        <button type="button" id="btnPegarIA" class="icon-btn" style="flex:1;">📋 Pegar</button>
       </div>
-      <div id="iaEstado" style="font-size:8pt; color:#B45309; font-weight:bold; text-align:center; display:none;">Analizando documento...</div>
+
+      <div id="iaEstado" style="font-size:8pt; color:#B45309; font-weight:bold; text-align:center; padding:6px; display:none; background:#FEF3C7; border-radius:6px;">Analizando documento...</div>
+      
       <div id="iaContenedorResultados" style="display:none;">
         <div class="ia-results-list" id="iaListaEventos"></div>
       </div>
@@ -693,7 +698,6 @@
 
     function closeDetailModal() { document.getElementById("modalDetailOverlay").style.display = "none"; }
     function closeModal() { document.getElementById("modalAssistantOverlay").style.display = "none"; }
-    function cerrarModalIA() { document.getElementById("modalIAOverlay").style.display = "none"; }
 
     function limpiarFormularioManual() {
       document.getElementById("fAsunto").value = "";
@@ -875,7 +879,7 @@
       }
     });
 
-    // --- MODALES EXTRA: MASCOTAS, BITÁCORA, RESPALDO, AIA ---
+    // --- MODALES: MASCOTAS, BITÁCORA, RESPALDO ---
     function abrirModalMascotas() {
       const modal = document.getElementById("modalMascotasOverlay");
       const list = document.getElementById("mascotasList");
@@ -952,10 +956,91 @@
       dlAnchor.remove();
     }
 
-    function abrirModalIA() { document.getElementById("modalIAOverlay").style.display = "flex"; }
-    function procesarArchivoSeleccionado(input) { alert("Archivo recibido para análisis AIA."); }
-    function pegarDesdePortapapeles() { alert("Puedes pegar capturas presionando Ctrl + V."); }
+    // --- MODAL AIA: FUNCIONAMIENTO COMPLETO DE BOTONES ---
+    function abrirModalIA() { 
+      document.getElementById("modalIAOverlay").style.display = "flex"; 
+    }
 
+    function cerrarModalIA() { 
+      document.getElementById("modalIAOverlay").style.display = "none"; 
+      const estado = document.getElementById("iaEstado");
+      if (estado) estado.style.display = "none";
+    }
+
+    function procesarArchivoOImagen(archivoOData, nombre = "Archivo") {
+      const estado = document.getElementById("iaEstado");
+      if (estado) {
+        estado.textContent = `Procesando: ${nombre}...`;
+        estado.style.display = "block";
+      }
+      console.log("Recibido para procesar en AIA:", archivoOData);
+    }
+
+    function procesarArchivoSeleccionado(input) {
+      if (input.files && input.files[0]) {
+        procesarArchivoOImagen(input.files[0], input.files[0].name);
+      }
+    }
+
+    // Vinculación de los botones Cargar y Pegar
+    const btnCargar = document.getElementById("btnCargarIA");
+    if (btnCargar) {
+      btnCargar.onclick = () => {
+        const inp = document.getElementById("inputArchivoIA");
+        if (inp) {
+          inp.value = ""; // permite seleccionar el mismo archivo si es necesario
+          inp.click();
+        }
+      };
+    }
+
+    const btnPegar = document.getElementById("btnPegarIA");
+    if (btnPegar) {
+      btnPegar.onclick = async () => {
+        try {
+          if (!navigator.clipboard || !navigator.clipboard.read) {
+            alert("Usa el atajo de teclado Ctrl + V para pegar capturas.");
+            return;
+          }
+          const items = await navigator.clipboard.read();
+          let encontrado = false;
+
+          for (const item of items) {
+            const imgType = item.types.find(t => t.startsWith("image/"));
+            if (imgType) {
+              const blob = await item.getType(imgType);
+              procesarArchivoOImagen(blob, "Captura pegada");
+              encontrado = true;
+              break;
+            }
+          }
+
+          if (!encontrado) {
+            alert("No hay ninguna imagen en el portapapeles. Copia una captura y vuelve a intentar.");
+          }
+        } catch (err) {
+          console.warn("Aviso portapapeles:", err);
+          alert("Pega la imagen directamente presionando Ctrl + V.");
+        }
+      };
+    }
+
+    // Detección directa de Ctrl + V en la ventana
+    window.addEventListener("paste", (e) => {
+      const modalIA = document.getElementById("modalIAOverlay");
+      if (modalIA && modalIA.style.display === "flex") {
+        const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+        for (let i = 0; i < items.length; i++) {
+          if (items[i].type.indexOf("image") !== -1) {
+            const blob = items[i].getAsFile();
+            procesarArchivoOImagen(blob, "Captura pegada (Ctrl+V)");
+            break;
+          }
+        }
+      }
+    });
+
+    // --- RELOJ Y NAVEGACIÓN ---
     function updateLiveClock() {
       const now = new Date();
       if(document.getElementById("fc-hour")) document.getElementById("fc-hour").textContent = String(now.getHours()).padStart(2, '0');
