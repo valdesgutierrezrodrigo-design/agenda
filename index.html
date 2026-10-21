@@ -203,7 +203,7 @@
   <header>
     <div class="header-left-group">
       <span class="brand-title">Agenda TDAH</span>
-      <span id="full-date-subtitle">Cargando...</span>
+      <span id="full-date-subtitle">Hoy</span>
       <button type="button" class="btn-mascotas-header" onclick="abrirModalMascotas()">🐾 Mascotas</button>
       
       <div class="switch-scope-container">
@@ -248,6 +248,7 @@
     <div class="week-container" id="daysGrid"></div>
   </main>
 
+  <!-- Modal Respaldo -->
   <div class="modal-overlay" id="modalRespaldoOverlay">
     <div class="modal-assistant">
       <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -258,6 +259,7 @@
     </div>
   </div>
 
+  <!-- Modal Bitácora -->
   <div class="modal-overlay" id="modalBitacoraOverlay">
     <div class="bitacora-modal">
       <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -278,6 +280,7 @@
     </div>
   </div>
 
+  <!-- Modal Detalle -->
   <div class="modal-overlay" id="modalDetailOverlay">
     <div class="modal-detail-card">
       <div style="display:flex; justify-content:space-between; align-items:flex-start;">
@@ -311,6 +314,7 @@
     </div>
   </div>
 
+  <!-- Modal Nuevo / Editar Evento -->
   <div class="modal-overlay" id="modalAssistantOverlay">
     <div class="modal-assistant">
       <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -372,6 +376,7 @@
     </div>
   </div>
 
+  <!-- Modal IA -->
   <div class="modal-overlay" id="modalIAOverlay">
     <div class="modal-assistant">
       <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -387,6 +392,20 @@
       <div id="iaEstado" style="font-size:8pt; color:#B45309; font-weight:bold; text-align:center; display:none;">Analizando documento...</div>
       <div id="iaContenedorResultados" style="display:none;">
         <div class="ia-results-list" id="iaListaEventos"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Mascotas -->
+  <div class="modal-overlay" id="modalMascotasOverlay">
+    <div class="modal-assistant">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-weight:800; font-size:10.5pt;">🐾 Control de Mascotas</span>
+        <button class="icon-btn" onclick="cerrarModalMascotas()">✕</button>
+      </div>
+      <div id="mascotasInfoContainer" style="font-size:8pt; line-height:1.4; display:flex; flex-direction:column; gap:6px;">
+        <p><b>Eventos y cuidados registrados:</b></p>
+        <div id="mascotasList" style="display:flex; flex-direction:column; gap:4px; max-height:200px; overflow-y:auto;"></div>
       </div>
     </div>
   </div>
@@ -530,7 +549,6 @@
             }
           });
 
-          // Blindaje: Solo sobrescribe si realmente hay tareas válidas
           if (remoteTasks.length > 0) {
             tasks = remoteTasks;
             localStorage.setItem("agenda_tdah_local", JSON.stringify(tasks));
@@ -541,6 +559,11 @@
         console.warn(err);
       } finally {
         if (btn) btn.innerHTML = "🔄 Sync";
+        const sub = document.getElementById("full-date-subtitle");
+        if (sub) {
+          const hoy = new Date();
+          sub.textContent = `${hoy.getDate()} ${monthNames[hoy.getMonth()]} ${hoy.getFullYear()}`;
+        }
       }
     }
 
@@ -563,6 +586,13 @@
         btnLab.className = "btn-cat";
         btnPer.className = "btn-cat selected-cat-personal";
       }
+    }
+
+    function selectPriority(prio) {
+      selectedPriority = prio;
+      document.getElementById('prioAlta').className = "btn-prio" + (prio === "Alta" ? " selected-alta" : "");
+      document.getElementById('prioMedia').className = "btn-prio" + (prio === "Media" ? " selected-media" : "");
+      document.getElementById('prioBaja').className = "btn-prio" + (prio === "Baja" ? " selected-baja" : "");
     }
 
     function renderCalendar() {
@@ -671,6 +701,8 @@
       document.getElementById("fHora").value = "";
       document.getElementById("fDetalle").value = "";
       document.getElementById("fAccion").value = "";
+      document.getElementById("avisoDuplicadoManual").style.display = "none";
+      document.getElementById("lblArchivosSeleccionados").textContent = "0 archivo(s)";
       selectPriority("Media");
       selectCategory("Laboral");
     }
@@ -680,7 +712,6 @@
       editEventId = null;
       document.getElementById("modalTitleStr").textContent = "Nuevo Evento";
       document.getElementById("btnGuardarEvento").textContent = "GUARDAR EVENTO";
-      document.getElementById("btnGuardarEvento").onclick = guardarEventoManual;
       limpiarFormularioManual();
       const hoyKey = formatDateKey(new Date());
       document.getElementById("fFechaInicio").value = hoyKey;
@@ -688,12 +719,242 @@
       document.getElementById("modalAssistantOverlay").style.display = "flex";
     }
 
-    function selectPriority(prio) {
-      selectedPriority = prio;
-      document.getElementById('prioAlta').className = "btn-prio" + (prio === "Alta" ? " selected-alta" : "");
-      document.getElementById('prioMedia').className = "btn-prio" + (prio === "Media" ? " selected-media" : "");
-      document.getElementById('prioBaja').className = "btn-prio" + (prio === "Baja" ? " selected-baja" : "");
+    function autoCompletarFechaFin() {
+      const fIni = document.getElementById("fFechaInicio").value;
+      const fFin = document.getElementById("fFechaFin");
+      if (fIni && (!fFin.value || fFin.value < fIni)) {
+        fFin.value = fIni;
+      }
     }
+
+    function verificarDuplicadoEnFormulario() {
+      const asunto = normalizarTexto(document.getElementById("fAsunto").value);
+      const fecha = document.getElementById("fFechaInicio").value;
+      const aviso = document.getElementById("avisoDuplicadoManual");
+      if (!asunto || !fecha) {
+        aviso.style.display = "none";
+        return;
+      }
+      const existe = tasks.some(t => t.date === fecha && normalizarTexto(t.subject) === asunto && t.id !== editEventId);
+      aviso.style.display = existe ? "block" : "none";
+    }
+
+    function actualizarContadorArchivosManuales(input) {
+      const count = input.files ? input.files.length : 0;
+      document.getElementById("lblArchivosSeleccionados").textContent = `${count} archivo(s)`;
+    }
+
+    function guardarEventoManual() {
+      const asunto = document.getElementById("fAsunto").value.trim();
+      const fecha = document.getElementById("fFechaInicio").value;
+      if (!asunto || !fecha) {
+        alert("Por favor completa el asunto y la fecha de inicio.");
+        return;
+      }
+
+      const hora = document.getElementById("fHora").value;
+      let min = 9999;
+      let tieneH = false;
+      if (hora) {
+        const partes = hora.split(":");
+        min = parseInt(partes[0]) * 60 + parseInt(partes[1]);
+        tieneH = true;
+      }
+
+      if (isEditing && editEventId) {
+        const item = tasks.find(t => t.id === editEventId);
+        if (item) {
+          item.subject = asunto;
+          item.date = fecha;
+          item.time = hora;
+          item.tieneHora = tieneH;
+          item.timeMinutos = min;
+          item.category = selectedCategory;
+          item.priority = selectedPriority;
+          item.sender = document.getElementById("fOrganizador").value.trim() || "General";
+          item.detail = document.getElementById("fDetalle").value.trim();
+          item.accion = document.getElementById("fAccion").value.trim();
+        }
+      } else {
+        const nuevo = {
+          id: "local_" + Date.now(),
+          date: fecha,
+          time: hora,
+          tieneHora: tieneH,
+          timeMinutos: min,
+          subject: asunto,
+          sender: document.getElementById("fOrganizador").value.trim() || "General",
+          detail: document.getElementById("fDetalle").value.trim(),
+          accion: document.getElementById("fAccion").value.trim(),
+          priority: selectedPriority,
+          category: selectedCategory,
+          status: "pending",
+          respaldos: []
+        };
+        tasks.push(nuevo);
+      }
+
+      localStorage.setItem("agenda_tdah_local", JSON.stringify(tasks));
+      closeModal();
+      renderCalendar();
+    }
+
+    function prepararEdicionActual() {
+      if (!currentEventId) return;
+      const t = tasks.find(x => x.id === currentEventId);
+      if (!t) return;
+
+      isEditing = true;
+      editEventId = t.id;
+      document.getElementById("modalTitleStr").textContent = "Editar Evento";
+      document.getElementById("btnGuardarEvento").textContent = "ACTUALIZAR EVENTO";
+
+      document.getElementById("fAsunto").value = t.subject || "";
+      document.getElementById("fFechaInicio").value = t.date || "";
+      document.getElementById("fFechaFin").value = t.date || "";
+      document.getElementById("fHora").value = t.time || "";
+      document.getElementById("fOrganizador").value = t.sender || "";
+      document.getElementById("fDetalle").value = t.detail || "";
+      document.getElementById("fAccion").value = t.accion || "";
+
+      selectCategory(t.category || "Laboral");
+      selectPriority(t.priority || "Media");
+
+      closeDetailModal();
+      document.getElementById("modalAssistantOverlay").style.display = "flex";
+    }
+
+    function eliminarEventoActual() {
+      if (!currentEventId) return;
+      if (confirm("¿Deseas eliminar este evento de la agenda?")) {
+        tasks = tasks.filter(x => x.id !== currentEventId);
+        localStorage.setItem("agenda_tdah_local", JSON.stringify(tasks));
+        closeDetailModal();
+        renderCalendar();
+      }
+    }
+
+    function toggleRealizadoActual() {
+      if (!currentEventId) return;
+      const t = tasks.find(x => x.id === currentEventId);
+      if (!t) return;
+      t.status = (t.status === "managed") ? "pending" : "managed";
+      localStorage.setItem("agenda_tdah_local", JSON.stringify(tasks));
+      openDetail(currentEventId);
+      renderCalendar();
+    }
+
+    // --- BÚSQUEDA GLOBAL ---
+    function ejecutarBusqueda() {
+      const q = normalizarTexto(document.getElementById("globalSearchInput").value);
+      const box = document.getElementById("searchResults");
+      if (!q) {
+        box.style.display = "none";
+        box.innerHTML = "";
+        return;
+      }
+      const matches = tasks.filter(t => normalizarTexto(t.subject).includes(q) || normalizarTexto(t.detail).includes(q) || normalizarTexto(t.sender).includes(q));
+      if (matches.length === 0) {
+        box.innerHTML = '<div style="padding:8px; font-size:7pt; color:#94A3B8;">Sin coincidencias</div>';
+      } else {
+        box.innerHTML = matches.map(m => `
+          <div class="search-item" onclick="openDetail('${m.id}'); document.getElementById('searchResults').style.display='none';">
+            <span style="font-weight:700; font-size:7.5pt;">${m.subject}</span>
+            <span style="font-size:6.5pt; color:var(--text-muted);">${m.date} | ${m.category}</span>
+          </div>
+        `).join("");
+      }
+      box.style.display = "block";
+    }
+
+    document.addEventListener("click", (e) => {
+      const wrap = document.querySelector(".search-wrapper");
+      if (wrap && !wrap.contains(e.target)) {
+        const box = document.getElementById("searchResults");
+        if (box) box.style.display = "none";
+      }
+    });
+
+    // --- MODALES EXTRA: MASCOTAS, BITÁCORA, RESPALDO, AIA ---
+    function abrirModalMascotas() {
+      const modal = document.getElementById("modalMascotasOverlay");
+      const list = document.getElementById("mascotasList");
+      const petKeywords = ["veterinario", "mascota", "ramon", "ramona", "jackson", "vacuna", "perro", "gato"];
+      const petTasks = tasks.filter(t => {
+        const txt = normalizarTexto(`${t.subject} ${t.detail} ${t.sender}`);
+        return petKeywords.some(k => txt.includes(k));
+      });
+
+      if (petTasks.length === 0) {
+        list.innerHTML = '<span style="color:#94A3B8;">No hay compromisos de mascotas registrados.</span>';
+      } else {
+        list.innerHTML = petTasks.map(t => `
+          <div class="bitacora-item" onclick="cerrarModalMascotas(); openDetail('${t.id}')">
+            <span><b>${t.subject}</b> (${t.date})</span>
+            <span style="font-size:6.5pt; color:var(--text-muted);">${t.status === 'managed' ? '✓' : 'Pendiente'}</span>
+          </div>
+        `).join("");
+      }
+      modal.style.display = "flex";
+    }
+    function cerrarModalMascotas() { document.getElementById("modalMascotasOverlay").style.display = "none"; }
+
+    function abrirModalBitacora() {
+      renderizarBitacora();
+      document.getElementById("modalBitacoraOverlay").style.display = "flex";
+    }
+    function cerrarModalBitacora() { document.getElementById("modalBitacoraOverlay").style.display = "none"; }
+
+    function renderizarBitacora(filtrarDuplicados = false) {
+      const container = document.getElementById("bitacoraListContainer");
+      const q = normalizarTexto(document.getElementById("bitacoraSearch").value);
+      let list = tasks.slice();
+
+      if (q) list = list.filter(t => normalizarTexto(t.subject).includes(q));
+
+      if (filtrarDuplicados) {
+        const conteo = {};
+        tasks.forEach(t => {
+          const k = `${t.date}_${normalizarTexto(t.subject)}`;
+          conteo[k] = (conteo[k] || 0) + 1;
+        });
+        list = list.filter(t => conteo[`${t.date}_${normalizarTexto(t.subject)}`] > 1);
+      }
+
+      document.getElementById("bitacoraTotal").textContent = `${list.length} evento(s)`;
+
+      if (list.length === 0) {
+        container.innerHTML = '<span style="font-size:7pt; color:#94A3B8; text-align:center;">Sin registros.</span>';
+        return;
+      }
+
+      container.innerHTML = list.map(t => `
+        <div class="bitacora-item" onclick="cerrarModalBitacora(); openDetail('${t.id}')">
+          <div>
+            <div style="font-weight:700; font-size:7.5pt;">${t.subject}</div>
+            <div style="font-size:6.5pt; color:var(--text-muted);">${t.date} ${t.tieneHora ? '| ' + t.time : ''} • ${t.category}</div>
+          </div>
+          <span style="font-size:7pt;">${t.status === 'managed' ? '✅' : '⏳'}</span>
+        </div>
+      `).join("");
+    }
+    function filtrarSoloDuplicados() { renderizarBitacora(true); }
+
+    function abrirModalRespaldo() { document.getElementById("modalRespaldoOverlay").style.display = "flex"; }
+    function cerrarModalRespaldo() { document.getElementById("modalRespaldoOverlay").style.display = "none"; }
+
+    function descargarRespaldoJSON() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(tasks, null, 2));
+      const dlAnchor = document.createElement('a');
+      dlAnchor.setAttribute("href", dataStr);
+      dlAnchor.setAttribute("download", `respaldo_agenda_${formatDateKey(new Date())}.json`);
+      dlAnchor.click();
+      dlAnchor.remove();
+    }
+
+    function abrirModalIA() { document.getElementById("modalIAOverlay").style.display = "flex"; }
+    function procesarArchivoSeleccionado(input) { alert("Archivo recibido para análisis AIA."); }
+    function pegarDesdePortapapeles() { alert("Puedes pegar capturas presionando Ctrl + V."); }
 
     function updateLiveClock() {
       const now = new Date();
@@ -708,6 +969,10 @@
     document.getElementById("btnPrev").onclick = () => { currentMonday.setDate(currentMonday.getDate() - 7); renderCalendar(); };
     document.getElementById("btnNext").onclick = () => { currentMonday.setDate(currentMonday.getDate() + 7); renderCalendar(); };
     
+    const hoyInicial = new Date();
+    const lblSub = document.getElementById("full-date-subtitle");
+    if (lblSub) lblSub.textContent = `${hoyInicial.getDate()} ${monthNames[hoyInicial.getMonth()]} ${hoyInicial.getFullYear()}`;
+
     renderCalendar();
     sincronizarDesdeSheets();
   </script>
