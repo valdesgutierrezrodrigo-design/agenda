@@ -186,7 +186,7 @@
     .modal-box { background: #F8FAFC; border: 1px solid var(--border-subtle); padding: 6px 10px; border-radius: var(--radius-sm); font-size: 8pt; line-height: 1.35; white-space: pre-wrap; word-break: break-word; }
     .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 
-    .modal-assistant { background: var(--surface); color: var(--text-main); max-width: 460px; width: 100%; border-radius: var(--radius-md); padding: 16px; display: flex; flex-direction: column; gap: 8px; max-height: 90vh; overflow-y: auto; position: relative; z-index: 1001; }
+    .modal-assistant { background: var(--surface); color: var(--text-main); max-width: 520px; width: 100%; border-radius: var(--radius-md); padding: 16px; display: flex; flex-direction: column; gap: 8px; max-height: 90vh; overflow-y: auto; position: relative; z-index: 1001; }
     .modal-assistant label { font-size: 7.5pt; color: #475569; display: block; margin-bottom: 2px; font-weight: 700; }
     .modal-assistant input, .modal-assistant textarea, .modal-assistant select { width: 100%; background: #F8FAFC; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 6px 8px; font-size: 8pt; outline: none; }
     
@@ -194,9 +194,15 @@
     .checkbox-container input { width: 13px; height: 13px; cursor: pointer; }
     .aviso-duplicado { background: var(--prio-alta-bg); border: 1px solid var(--prio-alta-border); color: #991B1B; padding: 5px 8px; border-radius: var(--radius-sm); font-size: 7pt; display: none; margin-top: 3px; }
 
-    .ia-results-list { display: flex; flex-direction: column; gap: 6px; max-height: 280px; overflow-y: auto; margin: 6px 0; }
-    .ia-item-card { background: #F8FAFC; border-left: 3.5px solid #F59E0B; padding: 6px 8px; border-radius: 4px; font-size: 7.5pt; display: flex; flex-direction: column; gap: 2px; border: 1px solid var(--border-subtle); }
-    .ia-item-header { display: flex; justify-content: space-between; font-weight: 700; color: #1E293B; }
+    /* Tarjetas de propuesta IA */
+    .ia-results-list { display: flex; flex-direction: column; gap: 8px; max-height: 380px; overflow-y: auto; margin: 6px 0; }
+    .ia-item-card { 
+      background: #FFFFFF; border: 1px solid var(--border-subtle); border-left: 4px solid #F59E0B; 
+      padding: 8px 10px; border-radius: var(--radius-sm); display: flex; flex-direction: column; gap: 5px; 
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .ia-item-header { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+    .ia-edit-input { font-size: 7.5pt !important; padding: 4px 6px !important; }
 
     .bitacora-modal { max-width: 540px; width: 100%; max-height: 88vh; background: var(--surface); border-radius: var(--radius-md); padding: 16px; display: flex; flex-direction: column; gap: 8px; position: relative; z-index: 1001; }
     .bitacora-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
@@ -305,8 +311,8 @@
       <div class="modal-field"><span class="modal-label">Síntesis</span><div id="dtDetail" class="modal-box">-</div></div>
       <div class="modal-field"><span class="modal-label">Acción Requerida</span><div id="dtAccion" class="modal-box" style="border-left:3px solid #FBBF24;">-</div></div>
 
-      <div class="modal-field" id="dtRespaldosContainer" style="display:none;">
-        <span class="modal-label">Respaldos Adjuntos</span>
+      <div class="modal-field" id="dtRespaldosContainer">
+        <span class="modal-label">Respaldo / Adjunto</span>
         <div id="dtRespaldosList" style="display:flex; gap:5px; flex-wrap:wrap; margin-top:3px;"></div>
       </div>
 
@@ -382,16 +388,20 @@
       <input type="file" id="inputArchivoIA" accept="image/*,application/pdf" style="display:none;" onchange="procesarArchivoSeleccionado(this)">
       
       <div style="display:flex; gap:5px; margin:4px 0;">
-        <button type="button" id="btnCargarIA" class="icon-btn" style="flex:1;">📁 Cargar</button>
-        <button type="button" id="btnPegarIA" class="icon-btn" style="flex:1;">📋 Pegar</button>
+        <button type="button" id="btnCargarIA" class="icon-btn" style="flex:1;">📁 Cargar Documento</button>
+        <button type="button" id="btnPegarIA" class="icon-btn" style="flex:1;">📋 Pegar Captura</button>
       </div>
 
+      <div id="iaArchivoInfo" style="font-size:7pt; color:#1D4ED8; background:#EFF6FF; padding:4px 8px; border-radius:4px; display:none;"></div>
       <div id="iaEstado" style="font-size:7.5pt; color:#B45309; font-weight:bold; text-align:center; padding:6px; display:none; background:#FEF3C7; border-radius:6px;">Analizando documento con Gemini...</div>
       
       <div id="iaContenedorResultados" style="display:none;">
-        <div style="font-size:8pt; font-weight:800; margin-top:6px; color:#1E293B;">Eventos detectados:</div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+          <span style="font-size:8pt; font-weight:800; color:#1E293B;">Propuesta de Eventos Detectados:</span>
+          <span style="font-size:6.8pt; color:var(--text-muted);">Puedes ajustar antes de agendar</span>
+        </div>
         <div class="ia-results-list" id="iaListaEventos"></div>
-        <button type="button" id="btnAgendarTodoIA" class="icon-btn btn-nuevo" style="width:100%; margin-top:6px; justify-content:center;" onclick="guardarEventosDetectadosIA()">AGENDAR TODOS</button>
+        <button type="button" id="btnAgendarTodoIA" class="icon-btn btn-nuevo" style="width:100%; margin-top:6px; justify-content:center;" onclick="guardarEventosDetectadosIA()">AGENDAR PROPUESTA Y SUBIR RESPALDO</button>
       </div>
     </div>
   </div>
@@ -424,6 +434,7 @@
 
     let tasks = [];
     let eventosDetectadosIA = [];
+    let archivoRespaldoIA = null; // Guardará { nombre, mimeType, base64 }
     let selectedPriority = "Media";
     let selectedCategory = "Laboral";
     let currentScopeFilter = "todos";
@@ -544,6 +555,17 @@
             const isManaged = (estado === "finalizado" || estado === "gestionado" || estado === "realizado");
             const cat = inferirCategoria(row);
 
+            // Obtener respaldos adjuntos si existen en la columna
+            let adjuntos = [];
+            const rawRespaldos = row.respaldos || (Array.isArray(row) ? row[8] : null);
+            if (rawRespaldos) {
+              try {
+                adjuntos = typeof rawRespaldos === "string" ? JSON.parse(rawRespaldos) : rawRespaldos;
+              } catch (e) {
+                adjuntos = [{ url: rawRespaldos, nombre: "Documento" }];
+              }
+            }
+
             remoteTasks.push({
               id: row.fila || "remote_" + (idx + 1),
               fila: row.fila || (idx + 1),
@@ -559,7 +581,7 @@
               priority: row.prioridad || (Array.isArray(row) ? row[2] : "Media"),
               category: cat,
               status: isManaged ? "managed" : "pending",
-              respaldos: []
+              respaldos: adjuntos
             });
           });
 
@@ -666,11 +688,12 @@
             const badgeHora = (t.tieneHora && t.time) ? `<span class="card-time">⏰ ${t.time}</span>` : '';
             const esPersonal = (t.category || "Laboral").toLowerCase() === "personal";
             const badgeScope = `<span class="card-cat-badge ${esPersonal ? 'card-cat-personal' : 'card-cat-laboral'}">${esPersonal ? '🏠' : '💼'}</span>`;
+            const badgeClip = (t.respaldos && t.respaldos.length > 0) ? `<span title="Tiene documento adjunto" style="font-size:6.5pt;">📎</span>` : '';
 
             card.innerHTML = `
               <div class="card-top">
                 <span class="card-title">${t.subject}</span>
-                <div class="card-badges">${badgeScope} ${badgeHora}</div>
+                <div class="card-badges">${badgeClip} ${badgeScope} ${badgeHora}</div>
               </div>
               <div class="card-sender">👤 ${t.sender || 'General'}</div>
             `;
@@ -701,6 +724,24 @@
 
       document.getElementById("dtStateBadge").textContent = (t.status === "managed") ? "ESTADO: REALIZADO" : "ESTADO: PENDIENTE";
       document.getElementById("btnToggleRealizado").innerHTML = (t.status === "managed") ? "↩ Reabrir" : "✓ Realizado";
+
+      // Renderizar respaldos adjuntos si existen
+      const rContainer = document.getElementById("dtRespaldosContainer");
+      const rList = document.getElementById("dtRespaldosList");
+      rList.innerHTML = "";
+      if (t.respaldos && t.respaldos.length > 0) {
+        t.respaldos.forEach(f => {
+          const enlace = document.createElement("a");
+          enlace.href = f.url || "#";
+          enlace.target = "_blank";
+          enlace.style.cssText = "font-size:7pt; color:#1D4ED8; text-decoration:underline; font-weight:bold;";
+          enlace.textContent = `📎 ${f.nombre || 'Ver archivo adjunto'}`;
+          rList.appendChild(enlace);
+        });
+        rContainer.style.display = "flex";
+      } else {
+        rContainer.style.display = "none";
+      }
 
       document.getElementById("modalDetailOverlay").style.display = "flex";
     }
@@ -959,12 +1000,14 @@
       dlAnchor.remove();
     }
 
-    // --- ASISTENTE AIA: PROCESAMIENTO CON GEMINI ---
+    // --- ASISTENTE AIA: PROCESAMIENTO CON GEMINI Y SUBIDA DE RESPALDO ---
     function abrirModalIA() { 
       document.getElementById("iaContenedorResultados").style.display = "none";
       document.getElementById("iaEstado").style.display = "none";
+      document.getElementById("iaArchivoInfo").style.display = "none";
       document.getElementById("iaListaEventos").innerHTML = "";
       eventosDetectadosIA = [];
+      archivoRespaldoIA = null;
       document.getElementById("modalIAOverlay").style.display = "flex"; 
     }
 
@@ -1001,7 +1044,7 @@
             const imgType = item.types.find(t => t.startsWith("image/"));
             if (imgType) {
               const blob = await item.getType(imgType);
-              ejecutarLlamadaGeminiIA(blob, imgType);
+              ejecutarLlamadaGeminiIA(blob, imgType, "Captura_Pegada.png");
               return;
             }
           }
@@ -1019,7 +1062,7 @@
         for (let i = 0; i < items.length; i++) {
           if (items[i].type.indexOf("image") !== -1) {
             const blob = items[i].getAsFile();
-            ejecutarLlamadaGeminiIA(blob, items[i].type);
+            ejecutarLlamadaGeminiIA(blob, items[i].type, "Captura_Pegada.png");
             break;
           }
         }
@@ -1029,12 +1072,13 @@
     function procesarArchivoSeleccionado(input) {
       if (input.files && input.files[0]) {
         const file = input.files[0];
-        ejecutarLlamadaGeminiIA(file, file.type || "application/pdf");
+        ejecutarLlamadaGeminiIA(file, file.type || "application/pdf", file.name);
       }
     }
 
-    async function ejecutarLlamadaGeminiIA(archivoBlob, mimeType) {
+    async function ejecutarLlamadaGeminiIA(archivoBlob, mimeType, nombreArchivo = "documento") {
       const elEstado = document.getElementById("iaEstado");
+      const elInfo = document.getElementById("iaArchivoInfo");
       elEstado.style.display = "block";
       elEstado.textContent = "⏳ Analizando con Gemini IA...";
       document.getElementById("iaContenedorResultados").style.display = "none";
@@ -1042,6 +1086,16 @@
       try {
         const base64Data = await fileToBase64(archivoBlob);
         const tipoReal = (mimeType && mimeType.includes("pdf")) ? "application/pdf" : "image/png";
+
+        // Guardar archivo para adjuntarlo como respaldo en Google Sheets
+        archivoRespaldoIA = {
+          nombre: nombreArchivo,
+          mimeType: tipoReal,
+          base64: base64Data
+        };
+
+        elInfo.textContent = `📎 Documento cargado: ${nombreArchivo}`;
+        elInfo.style.display = "block";
 
         const promptInstruccion = 
           "Eres un asistente directivo pedagógico. Analiza la imagen o documento.\n" +
@@ -1087,25 +1141,66 @@
         return;
       }
 
-      lista.forEach((ev) => {
-        const fKey = parsearFecha(ev.fecha) || "";
+      lista.forEach((ev, idx) => {
+        const fKey = parsearFecha(ev.fecha) || formatDateKey(new Date());
         const dup = verificarDuplicado(ev.asunto, fKey);
         const item = document.createElement("div");
         item.className = "ia-item-card";
         
         let avisoDupHtml = dup ? `<div style="color:#DC2626; font-size:6.8pt; font-weight:bold;">⚠️ Ya agendado: "${dup.subject}"</div>` : '';
 
+        // Campos interactivos para que el usuario pueda corregir antes de guardar
         item.innerHTML = `
-          <div class="ia-item-header"><span>📌 ${ev.asunto}</span><span>📅 ${ev.fecha || 'Sin fecha'}</span></div>
-          <div style="font-size:7pt; color:#475569;">👤 ${ev.organizador || 'General'} | ⏰ ${ev.hora || '09:00'} | Prioridad: ${ev.prioridad || 'Media'}</div>
-          <div style="font-size:7pt; color:#64748B;">📝 ${ev.sintesis || ''}</div>
+          <div class="ia-item-header">
+            <input type="text" class="ia-edit-input" style="font-weight:700; width:75%;" value="${ev.asunto || ''}" onchange="actualizarDatoIA(${idx}, 'asunto', this.value)">
+            <button type="button" class="icon-btn" style="color:#DC2626 !important; height:22px !important; padding:0 4px !important;" onclick="eliminarPropuestaIA(${idx})" title="Descartar este evento">✕</button>
+          </div>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:4px;">
+            <div>
+              <label style="font-size:6pt; margin:0;">Fecha:</label>
+              <input type="date" class="ia-edit-input" value="${fKey}" onchange="actualizarDatoIA(${idx}, 'fecha', this.value)">
+            </div>
+            <div>
+              <label style="font-size:6pt; margin:0;">Hora:</label>
+              <input type="time" class="ia-edit-input" value="${ev.hora || '09:00'}" onchange="actualizarDatoIA(${idx}, 'hora', this.value)">
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:4px;">
+            <div>
+              <label style="font-size:6pt; margin:0;">Organiza:</label>
+              <input type="text" class="ia-edit-input" value="${ev.organizador || 'General'}" onchange="actualizarDatoIA(${idx}, 'organizador', this.value)">
+            </div>
+            <div>
+              <label style="font-size:6pt; margin:0;">Prioridad:</label>
+              <select class="ia-edit-input" onchange="actualizarDatoIA(${idx}, 'prioridad', this.value)">
+                <option value="Alta" ${ev.prioridad === 'Alta' ? 'selected' : ''}>Alta</option>
+                <option value="Media" ${ev.prioridad === 'Media' || !ev.prioridad ? 'selected' : ''}>Media</option>
+                <option value="Baja" ${ev.prioridad === 'Baja' ? 'selected' : ''}>Baja</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label style="font-size:6pt; margin:0;">Síntesis:</label>
+            <textarea class="ia-edit-input" rows="1" onchange="actualizarDatoIA(${idx}, 'sintesis', this.value)">${ev.sintesis || ''}</textarea>
+          </div>
           ${avisoDupHtml}
         `;
         listaDiv.appendChild(item);
       });
 
-      document.getElementById("btnAgendarTodoIA").textContent = `AGENDAR LOS ${lista.length} EVENTOS`;
+      document.getElementById("btnAgendarTodoIA").textContent = `AGENDAR LOS ${lista.length} EVENTOS Y SUBIR RESPALDO`;
       contenedor.style.display = "block";
+    }
+
+    function actualizarDatoIA(idx, campo, valor) {
+      if (eventosDetectadosIA[idx]) {
+        eventosDetectadosIA[idx][campo] = valor;
+      }
+    }
+
+    function eliminarPropuestaIA(idx) {
+      eventosDetectadosIA.splice(idx, 1);
+      renderizarEventosDetectados(eventosDetectadosIA);
     }
 
     async function guardarEventosDetectadosIA() {
@@ -1114,6 +1209,8 @@
       btn.disabled = true; 
       btn.textContent = "⏳ AGENDANDO Y GUARDANDO...";
       const baseId = Date.now();
+
+      const respaldoInfo = archivoRespaldoIA ? [{ nombre: archivoRespaldoIA.nombre, url: "" }] : [];
 
       eventosDetectadosIA.forEach((ev, idx) => {
         const fKey = parsearFecha(ev.fecha) || formatDateKey(new Date());
@@ -1135,7 +1232,7 @@
           priority: ev.prioridad || "Media",
           category: inferirCategoria(ev),
           status: "pending",
-          respaldos: []
+          respaldos: respaldoInfo
         });
       });
 
@@ -1143,23 +1240,30 @@
       renderCalendar();
       cerrarModalIA();
 
-      // Guardado asíncrono en Google Sheets
+      // Guardado en Google Sheets junto con el archivo de respaldo (adjunto)
       for (const ev of eventosDetectadosIA) {
         const fKey = parsearFecha(ev.fecha) || formatDateKey(new Date());
         try {
           await fetch(API_URL, {
             method: "POST", mode: "no-cors", headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              accion: "crear_evento", fechaDoc: fKey, hora: ev.hora || "09:00", asunto: ev.asunto,
-              remitente: ev.organizador || "General", prioridad: ev.prioridad || "Media",
-              sintesis: ev.sintesis || "", accionReq: ev.accion || "Gestionar", archivos: [], anual: "No"
+              accion: "crear_evento", 
+              fechaDoc: fKey, 
+              hora: ev.hora || "09:00", 
+              asunto: ev.asunto,
+              remitente: ev.organizador || "General", 
+              prioridad: ev.prioridad || "Media",
+              sintesis: ev.sintesis || "", 
+              accionReq: ev.accion || "Gestionar", 
+              archivos: archivoRespaldoIA ? [archivoRespaldoIA] : [], 
+              anual: "No"
             })
           });
         } catch (e) {}
       }
 
       btn.disabled = false; 
-      btn.textContent = "AGENDAR TODOS";
+      btn.textContent = "AGENDAR PROPUESTA Y SUBIR RESPALDO";
     }
 
     // --- RELOJ Y NAVEGACIÓN ---
