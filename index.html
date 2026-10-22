@@ -194,7 +194,6 @@
     .checkbox-container input { width: 13px; height: 13px; cursor: pointer; }
     .aviso-duplicado { background: var(--prio-alta-bg); border: 1px solid var(--prio-alta-border); color: #991B1B; padding: 5px 8px; border-radius: var(--radius-sm); font-size: 7pt; display: none; margin-top: 3px; }
 
-    /* Tarjetas de propuesta IA */
     .ia-results-list { display: flex; flex-direction: column; gap: 8px; max-height: 380px; overflow-y: auto; margin: 6px 0; }
     .ia-item-card { 
       background: #FFFFFF; border: 1px solid var(--border-subtle); border-left: 4px solid #F59E0B; 
@@ -207,6 +206,8 @@
     .bitacora-modal { max-width: 540px; width: 100%; max-height: 88vh; background: var(--surface); border-radius: var(--radius-md); padding: 16px; display: flex; flex-direction: column; gap: 8px; position: relative; z-index: 1001; }
     .bitacora-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
     .bitacora-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; border-radius: var(--radius-sm); background: #FAFBFD; border: 1px solid var(--border-subtle); cursor: pointer; }
+    
+    .badge-file { display: inline-flex; align-items: center; gap: 4px; background: #EFF6FF; border: 1px solid #BFDBFE; color: #1D4ED8; padding: 3px 6px; border-radius: 4px; font-size: 7pt; }
   </style>
 </head>
 <body>
@@ -312,8 +313,8 @@
       <div class="modal-field"><span class="modal-label">Acción Requerida</span><div id="dtAccion" class="modal-box" style="border-left:3px solid #FBBF24;">-</div></div>
 
       <div class="modal-field" id="dtRespaldosContainer">
-        <span class="modal-label">Respaldo / Adjunto</span>
-        <div id="dtRespaldosList" style="display:flex; gap:5px; flex-wrap:wrap; margin-top:3px;"></div>
+        <span class="modal-label">Respaldo / Adjuntos</span>
+        <div id="dtRespaldosList" style="display:flex; gap:6px; flex-wrap:wrap; margin-top:4px;"></div>
       </div>
 
       <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px; padding-top:6px; border-top:1px solid var(--border-subtle);">
@@ -372,7 +373,15 @@
 
       <div><label>Síntesis</label><textarea id="fDetalle" rows="2" placeholder="Resumen clave..."></textarea></div>
       <div><label>Acción Requerida</label><textarea id="fAccion" rows="2" placeholder="Ej: Notificar, Solicitar informe..."></textarea></div>
-      <button type="button" id="btnGuardarEvento" class="icon-btn btn-nuevo" style="margin-top:3px; justify-content:center;" onclick="guardarEventoManual()">GUARDAR EVENTO</button>
+      
+      <!-- SUBIR ARCHIVOS (NUEVO O EDICIÓN) -->
+      <div>
+        <label>Adjuntar archivos de respaldo (PDF, Imágenes)</label>
+        <input type="file" id="fArchivos" multiple accept="image/*,application/pdf" onchange="procesarArchivosManuales(this)">
+        <div id="listaArchivosManuales" style="display:flex; flex-wrap:wrap; gap:4px; margin-top:5px;"></div>
+      </div>
+
+      <button type="button" id="btnGuardarEvento" class="icon-btn btn-nuevo" style="margin-top:5px; justify-content:center;" onclick="guardarEventoManual()">GUARDAR EVENTO</button>
     </div>
   </div>
 
@@ -385,10 +394,10 @@
       </div>
       <p style="font-size:7.5pt; color:var(--text-muted);">Sube una imagen o PDF, o pega tu captura con <b>Ctrl + V</b>.</p>
       
-      <input type="file" id="inputArchivoIA" accept="image/*,application/pdf" style="display:none;" onchange="procesarArchivoSeleccionado(this)">
+      <input type="file" id="inputArchivoIA" accept="image/*,application/pdf" multiple style="display:none;" onchange="procesarArchivoSeleccionado(this)">
       
       <div style="display:flex; gap:5px; margin:4px 0;">
-        <button type="button" id="btnCargarIA" class="icon-btn" style="flex:1;">📁 Cargar Documento</button>
+        <button type="button" id="btnCargarIA" class="icon-btn" style="flex:1;">📁 Cargar Documento(s)</button>
         <button type="button" id="btnPegarIA" class="icon-btn" style="flex:1;">📋 Pegar Captura</button>
       </div>
 
@@ -434,7 +443,8 @@
 
     let tasks = [];
     let eventosDetectadosIA = [];
-    let archivoRespaldoIA = null; // Guardará { nombre, mimeType, base64 }
+    let archivosRespaldoIA = []; 
+    let archivosManualesTemporales = []; 
     let selectedPriority = "Media";
     let selectedCategory = "Laboral";
     let currentScopeFilter = "todos";
@@ -555,14 +565,18 @@
             const isManaged = (estado === "finalizado" || estado === "gestionado" || estado === "realizado");
             const cat = inferirCategoria(row);
 
-            // Obtener respaldos adjuntos si existen en la columna
             let adjuntos = [];
             const rawRespaldos = row.respaldos || (Array.isArray(row) ? row[8] : null);
             if (rawRespaldos) {
               try {
                 adjuntos = typeof rawRespaldos === "string" ? JSON.parse(rawRespaldos) : rawRespaldos;
+                if (!Array.isArray(adjuntos)) adjuntos = [adjuntos];
               } catch (e) {
-                adjuntos = [{ url: rawRespaldos, nombre: "Documento" }];
+                if (typeof rawRespaldos === "string" && rawRespaldos.includes(",")) {
+                  adjuntos = rawRespaldos.split(",").map((u, i) => ({ url: u.trim(), nombre: `Documento ${i+1}` }));
+                } else {
+                  adjuntos = [{ url: String(rawRespaldos).trim(), nombre: "Documento" }];
+                }
               }
             }
 
@@ -688,7 +702,7 @@
             const badgeHora = (t.tieneHora && t.time) ? `<span class="card-time">⏰ ${t.time}</span>` : '';
             const esPersonal = (t.category || "Laboral").toLowerCase() === "personal";
             const badgeScope = `<span class="card-cat-badge ${esPersonal ? 'card-cat-personal' : 'card-cat-laboral'}">${esPersonal ? '🏠' : '💼'}</span>`;
-            const badgeClip = (t.respaldos && t.respaldos.length > 0) ? `<span title="Tiene documento adjunto" style="font-size:6.5pt;">📎</span>` : '';
+            const badgeClip = (t.respaldos && t.respaldos.length > 0) ? `<span title="Tiene ${t.respaldos.length} archivo(s) adjunto(s)" style="font-size:6.5pt;">📎 ${t.respaldos.length > 1 ? t.respaldos.length : ''}</span>` : '';
 
             card.innerHTML = `
               <div class="card-top">
@@ -725,17 +739,28 @@
       document.getElementById("dtStateBadge").textContent = (t.status === "managed") ? "ESTADO: REALIZADO" : "ESTADO: PENDIENTE";
       document.getElementById("btnToggleRealizado").innerHTML = (t.status === "managed") ? "↩ Reabrir" : "✓ Realizado";
 
-      // Renderizar respaldos adjuntos si existen
+      // Renderizar respaldos adjuntos con enlaces seguros
       const rContainer = document.getElementById("dtRespaldosContainer");
       const rList = document.getElementById("dtRespaldosList");
       rList.innerHTML = "";
       if (t.respaldos && t.respaldos.length > 0) {
         t.respaldos.forEach(f => {
           const enlace = document.createElement("a");
-          enlace.href = f.url || "#";
-          enlace.target = "_blank";
-          enlace.style.cssText = "font-size:7pt; color:#1D4ED8; text-decoration:underline; font-weight:bold;";
-          enlace.textContent = `📎 ${f.nombre || 'Ver archivo adjunto'}`;
+          let hrefReal = f.url;
+          if (!hrefReal && f.base64) {
+            hrefReal = `data:${f.mimeType || 'application/octet-stream'};base64,${f.base64}`;
+          }
+          if (hrefReal && hrefReal.trim() !== "" && hrefReal !== "#") {
+            enlace.href = hrefReal;
+            enlace.target = "_blank";
+            enlace.rel = "noopener noreferrer";
+          } else {
+            enlace.href = "javascript:void(0);";
+            enlace.onclick = () => alert("El archivo está subiéndose a Google Drive o no tiene enlace disponible.");
+          }
+          enlace.className = "badge-file";
+          enlace.style.textDecoration = "none";
+          enlace.textContent = `📎 ${f.nombre || 'Ver Documento'}`;
           rList.appendChild(enlace);
         });
         rContainer.style.display = "flex";
@@ -755,9 +780,43 @@
       document.getElementById("fHora").value = "";
       document.getElementById("fDetalle").value = "";
       document.getElementById("fAccion").value = "";
+      document.getElementById("fArchivos").value = "";
+      archivosManualesTemporales = [];
+      renderizarListaArchivosManuales();
       document.getElementById("avisoDuplicadoManual").style.display = "none";
       selectPriority("Media");
       selectCategory("Laboral");
+    }
+
+    async function procesarArchivosManuales(input) {
+      if (!input.files || input.files.length === 0) return;
+      for (let i = 0; i < input.files.length; i++) {
+        const file = input.files[i];
+        const b64 = await fileToBase64(file);
+        archivosManualesTemporales.push({
+          nombre: file.name,
+          mimeType: file.type || "application/octet-stream",
+          base64: b64,
+          url: ""
+        });
+      }
+      renderizarListaArchivosManuales();
+    }
+
+    function renderizarListaArchivosManuales() {
+      const container = document.getElementById("listaArchivosManuales");
+      container.innerHTML = "";
+      archivosManualesTemporales.forEach((arch, idx) => {
+        const tag = document.createElement("span");
+        tag.className = "badge-file";
+        tag.innerHTML = `${arch.nombre} <b style="cursor:pointer; margin-left:3px;" onclick="quitarArchivoManual(${idx})">✕</b>`;
+        container.appendChild(tag);
+      });
+    }
+
+    function quitarArchivoManual(idx) {
+      archivosManualesTemporales.splice(idx, 1);
+      renderizarListaArchivosManuales();
     }
 
     function abrirModalNuevo() {
@@ -792,7 +851,7 @@
       aviso.style.display = existe ? "block" : "none";
     }
 
-    function guardarEventoManual() {
+    async function guardarEventoManual() {
       const asunto = document.getElementById("fAsunto").value.trim();
       const fecha = document.getElementById("fFechaInicio").value;
       if (!asunto || !fecha) {
@@ -809,6 +868,12 @@
         tieneH = true;
       }
 
+      const btnGuardar = document.getElementById("btnGuardarEvento");
+      btnGuardar.disabled = true;
+      btnGuardar.textContent = "⏳ Guardando...";
+
+      let adjuntosFinales = [...archivosManualesTemporales];
+
       if (isEditing && editEventId) {
         const item = tasks.find(t => t.id === editEventId);
         if (item) {
@@ -822,6 +887,7 @@
           item.sender = document.getElementById("fOrganizador").value.trim() || "General";
           item.detail = document.getElementById("fDetalle").value.trim();
           item.accion = document.getElementById("fAccion").value.trim();
+          item.respaldos = adjuntosFinales;
         }
       } else {
         const nuevo = {
@@ -837,7 +903,7 @@
           priority: selectedPriority,
           category: selectedCategory,
           status: "pending",
-          respaldos: []
+          respaldos: adjuntosFinales
         };
         tasks.push(nuevo);
       }
@@ -845,6 +911,47 @@
       localStorage.setItem("agenda_tdah_local", JSON.stringify(tasks));
       closeModal();
       renderCalendar();
+
+      // Enviar a Google Apps Script
+      try {
+        const payload = {
+          accion: isEditing ? "editar_evento" : "crear_evento",
+          fila: isEditing ? (tasks.find(t => t.id === editEventId)?.fila || "") : "",
+          fechaDoc: fecha,
+          hora: hora || "09:00",
+          asunto: asunto,
+          remitente: document.getElementById("fOrganizador").value.trim() || "General",
+          prioridad: selectedPriority,
+          sintesis: document.getElementById("fDetalle").value.trim(),
+          accionReq: document.getElementById("fAccion").value.trim(),
+          archivos: adjuntosFinales,
+          anual: document.getElementById("fRepetirAnual").checked ? "Si" : "No"
+        };
+
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        });
+        const resJson = await res.json();
+        
+        // Si el script devolvió las URLs creadas de Google Drive, actualizarlas
+        if (resJson && resJson.urls && Array.isArray(resJson.urls)) {
+          const target = tasks.find(t => t.id === (isEditing ? editEventId : tasks[tasks.length - 1].id));
+          if (target && target.respaldos) {
+            target.respaldos.forEach((r, i) => {
+              if (resJson.urls[i]) r.url = resJson.urls[i];
+            });
+            localStorage.setItem("agenda_tdah_local", JSON.stringify(tasks));
+            renderCalendar();
+          }
+        }
+      } catch (err) {
+        console.warn("Aviso guardado remoto:", err);
+      } finally {
+        btnGuardar.disabled = false;
+        btnGuardar.textContent = isEditing ? "ACTUALIZAR EVENTO" : "GUARDAR EVENTO";
+      }
     }
 
     function prepararEdicionActual() {
@@ -864,6 +971,9 @@
       document.getElementById("fOrganizador").value = t.sender || "";
       document.getElementById("fDetalle").value = t.detail || "";
       document.getElementById("fAccion").value = t.accion || "";
+
+      archivosManualesTemporales = t.respaldos ? [...t.respaldos] : [];
+      renderizarListaArchivosManuales();
 
       selectCategory(t.category || "Laboral");
       selectPriority(t.priority || "Media");
@@ -1000,14 +1110,14 @@
       dlAnchor.remove();
     }
 
-    // --- ASISTENTE AIA: PROCESAMIENTO CON GEMINI Y SUBIDA DE RESPALDO ---
+    // --- ASISTENTE AIA: PROCESAMIENTO Y MULTI-SUBIDA ---
     function abrirModalIA() { 
       document.getElementById("iaContenedorResultados").style.display = "none";
       document.getElementById("iaEstado").style.display = "none";
       document.getElementById("iaArchivoInfo").style.display = "none";
       document.getElementById("iaListaEventos").innerHTML = "";
       eventosDetectadosIA = [];
-      archivoRespaldoIA = null;
+      archivosRespaldoIA = [];
       document.getElementById("modalIAOverlay").style.display = "flex"; 
     }
 
@@ -1044,7 +1154,7 @@
             const imgType = item.types.find(t => t.startsWith("image/"));
             if (imgType) {
               const blob = await item.getType(imgType);
-              ejecutarLlamadaGeminiIA(blob, imgType, "Captura_Pegada.png");
+              ejecutarLlamadaGeminiIA([blob], [imgType], ["Captura_Pegada.png"]);
               return;
             }
           }
@@ -1062,21 +1172,28 @@
         for (let i = 0; i < items.length; i++) {
           if (items[i].type.indexOf("image") !== -1) {
             const blob = items[i].getAsFile();
-            ejecutarLlamadaGeminiIA(blob, items[i].type, "Captura_Pegada.png");
+            ejecutarLlamadaGeminiIA([blob], [items[i].type], ["Captura_Pegada.png"]);
             break;
           }
         }
       }
     });
 
-    function procesarArchivoSeleccionado(input) {
-      if (input.files && input.files[0]) {
-        const file = input.files[0];
-        ejecutarLlamadaGeminiIA(file, file.type || "application/pdf", file.name);
+    async function procesarArchivoSeleccionado(input) {
+      if (input.files && input.files.length > 0) {
+        const blobs = [];
+        const tipos = [];
+        const nombres = [];
+        for (let i = 0; i < input.files.length; i++) {
+          blobs.push(input.files[i]);
+          tipos.push(input.files[i].type || "application/pdf");
+          nombres.push(input.files[i].name);
+        }
+        ejecutarLlamadaGeminiIA(blobs, tipos, nombres);
       }
     }
 
-    async function ejecutarLlamadaGeminiIA(archivoBlob, mimeType, nombreArchivo = "documento") {
+    async function ejecutarLlamadaGeminiIA(blobs, mimeTypes, nombresArchivos) {
       const elEstado = document.getElementById("iaEstado");
       const elInfo = document.getElementById("iaArchivoInfo");
       elEstado.style.display = "block";
@@ -1084,32 +1201,37 @@
       document.getElementById("iaContenedorResultados").style.display = "none";
 
       try {
-        const base64Data = await fileToBase64(archivoBlob);
-        const tipoReal = (mimeType && mimeType.includes("pdf")) ? "application/pdf" : "image/png";
+        archivosRespaldoIA = [];
+        const inlineParts = [];
 
-        // Guardar archivo para adjuntarlo como respaldo en Google Sheets
-        archivoRespaldoIA = {
-          nombre: nombreArchivo,
-          mimeType: tipoReal,
-          base64: base64Data
-        };
+        for (let i = 0; i < blobs.length; i++) {
+          const base64Data = await fileToBase64(blobs[i]);
+          const tipoReal = (mimeTypes[i] && mimeTypes[i].includes("pdf")) ? "application/pdf" : "image/png";
+          archivosRespaldoIA.push({
+            nombre: nombresArchivos[i],
+            mimeType: tipoReal,
+            base64: base64Data,
+            url: ""
+          });
+          inlineParts.push({ inlineData: { mimeType: tipoReal, data: base64Data } });
+        }
 
-        elInfo.textContent = `📎 Documento cargado: ${nombreArchivo}`;
+        elInfo.textContent = `📎 Documentos cargados: ${nombresArchivos.join(", ")}`;
         elInfo.style.display = "block";
 
         const promptInstruccion = 
-          "Eres un asistente directivo pedagógico. Analiza la imagen o documento.\n" +
+          "Eres un asistente directivo pedagógico. Analiza los documentos adjuntos.\n" +
           "Identifica todos los eventos, fechas o hitos (como Simce, reuniones, plazos).\n" +
           "Si contiene múltiples cursos o fechas, genera un elemento individual por cada evento.\n" +
           "Responde ÚNICA Y EXCLUSIVAMENTE con un arreglo JSON válido sin Markdown:\n" +
           "[\n  {\n    \"asunto\": \"Título breve\",\n    \"organizador\": \"Entidad\",\n    \"fecha\": \"YYYY-MM-DD\",\n    \"hora\": \"09:00\",\n    \"prioridad\": \"Alta\",\n    \"sintesis\": \"Resumen ejecutivo\",\n    \"accion\": \"Acción\"\n  }\n]";
 
         const payload = {
-          contents: [{ parts: [{ text: promptInstruccion }, { inlineData: { mimeType: tipoReal, data: base64Data } }] }],
+          contents: [{ parts: [{ text: promptInstruccion }, ...inlineParts] }],
           generationConfig: { responseMimeType: "application/json" }
         };
 
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${GEMINI_API_KEY}`, {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
           method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload)
         });
 
@@ -1149,7 +1271,6 @@
         
         let avisoDupHtml = dup ? `<div style="color:#DC2626; font-size:6.8pt; font-weight:bold;">⚠️ Ya agendado: "${dup.subject}"</div>` : '';
 
-        // Campos interactivos para que el usuario pueda corregir antes de guardar
         item.innerHTML = `
           <div class="ia-item-header">
             <input type="text" class="ia-edit-input" style="font-weight:700; width:75%;" value="${ev.asunto || ''}" onchange="actualizarDatoIA(${idx}, 'asunto', this.value)">
@@ -1193,9 +1314,7 @@
     }
 
     function actualizarDatoIA(idx, campo, valor) {
-      if (eventosDetectadosIA[idx]) {
-        eventosDetectadosIA[idx][campo] = valor;
-      }
+      if (eventosDetectadosIA[idx]) eventosDetectadosIA[idx][campo] = valor;
     }
 
     function eliminarPropuestaIA(idx) {
@@ -1210,7 +1329,7 @@
       btn.textContent = "⏳ AGENDANDO Y GUARDANDO...";
       const baseId = Date.now();
 
-      const respaldoInfo = archivoRespaldoIA ? [{ nombre: archivoRespaldoIA.nombre, url: "" }] : [];
+      const respaldoInfo = archivosRespaldoIA.map(a => ({ nombre: a.nombre, url: a.url || "", base64: a.base64, mimeType: a.mimeType }));
 
       eventosDetectadosIA.forEach((ev, idx) => {
         const fKey = parsearFecha(ev.fecha) || formatDateKey(new Date());
@@ -1232,7 +1351,7 @@
           priority: ev.prioridad || "Media",
           category: inferirCategoria(ev),
           status: "pending",
-          respaldos: respaldoInfo
+          respaldos: [...respaldoInfo]
         });
       });
 
@@ -1240,26 +1359,42 @@
       renderCalendar();
       cerrarModalIA();
 
-      // Guardado en Google Sheets junto con el archivo de respaldo (adjunto)
+      // Guardar en Google Sheets por cada evento detectado
       for (const ev of eventosDetectadosIA) {
         const fKey = parsearFecha(ev.fecha) || formatDateKey(new Date());
         try {
-          await fetch(API_URL, {
-            method: "POST", mode: "no-cors", headers: { "Content-Type": "application/json" },
+          const res = await fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
             body: JSON.stringify({
               accion: "crear_evento", 
               fechaDoc: fKey, 
               hora: ev.hora || "09:00", 
-              asunto: ev.asunto,
+              asunto: ev.asunto, 
               remitente: ev.organizador || "General", 
-              prioridad: ev.prioridad || "Media",
+              prioridad: ev.prioridad || "Media", 
               sintesis: ev.sintesis || "", 
               accionReq: ev.accion || "Gestionar", 
-              archivos: archivoRespaldoIA ? [archivoRespaldoIA] : [], 
+              archivos: archivosRespaldoIA, 
               anual: "No"
             })
           });
-        } catch (e) {}
+          const resJson = await res.json();
+          if (resJson && resJson.urls && Array.isArray(resJson.urls)) {
+            // Asignar los enlaces de Drive devueltos a los eventos
+            tasks.forEach(t => {
+              if (t.respaldos && t.subject === ev.asunto) {
+                t.respaldos.forEach((r, i) => {
+                  if (resJson.urls[i]) r.url = resJson.urls[i];
+                });
+              }
+            });
+            localStorage.setItem("agenda_tdah_local", JSON.stringify(tasks));
+            renderCalendar();
+          }
+        } catch (e) {
+          console.warn("Aviso al guardar con Google Sheets:", e);
+        }
       }
 
       btn.disabled = false; 
