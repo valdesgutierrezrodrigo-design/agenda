@@ -57,38 +57,47 @@
       display: flex; justify-content: space-between; align-items: center; 
       background: var(--surface); padding: 6px 14px; border-radius: var(--radius-md);
       border: 1px solid var(--border-subtle); box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
-      flex-shrink: 0; gap: 10px; margin-bottom: 6px; width: 100%; min-height: 52px; box-sizing: border-box;
+      flex-shrink: 0; gap: 12px; margin-bottom: 6px; width: 100%; min-height: 58px; box-sizing: border-box;
       flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
     }
     header::-webkit-scrollbar { display: none; }
     
     .header-left-group { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
     .brand-title { font-size: 15pt; font-weight: 900; color: var(--primary); white-space: nowrap; margin: 0; line-height: 1; letter-spacing: -0.4px; }
-    #full-date-subtitle { font-size: 9.5pt; font-weight: 700; color: #1E293B; background: #F8FAFC; border: 1.5px solid var(--border-subtle); padding: 0 10px; border-radius: var(--radius-sm); white-space: nowrap; height: 34px; display: inline-flex; align-items: center; text-transform: capitalize; }
+    #full-date-subtitle { font-size: 9.5pt; font-weight: 700; color: #1E293B; background: #F8FAFC; border: 1.5px solid var(--border-subtle); padding: 0 10px; border-radius: var(--radius-sm); white-space: nowrap; height: 36px; display: inline-flex; align-items: center; text-transform: capitalize; }
 
     /* BOTÓN AGENDA TDAH COMPACTO */
     .btn-agenda-tdah {
       background: #EFF6FF !important; color: #1D4ED8 !important; border: 1px solid #BFDBFE !important;
-      border-radius: var(--radius-sm) !important; padding: 0 7px !important; height: 30px !important;
-      font-size: 8pt !important; font-weight: 800 !important; cursor: pointer; display: inline-flex;
+      border-radius: var(--radius-sm) !important; padding: 0 8px !important; height: 32px !important;
+      font-size: 8.5pt !important; font-weight: 800 !important; cursor: pointer; display: inline-flex;
       align-items: center; gap: 4px; transition: all 0.15s ease; white-space: nowrap; text-decoration: none;
     }
     .btn-agenda-tdah:hover { background: #DBEAFE !important; }
 
     .mode-badge {
-      font-size: 8.5pt; font-weight: 800; padding: 4px 8px; border-radius: var(--radius-sm);
+      font-size: 8.5pt; font-weight: 800; padding: 5px 9px; border-radius: var(--radius-sm);
       background: #F1F5F9; color: #475569; border: 1.5px solid var(--border-strong);
       display: inline-flex; align-items: center; gap: 4px; cursor: pointer; user-select: none;
     }
     .mode-badge.admin { background: #DCFCE7; color: #166534; border-color: #86EFAC; }
     .mode-badge.readonly { background: #FEF3C7; color: #92400E; border-color: #FDE68A; }
 
-    /* RELOJ DESTACADO */
-    .flip-clock-container { display: flex; align-items: center; background: #0F172A; padding: 3px 10px; border-radius: var(--radius-sm); gap: 4px; height: 38px; flex-shrink: 0; }
+    /* RELOJ DESTACADO (MÁS GRANDE Y LEGIBLE) */
+    .flip-clock-container { 
+      display: flex; align-items: center; background: #0F172A; 
+      padding: 4px 12px; border-radius: var(--radius-sm); 
+      gap: 5px; height: 44px; flex-shrink: 0; 
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.25);
+    }
     .flip-section { display: flex; flex-direction: column; align-items: center; justify-content: center; }
-    .flip-label-top { font-size: 5.5pt; letter-spacing: 0.5px; color: #94A3B8; margin-bottom: 0px; font-weight: 800; text-transform: uppercase; line-height: 1; }
-    .flip-card { background: #1E293B; color: #FFFFFF; font-size: 13pt; font-weight: 900; padding: 1px 6px; border-radius: 4px; min-width: 30px; text-align: center; line-height: 1.1; }
-    .flip-colon { color: #94A3B8; font-size: 13pt; font-weight: bold; margin: 0 1px; }
+    .flip-label-top { font-size: 6pt; letter-spacing: 0.6px; color: #94A3B8; margin-bottom: 1px; font-weight: 800; text-transform: uppercase; line-height: 1; }
+    .flip-card { 
+      background: #1E293B; color: #FFFFFF; font-size: 16pt; font-weight: 900; 
+      padding: 1px 7px; border-radius: 5px; min-width: 34px; text-align: center; line-height: 1.1; 
+      letter-spacing: 0.5px;
+    }
+    .flip-colon { color: #94A3B8; font-size: 16pt; font-weight: bold; margin: 0 1px; }
 
     .header-right-group { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
     .search-wrapper { position: relative; width: 130px; flex-shrink: 0; }
@@ -146,7 +155,7 @@
     .cards-container { display: flex; flex-direction: column; gap: 6px; flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; }
     .cards-container::-webkit-scrollbar { display: none; }
     
-    /* TARJETA DE TAREA INSTITUCIONAL */
+    /* TARJETA DE TAREA */
     .task-card { 
       width: 100%; background: #FFFFFF; padding: 8px 10px; border-radius: var(--radius-sm);
       display: flex; flex-direction: column; gap: 4px; cursor: pointer; border: 1px solid rgba(0,0,0,0.08);
@@ -239,7 +248,6 @@
         <div class="date-label" id="dateLabel">Semana</div>
         <button class="icon-btn" id="btnNext">▶</button>
         <span style="border-left:2px solid var(--border-strong); height:20px; margin:0 2px;"></span>
-        <!-- BOTÓN DE INGRESO MANUAL -->
         <button class="icon-btn btn-nuevo" id="btnNuevoManual" onclick="abrirModalNuevo()">＋ Nuevo</button>
       </div>
     </div>
@@ -332,7 +340,6 @@
         <div id="avisoDuplicadoManual" class="aviso-duplicado">⚠️ Ya existe un evento similar agendado para esta fecha.</div>
       </div>
       <div>
-        <!-- HORA OBLIGATORIA -->
         <label>Hora del Evento (Obligatoria) *</label>
         <input type="time" id="fHora" required style="border-color:#3B82F6;">
       </div>
@@ -370,7 +377,7 @@
     </div>
   </div>
 
-  <!-- Modal IA (Rápido, Robusto y con fallback automático) -->
+  <!-- Modal IA -->
   <div class="modal-overlay" id="modalIAOverlay">
     <div class="modal-assistant">
       <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -404,7 +411,7 @@
     const API_URL = "https://script.google.com/macros/s/AKfycbyEnuZQjGdKpm2iypjvn2XbOoSt7WcYIino-dAOjMH0tnU-r5L-umFsh9dFDtKNMCff/exec";
     const GEMINI_API_KEY = "AQ.Ab8RN6LB-NIAelTRt0J4ebdrjfUDyA5BWDPD1N3taArdmJGeFA";
 
-    // CLAVE DE EDICIÓN PARA EL EQUIPO DIRECTIVO: 25078
+    // CLAVE DE EDICIÓN: 25078
     const CLAVE_ADMIN = "25078";
     let esModoAdmin = false;
 
@@ -417,7 +424,7 @@
     };
 
     let tasks = [];
-    let eventosEliminados = []; // Registro persistente para que no vuelvan a aparecer al sincronizar
+    let eventosEliminados = [];
     let eventosDetectadosIA = [];
     let archivosRespaldoIA = []; 
     let archivosManualesTemporales = []; 
@@ -438,7 +445,6 @@
       }
     } catch (e) {}
 
-    // GESTIÓN DE MODO SOLO LECTURA / EDICIÓN
     function actualizarModoUI() {
       const badge = document.getElementById("modeBadge");
       const btnNuevo = document.getElementById("btnNuevoManual");
@@ -595,22 +601,17 @@
             const fValida = parsearFecha(fDoc);
             if (!fValida) return;
 
-            // Clave única del evento
             const claveUnica = `${fValida}_${normalizarTexto(asunto)}`;
             
-            // VERIFICACIÓN: Si fue eliminado por el usuario, NO volver a agregarlo nunca
             const yaFueEliminado = eventosEliminados.some(e => e.clave === claveUnica || (e.fila && String(e.fila) === String(filaNum)));
             if (yaFueEliminado) return;
 
             if (vistos.has(claveUnica)) return;
             vistos.add(claveUnica);
 
-            // Extraer hora con precisión
             let horaParam = row.hora || (Array.isArray(row) ? row[10] : null);
             let infoHora = extraerHora(horaParam);
-            if (!infoHora.tieneHora) {
-              infoHora = extraerHora(fDoc);
-            }
+            if (!infoHora.tieneHora) infoHora = extraerHora(fDoc);
             if (!infoHora.tieneHora) {
               const infoExtra = `${asunto} ${row.sintesis || (Array.isArray(row) ? row[6] : '')}`;
               infoHora = extraerHora(infoExtra);
@@ -667,9 +668,7 @@
       } finally {
         if (btn) btn.innerHTML = "🔄 Sync";
         const sub = document.getElementById("full-date-subtitle");
-        if (sub) {
-          sub.textContent = formatFechaCompleta(new Date());
-        }
+        if (sub) sub.textContent = formatFechaCompleta(new Date());
       }
     }
 
@@ -680,7 +679,6 @@
       document.getElementById('prioBaja').className = "btn-prio" + (prio === "Baja" ? " selected-baja" : "");
     }
 
-    // RENDERIZAR CALENDARIO ORGANIZADO POR HORA (CRONOLÓGICO)
     function renderCalendar() {
       const grid = document.getElementById("daysGrid");
       if (!grid) return;
@@ -718,8 +716,6 @@
         `;
 
         const list = col.querySelector(`#list-${key}`);
-        
-        // FILTRAR Y ORDENAR ESTRICTAMENTE POR HORA (CRONOLÓGICAMENTE)
         const dayTasks = tasks.filter(t => t.date === key && (t.category || "Laboral").toLowerCase() === "laboral");
         dayTasks.sort((a, b) => (a.timeMinutos || 0) - (b.timeMinutos || 0));
 
@@ -781,7 +777,7 @@
             enlace.rel = "noopener noreferrer";
           } else {
             enlace.href = "javascript:void(0);";
-            enlace.onclick = () => alert("El archivo está subiéndose a Google Drive o no tiene enlace disponible.");
+            enlace.onclick = () => alert("El archivo está sincronizándose o no tiene enlace disponible.");
           }
           enlace.className = "badge-file";
           enlace.textContent = `📎 ${f.nombre || 'Ver Documento'}`;
@@ -843,7 +839,6 @@
       renderizarListaArchivosManuales();
     }
 
-    // BOTÓN DE INGRESO MANUAL CON VERIFICACIÓN DE CLAVE DIRECTIVA
     function abrirModalNuevo() {
       if (!solicitarClaveAdminSiEsNecesario()) return;
       isEditing = false;
@@ -877,7 +872,6 @@
       aviso.style.display = existe ? "block" : "none";
     }
 
-    // GUARDAR EVENTO MANUAL: OBLIGATORIO ASUNTO, FECHA Y HORA
     async function guardarEventoManual() {
       const asunto = document.getElementById("fAsunto").value.trim();
       const fecha = document.getElementById("fFechaInicio").value;
@@ -893,7 +887,6 @@
         document.getElementById("fFechaInicio").focus();
         return;
       }
-      // VALIDACIÓN ESTRICTA: NO DEJA AGENDAR SIN HORA
       if (!hora) {
         alert("⏰ LA HORA ES OBLIGATORIA: Por favor indica a qué hora se realiza el evento.");
         document.getElementById("fHora").focus();
@@ -1014,7 +1007,6 @@
       document.getElementById("modalAssistantOverlay").style.display = "flex";
     }
 
-    // ELIMINAR DEFINITIVO (LOCAL + REMOTO + BLOQUEO PERSISTENTE)
     async function eliminarEventoActual() {
       if (!solicitarClaveAdminSiEsNecesario()) return;
       if (!currentEventId) return;
@@ -1029,17 +1021,14 @@
       const filaRemota = t.fila;
       const claveUnica = `${t.date}_${normalizarTexto(t.subject)}`;
 
-      // 1. Guardar en lista negra de eliminados persistente
       eventosEliminados.push({ clave: claveUnica, fila: filaRemota, fecha: t.date, asunto: t.subject });
       localStorage.setItem("agenda_carlos_condell_eliminados", JSON.stringify(eventosEliminados));
 
-      // 2. Eliminar inmediatamente de la lista local y re-renderizar
       tasks = tasks.filter(x => x.id !== currentEventId);
       localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
       closeDetailModal();
       renderCalendar();
 
-      // 3. Notificar a Google Sheets
       try {
         await fetch(API_URL, {
           method: "POST",
@@ -1067,7 +1056,6 @@
       renderCalendar();
     }
 
-    // --- BÚSQUEDA GLOBAL ---
     function ejecutarBusqueda() {
       const q = normalizarTexto(document.getElementById("globalSearchInput").value);
       const box = document.getElementById("searchResults");
@@ -1098,7 +1086,6 @@
       }
     });
 
-    // --- BITÁCORA Y RESPALDO ---
     function abrirModalBitacora() {
       renderizarBitacora();
       document.getElementById("modalBitacoraOverlay").style.display = "flex";
@@ -1121,7 +1108,6 @@
         list = list.filter(t => conteo[`${t.date}_${normalizarTexto(t.subject)}`] > 1);
       }
 
-      // Ordenar bitácora por fecha y luego hora
       list.sort((a, b) => (a.date > b.date ? 1 : (a.date < b.date ? -1 : (a.timeMinutos || 0) - (b.timeMinutos || 0))));
 
       document.getElementById("bitacoraTotal").textContent = `${list.length} evento(s)`;
@@ -1155,7 +1141,7 @@
       dlAnchor.remove();
     }
 
-    // --- ASISTENTE AIA CON VALIDACIÓN DE HORA Y MANEJO DE ERRORES ---
+    // --- ASISTENTE AIA CON GEMINI FLASH ---
     function abrirModalIA() { 
       if (!solicitarClaveAdminSiEsNecesario()) return;
       document.getElementById("iaContenedorResultados").style.display = "none";
@@ -1276,7 +1262,7 @@
       }
     }
 
-    // LLAMADA A GEMINI CON SANITIZACIÓN ROBUSTA DE JSON Y MANEJO DE ERRORES
+    // LLAMADA A GEMINI REPARADA Y CON CONEXIÓN ROBUSTA
     async function ejecutarLlamadaGeminiIA(blobs, mimeTypes, nombresArchivos) {
       const elEstado = document.getElementById("iaEstado");
       const elInfo = document.getElementById("iaArchivoInfo");
@@ -1325,8 +1311,8 @@
           contents: [{ parts: [{ text: promptInstruccion }, ...inlineParts] }]
         };
 
-        const modelosAProbar = ["gemini-1.5-flash", "gemini-2.0-flash", "gemini-2.5-flash"];
-        let respuestaOk = null;
+        const modelosAProbar = ["gemini-1.5-flash", "gemini-2.0-flash"];
+        let respuestaOk = false;
         let textoJson = "";
 
         for (const mod of modelosAProbar) {
@@ -1377,7 +1363,6 @@
         const eventos = JSON.parse(textoJson);
         eventosDetectadosIA = Array.isArray(eventos) ? eventos : [eventos];
 
-        // Asegurar que cada evento de la IA tenga hora obligatoria
         eventosDetectadosIA.forEach(ev => {
           if (!ev.hora || ev.hora.trim() === "") ev.hora = "09:00";
         });
@@ -1464,7 +1449,6 @@
     async function guardarEventosDetectadosIA() {
       if (!eventosDetectadosIA || eventosDetectadosIA.length === 0) return;
 
-      // VALIDACIÓN ESTRICTA: Que ningún evento de la IA quede sin hora
       for (let i = 0; i < eventosDetectadosIA.length; i++) {
         if (!eventosDetectadosIA[i].hora || eventosDetectadosIA[i].hora.trim() === "") {
           alert(`⏰ Por favor asigna una hora al evento: "${eventosDetectadosIA[i].asunto || 'Sin título'}"`);
@@ -1547,7 +1531,7 @@
       btn.textContent = "AGENDAR PROPUESTA Y SUBIR RESPALDO";
     }
 
-    // --- RELOJ Y NAVEGACIÓN ---
+    // --- RELOJ EN VIVO ---
     function updateLiveClock() {
       const now = new Date();
       if(document.getElementById("fc-hour")) document.getElementById("fc-hour").textContent = String(now.getHours()).padStart(2, '0');
