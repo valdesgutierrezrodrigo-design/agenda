@@ -13,9 +13,9 @@
       --text-muted: #475569;
 
       /* Paleta Institucional Carlos Condell */
-      --primary: #1E3A8A;       /* Azul marino institucional */
+      --primary: #1E3A8A;
       --primary-hover: #1E40AF;
-      --accent: #D97706;        /* Ámbar institucional */
+      --accent: #D97706;
       
       --day-lunes-bg: #F8FAFC;
       --day-lunes-border: #CBD5E1;
@@ -50,62 +50,64 @@
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif; }
-    body { background-color: var(--bg-app); height: 100vh; padding: 8px 12px; color: var(--text-main); display: flex; flex-direction: column; overflow: hidden; }
+    body { background-color: var(--bg-app); height: 100vh; padding: 6px 10px; color: var(--text-main); display: flex; flex-direction: column; overflow: hidden; }
     
     /* ENCABEZADO */
     header { 
       display: flex; justify-content: space-between; align-items: center; 
-      background: var(--surface); padding: 8px 16px; border-radius: var(--radius-md);
+      background: var(--surface); padding: 6px 14px; border-radius: var(--radius-md);
       border: 1px solid var(--border-subtle); box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
-      flex-shrink: 0; gap: 12px; margin-bottom: 8px; width: 100%; min-height: 52px; box-sizing: border-box;
+      flex-shrink: 0; gap: 10px; margin-bottom: 6px; width: 100%; min-height: 52px; box-sizing: border-box;
       flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
     }
     header::-webkit-scrollbar { display: none; }
     
-    .header-left-group { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-    .brand-title { font-size: 16pt; font-weight: 900; color: var(--primary); white-space: nowrap; margin: 0; line-height: 1; letter-spacing: -0.4px; }
-    #full-date-subtitle { font-size: 10pt; font-weight: 700; color: #1E293B; background: #F8FAFC; border: 1.5px solid var(--border-subtle); padding: 0 12px; border-radius: var(--radius-sm); white-space: nowrap; height: 36px; display: inline-flex; align-items: center; text-transform: capitalize; }
+    .header-left-group { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .brand-title { font-size: 15pt; font-weight: 900; color: var(--primary); white-space: nowrap; margin: 0; line-height: 1; letter-spacing: -0.4px; }
+    #full-date-subtitle { font-size: 9.5pt; font-weight: 700; color: #1E293B; background: #F8FAFC; border: 1.5px solid var(--border-subtle); padding: 0 10px; border-radius: var(--radius-sm); white-space: nowrap; height: 34px; display: inline-flex; align-items: center; text-transform: capitalize; }
 
+    /* BOTÓN AGENDA TDAH COMPACTO */
     .btn-agenda-tdah {
-      background: #EFF6FF !important; color: #1D4ED8 !important; border: 1.5px solid #BFDBFE !important;
-      border-radius: var(--radius-sm) !important; padding: 0 12px !important; height: 36px !important;
-      font-size: 9.5pt !important; font-weight: 800 !important; cursor: pointer; display: inline-flex;
-      align-items: center; gap: 6px; transition: all 0.15s ease; white-space: nowrap; text-decoration: none;
+      background: #EFF6FF !important; color: #1D4ED8 !important; border: 1px solid #BFDBFE !important;
+      border-radius: var(--radius-sm) !important; padding: 0 7px !important; height: 30px !important;
+      font-size: 8pt !important; font-weight: 800 !important; cursor: pointer; display: inline-flex;
+      align-items: center; gap: 4px; transition: all 0.15s ease; white-space: nowrap; text-decoration: none;
     }
     .btn-agenda-tdah:hover { background: #DBEAFE !important; }
 
     .mode-badge {
-      font-size: 9pt; font-weight: 800; padding: 5px 10px; border-radius: var(--radius-sm);
+      font-size: 8.5pt; font-weight: 800; padding: 4px 8px; border-radius: var(--radius-sm);
       background: #F1F5F9; color: #475569; border: 1.5px solid var(--border-strong);
-      display: inline-flex; align-items: center; gap: 5px; cursor: pointer; user-select: none;
+      display: inline-flex; align-items: center; gap: 4px; cursor: pointer; user-select: none;
     }
     .mode-badge.admin { background: #DCFCE7; color: #166534; border-color: #86EFAC; }
     .mode-badge.readonly { background: #FEF3C7; color: #92400E; border-color: #FDE68A; }
 
-    .flip-clock-container { display: flex; align-items: center; background: #0F172A; padding: 3px 10px; border-radius: var(--radius-sm); gap: 3px; height: 36px; flex-shrink: 0; }
+    /* RELOJ DESTACADO */
+    .flip-clock-container { display: flex; align-items: center; background: #0F172A; padding: 3px 10px; border-radius: var(--radius-sm); gap: 4px; height: 38px; flex-shrink: 0; }
     .flip-section { display: flex; flex-direction: column; align-items: center; justify-content: center; }
     .flip-label-top { font-size: 5.5pt; letter-spacing: 0.5px; color: #94A3B8; margin-bottom: 0px; font-weight: 800; text-transform: uppercase; line-height: 1; }
-    .flip-card { background: #1E293B; color: #FFFFFF; font-size: 11pt; font-weight: 900; padding: 1px 5px; border-radius: 4px; min-width: 26px; text-align: center; line-height: 1.1; }
-    .flip-colon { color: #94A3B8; font-size: 11pt; font-weight: bold; margin: 0 1px; }
+    .flip-card { background: #1E293B; color: #FFFFFF; font-size: 13pt; font-weight: 900; padding: 1px 6px; border-radius: 4px; min-width: 30px; text-align: center; line-height: 1.1; }
+    .flip-colon { color: #94A3B8; font-size: 13pt; font-weight: bold; margin: 0 1px; }
 
-    .header-right-group { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-    .search-wrapper { position: relative; width: 140px; flex-shrink: 0; }
-    .search-input { width: 100%; height: 36px; padding: 0 8px 0 30px; font-size: 9.5pt; font-weight: 600; border: 1.5px solid var(--border-strong); border-radius: var(--radius-sm); outline: none; background: #FFFFFF; }
+    .header-right-group { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+    .search-wrapper { position: relative; width: 130px; flex-shrink: 0; }
+    .search-input { width: 100%; height: 34px; padding: 0 8px 0 28px; font-size: 9pt; font-weight: 600; border: 1.5px solid var(--border-strong); border-radius: var(--radius-sm); outline: none; background: #FFFFFF; }
     .search-input:focus { border-color: var(--primary); }
-    .search-icon { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); font-size: 9.5pt; color: var(--text-muted); pointer-events: none; }
+    .search-icon { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-size: 9pt; color: var(--text-muted); pointer-events: none; }
     .search-results { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: var(--surface); border: 1.5px solid var(--border-strong); border-radius: var(--radius-sm); max-height: 260px; overflow-y: auto; box-shadow: 0 8px 20px rgba(0,0,0,0.1); z-index: 50; display: none; }
     .search-item { padding: 8px 10px; border-bottom: 1px solid var(--border-subtle); cursor: pointer; display: flex; flex-direction: column; gap: 3px; }
     .search-item:hover { background: #F8FAFC; }
 
-    .nav-controls { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+    .nav-controls { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
     button, .icon-btn, .btn-prio { 
       background: #FFFFFF !important; color: #1E293B !important; border: 1.5px solid var(--border-strong) !important;
-      border-radius: var(--radius-sm); padding: 0 11px !important; height: 36px !important; cursor: pointer;
-      font-size: 9.5pt; font-weight: 800 !important; display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+      border-radius: var(--radius-sm); padding: 0 10px !important; height: 34px !important; cursor: pointer;
+      font-size: 9pt; font-weight: 800 !important; display: inline-flex; align-items: center; justify-content: center; gap: 4px;
       white-space: nowrap; transition: all 0.15s ease;
     }
     button:hover, .icon-btn:hover { background: #F8FAFC !important; border-color: #94A3B8 !important; }
-    .btn-nuevo { background: #FEF3C7 !important; border-color: #FDE68A !important; color: #B45309 !important; font-weight: 900 !important; padding: 0 14px !important; }
+    .btn-nuevo { background: #FEF3C7 !important; border-color: #FDE68A !important; color: #B45309 !important; font-weight: 900 !important; padding: 0 12px !important; }
     .btn-nuevo:hover { background: #FDE68A !important; }
     .btn-respaldo { background: #EFF6FF !important; border-color: #BFDBFE !important; color: #1D4ED8 !important; }
     
@@ -113,13 +115,13 @@
     .btn-prio.selected-media { border-color: var(--prio-media-border) !important; background: var(--prio-media-bg) !important; color: #92400E !important; }
     .btn-prio.selected-baja { border-color: var(--prio-baja-border) !important; background: var(--prio-baja-bg) !important; color: #075985 !important; }
 
-    .date-label { font-size: 10pt; font-weight: 800; min-width: 120px; text-align: center; color: var(--primary); line-height: 36px; height: 36px; white-space: nowrap; }
+    .date-label { font-size: 9.5pt; font-weight: 800; min-width: 110px; text-align: center; color: var(--primary); line-height: 34px; height: 34px; white-space: nowrap; }
 
     /* CUADRÍCULA 5 DÍAS (LUNES A VIERNES) */
     main#plannerSection { flex: 1; display: flex; min-height: 0; width: 100%; }
-    .week-container { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; width: 100%; height: 100%; }
+    .week-container { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; width: 100%; height: 100%; }
     
-    .day-column { border-radius: var(--radius-md); padding: 10px; display: flex; flex-direction: column; gap: 8px; min-height: 0; overflow: hidden; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03); }
+    .day-column { border-radius: var(--radius-md); padding: 8px 9px; display: flex; flex-direction: column; gap: 6px; min-height: 0; overflow: hidden; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03); }
     .day-lunes { background: var(--day-lunes-bg); border: 2px solid var(--day-lunes-border); }
     .day-martes { background: var(--day-martes-bg); border: 2px solid var(--day-martes-border); }
     .day-miercoles { background: var(--day-miercoles-bg); border: 2px solid var(--day-miercoles-border); }
@@ -133,20 +135,20 @@
     .day-viernes .day-name { color: var(--day-viernes-accent); }
 
     .day-column.is-today { border-width: 3px !important; border-color: var(--accent) !important; box-shadow: 0 4px 16px rgba(217, 119, 6, 0.2) !important; }
-    .day-header { text-align: center; padding-bottom: 8px; border-bottom: 2px solid rgba(0,0,0,0.06); flex-shrink: 0; }
+    .day-header { text-align: center; padding-bottom: 6px; border-bottom: 2px solid rgba(0,0,0,0.06); flex-shrink: 0; }
     .day-name { font-size: 11pt; font-weight: 900; text-transform: uppercase; line-height: 1.1; letter-spacing: 0.2px; }
     .day-number { font-size: 9.5pt; font-weight: 700; color: #475569; margin-top: 3px; }
     .text-red { color: #BE123C !important; }
     
-    .badge-tag { font-size: 8pt; padding: 2px 8px; border-radius: 6px; display: inline-block; margin-top: 4px; background: rgba(255,255,255,0.9); color: #334155; font-weight: 800; text-transform: uppercase; }
+    .badge-tag { font-size: 8pt; padding: 2px 8px; border-radius: 6px; display: inline-block; margin-top: 3px; background: rgba(255,255,255,0.9); color: #334155; font-weight: 800; text-transform: uppercase; }
     .badge-today { background: #FEF3C7; color: #B45309; border: 1.5px solid #FDE68A; }
     
-    .cards-container { display: flex; flex-direction: column; gap: 7px; flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; }
+    .cards-container { display: flex; flex-direction: column; gap: 6px; flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; }
     .cards-container::-webkit-scrollbar { display: none; }
     
     /* TARJETA DE TAREA INSTITUCIONAL */
     .task-card { 
-      width: 100%; background: #FFFFFF; padding: 9px 11px; border-radius: var(--radius-sm);
+      width: 100%; background: #FFFFFF; padding: 8px 10px; border-radius: var(--radius-sm);
       display: flex; flex-direction: column; gap: 4px; cursor: pointer; border: 1px solid rgba(0,0,0,0.08);
       border-left: 4.5px solid var(--border-strong); box-shadow: 0 1px 3px rgba(0,0,0,0.04);
       transition: transform 0.1s ease, box-shadow 0.1s ease;
@@ -161,7 +163,7 @@
     .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 6px; }
     .card-title { font-size: 10pt; font-weight: 800; color: #0F172A; line-height: 1.25; flex: 1; min-width: 0; }
     .card-badges { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
-    .card-time { font-size: 8pt; font-weight: 800; color: #1E293B; background: #F1F5F9; border: 1.5px solid #CBD5E1; padding: 2px 5px; border-radius: 4px; white-space: nowrap; }
+    .card-time { font-size: 9pt; font-weight: 800; color: #1E293B; background: #F1F5F9; border: 1.5px solid #CBD5E1; padding: 2px 6px; border-radius: 4px; white-space: nowrap; }
     
     .card-sender { font-size: 8.5pt; color: #475569; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .empty-text { font-size: 9pt; color: #94A3B8; text-align: center; margin-top: 24px; font-weight: 700; }
@@ -206,10 +208,11 @@
     <div class="header-left-group">
       <span class="brand-title">Agenda Carlos Condell</span>
       <span id="full-date-subtitle">Hoy</span>
-      <a href="[https://valdesgutierrezrodrigo-design.github.io/agenda/](https://valdesgutierrezrodrigo-design.github.io/agenda/)" target="_blank" class="btn-agenda-tdah" title="Abrir mi Agenda TDAH">🔗 Agenda TDAH</a>
-      <span id="modeBadge" class="mode-badge readonly" onclick="alternarModoEdicion()" title="Haz clic para desbloquear edición">🔒 Solo Lectura</span>
+      <a href="https://valdesgutierrezrodrigo-design.github.io/agenda/" target="_blank" class="btn-agenda-tdah" title="Abrir mi Agenda TDAH">🔗 Agenda TDAH</a>
+      <span id="modeBadge" class="mode-badge readonly" onclick="alternarModoEdicion()" title="Haz clic para desbloquear edición con clave 25078">🔒 Solo Lectura</span>
     </div>
 
+    <!-- RELOJ DESTACADO -->
     <div class="flip-clock-container">
       <div class="flip-section"><span class="flip-label-top">Hora</span><div class="flip-card" id="fc-hour">00</div></div>
       <div class="flip-colon">:</div>
@@ -226,17 +229,18 @@
       </div>
 
       <div class="nav-controls">
-        <button class="icon-btn btn-respaldo admin-only" onclick="abrirModalRespaldo()">💾 Respaldo</button>
+        <button class="icon-btn btn-respaldo" id="btnRespaldoNav" onclick="abrirModalRespaldo()">💾 Respaldo</button>
         <button class="icon-btn" onclick="abrirModalBitacora()">📋 Bitácora</button>
         <button class="icon-btn" id="btnSync" onclick="sincronizarDesdeSheets()">🔄 Sync</button>
-        <button class="icon-btn admin-only" onclick="abrirModalIA()">★ AIA</button>
-        <span style="border-left:2px solid var(--border-strong); height:20px; margin:0 3px;"></span>
+        <button class="icon-btn" id="btnIANav" onclick="abrirModalIA()">★ AIA</button>
+        <span style="border-left:2px solid var(--border-strong); height:20px; margin:0 2px;"></span>
         <button class="icon-btn" id="btnPrev">◀</button>
         <button class="icon-btn" id="btnToday">Hoy</button>
         <div class="date-label" id="dateLabel">Semana</div>
         <button class="icon-btn" id="btnNext">▶</button>
-        <span style="border-left:2px solid var(--border-strong); height:20px; margin:0 3px;"></span>
-        <button class="icon-btn btn-nuevo admin-only" onclick="abrirModalNuevo()">＋ Nuevo</button>
+        <span style="border-left:2px solid var(--border-strong); height:20px; margin:0 2px;"></span>
+        <!-- BOTÓN DE INGRESO MANUAL -->
+        <button class="icon-btn btn-nuevo" id="btnNuevoManual" onclick="abrirModalNuevo()">＋ Nuevo</button>
       </div>
     </div>
   </header>
@@ -304,9 +308,9 @@
       </div>
 
       <div id="detailActionFooter" style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; padding-top:10px; border-top:1.5px solid var(--border-subtle);">
-        <button class="icon-btn admin-only" onclick="eliminarEventoActual()">🗑️ Eliminar</button>
-        <button class="icon-btn admin-only" onclick="prepararEdicionActual()">✏️ Editar</button>
-        <button class="icon-btn admin-only" id="btnToggleRealizado" onclick="toggleRealizadoActual()">✓ Realizado</button>
+        <button class="icon-btn" onclick="eliminarEventoActual()" style="color:#DC2626 !important; border-color:#FCA5A5 !important; background:#FEF2F2 !important;">🗑️ Eliminar</button>
+        <button class="icon-btn" onclick="prepararEdicionActual()">✏️ Editar</button>
+        <button class="icon-btn" id="btnToggleRealizado" onclick="toggleRealizadoActual()">✓ Realizado</button>
       </div>
     </div>
   </div>
@@ -323,14 +327,18 @@
       </div>
 
       <div>
-        <label>Asunto / Compromiso</label>
+        <label>Asunto / Compromiso *</label>
         <input type="text" id="fAsunto" placeholder="Ej: Simce, Reunión UTP, Consejo de Profesores..." oninput="verificarDuplicadoEnFormulario()">
         <div id="avisoDuplicadoManual" class="aviso-duplicado">⚠️ Ya existe un evento similar agendado para esta fecha.</div>
       </div>
-      <div><label>Hora (opcional)</label><input type="time" id="fHora"></div>
+      <div>
+        <!-- HORA OBLIGATORIA -->
+        <label>Hora del Evento (Obligatoria) *</label>
+        <input type="time" id="fHora" required style="border-color:#3B82F6;">
+      </div>
       
       <div class="grid-2col">
-        <div><label>Fecha Inicio</label><input type="date" id="fFechaInicio" onchange="autoCompletarFechaFin(); verificarDuplicadoEnFormulario();"></div>
+        <div><label>Fecha Inicio *</label><input type="date" id="fFechaInicio" onchange="autoCompletarFechaFin(); verificarDuplicadoEnFormulario();"></div>
         <div id="fFechaFinContainer"><label>Fecha Término</label><input type="date" id="fFechaFin"></div>
       </div>
 
@@ -362,14 +370,14 @@
     </div>
   </div>
 
-  <!-- Modal IA (Rápido y Optimizado) -->
+  <!-- Modal IA (Rápido, Robusto y con fallback automático) -->
   <div class="modal-overlay" id="modalIAOverlay">
     <div class="modal-assistant">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <span style="font-weight:900; font-size:12.5pt; color:var(--primary);">★ Asistente Inteligente AIA</span>
         <button type="button" class="icon-btn" onclick="cerrarModalIA()">✕</button>
       </div>
-      <p style="font-size:9pt; color:var(--text-muted);">Sube o pega un documento institucional (PDF o imagen). El análisis se ejecuta en segundos.</p>
+      <p style="font-size:9pt; color:var(--text-muted);">Sube o pega un documento institucional (PDF o captura). El análisis extrae fecha, hora y detalles automáticamente.</p>
       
       <input type="file" id="inputArchivoIA" accept="image/*,application/pdf" multiple style="display:none;" onchange="procesarArchivoSeleccionado(this)">
       
@@ -379,12 +387,12 @@
       </div>
 
       <div id="iaArchivoInfo" style="font-size:8.5pt; color:#1D4ED8; background:#EFF6FF; padding:6px 10px; border-radius:6px; display:none; border:1px solid #BFDBFE;"></div>
-      <div id="iaEstado" style="font-size:9pt; color:#B45309; font-weight:bold; text-align:center; padding:8px; display:none; background:#FEF3C7; border-radius:6px; border:1px solid #FDE68A;">⚡ Analizando rápidamente con Gemini...</div>
+      <div id="iaEstado" style="font-size:9pt; color:#B45309; font-weight:bold; text-align:center; padding:8px; display:none; background:#FEF3C7; border-radius:6px; border:1px solid #FDE68A;">⚡ Analizando rápidamente con Gemini Flash...</div>
       
       <div id="iaContenedorResultados" style="display:none;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
           <span style="font-size:9.5pt; font-weight:800; color:var(--primary);">Propuesta de Eventos Detectados:</span>
-          <span style="font-size:8pt; color:var(--text-muted);">Ajusta si es necesario antes de agendar</span>
+          <span style="font-size:8pt; color:var(--text-muted);">Cada evento debe tener hora asignada</span>
         </div>
         <div class="ia-results-list" id="iaListaEventos"></div>
         <button type="button" id="btnAgendarTodoIA" class="icon-btn btn-nuevo" style="width:100%; margin-top:8px; justify-content:center; height:40px !important;" onclick="guardarEventosDetectadosIA()">AGENDAR PROPUESTA Y SUBIR RESPALDO</button>
@@ -393,7 +401,7 @@
   </div>
 
   <script>
-    const API_URL = "[https://script.google.com/macros/s/AKfycbyEnuZQjGdKpm2iypjvn2XbOoSt7WcYIino-dAOjMH0tnU-r5L-umFsh9dFDtKNMCff/exec](https://script.google.com/macros/s/AKfycbyEnuZQjGdKpm2iypjvn2XbOoSt7WcYIino-dAOjMH0tnU-r5L-umFsh9dFDtKNMCff/exec)";
+    const API_URL = "https://script.google.com/macros/s/AKfycbyEnuZQjGdKpm2iypjvn2XbOoSt7WcYIino-dAOjMH0tnU-r5L-umFsh9dFDtKNMCff/exec";
     const GEMINI_API_KEY = "AQ.Ab8RN6LB-NIAelTRt0J4ebdrjfUDyA5BWDPD1N3taArdmJGeFA";
 
     // CLAVE DE EDICIÓN PARA EL EQUIPO DIRECTIVO: 25078
@@ -409,6 +417,7 @@
     };
 
     let tasks = [];
+    let eventosEliminados = []; // Registro persistente para que no vuelvan a aparecer al sincronizar
     let eventosDetectadosIA = [];
     let archivosRespaldoIA = []; 
     let archivosManualesTemporales = []; 
@@ -423,23 +432,52 @@
         const parsed = JSON.parse(guardado);
         if (Array.isArray(parsed) && parsed.length > 0) tasks = parsed;
       }
+      const eliminadosGuardados = localStorage.getItem("agenda_carlos_condell_eliminados");
+      if (eliminadosGuardados) {
+        eventosEliminados = JSON.parse(eliminadosGuardados);
+      }
     } catch (e) {}
 
     // GESTIÓN DE MODO SOLO LECTURA / EDICIÓN
     function actualizarModoUI() {
       const badge = document.getElementById("modeBadge");
-      const adminElements = document.querySelectorAll(".admin-only");
+      const btnNuevo = document.getElementById("btnNuevoManual");
+      const btnAIA = document.getElementById("btnIANav");
+      const btnRespaldo = document.getElementById("btnRespaldoNav");
+      const footerActions = document.getElementById("detailActionFooter");
+
       if (esModoAdmin) {
         badge.textContent = "🔓 Modo Edición";
         badge.className = "mode-badge admin";
         badge.title = "Haz clic para volver a modo Solo Lectura";
-        adminElements.forEach(el => el.style.display = "");
+        if (btnNuevo) btnNuevo.style.display = "inline-flex";
+        if (btnAIA) btnAIA.style.display = "inline-flex";
+        if (btnRespaldo) btnRespaldo.style.display = "inline-flex";
+        if (footerActions) footerActions.style.display = "flex";
       } else {
         badge.textContent = "🔒 Solo Lectura";
         badge.className = "mode-badge readonly";
         badge.title = "Haz clic para ingresar clave y editar";
-        adminElements.forEach(el => el.style.display = "none");
+        if (btnNuevo) btnNuevo.style.display = "inline-flex";
+        if (btnAIA) btnAIA.style.display = "inline-flex";
+        if (btnRespaldo) btnRespaldo.style.display = "inline-flex";
+        if (footerActions) footerActions.style.display = "none";
       }
+    }
+
+    function solicitarClaveAdminSiEsNecesario() {
+      if (esModoAdmin) return true;
+      const pass = prompt("Acción protegida. Ingresa la clave directiva (25078) para editar:");
+      if (pass === CLAVE_ADMIN) {
+        esModoAdmin = true;
+        sessionStorage.setItem("modo_admin_condell", "1");
+        actualizarModoUI();
+        alert("¡Clave correcta! Modo edición habilitado.");
+        return true;
+      } else if (pass !== null) {
+        alert("Clave incorrecta. Permaneces en modo Solo Lectura.");
+      }
+      return false;
     }
 
     function alternarModoEdicion() {
@@ -449,15 +487,7 @@
         actualizarModoUI();
         alert("Modo Solo Lectura activado.");
       } else {
-        const pass = prompt("Ingresa la clave de edición directiva:");
-        if (pass === CLAVE_ADMIN) {
-          esModoAdmin = true;
-          sessionStorage.setItem("modo_admin_condell", "1");
-          actualizarModoUI();
-          alert("¡Clave correcta! Modo edición habilitado.");
-        } else if (pass !== null) {
-          alert("Clave incorrecta. Permaneces en modo Solo Lectura.");
-        }
+        solicitarClaveAdminSiEsNecesario();
       }
     }
 
@@ -504,8 +534,9 @@
       var str = String(textoCompleto);
       var match = str.match(/\b([01]?\d|2[0-3]):([0-5]\d)\b/);
       if (match) {
-        if (match[1] === "00" && match[2] === "00") return { horaStr: "", minutos: 9999, tieneHora: false };
-        return { horaStr: match[1].padStart(2, '0') + ":" + match[2], minutos: parseInt(match[1]) * 60 + parseInt(match[2]), tieneHora: true };
+        var hh = parseInt(match[1]);
+        var mm = parseInt(match[2]);
+        return { horaStr: String(hh).padStart(2, '0') + ":" + String(mm).padStart(2, '0'), minutos: hh * 60 + mm, tieneHora: true };
       }
       return { horaStr: "", minutos: 9999, tieneHora: false };
     }
@@ -558,20 +589,35 @@
           rawRows.forEach((row, idx) => {
             if (esEventoPersonal(row)) return;
 
+            const filaNum = row.fila || (Array.isArray(row) ? row[0] : (idx + 1));
+            const asunto = String(row.asunto || (Array.isArray(row) ? row[4] : "(Sin asunto)")).trim();
             const fDoc = row.fechaDoc || (Array.isArray(row) ? row[1] : null);
             const fValida = parsearFecha(fDoc);
             if (!fValida) return;
 
-            const asunto = String(row.asunto || (Array.isArray(row) ? row[4] : "(Sin asunto)")).trim();
+            // Clave única del evento
             const claveUnica = `${fValida}_${normalizarTexto(asunto)}`;
+            
+            // VERIFICACIÓN: Si fue eliminado por el usuario, NO volver a agregarlo nunca
+            const yaFueEliminado = eventosEliminados.some(e => e.clave === claveUnica || (e.fila && String(e.fila) === String(filaNum)));
+            if (yaFueEliminado) return;
+
             if (vistos.has(claveUnica)) return;
             vistos.add(claveUnica);
 
-            let infoHora = extraerHora(fDoc);
+            // Extraer hora con precisión
+            let horaParam = row.hora || (Array.isArray(row) ? row[10] : null);
+            let infoHora = extraerHora(horaParam);
+            if (!infoHora.tieneHora) {
+              infoHora = extraerHora(fDoc);
+            }
             if (!infoHora.tieneHora) {
               const infoExtra = `${asunto} ${row.sintesis || (Array.isArray(row) ? row[6] : '')}`;
               infoHora = extraerHora(infoExtra);
             }
+
+            const horaFinal = infoHora.tieneHora ? infoHora.horaStr : "09:00";
+            const minutosFinales = infoHora.tieneHora ? infoHora.minutos : (9 * 60);
 
             const estado = String(row.estado || (Array.isArray(row) ? row[3] : "")).trim().toLowerCase();
             const isManaged = (estado === "finalizado" || estado === "gestionado" || estado === "realizado");
@@ -592,13 +638,13 @@
             }
 
             remoteTasks.push({
-              id: row.fila || "remote_" + (idx + 1),
-              fila: row.fila || (idx + 1),
+              id: filaNum ? `remote_${filaNum}` : `remote_idx_${idx + 1}`,
+              fila: filaNum,
               date: fValida,
               isAnnual: false,
-              time: infoHora.horaStr,
-              timeMinutos: infoHora.minutos,
-              tieneHora: infoHora.tieneHora,
+              time: horaFinal,
+              timeMinutos: minutosFinales,
+              tieneHora: true,
               subject: asunto,
               sender: row.remitente || (Array.isArray(row) ? row[5] : "General"),
               detail: row.sintesis || (Array.isArray(row) ? row[6] : ""),
@@ -634,6 +680,7 @@
       document.getElementById('prioBaja').className = "btn-prio" + (prio === "Baja" ? " selected-baja" : "");
     }
 
+    // RENDERIZAR CALENDARIO ORGANIZADO POR HORA (CRONOLÓGICO)
     function renderCalendar() {
       const grid = document.getElementById("daysGrid");
       if (!grid) return;
@@ -671,7 +718,10 @@
         `;
 
         const list = col.querySelector(`#list-${key}`);
+        
+        // FILTRAR Y ORDENAR ESTRICTAMENTE POR HORA (CRONOLÓGICAMENTE)
         const dayTasks = tasks.filter(t => t.date === key && (t.category || "Laboral").toLowerCase() === "laboral");
+        dayTasks.sort((a, b) => (a.timeMinutos || 0) - (b.timeMinutos || 0));
 
         if (dayTasks.length === 0) {
           list.innerHTML = '<span class="empty-text">Sin tareas agendadas</span>';
@@ -682,7 +732,7 @@
             card.className = `task-card ${prioClass} ${t.status === "managed" ? 'is-done' : ''}`;
             card.onclick = () => openDetail(t.id);
             
-            const badgeHora = (t.tieneHora && t.time) ? `<span class="card-time">⏰ ${t.time}</span>` : '';
+            const badgeHora = t.time ? `<span class="card-time">⏰ ${t.time}</span>` : '';
             const badgeClip = (t.respaldos && t.respaldos.length > 0) ? `<span title="${t.respaldos.length} documento(s) adjunto(s)" style="font-size:8.5pt;">📎 ${t.respaldos.length > 1 ? t.respaldos.length : ''}</span>` : '';
 
             card.innerHTML = `
@@ -707,7 +757,7 @@
 
       document.getElementById("dtTitle").textContent = t.subject;
       document.getElementById("dtSender").textContent = t.sender || "General";
-      document.getElementById("dtDateTime").textContent = `${t.date} ${t.tieneHora ? '| ' + t.time + ' hrs' : '(Sin hora)'}`;
+      document.getElementById("dtDateTime").textContent = `${t.date} | ${t.time} hrs`;
       document.getElementById("dtDetail").textContent = t.detail || "Sin síntesis.";
       document.getElementById("dtAccion").textContent = t.accion || "Revisar y gestionar.";
 
@@ -793,11 +843,9 @@
       renderizarListaArchivosManuales();
     }
 
+    // BOTÓN DE INGRESO MANUAL CON VERIFICACIÓN DE CLAVE DIRECTIVA
     function abrirModalNuevo() {
-      if (!esModoAdmin) {
-        alert("Esta agenda está en modo Solo Lectura. Desbloquea con la clave 25078 para agregar eventos.");
-        return;
-      }
+      if (!solicitarClaveAdminSiEsNecesario()) return;
       isEditing = false;
       editEventId = null;
       document.getElementById("modalTitleStr").textContent = "Nuevo Evento Laboral";
@@ -829,22 +877,31 @@
       aviso.style.display = existe ? "block" : "none";
     }
 
+    // GUARDAR EVENTO MANUAL: OBLIGATORIO ASUNTO, FECHA Y HORA
     async function guardarEventoManual() {
       const asunto = document.getElementById("fAsunto").value.trim();
       const fecha = document.getElementById("fFechaInicio").value;
-      if (!asunto || !fecha) {
-        alert("Por favor completa el asunto y la fecha de inicio.");
+      const hora = document.getElementById("fHora").value;
+
+      if (!asunto) {
+        alert("Por favor ingresa el Asunto del evento.");
+        document.getElementById("fAsunto").focus();
+        return;
+      }
+      if (!fecha) {
+        alert("Por favor selecciona la Fecha de inicio.");
+        document.getElementById("fFechaInicio").focus();
+        return;
+      }
+      // VALIDACIÓN ESTRICTA: NO DEJA AGENDAR SIN HORA
+      if (!hora) {
+        alert("⏰ LA HORA ES OBLIGATORIA: Por favor indica a qué hora se realiza el evento.");
+        document.getElementById("fHora").focus();
         return;
       }
 
-      const hora = document.getElementById("fHora").value;
-      let min = 9999;
-      let tieneH = false;
-      if (hora) {
-        const partes = hora.split(":");
-        min = parseInt(partes[0]) * 60 + parseInt(partes[1]);
-        tieneH = true;
-      }
+      const partes = hora.split(":");
+      const min = parseInt(partes[0]) * 60 + parseInt(partes[1]);
 
       const btnGuardar = document.getElementById("btnGuardarEvento");
       btnGuardar.disabled = true;
@@ -858,7 +915,7 @@
           item.subject = asunto;
           item.date = fecha;
           item.time = hora;
-          item.tieneHora = tieneH;
+          item.tieneHora = true;
           item.timeMinutos = min;
           item.category = "Laboral";
           item.priority = selectedPriority;
@@ -872,7 +929,7 @@
           id: "local_" + Date.now(),
           date: fecha,
           time: hora,
-          tieneHora: tieneH,
+          tieneHora: true,
           timeMinutos: min,
           subject: asunto,
           sender: document.getElementById("fOrganizador").value.trim() || "General",
@@ -895,7 +952,7 @@
           accion: isEditing ? "editar_evento" : "crear_evento",
           fila: isEditing ? (tasks.find(t => t.id === editEventId)?.fila || "") : "",
           fechaDoc: fecha,
-          hora: hora || "09:00",
+          hora: hora,
           asunto: asunto,
           remitente: document.getElementById("fOrganizador").value.trim() || "General",
           prioridad: selectedPriority,
@@ -931,7 +988,7 @@
     }
 
     function prepararEdicionActual() {
-      if (!esModoAdmin) { alert("Solo lectura."); return; }
+      if (!solicitarClaveAdminSiEsNecesario()) return;
       if (!currentEventId) return;
       const t = tasks.find(x => x.id === currentEventId);
       if (!t) return;
@@ -957,19 +1014,50 @@
       document.getElementById("modalAssistantOverlay").style.display = "flex";
     }
 
-    function eliminarEventoActual() {
-      if (!esModoAdmin) { alert("Solo lectura."); return; }
+    // ELIMINAR DEFINITIVO (LOCAL + REMOTO + BLOQUEO PERSISTENTE)
+    async function eliminarEventoActual() {
+      if (!solicitarClaveAdminSiEsNecesario()) return;
       if (!currentEventId) return;
-      if (confirm("¿Deseas eliminar este evento de la agenda laboral?")) {
-        tasks = tasks.filter(x => x.id !== currentEventId);
-        localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
-        closeDetailModal();
-        renderCalendar();
+      
+      const t = tasks.find(x => x.id === currentEventId);
+      if (!t) return;
+
+      if (!confirm(`¿Estás seguro de eliminar definitivamente "${t.subject}"? No volverá a aparecer en las sincronizaciones.`)) {
+        return;
+      }
+
+      const filaRemota = t.fila;
+      const claveUnica = `${t.date}_${normalizarTexto(t.subject)}`;
+
+      // 1. Guardar en lista negra de eliminados persistente
+      eventosEliminados.push({ clave: claveUnica, fila: filaRemota, fecha: t.date, asunto: t.subject });
+      localStorage.setItem("agenda_carlos_condell_eliminados", JSON.stringify(eventosEliminados));
+
+      // 2. Eliminar inmediatamente de la lista local y re-renderizar
+      tasks = tasks.filter(x => x.id !== currentEventId);
+      localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
+      closeDetailModal();
+      renderCalendar();
+
+      // 3. Notificar a Google Sheets
+      try {
+        await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({
+            accion: "eliminar_evento",
+            fila: filaRemota || "",
+            fechaDoc: t.date,
+            asunto: t.subject
+          })
+        });
+      } catch (err) {
+        console.warn("Aviso al eliminar en Sheets:", err);
       }
     }
 
     function toggleRealizadoActual() {
-      if (!esModoAdmin) { alert("Solo lectura."); return; }
+      if (!solicitarClaveAdminSiEsNecesario()) return;
       if (!currentEventId) return;
       const t = tasks.find(x => x.id === currentEventId);
       if (!t) return;
@@ -995,7 +1083,7 @@
         box.innerHTML = matches.map(m => `
           <div class="search-item" onclick="openDetail('${m.id}'); document.getElementById('searchResults').style.display='none';">
             <span style="font-weight:800; font-size:9pt; color:#0F172A;">${m.subject}</span>
-            <span style="font-size:8pt; color:var(--text-muted);">${m.date} | ${m.sender || 'General'}</span>
+            <span style="font-size:8pt; color:var(--text-muted);">${m.date} | ${m.time} hrs • ${m.sender || 'General'}</span>
           </div>
         `).join("");
       }
@@ -1033,6 +1121,9 @@
         list = list.filter(t => conteo[`${t.date}_${normalizarTexto(t.subject)}`] > 1);
       }
 
+      // Ordenar bitácora por fecha y luego hora
+      list.sort((a, b) => (a.date > b.date ? 1 : (a.date < b.date ? -1 : (a.timeMinutos || 0) - (b.timeMinutos || 0))));
+
       document.getElementById("bitacoraTotal").textContent = `${list.length} evento(s)`;
 
       if (list.length === 0) {
@@ -1044,7 +1135,7 @@
         <div class="bitacora-item" onclick="cerrarModalBitacora(); openDetail('${t.id}')">
           <div>
             <div style="font-weight:800; font-size:9.5pt; color:#0F172A;">${t.subject}</div>
-            <div style="font-size:8pt; color:var(--text-muted); font-weight:600;">${t.date} ${t.tieneHora ? '| ' + t.time : ''} • ${t.sender || 'General'}</div>
+            <div style="font-size:8pt; color:var(--text-muted); font-weight:600;">${t.date} | ${t.time} hrs • ${t.sender || 'General'}</div>
           </div>
           <span style="font-size:9pt;">${t.status === 'managed' ? '✅' : '⏳'}</span>
         </div>
@@ -1064,12 +1155,9 @@
       dlAnchor.remove();
     }
 
-    // --- ASISTENTE AIA: COMPRESIÓN ULTRA-RÁPIDA Y EJECUCIÓN CON GEMINI FLASH ---
+    // --- ASISTENTE AIA CON VALIDACIÓN DE HORA Y MANEJO DE ERRORES ---
     function abrirModalIA() { 
-      if (!esModoAdmin) { 
-        alert("La carga inteligente con IA está reservada para el Equipo Directivo (Modo Edición). Ingresa la clave 25078."); 
-        return; 
-      }
+      if (!solicitarClaveAdminSiEsNecesario()) return;
       document.getElementById("iaContenedorResultados").style.display = "none";
       document.getElementById("iaEstado").style.display = "none";
       document.getElementById("iaArchivoInfo").style.display = "none";
@@ -1083,11 +1171,9 @@
       document.getElementById("modalIAOverlay").style.display = "none"; 
     }
 
-    // Optimiza y comprime imágenes al vuelo para que Gemini responda en 1-2 segundos
     function optimizarYCodificarArchivo(file) {
       return new Promise((resolve, reject) => {
         if (!file.type.startsWith("image/")) {
-          // Si es PDF, codificación directa
           const reader = new FileReader();
           reader.onload = () => resolve(reader.result.substring(reader.result.indexOf(',') + 1));
           reader.onerror = reject;
@@ -1103,7 +1189,7 @@
             const canvas = document.createElement("canvas");
             let width = img.width;
             let height = img.height;
-            const maxDimension = 1400; // Resolución perfecta para OCR rápido
+            const maxDimension = 1400;
 
             if (width > maxDimension || height > maxDimension) {
               if (width > height) {
@@ -1120,7 +1206,6 @@
             const ctx = canvas.getContext("2d");
             ctx.drawImage(img, 0, 0, width, height);
 
-            // Exportar en JPEG optimizado (calidad 0.82)
             const dataUrl = canvas.toDataURL("image/jpeg", 0.82);
             resolve(dataUrl.substring(dataUrl.indexOf(',') + 1));
           };
@@ -1191,6 +1276,7 @@
       }
     }
 
+    // LLAMADA A GEMINI CON SANITIZACIÓN ROBUSTA DE JSON Y MANEJO DE ERRORES
     async function ejecutarLlamadaGeminiIA(blobs, mimeTypes, nombresArchivos) {
       const elEstado = document.getElementById("iaEstado");
       const elInfo = document.getElementById("iaArchivoInfo");
@@ -1219,36 +1305,89 @@
         elInfo.style.display = "block";
 
         const promptInstruccion = 
-          "Eres un asistente directivo pedagógico de la Escuela Comandante Carlos Condell. Analiza de inmediato los documentos o capturas adjuntas.\n" +
-          "Identifica con precisión todos los eventos, plazos, reuniones, evaluaciones (Simce, DIA, UTP, etc.).\n" +
-          "Si hay varios cursos o fechas distintas, genera un elemento individual por cada evento.\n" +
-          "Responde ÚNICA Y EXCLUSIVAMENTE con un arreglo JSON válido (sin Markdown, sin explicaciones adicionales):\n" +
-          "[\n  {\n    \"asunto\": \"Título breve y claro\",\n    \"organizador\": \"Entidad o convocante (ej: Mineduc, UTP, Dirección)\",\n    \"fecha\": \"YYYY-MM-DD\",\n    \"hora\": \"09:00\",\n    \"prioridad\": \"Alta\",\n    \"sintesis\": \"Resumen ejecutivo breve\",\n    \"accion\": \"Acción requerida\"\n  }\n]";
+          "Eres el asistente directivo de la Escuela Comandante Carlos Condell. Analiza este documento o captura.\n" +
+          "Extrae todos los eventos, plazos, reuniones y evaluaciones (Simce, DIA, UTP, Consejo, etc.).\n" +
+          "Es obligatorio asignar una hora válida (en formato HH:MM, por ejemplo 09:00 o la detectada).\n" +
+          "Devuelve ÚNICAMENTE un arreglo JSON con este formato exacto, sin bloques markdown ``` ni texto adicional:\n" +
+          "[\n" +
+          "  {\n" +
+          "    \"asunto\": \"Nombre del evento o plazo\",\n" +
+          "    \"organizador\": \"Entidad que convoca\",\n" +
+          "    \"fecha\": \"YYYY-MM-DD\",\n" +
+          "    \"hora\": \"09:00\",\n" +
+          "    \"prioridad\": \"Alta\",\n" +
+          "    \"sintesis\": \"Resumen conciso\",\n" +
+          "    \"accion\": \"Acción a realizar\"\n" +
+          "  }\n" +
+          "]";
 
         const payload = {
-          contents: [{ parts: [{ text: promptInstruccion }, ...inlineParts] }],
-          generationConfig: { responseMimeType: "application/json", temperature: 0.1 }
+          contents: [{ parts: [{ text: promptInstruccion }, ...inlineParts] }]
         };
 
-        // Modelo Ultra-Rápido Gemini 2.5 Flash
-        const res = await fetch(`[https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=$](https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=$){GEMINI_API_KEY}`, {
-          method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload)
+        const modelosAProbar = ["gemini-1.5-flash", "gemini-2.0-flash", "gemini-2.5-flash"];
+        let respuestaOk = null;
+        let textoJson = "";
+
+        for (const mod of modelosAProbar) {
+          try {
+            const urlApi = `[https://generativelanguage.googleapis.com/v1beta/models/$](https://generativelanguage.googleapis.com/v1beta/models/$){mod}:generateContent?key=${GEMINI_API_KEY}`;
+            const res = await fetch(urlApi, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload)
+            });
+
+            const rawText = await res.text();
+            if (rawText.trim().startsWith("<") || rawText.includes("<!DOCTYPE") || rawText.includes("<html>")) {
+              continue;
+            }
+
+            const dataResp = JSON.parse(rawText);
+            if (dataResp.error) {
+              console.warn(`Aviso modelo ${mod}:`, dataResp.error.message);
+              continue;
+            }
+
+            if (dataResp.candidates && dataResp.candidates[0]?.content?.parts?.[0]?.text) {
+              textoJson = dataResp.candidates[0].content.parts[0].text;
+              respuestaOk = true;
+              break;
+            }
+          } catch (e) {
+            console.warn(`Fallo al intentar con ${mod}:`, e);
+          }
+        }
+
+        if (!respuestaOk || !textoJson) {
+          throw new Error("No se pudo conectar con el servicio de IA de Gemini. Verifica la conexión.");
+        }
+
+        textoJson = textoJson.trim()
+          .replace(/^```json\s*/i, '')
+          .replace(/^```\s*/i, '')
+          .replace(/```$/i, '')
+          .trim();
+
+        const matchArray = textoJson.match(/\[[\s\S]*\]/);
+        if (matchArray) {
+          textoJson = matchArray[0];
+        }
+
+        const eventos = JSON.parse(textoJson);
+        eventosDetectadosIA = Array.isArray(eventos) ? eventos : [eventos];
+
+        // Asegurar que cada evento de la IA tenga hora obligatoria
+        eventosDetectadosIA.forEach(ev => {
+          if (!ev.hora || ev.hora.trim() === "") ev.hora = "09:00";
         });
 
-        const jsonResp = await res.json();
-        if (jsonResp.error) throw new Error(jsonResp.error.message || "Error al conectar con la IA.");
-
-        let textoGenerado = jsonResp.candidates[0].content.parts[0].text.trim();
-        textoGenerado = textoGenerado.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```$/i, '').trim();
-        const eventos = JSON.parse(textoGenerado);
-
-        eventosDetectadosIA = Array.isArray(eventos) ? eventos : [eventos];
         renderizarEventosDetectados(eventosDetectadosIA);
         elEstado.style.display = "none";
 
       } catch (err) {
         console.error(err);
-        elEstado.textContent = "❌ Error: " + err.message;
+        elEstado.textContent = "❌ " + err.message;
       }
     }
 
@@ -1278,12 +1417,12 @@
           </div>
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
             <div>
-              <label style="font-size:7.5pt; margin:0;">Fecha:</label>
+              <label style="font-size:7.5pt; margin:0;">Fecha *:</label>
               <input type="date" class="ia-edit-input" value="${fKey}" onchange="actualizarDatoIA(${idx}, 'fecha', this.value)">
             </div>
             <div>
-              <label style="font-size:7.5pt; margin:0;">Hora:</label>
-              <input type="time" class="ia-edit-input" value="${ev.hora || '09:00'}" onchange="actualizarDatoIA(${idx}, 'hora', this.value)">
+              <label style="font-size:7.5pt; margin:0;">Hora (Obligatoria) *:</label>
+              <input type="time" class="ia-edit-input" required value="${ev.hora || '09:00'}" onchange="actualizarDatoIA(${idx}, 'hora', this.value)" style="border-color:#3B82F6;">
             </div>
           </div>
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
@@ -1324,6 +1463,15 @@
 
     async function guardarEventosDetectadosIA() {
       if (!eventosDetectadosIA || eventosDetectadosIA.length === 0) return;
+
+      // VALIDACIÓN ESTRICTA: Que ningún evento de la IA quede sin hora
+      for (let i = 0; i < eventosDetectadosIA.length; i++) {
+        if (!eventosDetectadosIA[i].hora || eventosDetectadosIA[i].hora.trim() === "") {
+          alert(`⏰ Por favor asigna una hora al evento: "${eventosDetectadosIA[i].asunto || 'Sin título'}"`);
+          return;
+        }
+      }
+
       const btn = document.getElementById("btnAgendarTodoIA");
       btn.disabled = true; 
       btn.textContent = "⏳ AGENDANDO Y GUARDANDO...";
@@ -1342,7 +1490,7 @@
           date: fKey,
           time: hora,
           timeMinutos: mins,
-          tieneHora: Boolean(hora),
+          tieneHora: true,
           isAnnual: false,
           subject: ev.asunto || "Compromiso Institucional",
           sender: ev.organizador || "General",
