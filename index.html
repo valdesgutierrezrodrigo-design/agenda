@@ -2,226 +2,212 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Agenda TDAH Integrada</title>
+  <title>Agenda Carlos Condell</title>
   <style>
     :root {
-      --bg-app: #F4F6F9;
+      --bg-app: #F1F5F9;
       --surface: #FFFFFF;
       --border-subtle: #E2E8F0;
       --border-strong: #CBD5E1;
-      --text-main: #1E293B;
-      --text-muted: #64748B;
+      --text-main: #0F172A;
+      --text-muted: #475569;
 
-      --day-lunes-bg: #F5F3FF;
-      --day-lunes-border: #DDD6FE;
-      --day-lunes-accent: #6D28D9;
+      /* Paleta Institucional Carlos Condell */
+      --primary: #1E3A8A;       /* Azul marino institucional */
+      --primary-hover: #1E40AF;
+      --accent: #D97706;        /* Ámbar institucional */
+      
+      --day-lunes-bg: #F8FAFC;
+      --day-lunes-border: #CBD5E1;
+      --day-lunes-accent: #1E3A8A;
 
       --day-martes-bg: #F0FDF4;
       --day-martes-border: #BBF7D0;
-      --day-martes-accent: #15803D;
+      --day-martes-accent: #166534;
 
-      --day-miercoles-bg: #F0F9FF;
-      --day-miercoles-border: #BAE6FD;
-      --day-miercoles-accent: #0369A1;
+      --day-miercoles-bg: #EFF6FF;
+      --day-miercoles-border: #BFDBFE;
+      --day-miercoles-accent: #1D4ED8;
 
       --day-jueves-bg: #FEFCE8;
       --day-jueves-border: #FEF08A;
-      --day-jueves-accent: #A16207;
+      --day-jueves-accent: #854D0E;
 
       --day-viernes-bg: #FFF7ED;
       --day-viernes-border: #FED7AA;
       --day-viernes-accent: #C2410C;
 
-      --day-sabado-bg: #FAF5FF;
-      --day-sabado-border: #E9D5FF;
-      --day-sabado-accent: #7E22CE;
-
-      --day-domingo-bg: #FFF1F2;
-      --day-domingo-border: #FECDD3;
-      --day-domingo-accent: #BE123C;
-
       --prio-alta-bg: #FEE2E2;
-      --prio-alta-border: #F87171;
+      --prio-alta-border: #EF4444;
       --prio-media-bg: #FEF3C7;
-      --prio-media-border: #FBBF24;
+      --prio-media-border: #F59E0B;
       --prio-baja-bg: #E0F2FE;
-      --prio-baja-border: #38BDF8;
+      --prio-baja-border: #0EA5E9;
 
       --radius-sm: 8px;
       --radius-md: 12px;
       --radius-lg: 16px;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: var(--bg-app); height: 100vh; padding: 6px 10px; color: var(--text-main); display: flex; flex-direction: column; overflow: hidden; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif; }
+    body { background-color: var(--bg-app); height: 100vh; padding: 8px 12px; color: var(--text-main); display: flex; flex-direction: column; overflow: hidden; }
     
+    /* ENCABEZADO */
     header { 
       display: flex; justify-content: space-between; align-items: center; 
-      background: var(--surface); padding: 5px 12px; border-radius: var(--radius-md);
-      border: 1px solid var(--border-subtle); box-shadow: 0 2px 6px rgba(148, 163, 184, 0.05);
-      flex-shrink: 0; gap: 8px; margin-bottom: 6px; width: 100%; min-height: 44px; box-sizing: border-box;
+      background: var(--surface); padding: 8px 16px; border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle); box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+      flex-shrink: 0; gap: 12px; margin-bottom: 8px; width: 100%; min-height: 52px; box-sizing: border-box;
       flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
     }
     header::-webkit-scrollbar { display: none; }
     
-    .header-left-group { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
-    .brand-title { font-size: 13.5pt; font-weight: 900; color: #1E293B; white-space: nowrap; margin: 0; line-height: 1; letter-spacing: -0.3px; }
-    #full-date-subtitle { font-size: 7.5pt; font-weight: 600; color: var(--text-muted); background: #F8FAFC; border: 1px solid var(--border-subtle); padding: 0 7px; border-radius: var(--radius-sm); white-space: nowrap; height: 30px; display: inline-flex; align-items: center; }
+    .header-left-group { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .brand-title { font-size: 16pt; font-weight: 900; color: var(--primary); white-space: nowrap; margin: 0; line-height: 1; letter-spacing: -0.4px; }
+    #full-date-subtitle { font-size: 10pt; font-weight: 700; color: #1E293B; background: #F8FAFC; border: 1.5px solid var(--border-subtle); padding: 0 12px; border-radius: var(--radius-sm); white-space: nowrap; height: 36px; display: inline-flex; align-items: center; text-transform: capitalize; }
 
-    .btn-mascotas-header {
-      background: #FFF7ED !important; color: #C2410C !important; border: 1px solid #FFEDD5 !important;
-      border-radius: var(--radius-sm) !important; padding: 0 8px !important; height: 30px !important;
-      font-size: 7.5pt !important; font-weight: 700 !important; cursor: pointer; display: inline-flex;
-      align-items: center; gap: 4px; transition: all 0.15s ease; white-space: nowrap;
+    .btn-agenda-tdah {
+      background: #EFF6FF !important; color: #1D4ED8 !important; border: 1.5px solid #BFDBFE !important;
+      border-radius: var(--radius-sm) !important; padding: 0 12px !important; height: 36px !important;
+      font-size: 9.5pt !important; font-weight: 800 !important; cursor: pointer; display: inline-flex;
+      align-items: center; gap: 6px; transition: all 0.15s ease; white-space: nowrap; text-decoration: none;
     }
-    .btn-mascotas-header:hover { background: #FFEDD5 !important; }
+    .btn-agenda-tdah:hover { background: #DBEAFE !important; }
 
-    .switch-scope-container {
-      display: inline-flex; background: #F1F5F9; padding: 2px;
-      border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);
-      gap: 2px; height: 30px; align-items: center; flex-shrink: 0;
+    .mode-badge {
+      font-size: 9pt; font-weight: 800; padding: 5px 10px; border-radius: var(--radius-sm);
+      background: #F1F5F9; color: #475569; border: 1.5px solid var(--border-strong);
+      display: inline-flex; align-items: center; gap: 5px; cursor: pointer; user-select: none;
     }
-    .btn-scope-switch {
-      background: transparent !important; border: none !important; border-radius: 6px !important;
-      font-size: 7.5pt !important; font-weight: 700 !important; color: #64748B !important;
-      padding: 0 8px !important; height: 26px !important; cursor: pointer; display: inline-flex;
-      align-items: center; gap: 3px; transition: all 0.15s ease; white-space: nowrap;
-    }
-    .btn-scope-switch.activo { background: #FFFFFF !important; color: #0F172A !important; box-shadow: 0 1px 3px rgba(0,0,0,0.08) !important; }
+    .mode-badge.admin { background: #DCFCE7; color: #166534; border-color: #86EFAC; }
+    .mode-badge.readonly { background: #FEF3C7; color: #92400E; border-color: #FDE68A; }
 
-    .flip-clock-container { display: flex; align-items: center; background: #1E293B; padding: 2px 7px; border-radius: var(--radius-sm); gap: 2px; height: 30px; flex-shrink: 0; }
+    .flip-clock-container { display: flex; align-items: center; background: #0F172A; padding: 3px 10px; border-radius: var(--radius-sm); gap: 3px; height: 36px; flex-shrink: 0; }
     .flip-section { display: flex; flex-direction: column; align-items: center; justify-content: center; }
-    .flip-label-top { font-size: 4.5pt; letter-spacing: 0.5px; color: #94A3B8; margin-bottom: 0px; font-weight: 800; text-transform: uppercase; line-height: 1; }
-    .flip-card { background: #0F172A; color: #FFFFFF; font-size: 9.5pt; font-weight: 800; padding: 1px 4px; border-radius: 4px; min-width: 22px; text-align: center; line-height: 1.1; }
-    .flip-colon { color: #94A3B8; font-size: 9.5pt; font-weight: bold; margin: 0 1px; }
+    .flip-label-top { font-size: 5.5pt; letter-spacing: 0.5px; color: #94A3B8; margin-bottom: 0px; font-weight: 800; text-transform: uppercase; line-height: 1; }
+    .flip-card { background: #1E293B; color: #FFFFFF; font-size: 11pt; font-weight: 900; padding: 1px 5px; border-radius: 4px; min-width: 26px; text-align: center; line-height: 1.1; }
+    .flip-colon { color: #94A3B8; font-size: 11pt; font-weight: bold; margin: 0 1px; }
 
-    .header-right-group { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
-    .search-wrapper { position: relative; width: 110px; flex-shrink: 0; }
-    .search-input { width: 100%; height: 30px; padding: 0 6px 0 22px; font-size: 7.5pt; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); outline: none; background: #FFFFFF; }
-    .search-icon { position: absolute; left: 7px; top: 50%; transform: translateY(-50%); font-size: 7.5pt; color: var(--text-muted); pointer-events: none; }
-    .search-results { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-sm); max-height: 250px; overflow-y: auto; box-shadow: 0 8px 20px rgba(0,0,0,0.08); z-index: 50; display: none; }
-    .search-item { padding: 6px 8px; border-bottom: 1px solid var(--border-subtle); cursor: pointer; display: flex; flex-direction: column; gap: 2px; }
+    .header-right-group { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .search-wrapper { position: relative; width: 140px; flex-shrink: 0; }
+    .search-input { width: 100%; height: 36px; padding: 0 8px 0 30px; font-size: 9.5pt; font-weight: 600; border: 1.5px solid var(--border-strong); border-radius: var(--radius-sm); outline: none; background: #FFFFFF; }
+    .search-input:focus { border-color: var(--primary); }
+    .search-icon { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); font-size: 9.5pt; color: var(--text-muted); pointer-events: none; }
+    .search-results { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: var(--surface); border: 1.5px solid var(--border-strong); border-radius: var(--radius-sm); max-height: 260px; overflow-y: auto; box-shadow: 0 8px 20px rgba(0,0,0,0.1); z-index: 50; display: none; }
+    .search-item { padding: 8px 10px; border-bottom: 1px solid var(--border-subtle); cursor: pointer; display: flex; flex-direction: column; gap: 3px; }
     .search-item:hover { background: #F8FAFC; }
 
-    .nav-controls { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
-    button, .icon-btn, .btn-prio, .btn-cat { 
-      background: #FFFFFF !important; color: #475569 !important; border: 1px solid var(--border-strong) !important;
-      border-radius: var(--radius-sm); padding: 0 7px !important; height: 30px !important; cursor: pointer;
-      font-size: 7.5pt; font-weight: 600 !important; display: inline-flex; align-items: center; justify-content: center; gap: 3px;
-      white-space: nowrap; transition: background 0.15s ease;
+    .nav-controls { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+    button, .icon-btn, .btn-prio { 
+      background: #FFFFFF !important; color: #1E293B !important; border: 1.5px solid var(--border-strong) !important;
+      border-radius: var(--radius-sm); padding: 0 11px !important; height: 36px !important; cursor: pointer;
+      font-size: 9.5pt; font-weight: 800 !important; display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+      white-space: nowrap; transition: all 0.15s ease;
     }
-    button:hover, .icon-btn:hover { background: #F8FAFC !important; }
-    .btn-nuevo { background: #FEF3C7 !important; border-color: #FDE68A !important; color: #B45309 !important; font-weight: 700 !important; padding: 0 10px !important; }
+    button:hover, .icon-btn:hover { background: #F8FAFC !important; border-color: #94A3B8 !important; }
+    .btn-nuevo { background: #FEF3C7 !important; border-color: #FDE68A !important; color: #B45309 !important; font-weight: 900 !important; padding: 0 14px !important; }
+    .btn-nuevo:hover { background: #FDE68A !important; }
     .btn-respaldo { background: #EFF6FF !important; border-color: #BFDBFE !important; color: #1D4ED8 !important; }
     
-    .btn-prio.selected-alta { border-color: var(--prio-alta-border) !important; background: var(--prio-alta-bg) !important; color: #991B1B !important; font-weight: 700 !important; }
-    .btn-prio.selected-media { border-color: var(--prio-media-border) !important; background: var(--prio-media-bg) !important; color: #92400E !important; font-weight: 700 !important; }
-    .btn-prio.selected-baja { border-color: var(--prio-baja-border) !important; background: var(--prio-baja-bg) !important; color: #075985 !important; font-weight: 700 !important; }
-    
-    .btn-cat.selected-cat { background: #0284C7 !important; border-color: #0284C7 !important; color: #FFFFFF !important; font-weight: 700 !important; }
-    .btn-cat.selected-cat-personal { background: #0D9488 !important; border-color: #0D9488 !important; color: #FFFFFF !important; font-weight: 700 !important; }
+    .btn-prio.selected-alta { border-color: var(--prio-alta-border) !important; background: var(--prio-alta-bg) !important; color: #991B1B !important; }
+    .btn-prio.selected-media { border-color: var(--prio-media-border) !important; background: var(--prio-media-bg) !important; color: #92400E !important; }
+    .btn-prio.selected-baja { border-color: var(--prio-baja-border) !important; background: var(--prio-baja-bg) !important; color: #075985 !important; }
 
-    .date-label { font-size: 7.5pt; font-weight: 700; min-width: 90px; text-align: center; color: #334155; line-height: 30px; height: 30px; white-space: nowrap; }
+    .date-label { font-size: 10pt; font-weight: 800; min-width: 120px; text-align: center; color: var(--primary); line-height: 36px; height: 36px; white-space: nowrap; }
 
+    /* CUADRÍCULA 5 DÍAS (LUNES A VIERNES) */
     main#plannerSection { flex: 1; display: flex; min-height: 0; width: 100%; }
-    .week-container { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; width: 100%; height: 100%; }
+    .week-container { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; width: 100%; height: 100%; }
     
-    .day-column { border-radius: var(--radius-md); padding: 6px 7px; display: flex; flex-direction: column; gap: 5px; min-height: 0; overflow: hidden; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03); }
-    .day-lunes { background: var(--day-lunes-bg); border: 1px solid var(--day-lunes-border); }
-    .day-martes { background: var(--day-martes-bg); border: 1px solid var(--day-martes-border); }
-    .day-miercoles { background: var(--day-miercoles-bg); border: 1px solid var(--day-miercoles-border); }
-    .day-jueves { background: var(--day-jueves-bg); border: 1px solid var(--day-jueves-border); }
-    .day-viernes { background: var(--day-viernes-bg); border: 1px solid var(--day-viernes-border); }
-    .day-sabado { background: var(--day-sabado-bg); border: 1px solid var(--day-sabado-border); }
-    .day-domingo { background: var(--day-domingo-bg); border: 1px solid var(--day-domingo-border); }
+    .day-column { border-radius: var(--radius-md); padding: 10px; display: flex; flex-direction: column; gap: 8px; min-height: 0; overflow: hidden; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03); }
+    .day-lunes { background: var(--day-lunes-bg); border: 2px solid var(--day-lunes-border); }
+    .day-martes { background: var(--day-martes-bg); border: 2px solid var(--day-martes-border); }
+    .day-miercoles { background: var(--day-miercoles-bg); border: 2px solid var(--day-miercoles-border); }
+    .day-jueves { background: var(--day-jueves-bg); border: 2px solid var(--day-jueves-border); }
+    .day-viernes { background: var(--day-viernes-bg); border: 2px solid var(--day-viernes-border); }
 
     .day-lunes .day-name { color: var(--day-lunes-accent); }
     .day-martes .day-name { color: var(--day-martes-accent); }
     .day-miercoles .day-name { color: var(--day-miercoles-accent); }
     .day-jueves .day-name { color: var(--day-jueves-accent); }
     .day-viernes .day-name { color: var(--day-viernes-accent); }
-    .day-sabado .day-name { color: var(--day-sabado-accent); }
-    .day-domingo .day-name { color: var(--day-domingo-accent); }
 
-    .day-column.is-today { border-width: 2px !important; border-color: #D97706 !important; box-shadow: 0 3px 12px rgba(217, 119, 6, 0.15) !important; }
-    .day-header { text-align: center; padding-bottom: 5px; border-bottom: 1px solid rgba(0,0,0,0.06); flex-shrink: 0; }
-    .day-name { font-size: 8pt; font-weight: 800; text-transform: uppercase; line-height: 1.1; }
-    .day-number { font-size: 7pt; font-weight: 600; color: var(--text-muted); margin-top: 2px; }
+    .day-column.is-today { border-width: 3px !important; border-color: var(--accent) !important; box-shadow: 0 4px 16px rgba(217, 119, 6, 0.2) !important; }
+    .day-header { text-align: center; padding-bottom: 8px; border-bottom: 2px solid rgba(0,0,0,0.06); flex-shrink: 0; }
+    .day-name { font-size: 11pt; font-weight: 900; text-transform: uppercase; line-height: 1.1; letter-spacing: 0.2px; }
+    .day-number { font-size: 9.5pt; font-weight: 700; color: #475569; margin-top: 3px; }
     .text-red { color: #BE123C !important; }
     
-    .badge-tag { font-size: 6pt; padding: 1px 5px; border-radius: 5px; display: inline-block; margin-top: 2px; background: rgba(255,255,255,0.7); color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
-    .badge-today { background: #FEF3C7; color: #B45309; border: 1px solid #FDE68A; }
+    .badge-tag { font-size: 8pt; padding: 2px 8px; border-radius: 6px; display: inline-block; margin-top: 4px; background: rgba(255,255,255,0.9); color: #334155; font-weight: 800; text-transform: uppercase; }
+    .badge-today { background: #FEF3C7; color: #B45309; border: 1.5px solid #FDE68A; }
     
-    .cards-container { display: flex; flex-direction: column; gap: 4px; flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; }
+    .cards-container { display: flex; flex-direction: column; gap: 7px; flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; }
     .cards-container::-webkit-scrollbar { display: none; }
     
+    /* TARJETA DE TAREA INSTITUCIONAL */
     .task-card { 
-      width: 100%; background: #FFFFFF; padding: 5px 7px; border-radius: var(--radius-sm);
-      display: flex; flex-direction: column; gap: 2px; cursor: pointer; border: 1px solid rgba(0,0,0,0.06);
-      border-left: 3.5px solid var(--border-strong); box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+      width: 100%; background: #FFFFFF; padding: 9px 11px; border-radius: var(--radius-sm);
+      display: flex; flex-direction: column; gap: 4px; cursor: pointer; border: 1px solid rgba(0,0,0,0.08);
+      border-left: 4.5px solid var(--border-strong); box-shadow: 0 1px 3px rgba(0,0,0,0.04);
       transition: transform 0.1s ease, box-shadow 0.1s ease;
     }
-    .task-card:hover { transform: translateY(-1px); box-shadow: 0 2px 5px rgba(0,0,0,0.06); }
+    .task-card:hover { transform: translateY(-1px); box-shadow: 0 4px 8px rgba(0,0,0,0.08); border-color: #94A3B8; }
     .task-card.prio-alta { border-left-color: var(--prio-alta-border); } 
     .task-card.prio-media { border-left-color: var(--prio-media-border); } 
     .task-card.prio-baja { border-left-color: var(--prio-baja-border); } 
-    .task-card.is-done { background: rgba(255,255,255,0.65) !important; opacity: 0.65; }
+    .task-card.is-done { background: rgba(255,255,255,0.7) !important; opacity: 0.65; }
     .task-card.is-done .card-title { text-decoration: line-through; }
 
-    .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 4px; }
-    .card-title { font-size: 7.5pt; font-weight: 700; color: #1E293B; line-height: 1.15; flex: 1; min-width: 0; }
-    .card-badges { display: flex; align-items: center; gap: 2px; flex-shrink: 0; }
-    .card-time { font-size: 5.8pt; font-weight: 700; color: #475569; background: #F1F5F9; border: 1px solid #E2E8F0; padding: 1px 3px; border-radius: 4px; white-space: nowrap; }
-    .card-cat-badge { font-size: 5.8pt; font-weight: 700; padding: 1px 3px; border-radius: 4px; white-space: nowrap; }
-    .card-cat-laboral { background: #E0F2FE; color: #0369A1; border: 1px solid #BAE6FD; }
-    .card-cat-personal { background: #CCFBF1; color: #0F766E; border: 1px solid #99F6E4; }
-
-    .card-sender { font-size: 6.2pt; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .empty-text { font-size: 7pt; color: #94A3B8; text-align: center; margin-top: 14px; font-weight: 500; }
-
-    .modal-overlay { position: fixed; inset: 0; background: rgba(30, 41, 59, 0.45); display: none; align-items: center; justify-content: center; padding: 12px; z-index: 1000; backdrop-filter: blur(3px); }
-    .modal-detail-card { background: var(--surface); max-width: 480px; width: 100%; max-height: 90vh; border-radius: var(--radius-md); padding: 16px; display: flex; flex-direction: column; gap: 9px; overflow-y: auto; position: relative; z-index: 1001; }
-    .modal-field { display: flex; flex-direction: column; gap: 3px; }
-    .modal-label { font-size: 7pt; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
-    .modal-box { background: #F8FAFC; border: 1px solid var(--border-subtle); padding: 6px 10px; border-radius: var(--radius-sm); font-size: 8pt; line-height: 1.35; white-space: pre-wrap; word-break: break-word; }
-    .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-
-    .modal-assistant { background: var(--surface); color: var(--text-main); max-width: 520px; width: 100%; border-radius: var(--radius-md); padding: 16px; display: flex; flex-direction: column; gap: 8px; max-height: 90vh; overflow-y: auto; position: relative; z-index: 1001; }
-    .modal-assistant label { font-size: 7.5pt; color: #475569; display: block; margin-bottom: 2px; font-weight: 700; }
-    .modal-assistant input, .modal-assistant textarea, .modal-assistant select { width: 100%; background: #F8FAFC; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 6px 8px; font-size: 8pt; outline: none; }
+    .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 6px; }
+    .card-title { font-size: 10pt; font-weight: 800; color: #0F172A; line-height: 1.25; flex: 1; min-width: 0; }
+    .card-badges { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+    .card-time { font-size: 8pt; font-weight: 800; color: #1E293B; background: #F1F5F9; border: 1.5px solid #CBD5E1; padding: 2px 5px; border-radius: 4px; white-space: nowrap; }
     
-    .checkbox-container { display: flex; align-items: center; gap: 6px; margin-top: 3px; }
-    .checkbox-container input { width: 13px; height: 13px; cursor: pointer; }
-    .aviso-duplicado { background: var(--prio-alta-bg); border: 1px solid var(--prio-alta-border); color: #991B1B; padding: 5px 8px; border-radius: var(--radius-sm); font-size: 7pt; display: none; margin-top: 3px; }
+    .card-sender { font-size: 8.5pt; color: #475569; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .empty-text { font-size: 9pt; color: #94A3B8; text-align: center; margin-top: 24px; font-weight: 700; }
 
-    .ia-results-list { display: flex; flex-direction: column; gap: 8px; max-height: 380px; overflow-y: auto; margin: 6px 0; }
+    /* MODALES */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.55); display: none; align-items: center; justify-content: center; padding: 16px; z-index: 1000; backdrop-filter: blur(4px); }
+    .modal-detail-card { background: var(--surface); max-width: 550px; width: 100%; max-height: 90vh; border-radius: var(--radius-md); padding: 20px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; position: relative; z-index: 1001; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+    .modal-field { display: flex; flex-direction: column; gap: 4px; }
+    .modal-label { font-size: 8.5pt; font-weight: 800; color: #475569; text-transform: uppercase; letter-spacing: 0.3px; }
+    .modal-box { background: #F8FAFC; border: 1.5px solid var(--border-subtle); padding: 10px 14px; border-radius: var(--radius-sm); font-size: 10pt; font-weight: 600; line-height: 1.45; white-space: pre-wrap; word-break: break-word; color: #0F172A; }
+    .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    .modal-assistant { background: var(--surface); color: var(--text-main); max-width: 560px; width: 100%; border-radius: var(--radius-md); padding: 20px; display: flex; flex-direction: column; gap: 12px; max-height: 90vh; overflow-y: auto; position: relative; z-index: 1001; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+    .modal-assistant label { font-size: 9pt; color: #1E293B; display: block; margin-bottom: 4px; font-weight: 800; }
+    .modal-assistant input, .modal-assistant textarea, .modal-assistant select { width: 100%; background: #F8FAFC; border: 1.5px solid var(--border-strong); border-radius: var(--radius-sm); padding: 9px 12px; font-size: 10pt; font-weight: 600; outline: none; }
+    .modal-assistant input:focus, .modal-assistant textarea:focus, .modal-assistant select:focus { border-color: var(--primary); background: #FFFFFF; }
+    
+    .checkbox-container { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+    .checkbox-container input { width: 16px; height: 16px; cursor: pointer; }
+    .aviso-duplicado { background: var(--prio-alta-bg); border: 1.5px solid var(--prio-alta-border); color: #991B1B; padding: 7px 12px; border-radius: var(--radius-sm); font-size: 8.5pt; font-weight: 800; display: none; margin-top: 4px; }
+
+    .ia-results-list { display: flex; flex-direction: column; gap: 10px; max-height: 380px; overflow-y: auto; margin: 8px 0; }
     .ia-item-card { 
-      background: #FFFFFF; border: 1px solid var(--border-subtle); border-left: 4px solid #F59E0B; 
-      padding: 8px 10px; border-radius: var(--radius-sm); display: flex; flex-direction: column; gap: 5px; 
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      background: #FFFFFF; border: 1.5px solid var(--border-subtle); border-left: 5px solid #F59E0B; 
+      padding: 10px 12px; border-radius: var(--radius-sm); display: flex; flex-direction: column; gap: 6px; 
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
     }
-    .ia-item-header { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
-    .ia-edit-input { font-size: 7.5pt !important; padding: 4px 6px !important; }
+    .ia-item-header { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .ia-edit-input { font-size: 9pt !important; padding: 6px 8px !important; }
 
-    .bitacora-modal { max-width: 540px; width: 100%; max-height: 88vh; background: var(--surface); border-radius: var(--radius-md); padding: 16px; display: flex; flex-direction: column; gap: 8px; position: relative; z-index: 1001; }
+    .bitacora-modal { max-width: 580px; width: 100%; max-height: 88vh; background: var(--surface); border-radius: var(--radius-md); padding: 20px; display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 1001; }
     .bitacora-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
-    .bitacora-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; border-radius: var(--radius-sm); background: #FAFBFD; border: 1px solid var(--border-subtle); cursor: pointer; }
+    .bitacora-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-radius: var(--radius-sm); background: #FAFBFD; border: 1.5px solid var(--border-subtle); cursor: pointer; }
+    .bitacora-item:hover { background: #F1F5F9; border-color: var(--primary); }
     
-    .badge-file { display: inline-flex; align-items: center; gap: 4px; background: #EFF6FF; border: 1px solid #BFDBFE; color: #1D4ED8; padding: 3px 6px; border-radius: 4px; font-size: 7pt; }
+    .badge-file { display: inline-flex; align-items: center; gap: 5px; background: #EFF6FF; border: 1.5px solid #BFDBFE; color: #1D4ED8; padding: 5px 10px; border-radius: 6px; font-size: 8.5pt; font-weight: 800; text-decoration: none; }
+    .badge-file:hover { background: #DBEAFE; }
   </style>
 </head>
 <body>
   <header>
     <div class="header-left-group">
-      <span class="brand-title">Agenda TDAH</span>
+      <span class="brand-title">Agenda Carlos Condell</span>
       <span id="full-date-subtitle">Hoy</span>
-      <button type="button" class="btn-mascotas-header" onclick="abrirModalMascotas()">🐾 Mascotas</button>
-      
-      <div class="switch-scope-container">
-        <button type="button" class="btn-scope-switch activo" id="scope-todos" onclick="cambiarFiltroAmbito('todos')">Todo</button>
-        <button type="button" class="btn-scope-switch" id="scope-laboral" onclick="cambiarFiltroAmbito('laboral')">💼 Laboral</button>
-        <button type="button" class="btn-scope-switch" id="scope-personal" onclick="cambiarFiltroAmbito('personal')">🏠 Personal</button>
-      </div>
+      <a href="[https://valdesgutierrezrodrigo-design.github.io/agenda/](https://valdesgutierrezrodrigo-design.github.io/agenda/)" target="_blank" class="btn-agenda-tdah" title="Abrir mi Agenda TDAH">🔗 Agenda TDAH</a>
+      <span id="modeBadge" class="mode-badge readonly" onclick="alternarModoEdicion()" title="Haz clic para desbloquear edición">🔒 Solo Lectura</span>
     </div>
 
     <div class="flip-clock-container">
@@ -240,17 +226,17 @@
       </div>
 
       <div class="nav-controls">
-        <button class="icon-btn btn-respaldo" onclick="abrirModalRespaldo()">💾 Respaldo</button>
+        <button class="icon-btn btn-respaldo admin-only" onclick="abrirModalRespaldo()">💾 Respaldo</button>
         <button class="icon-btn" onclick="abrirModalBitacora()">📋 Bitácora</button>
         <button class="icon-btn" id="btnSync" onclick="sincronizarDesdeSheets()">🔄 Sync</button>
-        <button class="icon-btn" onclick="abrirModalIA()">★ AIA</button>
-        <span style="border-left:1px solid var(--border-strong); height:16px; margin:0 2px;"></span>
+        <button class="icon-btn admin-only" onclick="abrirModalIA()">★ AIA</button>
+        <span style="border-left:2px solid var(--border-strong); height:20px; margin:0 3px;"></span>
         <button class="icon-btn" id="btnPrev">◀</button>
         <button class="icon-btn" id="btnToday">Hoy</button>
         <div class="date-label" id="dateLabel">Semana</div>
         <button class="icon-btn" id="btnNext">▶</button>
-        <span style="border-left:1px solid var(--border-strong); height:16px; margin:0 2px;"></span>
-        <button class="icon-btn btn-nuevo" onclick="abrirModalNuevo()">＋ Nuevo</button>
+        <span style="border-left:2px solid var(--border-strong); height:20px; margin:0 3px;"></span>
+        <button class="icon-btn btn-nuevo admin-only" onclick="abrirModalNuevo()">＋ Nuevo</button>
       </div>
     </div>
   </header>
@@ -263,9 +249,10 @@
   <div class="modal-overlay" id="modalRespaldoOverlay">
     <div class="modal-assistant">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-weight:800; font-size:11pt;">💾 Respaldo y Seguridad</span>
+        <span style="font-weight:900; font-size:13pt; color:var(--primary);">💾 Respaldo Institucional</span>
         <button class="icon-btn" onclick="cerrarModalRespaldo()">✕</button>
       </div>
+      <p style="font-size:9.5pt; color:var(--text-muted);">Descarga una copia completa de la agenda laboral en formato seguro JSON.</p>
       <button type="button" class="icon-btn btn-respaldo" style="width:100%; justify-content:center; margin-top:8px;" onclick="descargarRespaldoJSON()">⬇️ Descargar Copia (.json)</button>
     </div>
   </div>
@@ -275,14 +262,14 @@
     <div class="bitacora-modal">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <div>
-          <h3 style="font-size:10pt; font-weight:800;">📋 Bitácora de Compromisos</h3>
-          <span id="bitacoraTotal" style="font-size:7pt; color:var(--text-muted);">0 eventos</span>
+          <h3 style="font-size:12pt; font-weight:900; color:var(--primary);">📋 Bitácora Institucional Carlos Condell</h3>
+          <span id="bitacoraTotal" style="font-size:8.5pt; font-weight:700; color:var(--text-muted);">0 eventos</span>
         </div>
         <button class="icon-btn" onclick="cerrarModalBitacora()">✕</button>
       </div>
 
-      <div style="display:flex; gap:5px;">
-        <button type="button" class="icon-btn" style="flex:1;" onclick="renderizarBitacora()">Todos los Meses</button>
+      <div style="display:flex; gap:8px;">
+        <button type="button" class="icon-btn" style="flex:1;" onclick="renderizarBitacora()">Todos los Compromisos</button>
         <button type="button" class="icon-btn" style="flex:1; border-color:#FCA5A5 !important; color:#C53030 !important; background:var(--prio-alta-bg) !important;" onclick="filtrarSoloDuplicados()">⚠️ Solo Duplicados</button>
       </div>
 
@@ -297,30 +284,29 @@
       <div style="display:flex; justify-content:space-between; align-items:flex-start;">
         <div>
           <span id="dtPrioBadge" class="badge-tag">-</span>
-          <span id="dtScopeBadge" class="badge-tag" style="margin-left:3px;">-</span>
-          <span id="dtStateBadge" class="badge-tag" style="margin-left:3px; background:#E2E8F0;">-</span>
-          <h3 id="dtTitle" style="font-size:11pt; font-weight:800; margin-top:4px;">-</h3>
+          <span id="dtStateBadge" class="badge-tag" style="margin-left:4px; background:#E2E8F0;">-</span>
+          <h3 id="dtTitle" style="font-size:13pt; font-weight:900; margin-top:6px; color:#0F172A;">-</h3>
         </div>
         <button class="icon-btn" onclick="closeDetailModal()">✕</button>
       </div>
 
       <div class="grid-2col">
-        <div class="modal-field"><span class="modal-label">Organización / Ámbito</span><div id="dtSender" class="modal-box">-</div></div>
+        <div class="modal-field"><span class="modal-label">Organización / Convocante</span><div id="dtSender" class="modal-box">-</div></div>
         <div class="modal-field"><span class="modal-label">Fecha y Hora</span><div id="dtDateTime" class="modal-box">-</div></div>
       </div>
 
       <div class="modal-field"><span class="modal-label">Síntesis</span><div id="dtDetail" class="modal-box">-</div></div>
-      <div class="modal-field"><span class="modal-label">Acción Requerida</span><div id="dtAccion" class="modal-box" style="border-left:3px solid #FBBF24;">-</div></div>
+      <div class="modal-field"><span class="modal-label">Acción Requerida</span><div id="dtAccion" class="modal-box" style="border-left:4px solid #F59E0B;">-</div></div>
 
       <div class="modal-field" id="dtRespaldosContainer">
-        <span class="modal-label">Respaldo / Adjuntos</span>
-        <div id="dtRespaldosList" style="display:flex; gap:6px; flex-wrap:wrap; margin-top:4px;"></div>
+        <span class="modal-label">Documentos y Evidencias Adjuntas</span>
+        <div id="dtRespaldosList" style="display:flex; gap:8px; flex-wrap:wrap; margin-top:4px;"></div>
       </div>
 
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px; padding-top:6px; border-top:1px solid var(--border-subtle);">
-        <button class="icon-btn" onclick="eliminarEventoActual()">🗑️ Eliminar</button>
-        <button class="icon-btn" onclick="prepararEdicionActual()">✏️ Editar</button>
-        <button class="icon-btn" id="btnToggleRealizado" onclick="toggleRealizadoActual()">✓ Realizado</button>
+      <div id="detailActionFooter" style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; padding-top:10px; border-top:1.5px solid var(--border-subtle);">
+        <button class="icon-btn admin-only" onclick="eliminarEventoActual()">🗑️ Eliminar</button>
+        <button class="icon-btn admin-only" onclick="prepararEdicionActual()">✏️ Editar</button>
+        <button class="icon-btn admin-only" id="btnToggleRealizado" onclick="toggleRealizadoActual()">✓ Realizado</button>
       </div>
     </div>
   </div>
@@ -329,24 +315,16 @@
   <div class="modal-overlay" id="modalAssistantOverlay">
     <div class="modal-assistant">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span id="modalTitleStr" style="font-weight:800; font-size:10.5pt;">Nuevo Evento</span>
-        <div style="display:flex; gap:3px;">
+        <span id="modalTitleStr" style="font-weight:900; font-size:12.5pt; color:var(--primary);">Nuevo Evento Laboral</span>
+        <div style="display:flex; gap:6px;">
           <button type="button" class="icon-btn" onclick="limpiarFormularioManual()">Limpiar</button>
           <button class="icon-btn" onclick="closeModal()">✕</button>
-        </div>
-      </div>
-      
-      <div>
-        <label>Ámbito / Categoría</label>
-        <div style="display:flex; gap:4px;">
-          <button type="button" class="btn-cat selected-cat" id="catLaboral" onclick="selectCategory('Laboral')">💼 Laboral</button>
-          <button type="button" class="btn-cat" id="catPersonal" onclick="selectCategory('Personal')">🏠 Personal</button>
         </div>
       </div>
 
       <div>
         <label>Asunto / Compromiso</label>
-        <input type="text" id="fAsunto" placeholder="Ej: Simce, Reunión UTP, Veterinario..." oninput="verificarDuplicadoEnFormulario()">
+        <input type="text" id="fAsunto" placeholder="Ej: Simce, Reunión UTP, Consejo de Profesores..." oninput="verificarDuplicadoEnFormulario()">
         <div id="avisoDuplicadoManual" class="aviso-duplicado">⚠️ Ya existe un evento similar agendado para esta fecha.</div>
       </div>
       <div><label>Hora (opcional)</label><input type="time" id="fHora"></div>
@@ -358,13 +336,13 @@
 
       <div class="checkbox-container">
         <input type="checkbox" id="fRepetirAnual">
-        <label for="fRepetirAnual">🔁 Repetir anualmente</label>
+        <label for="fRepetirAnual" style="margin:0; font-size:9.5pt;">🔁 Repetir anualmente</label>
       </div>
 
-      <div><label>Organizador / Convoca</label><input type="text" id="fOrganizador" placeholder="Ej: Dirección, Mineduc, Familia"></div>
+      <div><label>Organizador / Convoca</label><input type="text" id="fOrganizador" placeholder="Ej: Dirección, Mineduc, UTP, SLEP"></div>
       <div>
         <label>Prioridad</label>
-        <div style="display:flex; gap:4px;">
+        <div style="display:flex; gap:8px;">
           <button type="button" class="btn-prio" id="prioAlta" onclick="selectPriority('Alta')">Alta</button>
           <button type="button" class="btn-prio selected-media" id="prioMedia" onclick="selectPriority('Media')">Media</button>
           <button type="button" class="btn-prio" id="prioBaja" onclick="selectPriority('Baja')">Baja</button>
@@ -374,66 +352,53 @@
       <div><label>Síntesis</label><textarea id="fDetalle" rows="2" placeholder="Resumen clave..."></textarea></div>
       <div><label>Acción Requerida</label><textarea id="fAccion" rows="2" placeholder="Ej: Notificar, Solicitar informe..."></textarea></div>
       
-      <!-- SUBIR ARCHIVOS (NUEVO O EDICIÓN) -->
       <div>
         <label>Adjuntar archivos de respaldo (PDF, Imágenes)</label>
         <input type="file" id="fArchivos" multiple accept="image/*,application/pdf" onchange="procesarArchivosManuales(this)">
-        <div id="listaArchivosManuales" style="display:flex; flex-wrap:wrap; gap:4px; margin-top:5px;"></div>
+        <div id="listaArchivosManuales" style="display:flex; flex-wrap:wrap; gap:6px; margin-top:6px;"></div>
       </div>
 
-      <button type="button" id="btnGuardarEvento" class="icon-btn btn-nuevo" style="margin-top:5px; justify-content:center;" onclick="guardarEventoManual()">GUARDAR EVENTO</button>
+      <button type="button" id="btnGuardarEvento" class="icon-btn btn-nuevo" style="margin-top:8px; justify-content:center; height:40px !important;" onclick="guardarEventoManual()">GUARDAR EVENTO</button>
     </div>
   </div>
 
-  <!-- Modal IA -->
+  <!-- Modal IA (Rápido y Optimizado) -->
   <div class="modal-overlay" id="modalIAOverlay">
     <div class="modal-assistant">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-weight:800; font-size:10.5pt;">★ Asistente AIA</span>
+        <span style="font-weight:900; font-size:12.5pt; color:var(--primary);">★ Asistente Inteligente AIA</span>
         <button type="button" class="icon-btn" onclick="cerrarModalIA()">✕</button>
       </div>
-      <p style="font-size:7.5pt; color:var(--text-muted);">Sube una imagen o PDF, o pega tu captura con <b>Ctrl + V</b>.</p>
+      <p style="font-size:9pt; color:var(--text-muted);">Sube o pega un documento institucional (PDF o imagen). El análisis se ejecuta en segundos.</p>
       
       <input type="file" id="inputArchivoIA" accept="image/*,application/pdf" multiple style="display:none;" onchange="procesarArchivoSeleccionado(this)">
       
-      <div style="display:flex; gap:5px; margin:4px 0;">
+      <div style="display:flex; gap:8px; margin:6px 0;">
         <button type="button" id="btnCargarIA" class="icon-btn" style="flex:1;">📁 Cargar Documento(s)</button>
-        <button type="button" id="btnPegarIA" class="icon-btn" style="flex:1;">📋 Pegar Captura</button>
+        <button type="button" id="btnPegarIA" class="icon-btn" style="flex:1;">📋 Pegar Captura (Ctrl+V)</button>
       </div>
 
-      <div id="iaArchivoInfo" style="font-size:7pt; color:#1D4ED8; background:#EFF6FF; padding:4px 8px; border-radius:4px; display:none;"></div>
-      <div id="iaEstado" style="font-size:7.5pt; color:#B45309; font-weight:bold; text-align:center; padding:6px; display:none; background:#FEF3C7; border-radius:6px;">Analizando documento con Gemini...</div>
+      <div id="iaArchivoInfo" style="font-size:8.5pt; color:#1D4ED8; background:#EFF6FF; padding:6px 10px; border-radius:6px; display:none; border:1px solid #BFDBFE;"></div>
+      <div id="iaEstado" style="font-size:9pt; color:#B45309; font-weight:bold; text-align:center; padding:8px; display:none; background:#FEF3C7; border-radius:6px; border:1px solid #FDE68A;">⚡ Analizando rápidamente con Gemini...</div>
       
       <div id="iaContenedorResultados" style="display:none;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
-          <span style="font-size:8pt; font-weight:800; color:#1E293B;">Propuesta de Eventos Detectados:</span>
-          <span style="font-size:6.8pt; color:var(--text-muted);">Puedes ajustar antes de agendar</span>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+          <span style="font-size:9.5pt; font-weight:800; color:var(--primary);">Propuesta de Eventos Detectados:</span>
+          <span style="font-size:8pt; color:var(--text-muted);">Ajusta si es necesario antes de agendar</span>
         </div>
         <div class="ia-results-list" id="iaListaEventos"></div>
-        <button type="button" id="btnAgendarTodoIA" class="icon-btn btn-nuevo" style="width:100%; margin-top:6px; justify-content:center;" onclick="guardarEventosDetectadosIA()">AGENDAR PROPUESTA Y SUBIR RESPALDO</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Mascotas -->
-  <div class="modal-overlay" id="modalMascotasOverlay">
-    <div class="modal-assistant">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-weight:800; font-size:10.5pt;">🐾 Control de Mascotas</span>
-        <button class="icon-btn" onclick="cerrarModalMascotas()">✕</button>
-      </div>
-      <div id="mascotasInfoContainer" style="font-size:8pt; line-height:1.4; display:flex; flex-direction:column; gap:6px;">
-        <p><b>Eventos y cuidados registrados:</b></p>
-        <div id="mascotasList" style="display:flex; flex-direction:column; gap:4px; max-height:200px; overflow-y:auto;"></div>
+        <button type="button" id="btnAgendarTodoIA" class="icon-btn btn-nuevo" style="width:100%; margin-top:8px; justify-content:center; height:40px !important;" onclick="guardarEventosDetectadosIA()">AGENDAR PROPUESTA Y SUBIR RESPALDO</button>
       </div>
     </div>
   </div>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbyEnuZQjGdKpm2iypjvn2XbOoSt7WcYIino-dAOjMH0tnU-r5L-umFsh9dFDtKNMCff/exec";
-    
-    // Clave de API de Gemini:
+    const API_URL = "[https://script.google.com/macros/s/AKfycbyEnuZQjGdKpm2iypjvn2XbOoSt7WcYIino-dAOjMH0tnU-r5L-umFsh9dFDtKNMCff/exec](https://script.google.com/macros/s/AKfycbyEnuZQjGdKpm2iypjvn2XbOoSt7WcYIino-dAOjMH0tnU-r5L-umFsh9dFDtKNMCff/exec)";
     const GEMINI_API_KEY = "AQ.Ab8RN6LB-NIAelTRt0J4ebdrjfUDyA5BWDPD1N3taArdmJGeFA";
+
+    // CLAVE DE EDICIÓN PARA EL EQUIPO DIRECTIVO: 25078
+    const CLAVE_ADMIN = "25078";
+    let esModoAdmin = false;
 
     const holidaysChile = { 
       "2026-01-01": "Año Nuevo", "2026-04-03": "Viernes Santo", "2026-05-01": "Día del Trabajador",
@@ -448,22 +413,66 @@
     let archivosRespaldoIA = []; 
     let archivosManualesTemporales = []; 
     let selectedPriority = "Media";
-    let selectedCategory = "Laboral";
-    let currentScopeFilter = "todos";
     let currentEventId = null;
     let isEditing = false;
     let editEventId = null;
 
     try {
-      const guardado = localStorage.getItem("agenda_tdah_local");
+      const guardado = localStorage.getItem("agenda_carlos_condell_local") || localStorage.getItem("agenda_tdah_local");
       if (guardado) {
         const parsed = JSON.parse(guardado);
         if (Array.isArray(parsed) && parsed.length > 0) tasks = parsed;
       }
     } catch (e) {}
 
+    // GESTIÓN DE MODO SOLO LECTURA / EDICIÓN
+    function actualizarModoUI() {
+      const badge = document.getElementById("modeBadge");
+      const adminElements = document.querySelectorAll(".admin-only");
+      if (esModoAdmin) {
+        badge.textContent = "🔓 Modo Edición";
+        badge.className = "mode-badge admin";
+        badge.title = "Haz clic para volver a modo Solo Lectura";
+        adminElements.forEach(el => el.style.display = "");
+      } else {
+        badge.textContent = "🔒 Solo Lectura";
+        badge.className = "mode-badge readonly";
+        badge.title = "Haz clic para ingresar clave y editar";
+        adminElements.forEach(el => el.style.display = "none");
+      }
+    }
+
+    function alternarModoEdicion() {
+      if (esModoAdmin) {
+        esModoAdmin = false;
+        sessionStorage.removeItem("modo_admin_condell");
+        actualizarModoUI();
+        alert("Modo Solo Lectura activado.");
+      } else {
+        const pass = prompt("Ingresa la clave de edición directiva:");
+        if (pass === CLAVE_ADMIN) {
+          esModoAdmin = true;
+          sessionStorage.setItem("modo_admin_condell", "1");
+          actualizarModoUI();
+          alert("¡Clave correcta! Modo edición habilitado.");
+        } else if (pass !== null) {
+          alert("Clave incorrecta. Permaneces en modo Solo Lectura.");
+        }
+      }
+    }
+
+    if (sessionStorage.getItem("modo_admin_condell") === "1") {
+      esModoAdmin = true;
+    }
+
     function formatDateKey(d) {
       return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, '0') + "-" + String(d.getDate()).padStart(2, '0');
+    }
+
+    function formatFechaCompleta(d) {
+      const diasSemana = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+      const meses = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+      return `${diasSemana[d.getDay()]}, ${d.getDate()} de ${meses[d.getMonth()]} de ${d.getFullYear()}`;
     }
 
     function parsearFecha(str) {
@@ -524,15 +533,14 @@
     }
 
     let currentMonday = getMonday(new Date());
-    const dayNames = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
-    const dayClassNames = ["day-lunes", "day-martes", "day-miercoles", "day-jueves", "day-viernes", "day-sabado", "day-domingo"];
+    const dayNames = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"];
+    const dayClassNames = ["day-lunes", "day-martes", "day-miercoles", "day-jueves", "day-viernes"];
     const monthNames = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
 
-    function inferirCategoria(row) {
+    function esEventoPersonal(row) {
       const texto = `${row.asunto || row[4] || ''} ${row.remitente || row[5] || ''} ${row.sintesis || row[6] || ''}`.toLowerCase();
       const palabrasPersonales = ["veterinario", "mascota", "ramon", "ramona", "jackson", "compra personal", "medico personal", "dentista", "casa", "familia"];
-      if (palabrasPersonales.some(p => texto.includes(p))) return "Personal";
-      return "Laboral";
+      return palabrasPersonales.some(p => texto.includes(p));
     }
 
     async function sincronizarDesdeSheets() {
@@ -548,6 +556,8 @@
           const vistos = new Set();
 
           rawRows.forEach((row, idx) => {
+            if (esEventoPersonal(row)) return;
+
             const fDoc = row.fechaDoc || (Array.isArray(row) ? row[1] : null);
             const fValida = parsearFecha(fDoc);
             if (!fValida) return;
@@ -565,7 +575,6 @@
 
             const estado = String(row.estado || (Array.isArray(row) ? row[3] : "")).trim().toLowerCase();
             const isManaged = (estado === "finalizado" || estado === "gestionado" || estado === "realizado");
-            const cat = inferirCategoria(row);
 
             let adjuntos = [];
             const rawRespaldos = row.respaldos || (Array.isArray(row) ? row[8] : null);
@@ -595,7 +604,7 @@
               detail: row.sintesis || (Array.isArray(row) ? row[6] : ""),
               accion: row.accionReq || (Array.isArray(row) ? row[7] : ""),
               priority: row.prioridad || (Array.isArray(row) ? row[2] : "Media"),
-              category: cat,
+              category: "Laboral",
               status: isManaged ? "managed" : "pending",
               respaldos: adjuntos
             });
@@ -603,7 +612,7 @@
 
           if (remoteTasks.length > 0) {
             tasks = remoteTasks;
-            localStorage.setItem("agenda_tdah_local", JSON.stringify(tasks));
+            localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
             renderCalendar();
           }
         }
@@ -613,30 +622,8 @@
         if (btn) btn.innerHTML = "🔄 Sync";
         const sub = document.getElementById("full-date-subtitle");
         if (sub) {
-          const hoy = new Date();
-          sub.textContent = `${hoy.getDate()} ${monthNames[hoy.getMonth()]} ${hoy.getFullYear()}`;
+          sub.textContent = formatFechaCompleta(new Date());
         }
-      }
-    }
-
-    function cambiarFiltroAmbito(scope) {
-      currentScopeFilter = scope;
-      document.getElementById("scope-todos").classList.toggle("activo", scope === "todos");
-      document.getElementById("scope-laboral").classList.toggle("activo", scope === "laboral");
-      document.getElementById("scope-personal").classList.toggle("activo", scope === "personal");
-      renderCalendar();
-    }
-
-    function selectCategory(cat) {
-      selectedCategory = cat;
-      const btnLab = document.getElementById("catLaboral");
-      const btnPer = document.getElementById("catPersonal");
-      if (cat === "Laboral") {
-        btnLab.className = "btn-cat selected-cat";
-        btnPer.className = "btn-cat";
-      } else {
-        btnLab.className = "btn-cat";
-        btnPer.className = "btn-cat selected-cat-personal";
       }
     }
 
@@ -653,19 +640,20 @@
       grid.innerHTML = "";
       const todayKey = formatDateKey(new Date());
       const weekDates = [];
-      for (let i = 0; i < 7; i++) {
+      
+      for (let i = 0; i < 5; i++) {
         const d = new Date(currentMonday);
         d.setDate(currentMonday.getDate() + i);
         weekDates.push(d);
       }
 
       const label = document.getElementById('dateLabel');
-      if (label) label.textContent = `${weekDates[0].getDate()} ${monthNames[weekDates[0].getMonth()]} - ${weekDates[6].getDate()} ${monthNames[weekDates[6].getMonth()]}`;
+      if (label) label.textContent = `${weekDates[0].getDate()} ${monthNames[weekDates[0].getMonth()]} - ${weekDates[4].getDate()} ${monthNames[weekDates[4].getMonth()]}`;
 
       weekDates.forEach((d, idx) => {
         const key = formatDateKey(d);
         const hol = holidaysChile[key];
-        const isRed = (idx === 6) || Boolean(hol);
+        const isRed = Boolean(hol);
         const isToday = (key === todayKey);
 
         const col = document.createElement("div");
@@ -683,17 +671,10 @@
         `;
 
         const list = col.querySelector(`#list-${key}`);
-        
-        const dayTasks = tasks.filter(t => {
-          if (t.date !== key) return false;
-          const cat = t.category || "Laboral";
-          if (currentScopeFilter === "laboral") return cat.toLowerCase() === "laboral";
-          if (currentScopeFilter === "personal") return cat.toLowerCase() === "personal";
-          return true;
-        });
+        const dayTasks = tasks.filter(t => t.date === key && (t.category || "Laboral").toLowerCase() === "laboral");
 
         if (dayTasks.length === 0) {
-          list.innerHTML = '<span class="empty-text">Sin tareas</span>';
+          list.innerHTML = '<span class="empty-text">Sin tareas agendadas</span>';
         } else {
           dayTasks.forEach(t => {
             const card = document.createElement("div");
@@ -702,14 +683,12 @@
             card.onclick = () => openDetail(t.id);
             
             const badgeHora = (t.tieneHora && t.time) ? `<span class="card-time">⏰ ${t.time}</span>` : '';
-            const esPersonal = (t.category || "Laboral").toLowerCase() === "personal";
-            const badgeScope = `<span class="card-cat-badge ${esPersonal ? 'card-cat-personal' : 'card-cat-laboral'}">${esPersonal ? '🏠' : '💼'}</span>`;
-            const badgeClip = (t.respaldos && t.respaldos.length > 0) ? `<span title="Tiene ${t.respaldos.length} archivo(s) adjunto(s)" style="font-size:6.5pt;">📎 ${t.respaldos.length > 1 ? t.respaldos.length : ''}</span>` : '';
+            const badgeClip = (t.respaldos && t.respaldos.length > 0) ? `<span title="${t.respaldos.length} documento(s) adjunto(s)" style="font-size:8.5pt;">📎 ${t.respaldos.length > 1 ? t.respaldos.length : ''}</span>` : '';
 
             card.innerHTML = `
               <div class="card-top">
                 <span class="card-title">${t.subject}</span>
-                <div class="card-badges">${badgeClip} ${badgeScope} ${badgeHora}</div>
+                <div class="card-badges">${badgeClip} ${badgeHora}</div>
               </div>
               <div class="card-sender">👤 ${t.sender || 'General'}</div>
             `;
@@ -718,6 +697,7 @@
         }
         grid.appendChild(col);
       });
+      actualizarModoUI();
     }
 
     function openDetail(id) {
@@ -725,23 +705,16 @@
       const t = tasks.find(x => x.id === id);
       if (!t) return;
 
-      const esPersonal = (t.category || "Laboral").toLowerCase() === "personal";
       document.getElementById("dtTitle").textContent = t.subject;
       document.getElementById("dtSender").textContent = t.sender || "General";
       document.getElementById("dtDateTime").textContent = `${t.date} ${t.tieneHora ? '| ' + t.time + ' hrs' : '(Sin hora)'}`;
       document.getElementById("dtDetail").textContent = t.detail || "Sin síntesis.";
-      document.getElementById("dtAccion").textContent = t.accion || "Revisar.";
+      document.getElementById("dtAccion").textContent = t.accion || "Revisar y gestionar.";
 
       document.getElementById("dtPrioBadge").textContent = `Prioridad: ${t.priority || 'Media'}`;
-      const dtScope = document.getElementById("dtScopeBadge");
-      dtScope.textContent = esPersonal ? "ÁMBITO: PERSONAL" : "ÁMBITO: LABORAL";
-      dtScope.style.background = esPersonal ? "#CCFBF1" : "#E0F2FE";
-      dtScope.style.color = esPersonal ? "#0F766E" : "#0369A1";
-
       document.getElementById("dtStateBadge").textContent = (t.status === "managed") ? "ESTADO: REALIZADO" : "ESTADO: PENDIENTE";
       document.getElementById("btnToggleRealizado").innerHTML = (t.status === "managed") ? "↩ Reabrir" : "✓ Realizado";
 
-      // Renderizar respaldos adjuntos con enlaces seguros
       const rContainer = document.getElementById("dtRespaldosContainer");
       const rList = document.getElementById("dtRespaldosList");
       rList.innerHTML = "";
@@ -761,7 +734,6 @@
             enlace.onclick = () => alert("El archivo está subiéndose a Google Drive o no tiene enlace disponible.");
           }
           enlace.className = "badge-file";
-          enlace.style.textDecoration = "none";
           enlace.textContent = `📎 ${f.nombre || 'Ver Documento'}`;
           rList.appendChild(enlace);
         });
@@ -771,6 +743,7 @@
       }
 
       document.getElementById("modalDetailOverlay").style.display = "flex";
+      actualizarModoUI();
     }
 
     function closeDetailModal() { document.getElementById("modalDetailOverlay").style.display = "none"; }
@@ -787,14 +760,13 @@
       renderizarListaArchivosManuales();
       document.getElementById("avisoDuplicadoManual").style.display = "none";
       selectPriority("Media");
-      selectCategory("Laboral");
     }
 
     async function procesarArchivosManuales(input) {
       if (!input.files || input.files.length === 0) return;
       for (let i = 0; i < input.files.length; i++) {
         const file = input.files[i];
-        const b64 = await fileToBase64(file);
+        const b64 = await optimizarYCodificarArchivo(file);
         archivosManualesTemporales.push({
           nombre: file.name,
           mimeType: file.type || "application/octet-stream",
@@ -811,7 +783,7 @@
       archivosManualesTemporales.forEach((arch, idx) => {
         const tag = document.createElement("span");
         tag.className = "badge-file";
-        tag.innerHTML = `${arch.nombre} <b style="cursor:pointer; margin-left:3px;" onclick="quitarArchivoManual(${idx})">✕</b>`;
+        tag.innerHTML = `${arch.nombre} <b style="cursor:pointer; margin-left:5px; color:#DC2626;" onclick="quitarArchivoManual(${idx})">✕</b>`;
         container.appendChild(tag);
       });
     }
@@ -822,9 +794,13 @@
     }
 
     function abrirModalNuevo() {
+      if (!esModoAdmin) {
+        alert("Esta agenda está en modo Solo Lectura. Desbloquea con la clave 25078 para agregar eventos.");
+        return;
+      }
       isEditing = false;
       editEventId = null;
-      document.getElementById("modalTitleStr").textContent = "Nuevo Evento";
+      document.getElementById("modalTitleStr").textContent = "Nuevo Evento Laboral";
       document.getElementById("btnGuardarEvento").textContent = "GUARDAR EVENTO";
       limpiarFormularioManual();
       const hoyKey = formatDateKey(new Date());
@@ -884,7 +860,7 @@
           item.time = hora;
           item.tieneHora = tieneH;
           item.timeMinutos = min;
-          item.category = selectedCategory;
+          item.category = "Laboral";
           item.priority = selectedPriority;
           item.sender = document.getElementById("fOrganizador").value.trim() || "General";
           item.detail = document.getElementById("fDetalle").value.trim();
@@ -903,18 +879,17 @@
           detail: document.getElementById("fDetalle").value.trim(),
           accion: document.getElementById("fAccion").value.trim(),
           priority: selectedPriority,
-          category: selectedCategory,
+          category: "Laboral",
           status: "pending",
           respaldos: adjuntosFinales
         };
         tasks.push(nuevo);
       }
 
-      localStorage.setItem("agenda_tdah_local", JSON.stringify(tasks));
+      localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
       closeModal();
       renderCalendar();
 
-      // Enviar a Google Apps Script
       try {
         const payload = {
           accion: isEditing ? "editar_evento" : "crear_evento",
@@ -937,14 +912,13 @@
         });
         const resJson = await res.json();
         
-        // Si el script devolvió las URLs creadas de Google Drive, actualizarlas
         if (resJson && resJson.urls && Array.isArray(resJson.urls)) {
           const target = tasks.find(t => t.id === (isEditing ? editEventId : tasks[tasks.length - 1].id));
           if (target && target.respaldos) {
             target.respaldos.forEach((r, i) => {
               if (resJson.urls[i]) r.url = resJson.urls[i];
             });
-            localStorage.setItem("agenda_tdah_local", JSON.stringify(tasks));
+            localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
             renderCalendar();
           }
         }
@@ -957,6 +931,7 @@
     }
 
     function prepararEdicionActual() {
+      if (!esModoAdmin) { alert("Solo lectura."); return; }
       if (!currentEventId) return;
       const t = tasks.find(x => x.id === currentEventId);
       if (!t) return;
@@ -976,8 +951,6 @@
 
       archivosManualesTemporales = t.respaldos ? [...t.respaldos] : [];
       renderizarListaArchivosManuales();
-
-      selectCategory(t.category || "Laboral");
       selectPriority(t.priority || "Media");
 
       closeDetailModal();
@@ -985,21 +958,23 @@
     }
 
     function eliminarEventoActual() {
+      if (!esModoAdmin) { alert("Solo lectura."); return; }
       if (!currentEventId) return;
-      if (confirm("¿Deseas eliminar este evento de la agenda?")) {
+      if (confirm("¿Deseas eliminar este evento de la agenda laboral?")) {
         tasks = tasks.filter(x => x.id !== currentEventId);
-        localStorage.setItem("agenda_tdah_local", JSON.stringify(tasks));
+        localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
         closeDetailModal();
         renderCalendar();
       }
     }
 
     function toggleRealizadoActual() {
+      if (!esModoAdmin) { alert("Solo lectura."); return; }
       if (!currentEventId) return;
       const t = tasks.find(x => x.id === currentEventId);
       if (!t) return;
       t.status = (t.status === "managed") ? "pending" : "managed";
-      localStorage.setItem("agenda_tdah_local", JSON.stringify(tasks));
+      localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
       openDetail(currentEventId);
       renderCalendar();
     }
@@ -1013,14 +988,14 @@
         box.innerHTML = "";
         return;
       }
-      const matches = tasks.filter(t => normalizarTexto(t.subject).includes(q) || normalizarTexto(t.detail).includes(q) || normalizarTexto(t.sender).includes(q));
+      const matches = tasks.filter(t => (t.category || "Laboral").toLowerCase() === "laboral" && (normalizarTexto(t.subject).includes(q) || normalizarTexto(t.detail).includes(q) || normalizarTexto(t.sender).includes(q)));
       if (matches.length === 0) {
-        box.innerHTML = '<div style="padding:8px; font-size:7pt; color:#94A3B8;">Sin coincidencias</div>';
+        box.innerHTML = '<div style="padding:10px; font-size:8.5pt; color:#94A3B8; font-weight:600;">Sin coincidencias</div>';
       } else {
         box.innerHTML = matches.map(m => `
           <div class="search-item" onclick="openDetail('${m.id}'); document.getElementById('searchResults').style.display='none';">
-            <span style="font-weight:700; font-size:7.5pt;">${m.subject}</span>
-            <span style="font-size:6.5pt; color:var(--text-muted);">${m.date} | ${m.category}</span>
+            <span style="font-weight:800; font-size:9pt; color:#0F172A;">${m.subject}</span>
+            <span style="font-size:8pt; color:var(--text-muted);">${m.date} | ${m.sender || 'General'}</span>
           </div>
         `).join("");
       }
@@ -1035,30 +1010,7 @@
       }
     });
 
-    // --- MASCOTAS, BITÁCORA Y RESPALDO ---
-    function abrirModalMascotas() {
-      const modal = document.getElementById("modalMascotasOverlay");
-      const list = document.getElementById("mascotasList");
-      const petKeywords = ["veterinario", "mascota", "ramon", "ramona", "jackson", "vacuna", "perro", "gato"];
-      const petTasks = tasks.filter(t => {
-        const txt = normalizarTexto(`${t.subject} ${t.detail} ${t.sender}`);
-        return petKeywords.some(k => txt.includes(k));
-      });
-
-      if (petTasks.length === 0) {
-        list.innerHTML = '<span style="color:#94A3B8;">No hay compromisos de mascotas registrados.</span>';
-      } else {
-        list.innerHTML = petTasks.map(t => `
-          <div class="bitacora-item" onclick="cerrarModalMascotas(); openDetail('${t.id}')">
-            <span><b>${t.subject}</b> (${t.date})</span>
-            <span style="font-size:6.5pt; color:var(--text-muted);">${t.status === 'managed' ? '✓' : 'Pendiente'}</span>
-          </div>
-        `).join("");
-      }
-      modal.style.display = "flex";
-    }
-    function cerrarModalMascotas() { document.getElementById("modalMascotasOverlay").style.display = "none"; }
-
+    // --- BITÁCORA Y RESPALDO ---
     function abrirModalBitacora() {
       renderizarBitacora();
       document.getElementById("modalBitacoraOverlay").style.display = "flex";
@@ -1068,7 +1020,7 @@
     function renderizarBitacora(filtrarDuplicados = false) {
       const container = document.getElementById("bitacoraListContainer");
       const q = normalizarTexto(document.getElementById("bitacoraSearch").value);
-      let list = tasks.slice();
+      let list = tasks.filter(t => (t.category || "Laboral").toLowerCase() === "laboral");
 
       if (q) list = list.filter(t => normalizarTexto(t.subject).includes(q));
 
@@ -1084,17 +1036,17 @@
       document.getElementById("bitacoraTotal").textContent = `${list.length} evento(s)`;
 
       if (list.length === 0) {
-        container.innerHTML = '<span style="font-size:7pt; color:#94A3B8; text-align:center;">Sin registros.</span>';
+        container.innerHTML = '<span style="font-size:9pt; color:#94A3B8; text-align:center; padding:12px;">Sin registros institucionales.</span>';
         return;
       }
 
       container.innerHTML = list.map(t => `
         <div class="bitacora-item" onclick="cerrarModalBitacora(); openDetail('${t.id}')">
           <div>
-            <div style="font-weight:700; font-size:7.5pt;">${t.subject}</div>
-            <div style="font-size:6.5pt; color:var(--text-muted);">${t.date} ${t.tieneHora ? '| ' + t.time : ''} • ${t.category}</div>
+            <div style="font-weight:800; font-size:9.5pt; color:#0F172A;">${t.subject}</div>
+            <div style="font-size:8pt; color:var(--text-muted); font-weight:600;">${t.date} ${t.tieneHora ? '| ' + t.time : ''} • ${t.sender || 'General'}</div>
           </div>
-          <span style="font-size:7pt;">${t.status === 'managed' ? '✅' : '⏳'}</span>
+          <span style="font-size:9pt;">${t.status === 'managed' ? '✅' : '⏳'}</span>
         </div>
       `).join("");
     }
@@ -1107,13 +1059,17 @@
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(tasks, null, 2));
       const dlAnchor = document.createElement('a');
       dlAnchor.setAttribute("href", dataStr);
-      dlAnchor.setAttribute("download", `respaldo_agenda_${formatDateKey(new Date())}.json`);
+      dlAnchor.setAttribute("download", `respaldo_agenda_carlos_condell_${formatDateKey(new Date())}.json`);
       dlAnchor.click();
       dlAnchor.remove();
     }
 
-    // --- ASISTENTE AIA: PROCESAMIENTO Y MULTI-SUBIDA ---
+    // --- ASISTENTE AIA: COMPRESIÓN ULTRA-RÁPIDA Y EJECUCIÓN CON GEMINI FLASH ---
     function abrirModalIA() { 
+      if (!esModoAdmin) { 
+        alert("La carga inteligente con IA está reservada para el Equipo Directivo (Modo Edición). Ingresa la clave 25078."); 
+        return; 
+      }
       document.getElementById("iaContenedorResultados").style.display = "none";
       document.getElementById("iaEstado").style.display = "none";
       document.getElementById("iaArchivoInfo").style.display = "none";
@@ -1127,11 +1083,51 @@
       document.getElementById("modalIAOverlay").style.display = "none"; 
     }
 
-    function fileToBase64(file) {
+    // Optimiza y comprime imágenes al vuelo para que Gemini responda en 1-2 segundos
+    function optimizarYCodificarArchivo(file) {
       return new Promise((resolve, reject) => {
+        if (!file.type.startsWith("image/")) {
+          // Si es PDF, codificación directa
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result.substring(reader.result.indexOf(',') + 1));
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+          return;
+        }
+
+        const img = new Image();
         const reader = new FileReader();
-        reader.onload = () => { const res = reader.result; resolve(res.substring(res.indexOf(',') + 1)); };
-        reader.onerror = reject; reader.readAsDataURL(file);
+        reader.onload = (e) => {
+          img.src = e.target.result;
+          img.onload = () => {
+            const canvas = document.createElement("canvas");
+            let width = img.width;
+            let height = img.height;
+            const maxDimension = 1400; // Resolución perfecta para OCR rápido
+
+            if (width > maxDimension || height > maxDimension) {
+              if (width > height) {
+                height = Math.round((height * maxDimension) / width);
+                width = maxDimension;
+              } else {
+                width = Math.round((width * maxDimension) / height);
+                height = maxDimension;
+              }
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, width, height);
+
+            // Exportar en JPEG optimizado (calidad 0.82)
+            const dataUrl = canvas.toDataURL("image/jpeg", 0.82);
+            resolve(dataUrl.substring(dataUrl.indexOf(',') + 1));
+          };
+          img.onerror = reject;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
       });
     }
 
@@ -1156,13 +1152,13 @@
             const imgType = item.types.find(t => t.startsWith("image/"));
             if (imgType) {
               const blob = await item.getType(imgType);
-              ejecutarLlamadaGeminiIA([blob], [imgType], ["Captura_Pegada.png"]);
+              ejecutarLlamadaGeminiIA([blob], [imgType], ["Captura_Pegada.jpg"]);
               return;
             }
           }
           alert("No se encontró imagen en el portapapeles. Copia con Windows + Shift + S y vuelve a intentar.");
         } catch (err) {
-          alert("Presiona Ctrl + V sobre esta ventana para pegar la imagen.");
+          alert("Presiona Ctrl + V sobre esta ventana para pegar la captura.");
         }
       };
     }
@@ -1174,7 +1170,7 @@
         for (let i = 0; i < items.length; i++) {
           if (items[i].type.indexOf("image") !== -1) {
             const blob = items[i].getAsFile();
-            ejecutarLlamadaGeminiIA([blob], [items[i].type], ["Captura_Pegada.png"]);
+            ejecutarLlamadaGeminiIA([blob], ["image/jpeg"], ["Captura_Pegada.jpg"]);
             break;
           }
         }
@@ -1199,7 +1195,7 @@
       const elEstado = document.getElementById("iaEstado");
       const elInfo = document.getElementById("iaArchivoInfo");
       elEstado.style.display = "block";
-      elEstado.textContent = "⏳ Analizando con Gemini IA...";
+      elEstado.textContent = "⚡ Analizando rápidamente con Gemini Flash...";
       document.getElementById("iaContenedorResultados").style.display = "none";
 
       try {
@@ -1207,8 +1203,9 @@
         const inlineParts = [];
 
         for (let i = 0; i < blobs.length; i++) {
-          const base64Data = await fileToBase64(blobs[i]);
-          const tipoReal = (mimeTypes[i] && mimeTypes[i].includes("pdf")) ? "application/pdf" : "image/png";
+          const base64Data = await optimizarYCodificarArchivo(blobs[i]);
+          const esPdf = mimeTypes[i] && mimeTypes[i].includes("pdf");
+          const tipoReal = esPdf ? "application/pdf" : "image/jpeg";
           archivosRespaldoIA.push({
             nombre: nombresArchivos[i],
             mimeType: tipoReal,
@@ -1218,28 +1215,28 @@
           inlineParts.push({ inlineData: { mimeType: tipoReal, data: base64Data } });
         }
 
-        elInfo.textContent = `📎 Documentos cargados: ${nombresArchivos.join(", ")}`;
+        elInfo.textContent = `📎 Documento cargado: ${nombresArchivos.join(", ")}`;
         elInfo.style.display = "block";
 
         const promptInstruccion = 
-          "Eres un asistente directivo pedagógico. Analiza los documentos adjuntos.\n" +
-          "Identifica todos los eventos, fechas o hitos (como Simce, reuniones, plazos).\n" +
-          "Si contiene múltiples cursos o fechas, genera un elemento individual por cada evento.\n" +
-          "Responde ÚNICA Y EXCLUSIVAMENTE con un arreglo JSON válido sin Markdown:\n" +
-          "[\n  {\n    \"asunto\": \"Título breve\",\n    \"organizador\": \"Entidad\",\n    \"fecha\": \"YYYY-MM-DD\",\n    \"hora\": \"09:00\",\n    \"prioridad\": \"Alta\",\n    \"sintesis\": \"Resumen ejecutivo\",\n    \"accion\": \"Acción\"\n  }\n]";
+          "Eres un asistente directivo pedagógico de la Escuela Comandante Carlos Condell. Analiza de inmediato los documentos o capturas adjuntas.\n" +
+          "Identifica con precisión todos los eventos, plazos, reuniones, evaluaciones (Simce, DIA, UTP, etc.).\n" +
+          "Si hay varios cursos o fechas distintas, genera un elemento individual por cada evento.\n" +
+          "Responde ÚNICA Y EXCLUSIVAMENTE con un arreglo JSON válido (sin Markdown, sin explicaciones adicionales):\n" +
+          "[\n  {\n    \"asunto\": \"Título breve y claro\",\n    \"organizador\": \"Entidad o convocante (ej: Mineduc, UTP, Dirección)\",\n    \"fecha\": \"YYYY-MM-DD\",\n    \"hora\": \"09:00\",\n    \"prioridad\": \"Alta\",\n    \"sintesis\": \"Resumen ejecutivo breve\",\n    \"accion\": \"Acción requerida\"\n  }\n]";
 
         const payload = {
           contents: [{ parts: [{ text: promptInstruccion }, ...inlineParts] }],
-          generationConfig: { responseMimeType: "application/json" }
+          generationConfig: { responseMimeType: "application/json", temperature: 0.1 }
         };
 
-        // LLAMADA EXACTA Y VIGENTE A GEMINI 3.8 FLASH
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${GEMINI_API_KEY}`, {
+        // Modelo Ultra-Rápido Gemini 2.5 Flash
+        const res = await fetch(`[https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=$](https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=$){GEMINI_API_KEY}`, {
           method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload)
         });
 
         const jsonResp = await res.json();
-        if (jsonResp.error) throw new Error(jsonResp.error.message || "Error al conectar con IA.");
+        if (jsonResp.error) throw new Error(jsonResp.error.message || "Error al conectar con la IA.");
 
         let textoGenerado = jsonResp.candidates[0].content.parts[0].text.trim();
         textoGenerado = textoGenerado.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```$/i, '').trim();
@@ -1261,7 +1258,7 @@
       listaDiv.innerHTML = "";
 
       if (!lista || lista.length === 0) {
-        listaDiv.innerHTML = "<div style='font-size:7.5pt; color:#94A3B8;'>No se detectaron eventos.</div>";
+        listaDiv.innerHTML = "<div style='font-size:9pt; color:#94A3B8; text-align:center; padding:10px;'>No se detectaron eventos en el documento.</div>";
         contenedor.style.display = "block";
         return;
       }
@@ -1272,30 +1269,30 @@
         const item = document.createElement("div");
         item.className = "ia-item-card";
         
-        let avisoDupHtml = dup ? `<div style="color:#DC2626; font-size:6.8pt; font-weight:bold;">⚠️ Ya agendado: "${dup.subject}"</div>` : '';
+        let avisoDupHtml = dup ? `<div style="color:#DC2626; font-size:8pt; font-weight:bold;">⚠️ Ya agendado: \"${dup.subject}\"</div>` : '';
 
         item.innerHTML = `
           <div class="ia-item-header">
-            <input type="text" class="ia-edit-input" style="font-weight:700; width:75%;" value="${ev.asunto || ''}" onchange="actualizarDatoIA(${idx}, 'asunto', this.value)">
-            <button type="button" class="icon-btn" style="color:#DC2626 !important; height:22px !important; padding:0 4px !important;" onclick="eliminarPropuestaIA(${idx})" title="Descartar este evento">✕</button>
+            <input type="text" class="ia-edit-input" style="font-weight:800; width:80%;" value="${ev.asunto || ''}" onchange="actualizarDatoIA(${idx}, 'asunto', this.value)">
+            <button type="button" class="icon-btn" style="color:#DC2626 !important; height:26px !important; padding:0 8px !important;" onclick="eliminarPropuestaIA(${idx})" title="Descartar evento">✕</button>
           </div>
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:4px;">
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
             <div>
-              <label style="font-size:6pt; margin:0;">Fecha:</label>
+              <label style="font-size:7.5pt; margin:0;">Fecha:</label>
               <input type="date" class="ia-edit-input" value="${fKey}" onchange="actualizarDatoIA(${idx}, 'fecha', this.value)">
             </div>
             <div>
-              <label style="font-size:6pt; margin:0;">Hora:</label>
+              <label style="font-size:7.5pt; margin:0;">Hora:</label>
               <input type="time" class="ia-edit-input" value="${ev.hora || '09:00'}" onchange="actualizarDatoIA(${idx}, 'hora', this.value)">
             </div>
           </div>
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:4px;">
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
             <div>
-              <label style="font-size:6pt; margin:0;">Organiza:</label>
+              <label style="font-size:7.5pt; margin:0;">Organiza:</label>
               <input type="text" class="ia-edit-input" value="${ev.organizador || 'General'}" onchange="actualizarDatoIA(${idx}, 'organizador', this.value)">
             </div>
             <div>
-              <label style="font-size:6pt; margin:0;">Prioridad:</label>
+              <label style="font-size:7.5pt; margin:0;">Prioridad:</label>
               <select class="ia-edit-input" onchange="actualizarDatoIA(${idx}, 'prioridad', this.value)">
                 <option value="Alta" ${ev.prioridad === 'Alta' ? 'selected' : ''}>Alta</option>
                 <option value="Media" ${ev.prioridad === 'Media' || !ev.prioridad ? 'selected' : ''}>Media</option>
@@ -1304,7 +1301,7 @@
             </div>
           </div>
           <div>
-            <label style="font-size:6pt; margin:0;">Síntesis:</label>
+            <label style="font-size:7.5pt; margin:0;">Síntesis:</label>
             <textarea class="ia-edit-input" rows="1" onchange="actualizarDatoIA(${idx}, 'sintesis', this.value)">${ev.sintesis || ''}</textarea>
           </div>
           ${avisoDupHtml}
@@ -1347,22 +1344,21 @@
           timeMinutos: mins,
           tieneHora: Boolean(hora),
           isAnnual: false,
-          subject: ev.asunto || "Compromiso IA",
+          subject: ev.asunto || "Compromiso Institucional",
           sender: ev.organizador || "General",
           detail: ev.sintesis || "",
           accion: ev.accion || "Gestionar",
           priority: ev.prioridad || "Media",
-          category: inferirCategoria(ev),
+          category: "Laboral",
           status: "pending",
           respaldos: [...respaldoInfo]
         });
       });
 
-      localStorage.setItem("agenda_tdah_local", JSON.stringify(tasks));
+      localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
       renderCalendar();
       cerrarModalIA();
 
-      // Guardar en Google Sheets por cada evento detectado
       for (const ev of eventosDetectadosIA) {
         const fKey = parsearFecha(ev.fecha) || formatDateKey(new Date());
         try {
@@ -1384,7 +1380,6 @@
           });
           const resJson = await res.json();
           if (resJson && resJson.urls && Array.isArray(resJson.urls)) {
-            // Asignar los enlaces de Drive devueltos a los eventos
             tasks.forEach(t => {
               if (t.respaldos && t.subject === ev.asunto) {
                 t.respaldos.forEach((r, i) => {
@@ -1392,11 +1387,11 @@
                 });
               }
             });
-            localStorage.setItem("agenda_tdah_local", JSON.stringify(tasks));
+            localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
             renderCalendar();
           }
         } catch (e) {
-          console.warn("Aviso al guardar con Google Sheets:", e);
+          console.warn("Aviso al guardar en Google Sheets:", e);
         }
       }
 
@@ -1420,7 +1415,7 @@
     
     const hoyInicial = new Date();
     const lblSub = document.getElementById("full-date-subtitle");
-    if (lblSub) lblSub.textContent = `${hoyInicial.getDate()} ${monthNames[hoyInicial.getMonth()]} ${hoyInicial.getFullYear()}`;
+    if (lblSub) lblSub.textContent = formatFechaCompleta(hoyInicial);
 
     renderCalendar();
     sincronizarDesdeSheets();
