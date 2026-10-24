@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Agenda Carlos Condell</title>
+  <title>Agenda Carlos Condell - San Bernardo</title>
   <style>
     :root {
       --bg-app: #F8FAFC;
@@ -12,7 +12,7 @@
       --text-main: #0F172A;
       --text-muted: #334155;
 
-      /* Paleta Pastel Suave */
+      /* Paleta Pastel Base Columnas */
       --day-lunes-bg: #F1F5F9;
       --day-lunes-border: #CBD5E1;
       --day-lunes-accent: #1E293B;
@@ -33,18 +33,22 @@
       --day-viernes-border: #FED7AA;
       --day-viernes-accent: #9A3412;
 
-      /* Bordes de prioridad resaltados */
-      --prio-alta-border: #DC2626;
-      --prio-alta-bg: #FEF2F2;
-      --prio-alta-shadow: rgba(220, 38, 38, 0.12);
+      /* COLORES ELÉCTRICOS VIBRANTES PARA PRIORIDADES */
+      --prio-alta-elec: #FF003C;
+      --prio-alta-bg: #FFF1F2;
+      --prio-alta-glow: rgba(255, 0, 60, 0.25);
 
-      --prio-media-border: #D97706;
-      --prio-media-bg: #FFFBEB;
-      --prio-media-shadow: rgba(217, 119, 6, 0.12);
+      --prio-media-elec: #FFB300;
+      --prio-media-bg: #FFFDE7;
+      --prio-media-glow: rgba(255, 179, 0, 0.28);
 
-      --prio-baja-border: #0284C7;
-      --prio-baja-bg: #F0F9FF;
-      --prio-baja-shadow: rgba(2, 132, 199, 0.12);
+      --prio-baja-elec: #00E676;
+      --prio-baja-bg: #F0FDF4;
+      --prio-baja-glow: rgba(0, 230, 118, 0.28);
+
+      /* DÍA EN CURSO (HOY) ELÉCTRICO */
+      --today-elec-border: #FFD600;
+      --today-glow: 0 0 16px rgba(255, 214, 0, 0.45);
 
       --radius-sm: 8px;
       --radius-md: 12px;
@@ -54,12 +58,12 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif; }
     body { background-color: var(--bg-app); height: 100vh; padding: 6px 10px; color: var(--text-main); display: flex; flex-direction: column; overflow: hidden; }
     
-    /* ENCABEZADO UNIFICADO Y ELEGANTE */
+    /* ENCABEZADO EQUILIBRADO CON SAN BERNARDO */
     header { 
       display: flex; align-items: center; justify-content: space-between;
       background: var(--surface); padding: 6px 20px; border-radius: var(--radius-md);
       border: 2px solid var(--border-subtle); box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
-      flex-shrink: 0; margin-bottom: 6px; width: 100%; min-height: 58px; box-sizing: border-box;
+      flex-shrink: 0; margin-bottom: 6px; width: 100%; min-height: 60px; box-sizing: border-box;
     }
     
     .brand-block {
@@ -69,34 +73,32 @@
       font-size: 17pt; font-weight: 900; color: #1E3A8A; white-space: nowrap; margin: 0; line-height: 1.1; letter-spacing: -0.4px;
     }
     .brand-meta {
-      font-size: 8.5pt; font-weight: 800; color: #64748B; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 0.5px;
+      font-size: 9pt; font-weight: 800; color: #475569; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 0.5px;
     }
     .badge-rbd {
-      background: #EFF6FF; color: #1D4ED8; padding: 1px 6px; border-radius: 4px; border: 1px solid #BFDBFE; font-weight: 900;
+      background: #EFF6FF; color: #1D4ED8; padding: 1px 7px; border-radius: 4px; border: 1.5px solid #BFDBFE; font-weight: 900;
     }
 
-    /* MÓDULO INTEGRADO: FECHA + RELOJ */
+    /* MÓDULO ANCHO: FECHA Y NÚMEROS GIGANTES SIN HORA/MIN/SEG */
     .time-module {
-      display: flex; align-items: center; background: #0F172A; border-radius: var(--radius-md);
-      padding: 4px 6px 4px 16px; gap: 14px; border: 2px solid #334155;
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+      display: flex; align-items: center; background: #0A0F1D; border-radius: var(--radius-md);
+      padding: 4px 12px 4px 20px; gap: 18px; border: 2.5px solid #1E293B;
+      box-shadow: 0 4px 16px rgba(10, 15, 29, 0.35);
     }
     .date-display-text {
-      color: #F8FAFC; font-size: 11pt; font-weight: 800; text-transform: capitalize;
+      color: #F8FAFC; font-size: 13pt; font-weight: 900; text-transform: capitalize;
       letter-spacing: 0.2px; white-space: nowrap;
     }
 
     .flip-clock-container { 
-      display: flex; align-items: center; gap: 5px;
+      display: flex; align-items: center; gap: 6px;
     }
-    .flip-section { display: flex; flex-direction: column; align-items: center; justify-content: center; }
-    .flip-label-top { font-size: 6pt; letter-spacing: 0.8px; color: #94A3B8; margin-bottom: 1px; font-weight: 800; text-transform: uppercase; line-height: 1; }
     .flip-card { 
-      background: #1E293B; color: #FFFFFF; font-size: 17pt; font-weight: 900; 
-      padding: 2px 8px; border-radius: 6px; min-width: 36px; text-align: center; line-height: 1.1; 
-      letter-spacing: 0.6px; border: 1px solid #475569;
+      background: #111827; color: #FFFFFF; font-size: 24pt; font-weight: 900; 
+      padding: 0 10px; border-radius: 6px; min-width: 46px; text-align: center; line-height: 1.15; 
+      letter-spacing: 1px; border: 1.5px solid #374151; box-shadow: inset 0 1px 2px rgba(255,255,255,0.1);
     }
-    .flip-colon { color: #94A3B8; font-size: 17pt; font-weight: bold; margin: 0 1px; }
+    .flip-colon { color: #E2E8F0; font-size: 22pt; font-weight: 900; margin: 0 1px; line-height: 1; }
 
     /* LAYOUT PRINCIPAL: DÍAS + BARRA LATERAL DERECHA */
     .main-workspace {
@@ -107,18 +109,32 @@
     main#plannerSection { flex: 1; display: flex; min-height: 0; min-width: 0; }
     .week-container { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; width: 100%; height: 100%; }
     
-    .day-column { border-radius: var(--radius-md); padding: 8px 8px; display: flex; flex-direction: column; gap: 6px; min-height: 0; overflow: hidden; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04); }
+    .day-column { 
+      border-radius: var(--radius-md); padding: 8px 8px; display: flex; flex-direction: column; gap: 6px; 
+      min-height: 0; overflow: hidden; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+      transition: all 0.2s ease;
+    }
     .day-lunes { background: var(--day-lunes-bg); border: 2px solid var(--day-lunes-border); }
     .day-martes { background: var(--day-martes-bg); border: 2px solid var(--day-martes-border); }
     .day-miercoles { background: var(--day-miercoles-bg); border: 2px solid var(--day-miercoles-border); }
     .day-jueves { background: var(--day-jueves-bg); border: 2px solid var(--day-jueves-border); }
     .day-viernes { background: var(--day-viernes-bg); border: 2px solid var(--day-viernes-border); }
 
-    .day-column.is-today { border-width: 3.5px !important; border-color: #D97706 !important; box-shadow: 0 4px 16px rgba(217, 119, 6, 0.22) !important; }
+    /* DÍA EN CURSO (HOY) RESALTADO CON BORDE ELÉCTRICO Y GLOW */
+    .day-column.is-today { 
+      border-width: 4px !important; 
+      border-color: var(--today-elec-border) !important; 
+      box-shadow: var(--today-glow) !important;
+      background: #FFFFFF !important;
+    }
+    .day-column.is-today .day-header {
+      background: #FEF9C3 !important;
+      border-color: #FACC15 !important;
+    }
     
     .day-header { 
       text-align: center; padding: 6px 4px 7px 4px; border-radius: 8px;
-      background: rgba(255, 255, 255, 0.75); border: 1.5px solid rgba(0,0,0,0.06);
+      background: rgba(255, 255, 255, 0.85); border: 1.5px solid rgba(0,0,0,0.08);
       flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 2px;
     }
     .day-name { font-size: 11.5pt; font-weight: 900; text-transform: uppercase; line-height: 1.1; letter-spacing: 0.4px; }
@@ -128,11 +144,14 @@
     .day-jueves .day-name { color: var(--day-jueves-accent); }
     .day-viernes .day-name { color: var(--day-viernes-accent); }
 
-    .day-number { font-size: 10pt; font-weight: 800; color: #1E293B; margin-top: 1px; }
+    .day-number { font-size: 10.5pt; font-weight: 900; color: #1E293B; margin-top: 1px; }
     .text-red { color: #BE123C !important; }
     
     .badge-tag { font-size: 8pt; padding: 2px 7px; border-radius: 6px; display: inline-block; margin-top: 3px; background: #FFFFFF; color: #0F172A; font-weight: 800; text-transform: uppercase; border: 1.5px solid var(--border-strong); }
-    .badge-today { background: #FEF08A; color: #854D0E; border: 1.5px solid #EAB308; }
+    .badge-today { 
+      background: #FFD600 !important; color: #000000 !important; border: 2px solid #EAB308 !important; 
+      font-weight: 900 !important; box-shadow: 0 2px 6px rgba(234, 179, 8, 0.4) !important;
+    }
     
     .cards-container { 
       display: flex; flex-direction: column; gap: 7px; flex: 1; min-height: 0; 
@@ -142,34 +161,40 @@
     .cards-container::-webkit-scrollbar { width: 5px; }
     .cards-container::-webkit-scrollbar-thumb { background: #94A3B8; border-radius: 6px; }
     
-    /* TARJETA CON BORDE RESALTADO POR PRIORIDAD */
+    /* TARJETA CON COLORES ELÉCTRICOS DE IMPACTO */
     .task-card { 
       width: 100%; background: #FFFFFF; padding: 9px 11px; border-radius: var(--radius-sm);
       display: flex; flex-direction: column; gap: 4px; cursor: pointer;
       border: 2px solid var(--border-subtle);
-      border-left: 6.5px solid var(--border-strong);
+      border-left: 7.5px solid var(--border-strong);
       box-shadow: 0 1px 4px rgba(0,0,0,0.05);
       transition: transform 0.1s ease, box-shadow 0.1s ease;
     }
-    .task-card:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .task-card:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
     
+    /* PRIORIDAD ALTA: ROJO ELÉCTRICO NEÓN */
     .task-card.prio-alta { 
-      border-color: #F87171; 
-      border-left: 7px solid var(--prio-alta-border); 
-      box-shadow: 0 2px 6px var(--prio-alta-shadow);
+      border-color: #FF003C !important; 
+      border-left: 8px solid var(--prio-alta-elec) !important; 
+      background: var(--prio-alta-bg) !important;
+      box-shadow: 0 2px 8px var(--prio-alta-glow) !important;
     } 
+    /* PRIORIDAD MEDIA: AMARILLO ELÉCTRICO */
     .task-card.prio-media { 
-      border-color: #FBBF24; 
-      border-left: 7px solid var(--prio-media-border); 
-      box-shadow: 0 2px 6px var(--prio-media-shadow);
+      border-color: #FFB300 !important; 
+      border-left: 8px solid var(--prio-media-elec) !important; 
+      background: var(--prio-media-bg) !important;
+      box-shadow: 0 2px 8px var(--prio-media-glow) !important;
     } 
+    /* PRIORIDAD BAJA: VERDE ELÉCTRICO NEÓN */
     .task-card.prio-baja { 
-      border-color: #38BDF8; 
-      border-left: 7px solid var(--prio-baja-border); 
-      box-shadow: 0 2px 6px var(--prio-baja-shadow);
+      border-color: #00E676 !important; 
+      border-left: 8px solid var(--prio-baja-elec) !important; 
+      background: var(--prio-baja-bg) !important;
+      box-shadow: 0 2px 8px var(--prio-baja-glow) !important;
     } 
     
-    .task-card.is-done { background: #F8FAFC !important; opacity: 0.85; border-color: #CBD5E1 !important; border-left-color: #94A3B8 !important; }
+    .task-card.is-done { background: #F8FAFC !important; opacity: 0.85; border-color: #CBD5E1 !important; border-left-color: #94A3B8 !important; box-shadow: none !important; }
     .task-card.is-done .card-title { text-decoration: line-through; color: #64748B !important; }
 
     .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 6px; }
@@ -229,6 +254,9 @@
     .btn-side-sync { background: #F0FDF4 !important; border-color: #86EFAC !important; color: #166534 !important; }
     .btn-side-sync:hover { background: #DCFCE7 !important; }
 
+    .btn-side-datos { background: #EEF2FF !important; border-color: #818CF8 !important; color: #3730A3 !important; font-weight: 900 !important; }
+    .btn-side-datos:hover { background: #E0E7FF !important; }
+
     .btn-side-tecnico { background: #F8FAFC !important; border-color: #64748B !important; color: #0F172A !important; font-weight: 900 !important; }
     .btn-side-tecnico:hover { background: #E2E8F0 !important; border-color: #334155 !important; }
 
@@ -285,17 +313,17 @@
     .modal-draggable-header { cursor: move; user-select: none; display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 2px solid var(--border-subtle); }
 
     .btn-prio { 
-      background: #FFFFFF !important; color: #0F172A !important; border: 2px solid var(--border-strong) !important;
-      border-radius: var(--radius-sm); padding: 0 12px !important; height: 38px !important; cursor: pointer;
-      font-size: 9.5pt; font-weight: 800 !important; display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+      background: #FFFFFF !important; color: #0F172A !important; border: 2.5px solid var(--border-strong) !important;
+      border-radius: var(--radius-sm); padding: 0 14px !important; height: 40px !important; cursor: pointer;
+      font-size: 10pt; font-weight: 900 !important; display: inline-flex; align-items: center; justify-content: center; gap: 5px;
     }
-    .btn-prio.selected-alta { border-color: var(--prio-alta-border) !important; background: var(--prio-alta-bg) !important; color: #991B1B !important; }
-    .btn-prio.selected-media { border-color: var(--prio-media-border) !important; background: var(--prio-media-bg) !important; color: #92400E !important; }
-    .btn-prio.selected-baja { border-color: var(--prio-baja-border) !important; background: var(--prio-baja-bg) !important; color: #0369A1 !important; }
+    .btn-prio.selected-alta { border-color: #FF003C !important; background: var(--prio-alta-bg) !important; color: #FF003C !important; }
+    .btn-prio.selected-media { border-color: #FFB300 !important; background: var(--prio-media-bg) !important; color: #B45309 !important; }
+    .btn-prio.selected-baja { border-color: #00E676 !important; background: var(--prio-baja-bg) !important; color: #15803D !important; }
 
     .checkbox-container { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
     .checkbox-container input { width: 18px; height: 18px; cursor: pointer; }
-    .aviso-duplicado { background: var(--prio-alta-bg); border: 2px solid var(--prio-alta-border); color: #991B1B; padding: 8px 14px; border-radius: var(--radius-sm); font-size: 9.5pt; font-weight: 800; display: none; margin-top: 4px; }
+    .aviso-duplicado { background: var(--prio-alta-bg); border: 2px solid var(--prio-alta-elec); color: #FF003C; padding: 8px 14px; border-radius: var(--radius-sm); font-size: 9.5pt; font-weight: 800; display: none; margin-top: 4px; }
 
     .ia-results-list { 
       display: flex; flex-direction: column; gap: 12px; 
@@ -336,26 +364,26 @@
   </style>
 </head>
 <body>
-  <!-- ENCABEZADO EQUILIBRADO Y PROFESIONAL -->
+  <!-- ENCABEZADO: IDENTIDAD SAN BERNARDO Y TIEMPO AGRANDADO -->
   <header>
     <div class="brand-block">
       <div class="brand-title">Agenda Carlos Condell</div>
       <div class="brand-meta">
-        <span>Coltauco</span>
+        <span>San Bernardo</span>
         <span>•</span>
         <span>RBD <span class="badge-rbd">25078</span></span>
       </div>
     </div>
 
-    <!-- MÓDULO UNIFICADO: FECHA Y RELOJ JUNTOS -->
+    <!-- MÓDULO ANCHO: FECHA Y NÚMEROS GIGANTES (SIN HORA/MIN/SEG) -->
     <div class="time-module">
       <span class="date-display-text" id="full-date-subtitle">Hoy</span>
       <div class="flip-clock-container">
-        <div class="flip-section"><span class="flip-label-top">Hora</span><div class="flip-card" id="fc-hour">00</div></div>
+        <div class="flip-card" id="fc-hour">00</div>
         <div class="flip-colon">:</div>
-        <div class="flip-section"><span class="flip-label-top">Min</span><div class="flip-card" id="fc-minute">00</div></div>
+        <div class="flip-card" id="fc-minute">00</div>
         <div class="flip-colon">:</div>
-        <div class="flip-section"><span class="flip-label-top">Seg</span><div class="flip-card" id="fc-second">00</div></div>
+        <div class="flip-card" id="fc-second">00</div>
       </div>
     </div>
   </header>
@@ -366,7 +394,7 @@
       <div class="week-container" id="daysGrid"></div>
     </main>
 
-    <!-- BARRA LATERAL DERECHA -->
+    <!-- BARRA LATERAL DERECHA ESTRUCTURADA -->
     <aside class="sidebar-actions">
       <span class="sidebar-section-title">Seguridad & Enlace</span>
       <div id="modeBadge" class="mode-badge-side readonly" onclick="alternarModoEdicion()" title="Haz clic para desbloquear edición con clave 25078">🔒 Solo Lectura</div>
@@ -402,6 +430,10 @@
       <hr class="sidebar-separator">
 
       <span class="sidebar-section-title">Módulos & Herramientas</span>
+      <!-- BOTÓN DATOS COLEGIO -->
+      <button class="btn-action-side btn-side-datos" id="btnDatosColegio" onclick="abrirModalDatos()">
+        <span class="btn-icon-lg">🏫</span> Datos
+      </button>
       <button class="btn-action-side btn-side-tecnico" id="btnPanelTecnico" onclick="abrirModalPanelTecnico()">
         <span class="btn-icon-lg">📊</span> Panel Técnico
       </button>
@@ -421,6 +453,44 @@
         </div>
       </div>
     </aside>
+  </div>
+
+  <!-- MODAL: DATOS INSTITUCIONALES (BLOCK DE INFORMACIÓN) -->
+  <div class="modal-overlay" id="modalDatosOverlay">
+    <div class="modal-assistant" style="height:auto; min-height:420px; width:540px;">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-weight:900; font-size:14pt; color:#1E3A8A;">🏫 Ficha de Datos Institucionales</span>
+        <button class="btn-action-side" style="width:auto; height:32px !important;" onclick="cerrarModalDatos()">✕</button>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:6px;">
+        <div style="padding:10px 12px; background:#F8FAFC; border:1.5px solid var(--border-subtle); border-radius:8px;">
+          <span style="font-size:7.5pt; font-weight:800; color:#64748B; text-transform:uppercase;">Establecimiento</span>
+          <div style="font-size:10.5pt; font-weight:900; color:#0F172A; margin-top:2px;">Escuela Particular Comandante Carlos Condell</div>
+        </div>
+        <div style="padding:10px 12px; background:#F8FAFC; border:1.5px solid var(--border-subtle); border-radius:8px;">
+          <span style="font-size:7.5pt; font-weight:800; color:#64748B; text-transform:uppercase;">RBD Oficial</span>
+          <div style="font-size:11pt; font-weight:900; color:#1D4ED8; margin-top:2px;">25078</div>
+        </div>
+        <div style="padding:10px 12px; background:#F8FAFC; border:1.5px solid var(--border-subtle); border-radius:8px;">
+          <span style="font-size:7.5pt; font-weight:800; color:#64748B; text-transform:uppercase;">Comuna</span>
+          <div style="font-size:10.5pt; font-weight:900; color:#0F172A; margin-top:2px;">San Bernardo</div>
+        </div>
+        <div style="padding:10px 12px; background:#F8FAFC; border:1.5px solid var(--border-subtle); border-radius:8px;">
+          <span style="font-size:7.5pt; font-weight:800; color:#64748B; text-transform:uppercase;">Región</span>
+          <div style="font-size:10.5pt; font-weight:900; color:#0F172A; margin-top:2px;">Metropolitana de Santiago</div>
+        </div>
+      </div>
+
+      <div style="margin-top:6px;">
+        <label style="font-size:9.5pt; font-weight:900; color:#1E3A8A; display:block; margin-bottom:4px;">📝 Block de Notas Directivas / Contactos Clave:</label>
+        <textarea id="blockNotasColegio" rows="4" placeholder="Escribe aquí teléfonos de emergencia, directrices o notas clave del colegio..." style="width:100%; border:2px solid var(--border-strong); border-radius:8px; padding:10px; font-size:10pt;" oninput="guardarNotasColegio()"></textarea>
+      </div>
+
+      <div style="display:flex; justify-content:flex-end;">
+        <button type="button" class="btn-action-side btn-side-nuevo" style="width:auto; justify-content:center;" onclick="cerrarModalDatos()">Cerrar</button>
+      </div>
+    </div>
   </div>
 
   <!-- Modal Panel Técnico -->
@@ -477,7 +547,7 @@
 
       <div style="display:flex; gap:8px;">
         <button type="button" class="btn-action-side" style="flex:1; justify-content:center;" onclick="renderizarBitacora()">Todos los Compromisos</button>
-        <button type="button" class="btn-action-side" style="flex:1; justify-content:center; border-color:#F87171 !important; color:#991B1B !important; background:var(--prio-alta-bg) !important;" onclick="filtrarSoloDuplicados()">⚠️ Solo Duplicados</button>
+        <button type="button" class="btn-action-side" style="flex:1; justify-content:center; border-color:#FF003C !important; color:#FF003C !important; background:var(--prio-alta-bg) !important;" onclick="filtrarSoloDuplicados()">⚠️ Solo Duplicados</button>
       </div>
 
       <input type="text" id="bitacoraSearch" class="search-input-side" style="width:100%; height:38px;" placeholder="Filtrar por asunto..." oninput="renderizarBitacora()">
@@ -503,7 +573,7 @@
       </div>
 
       <div class="modal-field"><span class="modal-label">Síntesis</span><div id="dtDetail" class="modal-box">-</div></div>
-      <div class="modal-field"><span class="modal-label">Acción Requerida</span><div id="dtAccion" class="modal-box" style="border-left:5px solid #D97706;">-</div></div>
+      <div class="modal-field"><span class="modal-label">Acción Requerida</span><div id="dtAccion" class="modal-box" style="border-left:5px solid #FFB300;">-</div></div>
 
       <div class="modal-field" id="dtRespaldosContainer">
         <span class="modal-label">Documentos y Evidencias Adjuntas</span>
@@ -511,14 +581,14 @@
       </div>
 
       <div id="detailActionFooter" style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; padding-top:10px; border-top:2px solid var(--border-subtle);">
-        <button class="btn-action-side" style="width:auto; color:#DC2626 !important; border-color:#FCA5A5 !important; background:#FEF2F2 !important;" onclick="eliminarEventoActual()">🗑️ Eliminar</button>
+        <button class="btn-action-side" style="width:auto; color:#FF003C !important; border-color:#FF003C !important; background:#FEF2F2 !important;" onclick="eliminarEventoActual()">🗑️ Eliminar</button>
         <button class="btn-action-side" style="width:auto;" onclick="prepararEdicionActual()">✏️ Editar</button>
         <button class="btn-action-side btn-side-sync" style="width:auto;" id="btnToggleRealizado" onclick="toggleRealizadoActual()">✓ Realizado</button>
       </div>
     </div>
   </div>
 
-  <!-- Modal Nuevo / Editar Evento -->
+  <!-- Modal Nuevo / Editar Evento con Colores Eléctricos -->
   <div class="modal-overlay" id="modalAssistantOverlay">
     <div class="modal-assistant" id="modalNuevoEventoBox">
       <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -551,11 +621,11 @@
 
       <div><label>Organizador / Convoca</label><input type="text" id="fOrganizador" placeholder="Ej: Dirección, Mineduc, UTP, SLEP"></div>
       <div>
-        <label>Prioridad</label>
+        <label>Prioridad (Color Eléctrico)</label>
         <div style="display:flex; gap:10px;">
-          <button type="button" class="btn-prio" id="prioAlta" onclick="selectPriority('Alta')">Alta</button>
-          <button type="button" class="btn-prio selected-media" id="prioMedia" onclick="selectPriority('Media')">Media</button>
-          <button type="button" class="btn-prio" id="prioBaja" onclick="selectPriority('Baja')">Baja</button>
+          <button type="button" class="btn-prio" id="prioAlta" onclick="selectPriority('Alta')">Alta (Rojo)</button>
+          <button type="button" class="btn-prio selected-media" id="prioMedia" onclick="selectPriority('Media')">Media (Amarillo)</button>
+          <button type="button" class="btn-prio" id="prioBaja" onclick="selectPriority('Baja')">Baja (Verde)</button>
         </div>
       </div>
 
@@ -637,7 +707,29 @@
       if (eliminadosGuardados) {
         eventosEliminados = JSON.parse(eliminadosGuardados);
       }
+      const notasGuardadas = localStorage.getItem("agenda_carlos_condell_notas_colegio");
+      if (notasGuardadas) {
+        setTimeout(() => {
+          const area = document.getElementById("blockNotasColegio");
+          if (area) area.value = notasGuardadas;
+        }, 500);
+      }
     } catch (e) {}
+
+    function guardarNotasColegio() {
+      const txt = document.getElementById("blockNotasColegio").value;
+      localStorage.setItem("agenda_carlos_condell_notas_colegio", txt);
+    }
+
+    function abrirModalDatos() {
+      const notas = localStorage.getItem("agenda_carlos_condell_notas_colegio") || "";
+      const area = document.getElementById("blockNotasColegio");
+      if (area) area.value = notas;
+      document.getElementById("modalDatosOverlay").style.display = "flex";
+    }
+    function cerrarModalDatos() {
+      document.getElementById("modalDatosOverlay").style.display = "none";
+    }
 
     function actualizarModoUI() {
       const badge = document.getElementById("modeBadge");
@@ -743,7 +835,6 @@
       if (match) {
         var hh = parseInt(match[1]);
         var mm = parseInt(match[2]);
-        if (hh === 0 && mm === 0) return { horaStr: "", minutos: 9999, tieneHora: false };
         return { horaStr: String(hh).padStart(2, '0') + ":" + String(mm).padStart(2, '0'), minutos: hh * 60 + mm, tieneHora: true };
       }
       return { horaStr: "", minutos: 9999, tieneHora: false };
@@ -907,7 +998,7 @@
         const col = document.createElement("div");
         col.className = `day-column ${dayClassNames[idx]} ${isToday ? 'is-today' : ''}`;
         let badgeHtml = hol ? `<div class="badge-tag">${hol}</div>` : '';
-        if (isToday) badgeHtml += `<div class="badge-tag badge-today">HOY</div>`;
+        if (isToday) badgeHtml += `<div class="badge-tag badge-today">★ HOY</div>`;
 
         col.innerHTML = `
           <div class="day-header">
@@ -1631,12 +1722,12 @@
         const item = document.createElement("div");
         item.className = "ia-item-card";
         
-        let avisoDupHtml = dup ? `<div style="color:#DC2626; font-size:9pt; font-weight:bold;">⚠️ Ya agendado: \"${dup.subject}\"</div>` : '';
+        let avisoDupHtml = dup ? `<div style="color:#FF003C; font-size:9pt; font-weight:bold;">⚠️ Ya agendado: \"${dup.subject}\"</div>` : '';
 
         item.innerHTML = `
           <div class="ia-item-header">
             <input type="text" class="ia-edit-input" style="font-weight:900; width:80%;" value="${ev.asunto || ''}" onchange="actualizarDatoIA(${idx}, 'asunto', this.value)">
-            <button type="button" class="btn-action-side" style="width:auto; color:#DC2626 !important; height:28px !important; padding:0 10px !important;" onclick="eliminarPropuestaIA(${idx})" title="Descartar evento">✕</button>
+            <button type="button" class="btn-action-side" style="width:auto; color:#FF003C !important; height:28px !important; padding:0 10px !important;" onclick="eliminarPropuestaIA(${idx})" title="Descartar evento">✕</button>
           </div>
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
             <div>
@@ -1782,7 +1873,7 @@
       btn.textContent = "AGENDAR PROPUESTA Y SUBIR RESPALDO";
     }
 
-    // --- RELOJ EN VIVO ---
+    // --- RELOJ EN VIVO (DÍGITOS GIGANTES) ---
     function updateLiveClock() {
       const now = new Date();
       if(document.getElementById("fc-hour")) document.getElementById("fc-hour").textContent = String(now.getHours()).padStart(2, '0');
