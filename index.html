@@ -1141,7 +1141,7 @@
       dlAnchor.remove();
     }
 
-    // --- ASISTENTE AIA CON GEMINI FLASH ---
+    // --- ASISTENTE AIA CON GEMINI FLASH (VÍA SERVIDOR APPS SCRIPT) ---
     function abrirModalIA() { 
       if (!solicitarClaveAdminSiEsNecesario()) return;
       document.getElementById("iaContenedorResultados").style.display = "none";
@@ -1262,12 +1262,12 @@
       }
     }
 
-    // LLAMADA A GEMINI CONECTADA DIRECTA Y LIMPIA
+    // LLAMADA A GEMINI RUTEADA POR APPS SCRIPT (EVITA CORS)
     async function ejecutarLlamadaGeminiIA(blobs, mimeTypes, nombresArchivos) {
       const elEstado = document.getElementById("iaEstado");
       const elInfo = document.getElementById("iaArchivoInfo");
       elEstado.style.display = "block";
-      elEstado.textContent = "⚡ Analizando rápidamente con Gemini Flash...";
+      elEstado.textContent = "⚡ Analizando con Gemini (vía Apps Script)...";
       document.getElementById("iaContenedorResultados").style.display = "none";
 
       try {
@@ -1307,49 +1307,28 @@
           "  }\n" +
           "]";
 
-        const payload = {
-          contents: [{ parts: [{ text: promptInstruccion }, ...inlineParts] }]
-        };
+        const partesContenido = [{ text: promptInstruccion }, ...inlineParts];
 
-        const modelosAProbar = ["gemini-1.5-flash", "gemini-2.0-flash", "gemini-2.5-flash"];
-        let respuestaOk = false;
-        let textoJson = "";
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({
+            accion: "analizar_con_gemini",
+            partes: partesContenido,
+            apiKey: GEMINI_API_KEY
+          })
+        });
 
-        for (const mod of modelosAProbar) {
-          try {
-            const urlApi = "[https://generativelanguage.googleapis.com/v1beta/models/](https://generativelanguage.googleapis.com/v1beta/models/)" + mod + ":generateContent?key=" + encodeURIComponent(GEMINI_API_KEY);
-            const res = await fetch(urlApi, {
-              method: "POST",
-              headers: { 
-                "Content-Type": "application/json",
-                "x-goog-api-key": GEMINI_API_KEY
-              },
-              body: JSON.stringify(payload)
-            });
-
-            const rawText = await res.text();
-            if (rawText.trim().startsWith("<") || rawText.includes("<!DOCTYPE") || rawText.includes("<html>")) {
-              continue;
-            }
-
-            const dataResp = JSON.parse(rawText);
-            if (dataResp.error) {
-              console.warn(`Aviso modelo ${mod}:`, dataResp.error.message);
-              continue;
-            }
-
-            if (dataResp.candidates && dataResp.candidates[0]?.content?.parts?.[0]?.text) {
-              textoJson = dataResp.candidates[0].content.parts[0].text;
-              respuestaOk = true;
-              break;
-            }
-          } catch (e) {
-            console.warn(`Fallo al intentar con ${mod}:`, e);
-          }
+        const dataResp = await res.json();
+        if (dataResp.error) {
+          throw new Error(dataResp.error.message);
         }
 
-        if (!respuestaOk || !textoJson) {
-          throw new Error("No se pudo conectar con el servicio de IA de Gemini. Verifica la conexión.");
+        let textoJson = "";
+        if (dataResp.candidates && dataResp.candidates[0]?.content?.parts?.[0]?.text) {
+          textoJson = dataResp.candidates[0].content.parts[0].text;
+        } else {
+          throw new Error("No se obtuvo respuesta de Gemini.");
         }
 
         textoJson = textoJson.trim()
