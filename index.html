@@ -1,1 +1,1559 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Agenda Carlos Condell</title>
+  <style>
+    :root {
+      --bg-app: #F1F5F9;
+      --surface: #FFFFFF;
+      --border-subtle: #E2E8F0;
+      --border-strong: #CBD5E1;
+      --text-main: #0F172A;
+      --text-muted: #475569;
 
+      /* Paleta Institucional Carlos Condell */
+      --primary: #1E3A8A;
+      --primary-hover: #1E40AF;
+      --accent: #D97706;
+      
+      --day-lunes-bg: #F8FAFC;
+      --day-lunes-border: #CBD5E1;
+      --day-lunes-accent: #1E3A8A;
+
+      --day-martes-bg: #F0FDF4;
+      --day-martes-border: #BBF7D0;
+      --day-martes-accent: #166534;
+
+      --day-miercoles-bg: #EFF6FF;
+      --day-miercoles-border: #BFDBFE;
+      --day-miercoles-accent: #1D4ED8;
+
+      --day-jueves-bg: #FEFCE8;
+      --day-jueves-border: #FEF08A;
+      --day-jueves-accent: #854D0E;
+
+      --day-viernes-bg: #FFF7ED;
+      --day-viernes-border: #FED7AA;
+      --day-viernes-accent: #C2410C;
+
+      --prio-alta-bg: #FEE2E2;
+      --prio-alta-border: #EF4444;
+      --prio-media-bg: #FEF3C7;
+      --prio-media-border: #F59E0B;
+      --prio-baja-bg: #E0F2FE;
+      --prio-baja-border: #0EA5E9;
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif; }
+    body { background-color: var(--bg-app); height: 100vh; padding: 6px 10px; color: var(--text-main); display: flex; flex-direction: column; overflow: hidden; }
+    
+    /* ENCABEZADO */
+    header { 
+      display: flex; justify-content: space-between; align-items: center; 
+      background: var(--surface); padding: 6px 14px; border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle); box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+      flex-shrink: 0; gap: 12px; margin-bottom: 6px; width: 100%; min-height: 58px; box-sizing: border-box;
+      flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
+    }
+    header::-webkit-scrollbar { display: none; }
+    
+    .header-left-group { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .brand-title { font-size: 15pt; font-weight: 900; color: var(--primary); white-space: nowrap; margin: 0; line-height: 1; letter-spacing: -0.4px; }
+    #full-date-subtitle { font-size: 9.5pt; font-weight: 700; color: #1E293B; background: #F8FAFC; border: 1.5px solid var(--border-subtle); padding: 0 10px; border-radius: var(--radius-sm); white-space: nowrap; height: 36px; display: inline-flex; align-items: center; text-transform: capitalize; }
+
+    /* BOTÓN AGENDA TDAH COMPACTO */
+    .btn-agenda-tdah {
+      background: #EFF6FF !important; color: #1D4ED8 !important; border: 1px solid #BFDBFE !important;
+      border-radius: var(--radius-sm) !important; padding: 0 8px !important; height: 32px !important;
+      font-size: 8.5pt !important; font-weight: 800 !important; cursor: pointer; display: inline-flex;
+      align-items: center; gap: 4px; transition: all 0.15s ease; white-space: nowrap; text-decoration: none;
+    }
+    .btn-agenda-tdah:hover { background: #DBEAFE !important; }
+
+    .mode-badge {
+      font-size: 8.5pt; font-weight: 800; padding: 5px 9px; border-radius: var(--radius-sm);
+      background: #F1F5F9; color: #475569; border: 1.5px solid var(--border-strong);
+      display: inline-flex; align-items: center; gap: 4px; cursor: pointer; user-select: none;
+    }
+    .mode-badge.admin { background: #DCFCE7; color: #166534; border-color: #86EFAC; }
+    .mode-badge.readonly { background: #FEF3C7; color: #92400E; border-color: #FDE68A; }
+
+    /* RELOJ DESTACADO */
+    .flip-clock-container { 
+      display: flex; align-items: center; background: #0F172A; 
+      padding: 4px 12px; border-radius: var(--radius-sm); 
+      gap: 5px; height: 44px; flex-shrink: 0; 
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.25);
+    }
+    .flip-section { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .flip-label-top { font-size: 6pt; letter-spacing: 0.6px; color: #94A3B8; margin-bottom: 1px; font-weight: 800; text-transform: uppercase; line-height: 1; }
+    .flip-card { 
+      background: #1E293B; color: #FFFFFF; font-size: 16pt; font-weight: 900; 
+      padding: 1px 7px; border-radius: 5px; min-width: 34px; text-align: center; line-height: 1.1; 
+      letter-spacing: 0.5px;
+    }
+    .flip-colon { color: #94A3B8; font-size: 16pt; font-weight: bold; margin: 0 1px; }
+
+    .header-right-group { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+    .search-wrapper { position: relative; width: 130px; flex-shrink: 0; }
+    .search-input { width: 100%; height: 34px; padding: 0 8px 0 28px; font-size: 9pt; font-weight: 600; border: 1.5px solid var(--border-strong); border-radius: var(--radius-sm); outline: none; background: #FFFFFF; }
+    .search-input:focus { border-color: var(--primary); }
+    .search-icon { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-size: 9pt; color: var(--text-muted); pointer-events: none; }
+    .search-results { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: var(--surface); border: 1.5px solid var(--border-strong); border-radius: var(--radius-sm); max-height: 260px; overflow-y: auto; box-shadow: 0 8px 20px rgba(0,0,0,0.1); z-index: 50; display: none; }
+    .search-item { padding: 8px 10px; border-bottom: 1px solid var(--border-subtle); cursor: pointer; display: flex; flex-direction: column; gap: 3px; }
+    .search-item:hover { background: #F8FAFC; }
+
+    .nav-controls { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
+    button, .icon-btn, .btn-prio { 
+      background: #FFFFFF !important; color: #1E293B !important; border: 1.5px solid var(--border-strong) !important;
+      border-radius: var(--radius-sm); padding: 0 10px !important; height: 34px !important; cursor: pointer;
+      font-size: 9pt; font-weight: 800 !important; display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+      white-space: nowrap; transition: all 0.15s ease;
+    }
+    button:hover, .icon-btn:hover { background: #F8FAFC !important; border-color: #94A3B8 !important; }
+    .btn-nuevo { background: #FEF3C7 !important; border-color: #FDE68A !important; color: #B45309 !important; font-weight: 900 !important; padding: 0 12px !important; }
+    .btn-nuevo:hover { background: #FDE68A !important; }
+    .btn-respaldo { background: #EFF6FF !important; border-color: #BFDBFE !important; color: #1D4ED8 !important; }
+    
+    .btn-prio.selected-alta { border-color: var(--prio-alta-border) !important; background: var(--prio-alta-bg) !important; color: #991B1B !important; }
+    .btn-prio.selected-media { border-color: var(--prio-media-border) !important; background: var(--prio-media-bg) !important; color: #92400E !important; }
+    .btn-prio.selected-baja { border-color: var(--prio-baja-border) !important; background: var(--prio-baja-bg) !important; color: #075985 !important; }
+
+    .date-label { font-size: 9.5pt; font-weight: 800; min-width: 110px; text-align: center; color: var(--primary); line-height: 34px; height: 34px; white-space: nowrap; }
+
+    /* CUADRÍCULA 5 DÍAS */
+    main#plannerSection { flex: 1; display: flex; min-height: 0; width: 100%; }
+    .week-container { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; width: 100%; height: 100%; }
+    
+    .day-column { border-radius: var(--radius-md); padding: 8px 9px; display: flex; flex-direction: column; gap: 6px; min-height: 0; overflow: hidden; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03); }
+    .day-lunes { background: var(--day-lunes-bg); border: 2px solid var(--day-lunes-border); }
+    .day-martes { background: var(--day-martes-bg); border: 2px solid var(--day-martes-border); }
+    .day-miercoles { background: var(--day-miercoles-bg); border: 2px solid var(--day-miercoles-border); }
+    .day-jueves { background: var(--day-jueves-bg); border: 2px solid var(--day-jueves-border); }
+    .day-viernes { background: var(--day-viernes-bg); border: 2px solid var(--day-viernes-border); }
+
+    .day-lunes .day-name { color: var(--day-lunes-accent); }
+    .day-martes .day-name { color: var(--day-martes-accent); }
+    .day-miercoles .day-name { color: var(--day-miercoles-accent); }
+    .day-jueves .day-name { color: var(--day-jueves-accent); }
+    .day-viernes .day-name { color: var(--day-viernes-accent); }
+
+    .day-column.is-today { border-width: 3px !important; border-color: var(--accent) !important; box-shadow: 0 4px 16px rgba(217, 119, 6, 0.2) !important; }
+    .day-header { text-align: center; padding-bottom: 6px; border-bottom: 2px solid rgba(0,0,0,0.06); flex-shrink: 0; }
+    .day-name { font-size: 11pt; font-weight: 900; text-transform: uppercase; line-height: 1.1; letter-spacing: 0.2px; }
+    .day-number { font-size: 9.5pt; font-weight: 700; color: #475569; margin-top: 3px; }
+    .text-red { color: #BE123C !important; }
+    
+    .badge-tag { font-size: 8pt; padding: 2px 8px; border-radius: 6px; display: inline-block; margin-top: 3px; background: rgba(255,255,255,0.9); color: #334155; font-weight: 800; text-transform: uppercase; }
+    .badge-today { background: #FEF3C7; color: #B45309; border: 1.5px solid #FDE68A; }
+    
+    .cards-container { display: flex; flex-direction: column; gap: 6px; flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; }
+    .cards-container::-webkit-scrollbar { display: none; }
+    
+    /* TARJETA DE TAREA */
+    .task-card { 
+      width: 100%; background: #FFFFFF; padding: 8px 10px; border-radius: var(--radius-sm);
+      display: flex; flex-direction: column; gap: 4px; cursor: pointer; border: 1px solid rgba(0,0,0,0.08);
+      border-left: 4.5px solid var(--border-strong); box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+    }
+    .task-card:hover { transform: translateY(-1px); box-shadow: 0 4px 8px rgba(0,0,0,0.08); border-color: #94A3B8; }
+    .task-card.prio-alta { border-left-color: var(--prio-alta-border); } 
+    .task-card.prio-media { border-left-color: var(--prio-media-border); } 
+    .task-card.prio-baja { border-left-color: var(--prio-baja-border); } 
+    .task-card.is-done { background: rgba(255,255,255,0.7) !important; opacity: 0.65; }
+    .task-card.is-done .card-title { text-decoration: line-through; }
+
+    .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 6px; }
+    .card-title { font-size: 10pt; font-weight: 800; color: #0F172A; line-height: 1.25; flex: 1; min-width: 0; }
+    .card-badges { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+    .card-time { font-size: 9pt; font-weight: 800; color: #1E293B; background: #F1F5F9; border: 1.5px solid #CBD5E1; padding: 2px 6px; border-radius: 4px; white-space: nowrap; }
+    
+    .card-sender { font-size: 8.5pt; color: #475569; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .empty-text { font-size: 9pt; color: #94A3B8; text-align: center; margin-top: 24px; font-weight: 700; }
+
+    /* MODALES */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.55); display: none; align-items: center; justify-content: center; padding: 16px; z-index: 1000; backdrop-filter: blur(4px); }
+    .modal-detail-card { background: var(--surface); max-width: 550px; width: 100%; max-height: 90vh; border-radius: var(--radius-md); padding: 20px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; position: relative; z-index: 1001; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+    .modal-field { display: flex; flex-direction: column; gap: 4px; }
+    .modal-label { font-size: 8.5pt; font-weight: 800; color: #475569; text-transform: uppercase; letter-spacing: 0.3px; }
+    .modal-box { background: #F8FAFC; border: 1.5px solid var(--border-subtle); padding: 10px 14px; border-radius: var(--radius-sm); font-size: 10pt; font-weight: 600; line-height: 1.45; white-space: pre-wrap; word-break: break-word; color: #0F172A; }
+    .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    .modal-assistant { background: var(--surface); color: var(--text-main); max-width: 560px; width: 100%; border-radius: var(--radius-md); padding: 20px; display: flex; flex-direction: column; gap: 12px; max-height: 90vh; overflow-y: auto; position: relative; z-index: 1001; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+    .modal-assistant label { font-size: 9pt; color: #1E293B; display: block; margin-bottom: 4px; font-weight: 800; }
+    .modal-assistant input, .modal-assistant textarea, .modal-assistant select { width: 100%; background: #F8FAFC; border: 1.5px solid var(--border-strong); border-radius: var(--radius-sm); padding: 9px 12px; font-size: 10pt; font-weight: 600; outline: none; }
+    .modal-assistant input:focus, .modal-assistant textarea:focus, .modal-assistant select:focus { border-color: var(--primary); background: #FFFFFF; }
+    
+    .checkbox-container { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+    .checkbox-container input { width: 16px; height: 16px; cursor: pointer; }
+    .aviso-duplicado { background: var(--prio-alta-bg); border: 1.5px solid var(--prio-alta-border); color: #991B1B; padding: 7px 12px; border-radius: var(--radius-sm); font-size: 8.5pt; font-weight: 800; display: none; margin-top: 4px; }
+
+    .ia-results-list { display: flex; flex-direction: column; gap: 10px; max-height: 380px; overflow-y: auto; margin: 8px 0; }
+    .ia-item-card { 
+      background: #FFFFFF; border: 1.5px solid var(--border-subtle); border-left: 5px solid #F59E0B; 
+      padding: 10px 12px; border-radius: var(--radius-sm); display: flex; flex-direction: column; gap: 6px; 
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+    .ia-item-header { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .ia-edit-input { font-size: 9pt !important; padding: 6px 8px !important; }
+
+    .bitacora-modal { max-width: 580px; width: 100%; max-height: 88vh; background: var(--surface); border-radius: var(--radius-md); padding: 20px; display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 1001; }
+    .bitacora-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+    .bitacora-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-radius: var(--radius-sm); background: #FAFBFD; border: 1.5px solid var(--border-subtle); cursor: pointer; }
+    .bitacora-item:hover { background: #F1F5F9; border-color: var(--primary); }
+    
+    .badge-file { display: inline-flex; align-items: center; gap: 5px; background: #EFF6FF; border: 1.5px solid #BFDBFE; color: #1D4ED8; padding: 5px 10px; border-radius: 6px; font-size: 8.5pt; font-weight: 800; text-decoration: none; }
+    .badge-file:hover { background: #DBEAFE; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-left-group">
+      <span class="brand-title">Agenda Carlos Condell</span>
+      <span id="full-date-subtitle">Hoy</span>
+      <a href="https://valdesgutierrezrodrigo-design.github.io/agenda/" target="_blank" class="btn-agenda-tdah" title="Abrir mi Agenda TDAH">🔗 Agenda TDAH</a>
+      <span id="modeBadge" class="mode-badge readonly" onclick="alternarModoEdicion()" title="Haz clic para desbloquear edición con clave 25078">🔒 Solo Lectura</span>
+    </div>
+
+    <!-- RELOJ DESTACADO -->
+    <div class="flip-clock-container">
+      <div class="flip-section"><span class="flip-label-top">Hora</span><div class="flip-card" id="fc-hour">00</div></div>
+      <div class="flip-colon">:</div>
+      <div class="flip-section"><span class="flip-label-top">Min</span><div class="flip-card" id="fc-minute">00</div></div>
+      <div class="flip-colon">:</div>
+      <div class="flip-section"><span class="flip-label-top">Seg</span><div class="flip-card" id="fc-second">00</div></div>
+    </div>
+    
+    <div class="header-right-group">
+      <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="globalSearchInput" class="search-input" placeholder="Buscar..." oninput="ejecutarBusqueda()" onfocus="ejecutarBusqueda()">
+        <div id="searchResults" class="search-results"></div>
+      </div>
+
+      <div class="nav-controls">
+        <button class="icon-btn btn-respaldo" id="btnRespaldoNav" onclick="abrirModalRespaldo()">💾 Respaldo</button>
+        <button class="icon-btn" onclick="abrirModalBitacora()">📋 Bitácora</button>
+        <button class="icon-btn" id="btnSync" onclick="sincronizarDesdeSheets()">🔄 Sync</button>
+        <button class="icon-btn" id="btnIANav" onclick="abrirModalIA()">★ AIA</button>
+        <span style="border-left:2px solid var(--border-strong); height:20px; margin:0 2px;"></span>
+        <button class="icon-btn" id="btnPrev">◀</button>
+        <button class="icon-btn" id="btnToday">Hoy</button>
+        <div class="date-label" id="dateLabel">Semana</div>
+        <button class="icon-btn" id="btnNext">▶</button>
+        <span style="border-left:2px solid var(--border-strong); height:20px; margin:0 2px;"></span>
+        <button class="icon-btn btn-nuevo" id="btnNuevoManual" onclick="abrirModalNuevo()">＋ Nuevo</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="plannerSection">
+    <div class="week-container" id="daysGrid"></div>
+  </main>
+
+  <!-- Modal Respaldo -->
+  <div class="modal-overlay" id="modalRespaldoOverlay">
+    <div class="modal-assistant">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-weight:900; font-size:13pt; color:var(--primary);">💾 Respaldo Institucional</span>
+        <button class="icon-btn" onclick="cerrarModalRespaldo()">✕</button>
+      </div>
+      <p style="font-size:9.5pt; color:var(--text-muted);">Descarga una copia completa de la agenda laboral en formato seguro JSON.</p>
+      <button type="button" class="icon-btn btn-respaldo" style="width:100%; justify-content:center; margin-top:8px;" onclick="descargarRespaldoJSON()">⬇️ Descargar Copia (.json)</button>
+    </div>
+  </div>
+
+  <!-- Modal Bitácora -->
+  <div class="modal-overlay" id="modalBitacoraOverlay">
+    <div class="bitacora-modal">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <h3 style="font-size:12pt; font-weight:900; color:var(--primary);">📋 Bitácora Institucional Carlos Condell</h3>
+          <span id="bitacoraTotal" style="font-size:8.5pt; font-weight:700; color:var(--text-muted);">0 eventos</span>
+        </div>
+        <button class="icon-btn" onclick="cerrarModalBitacora()">✕</button>
+      </div>
+
+      <div style="display:flex; gap:8px;">
+        <button type="button" class="icon-btn" style="flex:1;" onclick="renderizarBitacora()">Todos los Compromisos</button>
+        <button type="button" class="icon-btn" style="flex:1; border-color:#FCA5A5 !important; color:#C53030 !important; background:var(--prio-alta-bg) !important;" onclick="filtrarSoloDuplicados()">⚠️ Solo Duplicados</button>
+      </div>
+
+      <input type="text" id="bitacoraSearch" class="search-input" style="width:100%;" placeholder="Filtrar por asunto..." oninput="renderizarBitacora()">
+      <div class="bitacora-list" id="bitacoraListContainer"></div>
+    </div>
+  </div>
+
+  <!-- Modal Detalle -->
+  <div class="modal-overlay" id="modalDetailOverlay">
+    <div class="modal-detail-card">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+        <div>
+          <span id="dtPrioBadge" class="badge-tag">-</span>
+          <span id="dtStateBadge" class="badge-tag" style="margin-left:4px; background:#E2E8F0;">-</span>
+          <h3 id="dtTitle" style="font-size:13pt; font-weight:900; margin-top:6px; color:#0F172A;">-</h3>
+        </div>
+        <button class="icon-btn" onclick="closeDetailModal()">✕</button>
+      </div>
+
+      <div class="grid-2col">
+        <div class="modal-field"><span class="modal-label">Organización / Convocante</span><div id="dtSender" class="modal-box">-</div></div>
+        <div class="modal-field"><span class="modal-label">Fecha y Hora</span><div id="dtDateTime" class="modal-box">-</div></div>
+      </div>
+
+      <div class="modal-field"><span class="modal-label">Síntesis</span><div id="dtDetail" class="modal-box">-</div></div>
+      <div class="modal-field"><span class="modal-label">Acción Requerida</span><div id="dtAccion" class="modal-box" style="border-left:4px solid #F59E0B;">-</div></div>
+
+      <div class="modal-field" id="dtRespaldosContainer">
+        <span class="modal-label">Documentos y Evidencias Adjuntas</span>
+        <div id="dtRespaldosList" style="display:flex; gap:8px; flex-wrap:wrap; margin-top:4px;"></div>
+      </div>
+
+      <div id="detailActionFooter" style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; padding-top:10px; border-top:1.5px solid var(--border-subtle);">
+        <button class="icon-btn" onclick="eliminarEventoActual()" style="color:#DC2626 !important; border-color:#FCA5A5 !important; background:#FEF2F2 !important;">🗑️ Eliminar</button>
+        <button class="icon-btn" onclick="prepararEdicionActual()">✏️ Editar</button>
+        <button class="icon-btn" id="btnToggleRealizado" onclick="toggleRealizadoActual()">✓ Realizado</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Nuevo / Editar Evento -->
+  <div class="modal-overlay" id="modalAssistantOverlay">
+    <div class="modal-assistant">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span id="modalTitleStr" style="font-weight:900; font-size:12.5pt; color:var(--primary);">Nuevo Evento Laboral</span>
+        <div style="display:flex; gap:6px;">
+          <button type="button" class="icon-btn" onclick="limpiarFormularioManual()">Limpiar</button>
+          <button class="icon-btn" onclick="closeModal()">✕</button>
+        </div>
+      </div>
+
+      <div>
+        <label>Asunto / Compromiso *</label>
+        <input type="text" id="fAsunto" placeholder="Ej: Simce, Reunión UTP, Consejo de Profesores..." oninput="verificarDuplicadoEnFormulario()">
+        <div id="avisoDuplicadoManual" class="aviso-duplicado">⚠️ Ya existe un evento similar agendado para esta fecha.</div>
+      </div>
+      <div>
+        <label>Hora del Evento (Obligatoria) *</label>
+        <input type="time" id="fHora" required style="border-color:#3B82F6;">
+      </div>
+      
+      <div class="grid-2col">
+        <div><label>Fecha Inicio *</label><input type="date" id="fFechaInicio" onchange="autoCompletarFechaFin(); verificarDuplicadoEnFormulario();"></div>
+        <div id="fFechaFinContainer"><label>Fecha Término</label><input type="date" id="fFechaFin"></div>
+      </div>
+
+      <div class="checkbox-container">
+        <input type="checkbox" id="fRepetirAnual">
+        <label for="fRepetirAnual" style="margin:0; font-size:9.5pt;">🔁 Repetir anualmente</label>
+      </div>
+
+      <div><label>Organizador / Convoca</label><input type="text" id="fOrganizador" placeholder="Ej: Dirección, Mineduc, UTP, SLEP"></div>
+      <div>
+        <label>Prioridad</label>
+        <div style="display:flex; gap:8px;">
+          <button type="button" class="btn-prio" id="prioAlta" onclick="selectPriority('Alta')">Alta</button>
+          <button type="button" class="btn-prio selected-media" id="prioMedia" onclick="selectPriority('Media')">Media</button>
+          <button type="button" class="btn-prio" id="prioBaja" onclick="selectPriority('Baja')">Baja</button>
+        </div>
+      </div>
+
+      <div><label>Síntesis</label><textarea id="fDetalle" rows="2" placeholder="Resumen clave..."></textarea></div>
+      <div><label>Acción Requerida</label><textarea id="fAccion" rows="2" placeholder="Ej: Notificar, Solicitar informe..."></textarea></div>
+      
+      <div>
+        <label>Adjuntar archivos de respaldo (PDF, Imágenes)</label>
+        <input type="file" id="fArchivos" multiple accept="image/*,application/pdf" onchange="procesarArchivosManuales(this)">
+        <div id="listaArchivosManuales" style="display:flex; flex-wrap:wrap; gap:6px; margin-top:6px;"></div>
+      </div>
+
+      <button type="button" id="btnGuardarEvento" class="icon-btn btn-nuevo" style="margin-top:8px; justify-content:center; height:40px !important;" onclick="guardarEventoManual()">GUARDAR EVENTO</button>
+    </div>
+  </div>
+
+  <!-- Modal IA -->
+  <div class="modal-overlay" id="modalIAOverlay">
+    <div class="modal-assistant">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-weight:900; font-size:12.5pt; color:var(--primary);">★ Asistente Inteligente AIA</span>
+        <button type="button" class="icon-btn" onclick="cerrarModalIA()">✕</button>
+      </div>
+      <p style="font-size:9pt; color:var(--text-muted);">Sube o pega un documento institucional (PDF o captura). El análisis extrae fecha, hora y detalles automáticamente.</p>
+      
+      <input type="file" id="inputArchivoIA" accept="image/*,application/pdf" multiple style="display:none;" onchange="procesarArchivoSeleccionado(this)">
+      
+      <div style="display:flex; gap:8px; margin:6px 0;">
+        <button type="button" id="btnCargarIA" class="icon-btn" style="flex:1;">📁 Cargar Documento(s)</button>
+        <button type="button" id="btnPegarIA" class="icon-btn" style="flex:1;">📋 Pegar Captura (Ctrl+V)</button>
+      </div>
+
+      <div id="iaArchivoInfo" style="font-size:8.5pt; color:#1D4ED8; background:#EFF6FF; padding:6px 10px; border-radius:6px; display:none; border:1px solid #BFDBFE;"></div>
+      <div id="iaEstado" style="font-size:9pt; color:#B45309; font-weight:bold; text-align:center; padding:8px; display:none; background:#FEF3C7; border-radius:6px; border:1px solid #FDE68A;">⚡ Analizando rápidamente con Gemini Flash...</div>
+      
+      <div id="iaContenedorResultados" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+          <span style="font-size:9.5pt; font-weight:800; color:var(--primary);">Propuesta de Eventos Detectados:</span>
+          <span style="font-size:8pt; color:var(--text-muted);">Cada evento debe tener hora asignada</span>
+        </div>
+        <div class="ia-results-list" id="iaListaEventos"></div>
+        <button type="button" id="btnAgendarTodoIA" class="icon-btn btn-nuevo" style="width:100%; margin-top:8px; justify-content:center; height:40px !important;" onclick="guardarEventosDetectadosIA()">AGENDAR PROPUESTA Y SUBIR RESPALDO</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbyEnuZQjGdKpm2iypjvn2XbOoSt7WcYIino-dAOjMH0tnU-r5L-umFsh9dFDtKNMCff/exec";
+    const GEMINI_API_KEY = "AQ.Ab8RN6LB-NIAelTRt0J4ebdrjfUDyA5BWDPD1N3taArdmJGeFA";
+
+    // CLAVE DE EDICIÓN: 25078
+    const CLAVE_ADMIN = "25078";
+    let esModoAdmin = false;
+
+    const holidaysChile = { 
+      "2026-01-01": "Año Nuevo", "2026-04-03": "Viernes Santo", "2026-05-01": "Día del Trabajador",
+      "2026-05-21": "Glorias Navales", "2026-06-21": "Pueblos Indígenas", "2026-06-29": "San Pedro y San Pablo",
+      "2026-07-16": "Virgen del Carmen", "2026-08-15": "Asunción", "2026-09-18": "Independencia",
+      "2026-09-19": "Glorias Ejército", "2026-10-12": "Encuentro Mundos", "2026-10-31": "Iglesias Evangélicas",
+      "2026-11-01": "Todos los Santos", "2026-12-08": "Inmaculada", "2026-12-25": "Navidad"
+    };
+
+    let tasks = [];
+    let eventosEliminados = [];
+    let eventosDetectadosIA = [];
+    let archivosRespaldoIA = []; 
+    let archivosManualesTemporales = []; 
+    let selectedPriority = "Media";
+    let currentEventId = null;
+    let isEditing = false;
+    let editEventId = null;
+
+    try {
+      const guardado = localStorage.getItem("agenda_carlos_condell_local") || localStorage.getItem("agenda_tdah_local");
+      if (guardado) {
+        const parsed = JSON.parse(guardado);
+        if (Array.isArray(parsed) && parsed.length > 0) tasks = parsed;
+      }
+      const eliminadosGuardados = localStorage.getItem("agenda_carlos_condell_eliminados");
+      if (eliminadosGuardados) {
+        eventosEliminados = JSON.parse(eliminadosGuardados);
+      }
+    } catch (e) {}
+
+    function actualizarModoUI() {
+      const badge = document.getElementById("modeBadge");
+      const btnNuevo = document.getElementById("btnNuevoManual");
+      const btnAIA = document.getElementById("btnIANav");
+      const btnRespaldo = document.getElementById("btnRespaldoNav");
+      const footerActions = document.getElementById("detailActionFooter");
+
+      if (esModoAdmin) {
+        badge.textContent = "🔓 Modo Edición";
+        badge.className = "mode-badge admin";
+        badge.title = "Haz clic para volver a modo Solo Lectura";
+        if (btnNuevo) btnNuevo.style.display = "inline-flex";
+        if (btnAIA) btnAIA.style.display = "inline-flex";
+        if (btnRespaldo) btnRespaldo.style.display = "inline-flex";
+        if (footerActions) footerActions.style.display = "flex";
+      } else {
+        badge.textContent = "🔒 Solo Lectura";
+        badge.className = "mode-badge readonly";
+        badge.title = "Haz clic para ingresar clave y editar";
+        if (btnNuevo) btnNuevo.style.display = "inline-flex";
+        if (btnAIA) btnAIA.style.display = "inline-flex";
+        if (btnRespaldo) btnRespaldo.style.display = "inline-flex";
+        if (footerActions) footerActions.style.display = "none";
+      }
+    }
+
+    function solicitarClaveAdminSiEsNecesario() {
+      if (esModoAdmin) return true;
+      const pass = prompt("Acción protegida. Ingresa la clave directiva (25078) para editar:");
+      if (pass === CLAVE_ADMIN) {
+        esModoAdmin = true;
+        sessionStorage.setItem("modo_admin_condell", "1");
+        actualizarModoUI();
+        alert("¡Clave correcta! Modo edición habilitado.");
+        return true;
+      } else if (pass !== null) {
+        alert("Clave incorrecta. Permaneces en modo Solo Lectura.");
+      }
+      return false;
+    }
+
+    function alternarModoEdicion() {
+      if (esModoAdmin) {
+        esModoAdmin = false;
+        sessionStorage.removeItem("modo_admin_condell");
+        actualizarModoUI();
+        alert("Modo Solo Lectura activado.");
+      } else {
+        solicitarClaveAdminSiEsNecesario();
+      }
+    }
+
+    if (sessionStorage.getItem("modo_admin_condell") === "1") {
+      esModoAdmin = true;
+    }
+
+    function formatDateKey(d) {
+      return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, '0') + "-" + String(d.getDate()).padStart(2, '0');
+    }
+
+    function formatFechaCompleta(d) {
+      const diasSemana = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+      const meses = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+      return `${diasSemana[d.getDay()]}, ${d.getDate()} de ${meses[d.getMonth()]} de ${d.getFullYear()}`;
+    }
+
+    function parsearFecha(str) {
+      if (!str) return null;
+      if (str instanceof Date) return formatDateKey(str);
+      str = String(str).trim();
+      var mIso = str.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/);
+      if (mIso) return mIso[1] + "-" + mIso[2].padStart(2, '0') + "-" + mIso[3].padStart(2, '0');
+      var mSlash = str.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/);
+      if (mSlash) return mSlash[3] + "-" + mSlash[2].padStart(2, '0') + "-" + mSlash[1].padStart(2, '0');
+      var meses = { ene:'01', feb:'02', mar:'03', abr:'04', may:'05', jun:'06', jul:'07', ago:'08', sep:'09', oct:'10', nov:'11', dic:'12', enero:'01', febrero:'02', marzo:'03', abril:'04', mayo:'05', junio:'06', julio:'07', agosto:'08', septiembre:'09', octubre:'10', noviembre:'11', diciembre:'12' };
+      var mTexto = str.match(/(\d{1,2})\s+de\s+([a-zA-Z]+)(?:\s+de)?\s+(\d{4})/i);
+      if (mTexto) {
+        var dia = mTexto[1].padStart(2, '0');
+        var mesNum = meses[mTexto[2].toLowerCase()] || meses[mTexto[2].toLowerCase().substring(0, 3)];
+        if (mesNum) return mTexto[3] + "-" + mesNum + "-" + dia;
+      }
+      return null;
+    }
+
+    function extraerHora(textoCompleto) {
+      if (!textoCompleto) return { horaStr: "", minutos: 9999, tieneHora: false };
+      if (textoCompleto instanceof Date) {
+        var h = textoCompleto.getHours();
+        var m = textoCompleto.getMinutes();
+        if (h === 0 && m === 0) return { horaStr: "", minutos: 9999, tieneHora: false };
+        return { horaStr: String(h).padStart(2, '0') + ":" + String(m).padStart(2, '0'), minutos: h * 60 + m, tieneHora: true };
+      }
+      var str = String(textoCompleto);
+      var match = str.match(/\b([01]?\d|2[0-3]):([0-5]\d)\b/);
+      if (match) {
+        var hh = parseInt(match[1]);
+        var mm = parseInt(match[2]);
+        return { horaStr: String(hh).padStart(2, '0') + ":" + String(mm).padStart(2, '0'), minutos: hh * 60 + mm, tieneHora: true };
+      }
+      return { horaStr: "", minutos: 9999, tieneHora: false };
+    }
+
+    function normalizarTexto(txt) {
+      return (txt || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+    }
+
+    function verificarDuplicado(asunto, fecha, ignorarId = null) {
+      if (!asunto || !fecha) return null;
+      const asuntoNorm = normalizarTexto(asunto);
+      return tasks.find(t => {
+        if (ignorarId && t.id === ignorarId) return false;
+        if (t.date !== fecha) return false;
+        const subNorm = normalizarTexto(t.subject);
+        return subNorm === asuntoNorm || subNorm.includes(asuntoNorm) || asuntoNorm.includes(subNorm);
+      });
+    }
+
+    function getMonday(d) {
+      const date = new Date(d);
+      const day = date.getDay();
+      const diff = date.getDate() - day + (day === 0 ? -6 : 1);
+      return new Date(date.setDate(diff));
+    }
+
+    let currentMonday = getMonday(new Date());
+    const dayNames = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"];
+    const dayClassNames = ["day-lunes", "day-martes", "day-miercoles", "day-jueves", "day-viernes"];
+    const monthNames = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+
+    function esEventoPersonal(row) {
+      const texto = `${row.asunto || row[4] || ''} ${row.remitente || row[5] || ''} ${row.sintesis || row[6] || ''}`.toLowerCase();
+      const palabrasPersonales = ["veterinario", "mascota", "ramon", "ramona", "jackson", "compra personal", "medico personal", "dentista", "casa", "familia"];
+      return palabrasPersonales.some(p => texto.includes(p));
+    }
+
+    async function sincronizarDesdeSheets() {
+      const btn = document.getElementById("btnSync");
+      if (btn) btn.textContent = "⏳...";
+      try {
+        const res = await fetch(API_URL);
+        const data = await res.json();
+        const rawRows = Array.isArray(data) ? data : (data.datos || []);
+        
+        if (Array.isArray(rawRows) && rawRows.length > 0) {
+          const remoteTasks = [];
+          const vistos = new Set();
+
+          rawRows.forEach((row, idx) => {
+            if (esEventoPersonal(row)) return;
+
+            const filaNum = row.fila || (Array.isArray(row) ? row[0] : (idx + 1));
+            const asunto = String(row.asunto || (Array.isArray(row) ? row[4] : "(Sin asunto)")).trim();
+            const fDoc = row.fechaDoc || (Array.isArray(row) ? row[1] : null);
+            const fValida = parsearFecha(fDoc);
+            if (!fValida) return;
+
+            const claveUnica = `${fValida}_${normalizarTexto(asunto)}`;
+            
+            const yaFueEliminado = eventosEliminados.some(e => e.clave === claveUnica || (e.fila && String(e.fila) === String(filaNum)));
+            if (yaFueEliminado) return;
+
+            if (vistos.has(claveUnica)) return;
+            vistos.add(claveUnica);
+
+            let horaParam = row.hora || (Array.isArray(row) ? row[10] : null);
+            let infoHora = extraerHora(horaParam);
+            if (!infoHora.tieneHora) infoHora = extraerHora(fDoc);
+            if (!infoHora.tieneHora) {
+              const infoExtra = `${asunto} ${row.sintesis || (Array.isArray(row) ? row[6] : '')}`;
+              infoHora = extraerHora(infoExtra);
+            }
+
+            const horaFinal = infoHora.tieneHora ? infoHora.horaStr : "09:00";
+            const minutosFinales = infoHora.tieneHora ? infoHora.minutos : (9 * 60);
+
+            const estado = String(row.estado || (Array.isArray(row) ? row[3] : "")).trim().toLowerCase();
+            const isManaged = (estado === "finalizado" || estado === "gestionado" || estado === "realizado");
+
+            let adjuntos = [];
+            const rawRespaldos = row.respaldos || (Array.isArray(row) ? row[8] : null);
+            if (rawRespaldos) {
+              try {
+                adjuntos = typeof rawRespaldos === "string" ? JSON.parse(rawRespaldos) : rawRespaldos;
+                if (!Array.isArray(adjuntos)) adjuntos = [adjuntos];
+              } catch (e) {
+                if (typeof rawRespaldos === "string" && rawRespaldos.includes(",")) {
+                  adjuntos = rawRespaldos.split(",").map((u, i) => ({ url: u.trim(), nombre: `Documento ${i+1}` }));
+                } else {
+                  adjuntos = [{ url: String(rawRespaldos).trim(), nombre: "Documento" }];
+                }
+              }
+            }
+
+            remoteTasks.push({
+              id: filaNum ? `remote_${filaNum}` : `remote_idx_${idx + 1}`,
+              fila: filaNum,
+              date: fValida,
+              isAnnual: false,
+              time: horaFinal,
+              timeMinutos: minutosFinales,
+              tieneHora: true,
+              subject: asunto,
+              sender: row.remitente || (Array.isArray(row) ? row[5] : "General"),
+              detail: row.sintesis || (Array.isArray(row) ? row[6] : ""),
+              accion: row.accionReq || (Array.isArray(row) ? row[7] : ""),
+              priority: row.prioridad || (Array.isArray(row) ? row[2] : "Media"),
+              category: "Laboral",
+              status: isManaged ? "managed" : "pending",
+              respaldos: adjuntos
+            });
+          });
+
+          if (remoteTasks.length > 0) {
+            tasks = remoteTasks;
+            localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
+            renderCalendar();
+          }
+        }
+      } catch (err) {
+        console.warn("Aviso sync:", err);
+      } finally {
+        if (btn) btn.innerHTML = "🔄 Sync";
+        const sub = document.getElementById("full-date-subtitle");
+        if (sub) sub.textContent = formatFechaCompleta(new Date());
+      }
+    }
+
+    function selectPriority(prio) {
+      selectedPriority = prio;
+      document.getElementById('prioAlta').className = "btn-prio" + (prio === "Alta" ? " selected-alta" : "");
+      document.getElementById('prioMedia').className = "btn-prio" + (prio === "Media" ? " selected-media" : "");
+      document.getElementById('prioBaja').className = "btn-prio" + (prio === "Baja" ? " selected-baja" : "");
+    }
+
+    function renderCalendar() {
+      const grid = document.getElementById("daysGrid");
+      if (!grid) return;
+      grid.innerHTML = "";
+      const todayKey = formatDateKey(new Date());
+      const weekDates = [];
+      
+      for (let i = 0; i < 5; i++) {
+        const d = new Date(currentMonday);
+        d.setDate(currentMonday.getDate() + i);
+        weekDates.push(d);
+      }
+
+      const label = document.getElementById('dateLabel');
+      if (label) label.textContent = `${weekDates[0].getDate()} ${monthNames[weekDates[0].getMonth()]} - ${weekDates[4].getDate()} ${monthNames[weekDates[4].getMonth()]}`;
+
+      weekDates.forEach((d, idx) => {
+        const key = formatDateKey(d);
+        const hol = holidaysChile[key];
+        const isRed = Boolean(hol);
+        const isToday = (key === todayKey);
+
+        const col = document.createElement("div");
+        col.className = `day-column ${dayClassNames[idx]} ${isToday ? 'is-today' : ''}`;
+        let badgeHtml = hol ? `<div class="badge-tag">${hol}</div>` : '';
+        if (isToday) badgeHtml += `<div class="badge-tag badge-today">HOY</div>`;
+
+        col.innerHTML = `
+          <div class="day-header">
+            <div class="day-name ${isRed ? 'text-red' : ''}">${dayNames[idx]}</div>
+            <div class="day-number ${isRed ? 'text-red' : ''}">${d.getDate()} de ${monthNames[d.getMonth()]}</div>
+            ${badgeHtml}
+          </div>
+          <div class="cards-container" id="list-${key}"></div>
+        `;
+
+        const list = col.querySelector(`#list-${key}`);
+        const dayTasks = tasks.filter(t => t.date === key && (t.category || "Laboral").toLowerCase() === "laboral");
+        dayTasks.sort((a, b) => (a.timeMinutos || 0) - (b.timeMinutos || 0));
+
+        if (dayTasks.length === 0) {
+          list.innerHTML = '<span class="empty-text">Sin tareas agendadas</span>';
+        } else {
+          dayTasks.forEach(t => {
+            const card = document.createElement("div");
+            let prioClass = t.priority === "Alta" ? "prio-alta" : (t.priority === "Baja" ? "prio-baja" : "prio-media");
+            card.className = `task-card ${prioClass} ${t.status === "managed" ? 'is-done' : ''}`;
+            card.onclick = () => openDetail(t.id);
+            
+            const badgeHora = t.time ? `<span class="card-time">⏰ ${t.time}</span>` : '';
+            const badgeClip = (t.respaldos && t.respaldos.length > 0) ? `<span title="${t.respaldos.length} documento(s) adjunto(s)" style="font-size:8.5pt;">📎 ${t.respaldos.length > 1 ? t.respaldos.length : ''}</span>` : '';
+
+            card.innerHTML = `
+              <div class="card-top">
+                <span class="card-title">${t.subject}</span>
+                <div class="card-badges">${badgeClip} ${badgeHora}</div>
+              </div>
+              <div class="card-sender">👤 ${t.sender || 'General'}</div>
+            `;
+            list.appendChild(card);
+          });
+        }
+        grid.appendChild(col);
+      });
+      actualizarModoUI();
+    }
+
+    function openDetail(id) {
+      currentEventId = id;
+      const t = tasks.find(x => x.id === id);
+      if (!t) return;
+
+      document.getElementById("dtTitle").textContent = t.subject;
+      document.getElementById("dtSender").textContent = t.sender || "General";
+      document.getElementById("dtDateTime").textContent = `${t.date} | ${t.time} hrs`;
+      document.getElementById("dtDetail").textContent = t.detail || "Sin síntesis.";
+      document.getElementById("dtAccion").textContent = t.accion || "Revisar y gestionar.";
+
+      document.getElementById("dtPrioBadge").textContent = `Prioridad: ${t.priority || 'Media'}`;
+      document.getElementById("dtStateBadge").textContent = (t.status === "managed") ? "ESTADO: REALIZADO" : "ESTADO: PENDIENTE";
+      document.getElementById("btnToggleRealizado").innerHTML = (t.status === "managed") ? "↩ Reabrir" : "✓ Realizado";
+
+      const rContainer = document.getElementById("dtRespaldosContainer");
+      const rList = document.getElementById("dtRespaldosList");
+      rList.innerHTML = "";
+      if (t.respaldos && t.respaldos.length > 0) {
+        t.respaldos.forEach(f => {
+          const enlace = document.createElement("a");
+          let hrefReal = f.url;
+          if (!hrefReal && f.base64) {
+            hrefReal = `data:${f.mimeType || 'application/octet-stream'};base64,${f.base64}`;
+          }
+          if (hrefReal && hrefReal.trim() !== "" && hrefReal !== "#") {
+            enlace.href = hrefReal;
+            enlace.target = "_blank";
+            enlace.rel = "noopener noreferrer";
+          } else {
+            enlace.href = "javascript:void(0);";
+            enlace.onclick = () => alert("El archivo está sincronizándose o no tiene enlace disponible.");
+          }
+          enlace.className = "badge-file";
+          enlace.textContent = `📎 ${f.nombre || 'Ver Documento'}`;
+          rList.appendChild(enlace);
+        });
+        rContainer.style.display = "flex";
+      } else {
+        rContainer.style.display = "none";
+      }
+
+      document.getElementById("modalDetailOverlay").style.display = "flex";
+      actualizarModoUI();
+    }
+
+    function closeDetailModal() { document.getElementById("modalDetailOverlay").style.display = "none"; }
+    function closeModal() { document.getElementById("modalAssistantOverlay").style.display = "none"; }
+
+    function limpiarFormularioManual() {
+      document.getElementById("fAsunto").value = "";
+      document.getElementById("fOrganizador").value = "";
+      document.getElementById("fHora").value = "";
+      document.getElementById("fDetalle").value = "";
+      document.getElementById("fAccion").value = "";
+      document.getElementById("fArchivos").value = "";
+      archivosManualesTemporales = [];
+      renderizarListaArchivosManuales();
+      document.getElementById("avisoDuplicadoManual").style.display = "none";
+      selectPriority("Media");
+    }
+
+    async function procesarArchivosManuales(input) {
+      if (!input.files || input.files.length === 0) return;
+      for (let i = 0; i < input.files.length; i++) {
+        const file = input.files[i];
+        const b64 = await optimizarYCodificarArchivo(file);
+        archivosManualesTemporales.push({
+          nombre: file.name,
+          mimeType: file.type || "application/octet-stream",
+          base64: b64,
+          url: ""
+        });
+      }
+      renderizarListaArchivosManuales();
+    }
+
+    function renderizarListaArchivosManuales() {
+      const container = document.getElementById("listaArchivosManuales");
+      container.innerHTML = "";
+      archivosManualesTemporales.forEach((arch, idx) => {
+        const tag = document.createElement("span");
+        tag.className = "badge-file";
+        tag.innerHTML = `${arch.nombre} <b style="cursor:pointer; margin-left:5px; color:#DC2626;" onclick="quitarArchivoManual(${idx})">✕</b>`;
+        container.appendChild(tag);
+      });
+    }
+
+    function quitarArchivoManual(idx) {
+      archivosManualesTemporales.splice(idx, 1);
+      renderizarListaArchivosManuales();
+    }
+
+    function abrirModalNuevo() {
+      if (!solicitarClaveAdminSiEsNecesario()) return;
+      isEditing = false;
+      editEventId = null;
+      document.getElementById("modalTitleStr").textContent = "Nuevo Evento Laboral";
+      document.getElementById("btnGuardarEvento").textContent = "GUARDAR EVENTO";
+      limpiarFormularioManual();
+      const hoyKey = formatDateKey(new Date());
+      document.getElementById("fFechaInicio").value = hoyKey;
+      document.getElementById("fFechaFin").value = hoyKey;
+      document.getElementById("modalAssistantOverlay").style.display = "flex";
+    }
+
+    function autoCompletarFechaFin() {
+      const fIni = document.getElementById("fFechaInicio").value;
+      const fFin = document.getElementById("fFechaFin");
+      if (fIni && (!fFin.value || fFin.value < fIni)) {
+        fFin.value = fIni;
+      }
+    }
+
+    function verificarDuplicadoEnFormulario() {
+      const asunto = normalizarTexto(document.getElementById("fAsunto").value);
+      const fecha = document.getElementById("fFechaInicio").value;
+      const aviso = document.getElementById("avisoDuplicadoManual");
+      if (!asunto || !fecha) {
+        aviso.style.display = "none";
+        return;
+      }
+      const existe = tasks.some(t => t.date === fecha && normalizarTexto(t.subject) === asunto && t.id !== editEventId);
+      aviso.style.display = existe ? "block" : "none";
+    }
+
+    async function guardarEventoManual() {
+      const asunto = document.getElementById("fAsunto").value.trim();
+      const fecha = document.getElementById("fFechaInicio").value;
+      const hora = document.getElementById("fHora").value;
+
+      if (!asunto) {
+        alert("Por favor ingresa el Asunto del evento.");
+        document.getElementById("fAsunto").focus();
+        return;
+      }
+      if (!fecha) {
+        alert("Por favor selecciona la Fecha de inicio.");
+        document.getElementById("fFechaInicio").focus();
+        return;
+      }
+      if (!hora) {
+        alert("⏰ LA HORA ES OBLIGATORIA: Por favor indica a qué hora se realiza el evento.");
+        document.getElementById("fHora").focus();
+        return;
+      }
+
+      const partes = hora.split(":");
+      const min = parseInt(partes[0]) * 60 + parseInt(partes[1]);
+
+      const btnGuardar = document.getElementById("btnGuardarEvento");
+      btnGuardar.disabled = true;
+      btnGuardar.textContent = "⏳ Guardando...";
+
+      let adjuntosFinales = [...archivosManualesTemporales];
+
+      if (isEditing && editEventId) {
+        const item = tasks.find(t => t.id === editEventId);
+        if (item) {
+          item.subject = asunto;
+          item.date = fecha;
+          item.time = hora;
+          item.tieneHora = true;
+          item.timeMinutos = min;
+          item.category = "Laboral";
+          item.priority = selectedPriority;
+          item.sender = document.getElementById("fOrganizador").value.trim() || "General";
+          item.detail = document.getElementById("fDetalle").value.trim();
+          item.accion = document.getElementById("fAccion").value.trim();
+          item.respaldos = adjuntosFinales;
+        }
+      } else {
+        const nuevo = {
+          id: "local_" + Date.now(),
+          date: fecha,
+          time: hora,
+          tieneHora: true,
+          timeMinutos: min,
+          subject: asunto,
+          sender: document.getElementById("fOrganizador").value.trim() || "General",
+          detail: document.getElementById("fDetalle").value.trim(),
+          accion: document.getElementById("fAccion").value.trim(),
+          priority: selectedPriority,
+          category: "Laboral",
+          status: "pending",
+          respaldos: adjuntosFinales
+        };
+        tasks.push(nuevo);
+      }
+
+      localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
+      closeModal();
+      renderCalendar();
+
+      try {
+        const payload = {
+          accion: isEditing ? "editar_evento" : "crear_evento",
+          fila: isEditing ? (tasks.find(t => t.id === editEventId)?.fila || "") : "",
+          fechaDoc: fecha,
+          hora: hora,
+          asunto: asunto,
+          remitente: document.getElementById("fOrganizador").value.trim() || "General",
+          prioridad: selectedPriority,
+          sintesis: document.getElementById("fDetalle").value.trim(),
+          accionReq: document.getElementById("fAccion").value.trim(),
+          archivos: adjuntosFinales,
+          anual: document.getElementById("fRepetirAnual").checked ? "Si" : "No"
+        };
+
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        });
+        const resJson = await res.json();
+        
+        if (resJson && resJson.urls && Array.isArray(resJson.urls)) {
+          const target = tasks.find(t => t.id === (isEditing ? editEventId : tasks[tasks.length - 1].id));
+          if (target && target.respaldos) {
+            target.respaldos.forEach((r, i) => {
+              if (resJson.urls[i]) r.url = resJson.urls[i];
+            });
+            localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
+            renderCalendar();
+          }
+        }
+      } catch (err) {
+        console.warn("Aviso guardado remoto:", err);
+      } finally {
+        btnGuardar.disabled = false;
+        btnGuardar.textContent = isEditing ? "ACTUALIZAR EVENTO" : "GUARDAR EVENTO";
+      }
+    }
+
+    function prepararEdicionActual() {
+      if (!solicitarClaveAdminSiEsNecesario()) return;
+      if (!currentEventId) return;
+      const t = tasks.find(x => x.id === currentEventId);
+      if (!t) return;
+
+      isEditing = true;
+      editEventId = t.id;
+      document.getElementById("modalTitleStr").textContent = "Editar Evento";
+      document.getElementById("btnGuardarEvento").textContent = "ACTUALIZAR EVENTO";
+
+      document.getElementById("fAsunto").value = t.subject || "";
+      document.getElementById("fFechaInicio").value = t.date || "";
+      document.getElementById("fFechaFin").value = t.date || "";
+      document.getElementById("fHora").value = t.time || "";
+      document.getElementById("fOrganizador").value = t.sender || "";
+      document.getElementById("fDetalle").value = t.detail || "";
+      document.getElementById("fAccion").value = t.accion || "";
+
+      archivosManualesTemporales = t.respaldos ? [...t.respaldos] : [];
+      renderizarListaArchivosManuales();
+      selectPriority(t.priority || "Media");
+
+      closeDetailModal();
+      document.getElementById("modalAssistantOverlay").style.display = "flex";
+    }
+
+    async function eliminarEventoActual() {
+      if (!solicitarClaveAdminSiEsNecesario()) return;
+      if (!currentEventId) return;
+      
+      const t = tasks.find(x => x.id === currentEventId);
+      if (!t) return;
+
+      if (!confirm(`¿Estás seguro de eliminar definitivamente "${t.subject}"? No volverá a aparecer en las sincronizaciones.`)) {
+        return;
+      }
+
+      const filaRemota = t.fila;
+      const claveUnica = `${t.date}_${normalizarTexto(t.subject)}`;
+
+      eventosEliminados.push({ clave: claveUnica, fila: filaRemota, fecha: t.date, asunto: t.subject });
+      localStorage.setItem("agenda_carlos_condell_eliminados", JSON.stringify(eventosEliminados));
+
+      tasks = tasks.filter(x => x.id !== currentEventId);
+      localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
+      closeDetailModal();
+      renderCalendar();
+
+      try {
+        await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({
+            accion: "eliminar_evento",
+            fila: filaRemota || "",
+            fechaDoc: t.date,
+            asunto: t.subject
+          })
+        });
+      } catch (err) {
+        console.warn("Aviso al eliminar en Sheets:", err);
+      }
+    }
+
+    function toggleRealizadoActual() {
+      if (!solicitarClaveAdminSiEsNecesario()) return;
+      if (!currentEventId) return;
+      const t = tasks.find(x => x.id === currentEventId);
+      if (!t) return;
+      t.status = (t.status === "managed") ? "pending" : "managed";
+      localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
+      openDetail(currentEventId);
+      renderCalendar();
+    }
+
+    function ejecutarBusqueda() {
+      const q = normalizarTexto(document.getElementById("globalSearchInput").value);
+      const box = document.getElementById("searchResults");
+      if (!q) {
+        box.style.display = "none";
+        box.innerHTML = "";
+        return;
+      }
+      const matches = tasks.filter(t => (t.category || "Laboral").toLowerCase() === "laboral" && (normalizarTexto(t.subject).includes(q) || normalizarTexto(t.detail).includes(q) || normalizarTexto(t.sender).includes(q)));
+      if (matches.length === 0) {
+        box.innerHTML = '<div style="padding:10px; font-size:8.5pt; color:#94A3B8; font-weight:600;">Sin coincidencias</div>';
+      } else {
+        box.innerHTML = matches.map(m => `
+          <div class="search-item" onclick="openDetail('${m.id}'); document.getElementById('searchResults').style.display='none';">
+            <span style="font-weight:800; font-size:9pt; color:#0F172A;">${m.subject}</span>
+            <span style="font-size:8pt; color:var(--text-muted);">${m.date} | ${m.time} hrs • ${m.sender || 'General'}</span>
+          </div>
+        `).join("");
+      }
+      box.style.display = "block";
+    }
+
+    document.addEventListener("click", (e) => {
+      const wrap = document.querySelector(".search-wrapper");
+      if (wrap && !wrap.contains(e.target)) {
+        const box = document.getElementById("searchResults");
+        if (box) box.style.display = "none";
+      }
+    });
+
+    function abrirModalBitacora() {
+      renderizarBitacora();
+      document.getElementById("modalBitacoraOverlay").style.display = "flex";
+    }
+    function cerrarModalBitacora() { document.getElementById("modalBitacoraOverlay").style.display = "none"; }
+
+    function renderizarBitacora(filtrarDuplicados = false) {
+      const container = document.getElementById("bitacoraListContainer");
+      const q = normalizarTexto(document.getElementById("bitacoraSearch").value);
+      let list = tasks.filter(t => (t.category || "Laboral").toLowerCase() === "laboral");
+
+      if (q) list = list.filter(t => normalizarTexto(t.subject).includes(q));
+
+      if (filtrarDuplicados) {
+        const conteo = {};
+        tasks.forEach(t => {
+          const k = `${t.date}_${normalizarTexto(t.subject)}`;
+          conteo[k] = (conteo[k] || 0) + 1;
+        });
+        list = list.filter(t => conteo[`${t.date}_${normalizarTexto(t.subject)}`] > 1);
+      }
+
+      list.sort((a, b) => (a.date > b.date ? 1 : (a.date < b.date ? -1 : (a.timeMinutos || 0) - (b.timeMinutos || 0))));
+
+      document.getElementById("bitacoraTotal").textContent = `${list.length} evento(s)`;
+
+      if (list.length === 0) {
+        container.innerHTML = '<span style="font-size:9pt; color:#94A3B8; text-align:center; padding:12px;">Sin registros institucionales.</span>';
+        return;
+      }
+
+      container.innerHTML = list.map(t => `
+        <div class="bitacora-item" onclick="cerrarModalBitacora(); openDetail('${t.id}')">
+          <div>
+            <div style="font-weight:800; font-size:9.5pt; color:#0F172A;">${t.subject}</div>
+            <div style="font-size:8pt; color:var(--text-muted); font-weight:600;">${t.date} | ${t.time} hrs • ${t.sender || 'General'}</div>
+          </div>
+          <span style="font-size:9pt;">${t.status === 'managed' ? '✅' : '⏳'}</span>
+        </div>
+      `).join("");
+    }
+    function filtrarSoloDuplicados() { renderizarBitacora(true); }
+
+    function abrirModalRespaldo() { document.getElementById("modalRespaldoOverlay").style.display = "flex"; }
+    function cerrarModalRespaldo() { document.getElementById("modalRespaldoOverlay").style.display = "none"; }
+
+    function descargarRespaldoJSON() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(tasks, null, 2));
+      const dlAnchor = document.createElement('a');
+      dlAnchor.setAttribute("href", dataStr);
+      dlAnchor.setAttribute("download", `respaldo_agenda_carlos_condell_${formatDateKey(new Date())}.json`);
+      dlAnchor.click();
+      dlAnchor.remove();
+    }
+
+    // --- ASISTENTE AIA CON GEMINI FLASH ---
+    function abrirModalIA() { 
+      if (!solicitarClaveAdminSiEsNecesario()) return;
+      document.getElementById("iaContenedorResultados").style.display = "none";
+      document.getElementById("iaEstado").style.display = "none";
+      document.getElementById("iaArchivoInfo").style.display = "none";
+      document.getElementById("iaListaEventos").innerHTML = "";
+      eventosDetectadosIA = [];
+      archivosRespaldoIA = [];
+      document.getElementById("modalIAOverlay").style.display = "flex"; 
+    }
+
+    function cerrarModalIA() { 
+      document.getElementById("modalIAOverlay").style.display = "none"; 
+    }
+
+    function optimizarYCodificarArchivo(file) {
+      return new Promise((resolve, reject) => {
+        if (!file.type.startsWith("image/")) {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result.substring(reader.result.indexOf(',') + 1));
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+          return;
+        }
+
+        const img = new Image();
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          img.src = e.target.result;
+          img.onload = () => {
+            const canvas = document.createElement("canvas");
+            let width = img.width;
+            let height = img.height;
+            const maxDimension = 1400;
+
+            if (width > maxDimension || height > maxDimension) {
+              if (width > height) {
+                height = Math.round((height * maxDimension) / width);
+                width = maxDimension;
+              } else {
+                width = Math.round((width * maxDimension) / height);
+                height = maxDimension;
+              }
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, width, height);
+
+            const dataUrl = canvas.toDataURL("image/jpeg", 0.82);
+            resolve(dataUrl.substring(dataUrl.indexOf(',') + 1));
+          };
+          img.onerror = reject;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    const btnCargar = document.getElementById("btnCargarIA");
+    if (btnCargar) {
+      btnCargar.onclick = () => {
+        const inp = document.getElementById("inputArchivoIA");
+        if (inp) { inp.value = ""; inp.click(); }
+      };
+    }
+
+    const btnPegar = document.getElementById("btnPegarIA");
+    if (btnPegar) {
+      btnPegar.onclick = async () => {
+        try {
+          if (!navigator.clipboard || !navigator.clipboard.read) {
+            alert("Presiona Ctrl + V directamente para pegar capturas.");
+            return;
+          }
+          const items = await navigator.clipboard.read();
+          for (const item of items) {
+            const imgType = item.types.find(t => t.startsWith("image/"));
+            if (imgType) {
+              const blob = await item.getType(imgType);
+              ejecutarLlamadaGeminiIA([blob], [imgType], ["Captura_Pegada.jpg"]);
+              return;
+            }
+          }
+          alert("No se encontró imagen en el portapapeles. Copia con Windows + Shift + S y vuelve a intentar.");
+        } catch (err) {
+          alert("Presiona Ctrl + V sobre esta ventana para pegar la captura.");
+        }
+      };
+    }
+
+    window.addEventListener("paste", (e) => {
+      const modalIA = document.getElementById("modalIAOverlay");
+      if (modalIA && modalIA.style.display === "flex") {
+        const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+        for (let i = 0; i < items.length; i++) {
+          if (items[i].type.indexOf("image") !== -1) {
+            const blob = items[i].getAsFile();
+            ejecutarLlamadaGeminiIA([blob], ["image/jpeg"], ["Captura_Pegada.jpg"]);
+            break;
+          }
+        }
+      }
+    });
+
+    async function procesarArchivoSeleccionado(input) {
+      if (input.files && input.files.length > 0) {
+        const blobs = [];
+        const tipos = [];
+        const nombres = [];
+        for (let i = 0; i < input.files.length; i++) {
+          blobs.push(input.files[i]);
+          tipos.push(input.files[i].type || "application/pdf");
+          nombres.push(input.files[i].name);
+        }
+        ejecutarLlamadaGeminiIA(blobs, tipos, nombres);
+      }
+    }
+
+    // LLAMADA A GEMINI CONECTADA DIRECTA Y LIMPIA
+    async function ejecutarLlamadaGeminiIA(blobs, mimeTypes, nombresArchivos) {
+      const elEstado = document.getElementById("iaEstado");
+      const elInfo = document.getElementById("iaArchivoInfo");
+      elEstado.style.display = "block";
+      elEstado.textContent = "⚡ Analizando rápidamente con Gemini Flash...";
+      document.getElementById("iaContenedorResultados").style.display = "none";
+
+      try {
+        archivosRespaldoIA = [];
+        const inlineParts = [];
+
+        for (let i = 0; i < blobs.length; i++) {
+          const base64Data = await optimizarYCodificarArchivo(blobs[i]);
+          const esPdf = mimeTypes[i] && mimeTypes[i].includes("pdf");
+          const tipoReal = esPdf ? "application/pdf" : "image/jpeg";
+          archivosRespaldoIA.push({
+            nombre: nombresArchivos[i],
+            mimeType: tipoReal,
+            base64: base64Data,
+            url: ""
+          });
+          inlineParts.push({ inlineData: { mimeType: tipoReal, data: base64Data } });
+        }
+
+        elInfo.textContent = `📎 Documento cargado: ${nombresArchivos.join(", ")}`;
+        elInfo.style.display = "block";
+
+        const promptInstruccion = 
+          "Eres el asistente directivo de la Escuela Comandante Carlos Condell. Analiza este documento o captura.\n" +
+          "Extrae todos los eventos, plazos, reuniones y evaluaciones (Simce, DIA, UTP, Consejo, etc.).\n" +
+          "Es obligatorio asignar una hora válida (en formato HH:MM, por ejemplo 09:00 o la detectada).\n" +
+          "Devuelve ÚNICAMENTE un arreglo JSON con este formato exacto, sin bloques markdown ``` ni texto adicional:\n" +
+          "[\n" +
+          "  {\n" +
+          "    \"asunto\": \"Nombre del evento o plazo\",\n" +
+          "    \"organizador\": \"Entidad que convoca\",\n" +
+          "    \"fecha\": \"YYYY-MM-DD\",\n" +
+          "    \"hora\": \"09:00\",\n" +
+          "    \"prioridad\": \"Alta\",\n" +
+          "    \"sintesis\": \"Resumen conciso\",\n" +
+          "    \"accion\": \"Acción a realizar\"\n" +
+          "  }\n" +
+          "]";
+
+        const payload = {
+          contents: [{ parts: [{ text: promptInstruccion }, ...inlineParts] }]
+        };
+
+        const modelosAProbar = ["gemini-1.5-flash", "gemini-2.0-flash", "gemini-2.5-flash"];
+        let respuestaOk = false;
+        let textoJson = "";
+
+        for (const mod of modelosAProbar) {
+          try {
+            const urlApi = `[https://generativelanguage.googleapis.com/v1beta/models/$](https://generativelanguage.googleapis.com/v1beta/models/$){mod}:generateContent?key=${encodeURIComponent(GEMINI_API_KEY)}`;
+            const res = await fetch(urlApi, {
+              method: "POST",
+              headers: { 
+                "Content-Type": "application/json",
+                "x-goog-api-key": GEMINI_API_KEY
+              },
+              body: JSON.stringify(payload)
+            });
+
+            const rawText = await res.text();
+            if (rawText.trim().startsWith("<") || rawText.includes("<!DOCTYPE") || rawText.includes("<html>")) {
+              continue;
+            }
+
+            const dataResp = JSON.parse(rawText);
+            if (dataResp.error) {
+              console.warn(`Aviso modelo ${mod}:`, dataResp.error.message);
+              continue;
+            }
+
+            if (dataResp.candidates && dataResp.candidates[0]?.content?.parts?.[0]?.text) {
+              textoJson = dataResp.candidates[0].content.parts[0].text;
+              respuestaOk = true;
+              break;
+            }
+          } catch (e) {
+            console.warn(`Fallo al intentar con ${mod}:`, e);
+          }
+        }
+
+        if (!respuestaOk || !textoJson) {
+          throw new Error("No se pudo conectar con el servicio de IA de Gemini. Verifica la conexión.");
+        }
+
+        textoJson = textoJson.trim()
+          .replace(/^```json\s*/i, '')
+          .replace(/^```\s*/i, '')
+          .replace(/```$/i, '')
+          .trim();
+
+        const matchArray = textoJson.match(/\[[\s\S]*\]/);
+        if (matchArray) {
+          textoJson = matchArray[0];
+        }
+
+        const eventos = JSON.parse(textoJson);
+        eventosDetectadosIA = Array.isArray(eventos) ? eventos : [eventos];
+
+        eventosDetectadosIA.forEach(ev => {
+          if (!ev.hora || ev.hora.trim() === "") ev.hora = "09:00";
+        });
+
+        renderizarEventosDetectados(eventosDetectadosIA);
+        elEstado.style.display = "none";
+
+      } catch (err) {
+        console.error(err);
+        elEstado.textContent = "❌ " + err.message;
+      }
+    }
+
+    function renderizarEventosDetectados(lista) {
+      const contenedor = document.getElementById("iaContenedorResultados");
+      const listaDiv = document.getElementById("iaListaEventos");
+      listaDiv.innerHTML = "";
+
+      if (!lista || lista.length === 0) {
+        listaDiv.innerHTML = "<div style='font-size:9pt; color:#94A3B8; text-align:center; padding:10px;'>No se detectaron eventos en el documento.</div>";
+        contenedor.style.display = "block";
+        return;
+      }
+
+      lista.forEach((ev, idx) => {
+        const fKey = parsearFecha(ev.fecha) || formatDateKey(new Date());
+        const dup = verificarDuplicado(ev.asunto, fKey);
+        const item = document.createElement("div");
+        item.className = "ia-item-card";
+        
+        let avisoDupHtml = dup ? `<div style="color:#DC2626; font-size:8pt; font-weight:bold;">⚠️ Ya agendado: \"${dup.subject}\"</div>` : '';
+
+        item.innerHTML = `
+          <div class="ia-item-header">
+            <input type="text" class="ia-edit-input" style="font-weight:800; width:80%;" value="${ev.asunto || ''}" onchange="actualizarDatoIA(${idx}, 'asunto', this.value)">
+            <button type="button" class="icon-btn" style="color:#DC2626 !important; height:26px !important; padding:0 8px !important;" onclick="eliminarPropuestaIA(${idx})" title="Descartar evento">✕</button>
+          </div>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+            <div>
+              <label style="font-size:7.5pt; margin:0;">Fecha *:</label>
+              <input type="date" class="ia-edit-input" value="${fKey}" onchange="actualizarDatoIA(${idx}, 'fecha', this.value)">
+            </div>
+            <div>
+              <label style="font-size:7.5pt; margin:0;">Hora (Obligatoria) *:</label>
+              <input type="time" class="ia-edit-input" required value="${ev.hora || '09:00'}" onchange="actualizarDatoIA(${idx}, 'hora', this.value)" style="border-color:#3B82F6;">
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+            <div>
+              <label style="font-size:7.5pt; margin:0;">Organiza:</label>
+              <input type="text" class="ia-edit-input" value="${ev.organizador || 'General'}" onchange="actualizarDatoIA(${idx}, 'organizador', this.value)">
+            </div>
+            <div>
+              <label style="font-size:7.5pt; margin:0;">Prioridad:</label>
+              <select class="ia-edit-input" onchange="actualizarDatoIA(${idx}, 'prioridad', this.value)">
+                <option value="Alta" ${ev.prioridad === 'Alta' ? 'selected' : ''}>Alta</option>
+                <option value="Media" ${ev.prioridad === 'Media' || !ev.prioridad ? 'selected' : ''}>Media</option>
+                <option value="Baja" ${ev.prioridad === 'Baja' ? 'selected' : ''}>Baja</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label style="font-size:7.5pt; margin:0;">Síntesis:</label>
+            <textarea class="ia-edit-input" rows="1" onchange="actualizarDatoIA(${idx}, 'sintesis', this.value)">${ev.sintesis || ''}</textarea>
+          </div>
+          ${avisoDupHtml}
+        `;
+        listaDiv.appendChild(item);
+      });
+
+      document.getElementById("btnAgendarTodoIA").textContent = `AGENDAR LOS ${lista.length} EVENTOS Y SUBIR RESPALDO`;
+      contenedor.style.display = "block";
+    }
+
+    function actualizarDatoIA(idx, campo, valor) {
+      if (eventosDetectadosIA[idx]) eventosDetectadosIA[idx][campo] = valor;
+    }
+
+    function eliminarPropuestaIA(idx) {
+      eventosDetectadosIA.splice(idx, 1);
+      renderizarEventosDetectados(eventosDetectadosIA);
+    }
+
+    async function guardarEventosDetectadosIA() {
+      if (!eventosDetectadosIA || eventosDetectadosIA.length === 0) return;
+
+      for (let i = 0; i < eventosDetectadosIA.length; i++) {
+        if (!eventosDetectadosIA[i].hora || eventosDetectadosIA[i].hora.trim() === "") {
+          alert(`⏰ Por favor asigna una hora al evento: "${eventosDetectadosIA[i].asunto || 'Sin título'}"`);
+          return;
+        }
+      }
+
+      const btn = document.getElementById("btnAgendarTodoIA");
+      btn.disabled = true; 
+      btn.textContent = "⏳ AGENDANDO Y GUARDANDO...";
+      const baseId = Date.now();
+
+      const respaldoInfo = archivosRespaldoIA.map(a => ({ nombre: a.nombre, url: a.url || "", base64: a.base64, mimeType: a.mimeType }));
+
+      eventosDetectadosIA.forEach((ev, idx) => {
+        const fKey = parsearFecha(ev.fecha) || formatDateKey(new Date());
+        const hora = ev.hora || "09:00";
+        const partesH = hora.split(":");
+        const mins = parseInt(partesH[0]) * 60 + parseInt(partesH[1] || 0);
+
+        tasks.push({
+          id: baseId + idx,
+          date: fKey,
+          time: hora,
+          timeMinutos: mins,
+          tieneHora: true,
+          isAnnual: false,
+          subject: ev.asunto || "Compromiso Institucional",
+          sender: ev.organizador || "General",
+          detail: ev.sintesis || "",
+          accion: ev.accion || "Gestionar",
+          priority: ev.prioridad || "Media",
+          category: "Laboral",
+          status: "pending",
+          respaldos: [...respaldoInfo]
+        });
+      });
+
+      localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
+      renderCalendar();
+      cerrarModalIA();
+
+      for (const ev of eventosDetectadosIA) {
+        const fKey = parsearFecha(ev.fecha) || formatDateKey(new Date());
+        try {
+          const res = await fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify({
+              accion: "crear_evento", 
+              fechaDoc: fKey, 
+              hora: ev.hora || "09:00", 
+              asunto: ev.asunto, 
+              remitente: ev.organizador || "General", 
+              prioridad: ev.prioridad || "Media", 
+              sintesis: ev.sintesis || "", 
+              accionReq: ev.accion || "Gestionar", 
+              archivos: archivosRespaldoIA, 
+              anual: "No"
+            })
+          });
+          const resJson = await res.json();
+          if (resJson && resJson.urls && Array.isArray(resJson.urls)) {
+            tasks.forEach(t => {
+              if (t.respaldos && t.subject === ev.asunto) {
+                t.respaldos.forEach((r, i) => {
+                  if (resJson.urls[i]) r.url = resJson.urls[i];
+                });
+              }
+            });
+            localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
+            renderCalendar();
+          }
+        } catch (e) {
+          console.warn("Aviso al guardar en Google Sheets:", e);
+        }
+      }
+
+      btn.disabled = false; 
+      btn.textContent = "AGENDAR PROPUESTA Y SUBIR RESPALDO";
+    }
+
+    // --- RELOJ EN VIVO ---
+    function updateLiveClock() {
+      const now = new Date();
+      if(document.getElementById("fc-hour")) document.getElementById("fc-hour").textContent = String(now.getHours()).padStart(2, '0');
+      if(document.getElementById("fc-minute")) document.getElementById("fc-minute").textContent = String(now.getMinutes()).padStart(2, '0');
+      if(document.getElementById("fc-second")) document.getElementById("fc-second").textContent = String(now.getSeconds()).padStart(2, '0');
+    }
+    setInterval(updateLiveClock, 1000);
+    updateLiveClock();
+
+    document.getElementById("btnToday").onclick = () => { currentMonday = getMonday(new Date()); renderCalendar(); };
+    document.getElementById("btnPrev").onclick = () => { currentMonday.setDate(currentMonday.getDate() - 7); renderCalendar(); };
+    document.getElementById("btnNext").onclick = () => { currentMonday.setDate(currentMonday.getDate() + 7); renderCalendar(); };
+    
+    const hoyInicial = new Date();
+    const lblSub = document.getElementById("full-date-subtitle");
+    if (lblSub) lblSub.textContent = formatFechaCompleta(hoyInicial);
+
+    renderCalendar();
+    sincronizarDesdeSheets();
+  </script>
+</body>
+</html>
