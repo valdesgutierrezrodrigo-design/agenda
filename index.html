@@ -33,12 +33,18 @@
       --day-viernes-border: #FED7AA;
       --day-viernes-accent: #9A3412;
 
-      --prio-alta-bg: #FEE2E2;
+      /* Bordes de prioridad resaltados */
       --prio-alta-border: #DC2626;
-      --prio-media-bg: #FEF3C7;
+      --prio-alta-bg: #FEF2F2;
+      --prio-alta-shadow: rgba(220, 38, 38, 0.12);
+
       --prio-media-border: #D97706;
-      --prio-baja-bg: #E0F2FE;
+      --prio-media-bg: #FFFBEB;
+      --prio-media-shadow: rgba(217, 119, 6, 0.12);
+
       --prio-baja-border: #0284C7;
+      --prio-baja-bg: #F0F9FF;
+      --prio-baja-shadow: rgba(2, 132, 199, 0.12);
 
       --radius-sm: 8px;
       --radius-md: 12px;
@@ -48,55 +54,49 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif; }
     body { background-color: var(--bg-app); height: 100vh; padding: 6px 10px; color: var(--text-main); display: flex; flex-direction: column; overflow: hidden; }
     
-    /* ENCABEZADO: GRID DE 3 COLUMNAS PARA CENTRADO EXACTO */
+    /* ENCABEZADO UNIFICADO Y ELEGANTE */
     header { 
-      display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
-      background: var(--surface); padding: 6px 18px; border-radius: var(--radius-md);
-      border: 2px solid var(--border-subtle); box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--surface); padding: 6px 20px; border-radius: var(--radius-md);
+      border: 2px solid var(--border-subtle); box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
       flex-shrink: 0; margin-bottom: 6px; width: 100%; min-height: 58px; box-sizing: border-box;
     }
     
-    .header-left-title {
-      font-size: 16.5pt; font-weight: 900; color: #1E3A8A; white-space: nowrap; margin: 0; line-height: 1; letter-spacing: -0.4px;
-      justify-self: start;
+    .brand-block {
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    .brand-title {
+      font-size: 17pt; font-weight: 900; color: #1E3A8A; white-space: nowrap; margin: 0; line-height: 1.1; letter-spacing: -0.4px;
+    }
+    .brand-meta {
+      font-size: 8.5pt; font-weight: 800; color: #64748B; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .badge-rbd {
+      background: #EFF6FF; color: #1D4ED8; padding: 1px 6px; border-radius: 4px; border: 1px solid #BFDBFE; font-weight: 900;
     }
 
-    /* GRUPO CENTRAL: FECHA + RELOJ PERFECTAMENTE BALANCEADOS */
-    .header-center-group {
-      display: flex; align-items: center; gap: 12px; justify-self: center;
+    /* MÓDULO INTEGRADO: FECHA + RELOJ */
+    .time-module {
+      display: flex; align-items: center; background: #0F172A; border-radius: var(--radius-md);
+      padding: 4px 6px 4px 16px; gap: 14px; border: 2px solid #334155;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+    }
+    .date-display-text {
+      color: #F8FAFC; font-size: 11pt; font-weight: 800; text-transform: capitalize;
+      letter-spacing: 0.2px; white-space: nowrap;
     }
 
-    .header-right-spacer {
-      justify-self: end;
-      display: flex; align-items: center; justify-content: flex-end;
-    }
-    .badge-colegio {
-      font-size: 8.5pt; font-weight: 800; color: #475569; background: #F1F5F9;
-      border: 1.5px solid var(--border-subtle); padding: 4px 10px; border-radius: var(--radius-sm);
-    }
-
-    #full-date-subtitle { 
-      font-size: 11pt; font-weight: 800; color: #0F172A; background: #F1F5F9; 
-      border: 2px solid var(--border-strong); padding: 0 14px; border-radius: var(--radius-sm); 
-      white-space: nowrap; height: 44px; display: inline-flex; align-items: center; text-transform: capitalize; 
-    }
-
-    /* RELOJ DESTACADO Y ALARGADO */
     .flip-clock-container { 
-      display: flex; align-items: center; background: #0F172A; 
-      padding: 4px 16px; border-radius: var(--radius-md); 
-      gap: 6px; height: 46px; flex-shrink: 0; 
-      box-shadow: 0 3px 8px rgba(15, 23, 42, 0.25);
-      border: 2px solid #334155;
+      display: flex; align-items: center; gap: 5px;
     }
     .flip-section { display: flex; flex-direction: column; align-items: center; justify-content: center; }
-    .flip-label-top { font-size: 6.5pt; letter-spacing: 0.8px; color: #94A3B8; margin-bottom: 1px; font-weight: 800; text-transform: uppercase; line-height: 1; }
+    .flip-label-top { font-size: 6pt; letter-spacing: 0.8px; color: #94A3B8; margin-bottom: 1px; font-weight: 800; text-transform: uppercase; line-height: 1; }
     .flip-card { 
-      background: #1E293B; color: #FFFFFF; font-size: 18pt; font-weight: 900; 
-      padding: 1px 8px; border-radius: 5px; min-width: 38px; text-align: center; line-height: 1.1; 
-      letter-spacing: 0.8px; border: 1px solid #475569;
+      background: #1E293B; color: #FFFFFF; font-size: 17pt; font-weight: 900; 
+      padding: 2px 8px; border-radius: 6px; min-width: 36px; text-align: center; line-height: 1.1; 
+      letter-spacing: 0.6px; border: 1px solid #475569;
     }
-    .flip-colon { color: #CBD5E1; font-size: 18pt; font-weight: bold; margin: 0 1px; }
+    .flip-colon { color: #94A3B8; font-size: 17pt; font-weight: bold; margin: 0 1px; }
 
     /* LAYOUT PRINCIPAL: DÍAS + BARRA LATERAL DERECHA */
     .main-workspace {
@@ -116,10 +116,9 @@
 
     .day-column.is-today { border-width: 3.5px !important; border-color: #D97706 !important; box-shadow: 0 4px 16px rgba(217, 119, 6, 0.22) !important; }
     
-    /* ENCABEZADOS DE COLUMNA DE ALTO CONTRASTE */
     .day-header { 
       text-align: center; padding: 6px 4px 7px 4px; border-radius: 8px;
-      background: rgba(255, 255, 255, 0.7); border: 1.5px solid rgba(0,0,0,0.06);
+      background: rgba(255, 255, 255, 0.75); border: 1.5px solid rgba(0,0,0,0.06);
       flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 2px;
     }
     .day-name { font-size: 11.5pt; font-weight: 900; text-transform: uppercase; line-height: 1.1; letter-spacing: 0.4px; }
@@ -136,27 +135,41 @@
     .badge-today { background: #FEF08A; color: #854D0E; border: 1.5px solid #EAB308; }
     
     .cards-container { 
-      display: flex; flex-direction: column; gap: 6px; flex: 1; min-height: 0; 
+      display: flex; flex-direction: column; gap: 7px; flex: 1; min-height: 0; 
       overflow-y: auto; padding-right: 2px;
       scrollbar-width: thin; scrollbar-color: #94A3B8 transparent;
     }
     .cards-container::-webkit-scrollbar { width: 5px; }
     .cards-container::-webkit-scrollbar-thumb { background: #94A3B8; border-radius: 6px; }
     
-    /* TARJETA COMPACTA CON LETRA 12pt Y CONTROL DE TACHADO */
+    /* TARJETA CON BORDE RESALTADO POR PRIORIDAD */
     .task-card { 
-      width: 100%; background: #FFFFFF; padding: 8px 10px; border-radius: var(--radius-sm);
-      display: flex; flex-direction: column; gap: 4px; cursor: pointer; border: 1.5px solid rgba(0,0,0,0.1);
-      border-left: 5.5px solid var(--border-strong); box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      width: 100%; background: #FFFFFF; padding: 9px 11px; border-radius: var(--radius-sm);
+      display: flex; flex-direction: column; gap: 4px; cursor: pointer;
+      border: 2px solid var(--border-subtle);
+      border-left: 6.5px solid var(--border-strong);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
       transition: transform 0.1s ease, box-shadow 0.1s ease;
     }
-    .task-card:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0,0,0,0.08); border-color: #64748B; }
-    .task-card.prio-alta { border-left-color: var(--prio-alta-border); } 
-    .task-card.prio-media { border-left-color: var(--prio-media-border); } 
-    .task-card.prio-baja { border-left-color: var(--prio-baja-border); } 
+    .task-card:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
     
-    /* Cuando está realizado, solo se atenúa sutilmente y tacha el título */
-    .task-card.is-done { background: #F8FAFC !important; opacity: 0.85; border-color: #CBD5E1; }
+    .task-card.prio-alta { 
+      border-color: #F87171; 
+      border-left: 7px solid var(--prio-alta-border); 
+      box-shadow: 0 2px 6px var(--prio-alta-shadow);
+    } 
+    .task-card.prio-media { 
+      border-color: #FBBF24; 
+      border-left: 7px solid var(--prio-media-border); 
+      box-shadow: 0 2px 6px var(--prio-media-shadow);
+    } 
+    .task-card.prio-baja { 
+      border-color: #38BDF8; 
+      border-left: 7px solid var(--prio-baja-border); 
+      box-shadow: 0 2px 6px var(--prio-baja-shadow);
+    } 
+    
+    .task-card.is-done { background: #F8FAFC !important; opacity: 0.85; border-color: #CBD5E1 !important; border-left-color: #94A3B8 !important; }
     .task-card.is-done .card-title { text-decoration: line-through; color: #64748B !important; }
 
     .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 6px; }
@@ -204,7 +217,6 @@
     .btn-action-side:hover { background: #F1F5F9 !important; border-color: #475569 !important; }
     .btn-icon-lg { font-size: 12pt; line-height: 1; }
     
-    /* BOTÓN NUEVO EVENTO CON RELIEVE DESTACADO */
     .btn-side-nuevo { 
       background: #FEF08A !important; border-color: #EAB308 !important; color: #854D0E !important; font-weight: 900 !important; 
       box-shadow: 0 3px 8px rgba(234, 179, 8, 0.35) !important;
@@ -324,12 +336,20 @@
   </style>
 </head>
 <body>
-  <!-- ENCABEZADO SUPERIOR SIMÉTRICO -->
+  <!-- ENCABEZADO EQUILIBRADO Y PROFESIONAL -->
   <header>
-    <div class="header-left-title">Agenda Carlos Condell</div>
+    <div class="brand-block">
+      <div class="brand-title">Agenda Carlos Condell</div>
+      <div class="brand-meta">
+        <span>Coltauco</span>
+        <span>•</span>
+        <span>RBD <span class="badge-rbd">25078</span></span>
+      </div>
+    </div>
 
-    <div class="header-center-group">
-      <span id="full-date-subtitle">Hoy</span>
+    <!-- MÓDULO UNIFICADO: FECHA Y RELOJ JUNTOS -->
+    <div class="time-module">
+      <span class="date-display-text" id="full-date-subtitle">Hoy</span>
       <div class="flip-clock-container">
         <div class="flip-section"><span class="flip-label-top">Hora</span><div class="flip-card" id="fc-hour">00</div></div>
         <div class="flip-colon">:</div>
@@ -337,10 +357,6 @@
         <div class="flip-colon">:</div>
         <div class="flip-section"><span class="flip-label-top">Seg</span><div class="flip-card" id="fc-second">00</div></div>
       </div>
-    </div>
-
-    <div class="header-right-spacer">
-      <span class="badge-colegio">Coltauco</span>
     </div>
   </header>
 
@@ -350,7 +366,7 @@
       <div class="week-container" id="daysGrid"></div>
     </main>
 
-    <!-- BARRA LATERAL DERECHA ESTRUCTURADA -->
+    <!-- BARRA LATERAL DERECHA -->
     <aside class="sidebar-actions">
       <span class="sidebar-section-title">Seguridad & Enlace</span>
       <div id="modeBadge" class="mode-badge-side readonly" onclick="alternarModoEdicion()" title="Haz clic para desbloquear edición con clave 25078">🔒 Solo Lectura</div>
@@ -915,7 +931,6 @@
             card.className = `task-card ${prioClass} ${t.status === "managed" ? 'is-done' : ''}`;
             card.onclick = () => openDetail(t.id);
             
-            // Cápsula de hora legible o "Por definir"
             let badgeHora = "";
             if (t.time && t.time !== "00:00") {
               badgeHora = `<span class="card-time">⏰ ${t.time}</span>`;
@@ -1364,7 +1379,6 @@
       document.getElementById("modalIAOverlay").style.display = "none"; 
     }
 
-    // HACER MODAL ARRASTRABLE
     (function hacerModalArrastrable() {
       const header = document.getElementById("dragHeaderIA");
       const box = document.getElementById("modalIABox");
