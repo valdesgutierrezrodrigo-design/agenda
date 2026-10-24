@@ -83,7 +83,7 @@
     .mode-badge.admin { background: #DCFCE7; color: #166534; border-color: #86EFAC; }
     .mode-badge.readonly { background: #FEF3C7; color: #92400E; border-color: #FDE68A; }
 
-    /* RELOJ DESTACADO (MÁS GRANDE Y LEGIBLE) */
+    /* RELOJ DESTACADO */
     .flip-clock-container { 
       display: flex; align-items: center; background: #0F172A; 
       padding: 4px 12px; border-radius: var(--radius-sm); 
@@ -126,7 +126,7 @@
 
     .date-label { font-size: 9.5pt; font-weight: 800; min-width: 110px; text-align: center; color: var(--primary); line-height: 34px; height: 34px; white-space: nowrap; }
 
-    /* CUADRÍCULA 5 DÍAS (LUNES A VIERNES) */
+    /* CUADRÍCULA 5 DÍAS */
     main#plannerSection { flex: 1; display: flex; min-height: 0; width: 100%; }
     .week-container { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; width: 100%; height: 100%; }
     
@@ -1262,7 +1262,7 @@
       }
     }
 
-    // LLAMADA A GEMINI REPARADA Y CON CONEXIÓN ROBUSTA
+    // LLAMADA A GEMINI CONECTADA DIRECTA Y LIMPIA
     async function ejecutarLlamadaGeminiIA(blobs, mimeTypes, nombresArchivos) {
       const elEstado = document.getElementById("iaEstado");
       const elInfo = document.getElementById("iaArchivoInfo");
@@ -1311,16 +1311,19 @@
           contents: [{ parts: [{ text: promptInstruccion }, ...inlineParts] }]
         };
 
-        const modelosAProbar = ["gemini-1.5-flash", "gemini-2.0-flash"];
+        const modelosAProbar = ["gemini-1.5-flash", "gemini-2.0-flash", "gemini-2.5-flash"];
         let respuestaOk = false;
         let textoJson = "";
 
         for (const mod of modelosAProbar) {
           try {
-            const urlApi = `[https://generativelanguage.googleapis.com/v1beta/models/$](https://generativelanguage.googleapis.com/v1beta/models/$){mod}:generateContent?key=${GEMINI_API_KEY}`;
+            const urlApi = `[https://generativelanguage.googleapis.com/v1beta/models/$](https://generativelanguage.googleapis.com/v1beta/models/$){mod}:generateContent?key=${encodeURIComponent(GEMINI_API_KEY)}`;
             const res = await fetch(urlApi, {
               method: "POST",
-              headers: { "Content-Type": "application/json" },
+              headers: { 
+                "Content-Type": "application/json",
+                "x-goog-api-key": GEMINI_API_KEY
+              },
               body: JSON.stringify(payload)
             });
 
