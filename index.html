@@ -5,44 +5,40 @@
   <title>Agenda Carlos Condell</title>
   <style>
     :root {
-      --bg-app: #F1F5F9;
+      --bg-app: #F8FAFC;
       --surface: #FFFFFF;
       --border-subtle: #E2E8F0;
-      --border-strong: #CBD5E1;
+      --border-strong: #94A3B8;
       --text-main: #0F172A;
-      --text-muted: #475569;
+      --text-muted: #334155;
 
-      /* Paleta Institucional Carlos Condell */
-      --primary: #1E3A8A;
-      --primary-hover: #1E40AF;
-      --accent: #D97706;
-      
-      --day-lunes-bg: #F8FAFC;
+      /* Paleta Pastel Suave y Armónica */
+      --day-lunes-bg: #F1F5F9;
       --day-lunes-border: #CBD5E1;
-      --day-lunes-accent: #1E3A8A;
+      --day-lunes-accent: #334155;
 
-      --day-martes-bg: #F0FDF4;
-      --day-martes-border: #BBF7D0;
-      --day-martes-accent: #166534;
+      --day-martes-bg: #FEFCE8;
+      --day-martes-border: #FEF08A;
+      --day-martes-accent: #854D0E;
 
-      --day-miercoles-bg: #EFF6FF;
-      --day-miercoles-border: #BFDBFE;
-      --day-miercoles-accent: #1D4ED8;
+      --day-miercoles-bg: #E0F2FE;
+      --day-miercoles-border: #BAE6FD;
+      --day-miercoles-accent: #0369A1;
 
-      --day-jueves-bg: #FEFCE8;
-      --day-jueves-border: #FEF08A;
-      --day-jueves-accent: #854D0E;
+      --day-jueves-bg: #FEF3C7;
+      --day-jueves-border: #FDE68A;
+      --day-jueves-accent: #92400E;
 
-      --day-viernes-bg: #FFF7ED;
+      --day-viernes-bg: #FFEDD5;
       --day-viernes-border: #FED7AA;
       --day-viernes-accent: #C2410C;
 
       --prio-alta-bg: #FEE2E2;
-      --prio-alta-border: #EF4444;
+      --prio-alta-border: #DC2626;
       --prio-media-bg: #FEF3C7;
-      --prio-media-border: #F59E0B;
+      --prio-media-border: #D97706;
       --prio-baja-bg: #E0F2FE;
-      --prio-baja-border: #0EA5E9;
+      --prio-baja-border: #0284C7;
 
       --radius-sm: 8px;
       --radius-md: 12px;
@@ -55,87 +51,93 @@
     /* ENCABEZADO */
     header { 
       display: flex; justify-content: space-between; align-items: center; 
-      background: var(--surface); padding: 6px 14px; border-radius: var(--radius-md);
-      border: 1px solid var(--border-subtle); box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
-      flex-shrink: 0; gap: 12px; margin-bottom: 6px; width: 100%; min-height: 58px; box-sizing: border-box;
+      background: var(--surface); padding: 8px 16px; border-radius: var(--radius-md);
+      border: 2px solid var(--border-subtle); box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+      flex-shrink: 0; gap: 12px; margin-bottom: 6px; width: 100%; min-height: 64px; box-sizing: border-box;
       flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
     }
     header::-webkit-scrollbar { display: none; }
     
-    .header-left-group { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-    .brand-title { font-size: 15pt; font-weight: 900; color: var(--primary); white-space: nowrap; margin: 0; line-height: 1; letter-spacing: -0.4px; }
-    #full-date-subtitle { font-size: 9.5pt; font-weight: 700; color: #1E293B; background: #F8FAFC; border: 1.5px solid var(--border-subtle); padding: 0 10px; border-radius: var(--radius-sm); white-space: nowrap; height: 36px; display: inline-flex; align-items: center; text-transform: capitalize; }
+    .header-left-group { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .brand-title { font-size: 16pt; font-weight: 900; color: #1E3A8A; white-space: nowrap; margin: 0; line-height: 1; letter-spacing: -0.4px; }
+    
+    /* FECHA DESTACADA Y MÁS GRANDE */
+    #full-date-subtitle { 
+      font-size: 11pt; font-weight: 800; color: #0F172A; background: #F1F5F9; 
+      border: 2px solid var(--border-strong); padding: 0 12px; border-radius: var(--radius-sm); 
+      white-space: nowrap; height: 42px; display: inline-flex; align-items: center; text-transform: capitalize; 
+    }
 
-    /* BOTÓN AGENDA TDAH COMPACTO */
     .btn-agenda-tdah {
-      background: #EFF6FF !important; color: #1D4ED8 !important; border: 1px solid #BFDBFE !important;
-      border-radius: var(--radius-sm) !important; padding: 0 8px !important; height: 32px !important;
-      font-size: 8.5pt !important; font-weight: 800 !important; cursor: pointer; display: inline-flex;
-      align-items: center; gap: 4px; transition: all 0.15s ease; white-space: nowrap; text-decoration: none;
+      background: #EFF6FF !important; color: #1D4ED8 !important; border: 2px solid #93C5FD !important;
+      border-radius: var(--radius-sm) !important; padding: 0 10px !important; height: 38px !important;
+      font-size: 9.5pt !important; font-weight: 800 !important; cursor: pointer; display: inline-flex;
+      align-items: center; gap: 5px; transition: all 0.15s ease; white-space: nowrap; text-decoration: none;
     }
     .btn-agenda-tdah:hover { background: #DBEAFE !important; }
 
     .mode-badge {
-      font-size: 8.5pt; font-weight: 800; padding: 5px 9px; border-radius: var(--radius-sm);
-      background: #F1F5F9; color: #475569; border: 1.5px solid var(--border-strong);
-      display: inline-flex; align-items: center; gap: 4px; cursor: pointer; user-select: none;
+      font-size: 9.5pt; font-weight: 800; padding: 6px 12px; border-radius: var(--radius-sm);
+      background: #F1F5F9; color: #334155; border: 2px solid var(--border-strong);
+      display: inline-flex; align-items: center; gap: 5px; cursor: pointer; user-select: none; height: 38px;
     }
-    .mode-badge.admin { background: #DCFCE7; color: #166534; border-color: #86EFAC; }
-    .mode-badge.readonly { background: #FEF3C7; color: #92400E; border-color: #FDE68A; }
+    .mode-badge.admin { background: #DCFCE7; color: #166534; border-color: #4ADE80; }
+    .mode-badge.readonly { background: #FEF3C7; color: #92400E; border-color: #FCD34D; }
 
-    /* RELOJ DESTACADO */
+    /* RELOJ DESTACADO, ALARGADO Y AGRANDADO */
     .flip-clock-container { 
       display: flex; align-items: center; background: #0F172A; 
-      padding: 4px 12px; border-radius: var(--radius-sm); 
-      gap: 5px; height: 44px; flex-shrink: 0; 
-      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.25);
+      padding: 6px 16px; border-radius: var(--radius-md); 
+      gap: 7px; height: 50px; flex-shrink: 0; 
+      box-shadow: 0 3px 8px rgba(15, 23, 42, 0.3);
+      border: 2px solid #334155;
     }
     .flip-section { display: flex; flex-direction: column; align-items: center; justify-content: center; }
-    .flip-label-top { font-size: 6pt; letter-spacing: 0.6px; color: #94A3B8; margin-bottom: 1px; font-weight: 800; text-transform: uppercase; line-height: 1; }
+    .flip-label-top { font-size: 7pt; letter-spacing: 0.8px; color: #94A3B8; margin-bottom: 2px; font-weight: 800; text-transform: uppercase; line-height: 1; }
     .flip-card { 
-      background: #1E293B; color: #FFFFFF; font-size: 16pt; font-weight: 900; 
-      padding: 1px 7px; border-radius: 5px; min-width: 34px; text-align: center; line-height: 1.1; 
-      letter-spacing: 0.5px;
+      background: #1E293B; color: #FFFFFF; font-size: 19pt; font-weight: 900; 
+      padding: 2px 9px; border-radius: 6px; min-width: 40px; text-align: center; line-height: 1.1; 
+      letter-spacing: 0.8px; border: 1px solid #475569;
     }
-    .flip-colon { color: #94A3B8; font-size: 16pt; font-weight: bold; margin: 0 1px; }
+    .flip-colon { color: #CBD5E1; font-size: 19pt; font-weight: bold; margin: 0 2px; }
 
-    .header-right-group { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
-    .search-wrapper { position: relative; width: 130px; flex-shrink: 0; }
-    .search-input { width: 100%; height: 34px; padding: 0 8px 0 28px; font-size: 9pt; font-weight: 600; border: 1.5px solid var(--border-strong); border-radius: var(--radius-sm); outline: none; background: #FFFFFF; }
-    .search-input:focus { border-color: var(--primary); }
-    .search-icon { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-size: 9pt; color: var(--text-muted); pointer-events: none; }
-    .search-results { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: var(--surface); border: 1.5px solid var(--border-strong); border-radius: var(--radius-sm); max-height: 260px; overflow-y: auto; box-shadow: 0 8px 20px rgba(0,0,0,0.1); z-index: 50; display: none; }
-    .search-item { padding: 8px 10px; border-bottom: 1px solid var(--border-subtle); cursor: pointer; display: flex; flex-direction: column; gap: 3px; }
+    .header-right-group { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .search-wrapper { position: relative; width: 140px; flex-shrink: 0; }
+    .search-input { width: 100%; height: 38px; padding: 0 10px 0 32px; font-size: 10pt; font-weight: 600; border: 2px solid var(--border-strong); border-radius: var(--radius-sm); outline: none; background: #FFFFFF; }
+    .search-input:focus { border-color: #1E3A8A; }
+    .search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 10pt; color: var(--text-muted); pointer-events: none; }
+    .search-results { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: var(--surface); border: 2px solid var(--border-strong); border-radius: var(--radius-sm); max-height: 280px; overflow-y: auto; box-shadow: 0 8px 24px rgba(0,0,0,0.12); z-index: 50; display: none; }
+    .search-item { padding: 9px 12px; border-bottom: 1px solid var(--border-subtle); cursor: pointer; display: flex; flex-direction: column; gap: 3px; }
     .search-item:hover { background: #F8FAFC; }
 
-    .nav-controls { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
+    .nav-controls { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
     button, .icon-btn, .btn-prio { 
-      background: #FFFFFF !important; color: #1E293B !important; border: 1.5px solid var(--border-strong) !important;
-      border-radius: var(--radius-sm); padding: 0 10px !important; height: 34px !important; cursor: pointer;
-      font-size: 9pt; font-weight: 800 !important; display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+      background: #FFFFFF !important; color: #0F172A !important; border: 2px solid var(--border-strong) !important;
+      border-radius: var(--radius-sm); padding: 0 12px !important; height: 38px !important; cursor: pointer;
+      font-size: 9.5pt; font-weight: 800 !important; display: inline-flex; align-items: center; justify-content: center; gap: 5px;
       white-space: nowrap; transition: all 0.15s ease;
     }
-    button:hover, .icon-btn:hover { background: #F8FAFC !important; border-color: #94A3B8 !important; }
-    .btn-nuevo { background: #FEF3C7 !important; border-color: #FDE68A !important; color: #B45309 !important; font-weight: 900 !important; padding: 0 12px !important; }
-    .btn-nuevo:hover { background: #FDE68A !important; }
-    .btn-respaldo { background: #EFF6FF !important; border-color: #BFDBFE !important; color: #1D4ED8 !important; }
+    button:hover, .icon-btn:hover { background: #F1F5F9 !important; border-color: #475569 !important; }
+    .btn-nuevo { background: #FEF08A !important; border-color: #EAB308 !important; color: #854D0E !important; font-weight: 900 !important; padding: 0 14px !important; }
+    .btn-nuevo:hover { background: #FDE047 !important; }
+    .btn-respaldo { background: #EFF6FF !important; border-color: #93C5FD !important; color: #1D4ED8 !important; }
     
     .btn-prio.selected-alta { border-color: var(--prio-alta-border) !important; background: var(--prio-alta-bg) !important; color: #991B1B !important; }
     .btn-prio.selected-media { border-color: var(--prio-media-border) !important; background: var(--prio-media-bg) !important; color: #92400E !important; }
-    .btn-prio.selected-baja { border-color: var(--prio-baja-border) !important; background: var(--prio-baja-bg) !important; color: #075985 !important; }
+    .btn-prio.selected-baja { border-color: var(--prio-baja-border) !important; background: var(--prio-baja-bg) !important; color: #0369A1 !important; }
 
-    .date-label { font-size: 9.5pt; font-weight: 800; min-width: 110px; text-align: center; color: var(--primary); line-height: 34px; height: 34px; white-space: nowrap; }
+    .date-label { font-size: 10.5pt; font-weight: 800; min-width: 120px; text-align: center; color: #1E3A8A; line-height: 38px; height: 38px; white-space: nowrap; }
 
     /* CUADRÍCULA 5 DÍAS */
-    main#plannerSection { flex: 1; display: flex; min-height: 0; width: 100%; }
-    .week-container { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; width: 100%; height: 100%; }
+    main#plannerSection { flex: 1; display: flex; min-height: 0; width: 100%; margin-top: 4px; }
+    .week-container { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; width: 100%; height: 100%; }
     
-    .day-column { border-radius: var(--radius-md); padding: 8px 9px; display: flex; flex-direction: column; gap: 6px; min-height: 0; overflow: hidden; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03); }
-    .day-lunes { background: var(--day-lunes-bg); border: 2px solid var(--day-lunes-border); }
-    .day-martes { background: var(--day-martes-bg); border: 2px solid var(--day-martes-border); }
-    .day-miercoles { background: var(--day-miercoles-bg); border: 2px solid var(--day-miercoles-border); }
-    .day-jueves { background: var(--day-jueves-bg); border: 2px solid var(--day-jueves-border); }
-    .day-viernes { background: var(--day-viernes-bg); border: 2px solid var(--day-viernes-border); }
+    .day-column { border-radius: var(--radius-md); padding: 8px 10px; display: flex; flex-direction: column; gap: 6px; min-height: 0; overflow: hidden; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04); }
+    .day-lunes { background: var(--day-lunes-bg); border: 2.5px solid var(--day-lunes-border); }
+    .day-martes { background: var(--day-martes-bg); border: 2.5px solid var(--day-martes-border); }
+    .day-miercoles { background: var(--day-miercoles-bg); border: 2.5px solid var(--day-miercoles-border); }
+    .day-jueves { background: var(--day-jueves-bg); border: 2.5px solid var(--day-jueves-border); }
+    .day-viernes { background: var(--day-viernes-bg); border: 2.5px solid var(--day-viernes-border); }
 
     .day-lunes .day-name { color: var(--day-lunes-accent); }
     .day-martes .day-name { color: var(--day-martes-accent); }
@@ -143,26 +145,32 @@
     .day-jueves .day-name { color: var(--day-jueves-accent); }
     .day-viernes .day-name { color: var(--day-viernes-accent); }
 
-    .day-column.is-today { border-width: 3px !important; border-color: var(--accent) !important; box-shadow: 0 4px 16px rgba(217, 119, 6, 0.2) !important; }
-    .day-header { text-align: center; padding-bottom: 6px; border-bottom: 2px solid rgba(0,0,0,0.06); flex-shrink: 0; }
-    .day-name { font-size: 11pt; font-weight: 900; text-transform: uppercase; line-height: 1.1; letter-spacing: 0.2px; }
-    .day-number { font-size: 9.5pt; font-weight: 700; color: #475569; margin-top: 3px; }
+    .day-column.is-today { border-width: 3.5px !important; border-color: #D97706 !important; box-shadow: 0 4px 18px rgba(217, 119, 6, 0.25) !important; }
+    .day-header { text-align: center; padding-bottom: 6px; border-bottom: 2px solid rgba(0,0,0,0.08); flex-shrink: 0; }
+    .day-name { font-size: 12pt; font-weight: 900; text-transform: uppercase; line-height: 1.1; letter-spacing: 0.3px; }
+    .day-number { font-size: 10pt; font-weight: 800; color: #334155; margin-top: 2px; }
     .text-red { color: #BE123C !important; }
     
-    .badge-tag { font-size: 8pt; padding: 2px 8px; border-radius: 6px; display: inline-block; margin-top: 3px; background: rgba(255,255,255,0.9); color: #334155; font-weight: 800; text-transform: uppercase; }
-    .badge-today { background: #FEF3C7; color: #B45309; border: 1.5px solid #FDE68A; }
+    .badge-tag { font-size: 8.5pt; padding: 2px 8px; border-radius: 6px; display: inline-block; margin-top: 3px; background: rgba(255,255,255,0.95); color: #0F172A; font-weight: 800; text-transform: uppercase; border: 1px solid rgba(0,0,0,0.1); }
+    .badge-today { background: #FEF08A; color: #854D0E; border: 1.5px solid #EAB308; }
     
-    .cards-container { display: flex; flex-direction: column; gap: 6px; flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; }
-    .cards-container::-webkit-scrollbar { display: none; }
+    /* BARRA LATERAL VISIBLE EN CONTENEDOR DE TARJETAS */
+    .cards-container { 
+      display: flex; flex-direction: column; gap: 6px; flex: 1; min-height: 0; 
+      overflow-y: auto; padding-right: 2px;
+      scrollbar-width: thin; scrollbar-color: #94A3B8 transparent;
+    }
+    .cards-container::-webkit-scrollbar { width: 6px; }
+    .cards-container::-webkit-scrollbar-thumb { background: #94A3B8; border-radius: 6px; }
     
-    /* TARJETA DE TAREA */
+    /* TARJETAS COMPACTAS CON LETRA MÁS GRANDE */
     .task-card { 
-      width: 100%; background: #FFFFFF; padding: 8px 10px; border-radius: var(--radius-sm);
-      display: flex; flex-direction: column; gap: 4px; cursor: pointer; border: 1px solid rgba(0,0,0,0.08);
-      border-left: 4.5px solid var(--border-strong); box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      width: 100%; background: #FFFFFF; padding: 6px 10px; border-radius: var(--radius-sm);
+      display: flex; flex-direction: column; gap: 3px; cursor: pointer; border: 1.5px solid rgba(0,0,0,0.1);
+      border-left: 5px solid var(--border-strong); box-shadow: 0 1px 4px rgba(0,0,0,0.04);
       transition: transform 0.1s ease, box-shadow 0.1s ease;
     }
-    .task-card:hover { transform: translateY(-1px); box-shadow: 0 4px 8px rgba(0,0,0,0.08); border-color: #94A3B8; }
+    .task-card:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0,0,0,0.08); border-color: #64748B; }
     .task-card.prio-alta { border-left-color: var(--prio-alta-border); } 
     .task-card.prio-media { border-left-color: var(--prio-media-border); } 
     .task-card.prio-baja { border-left-color: var(--prio-baja-border); } 
@@ -170,45 +178,84 @@
     .task-card.is-done .card-title { text-decoration: line-through; }
 
     .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 6px; }
-    .card-title { font-size: 10pt; font-weight: 800; color: #0F172A; line-height: 1.25; flex: 1; min-width: 0; }
+    .card-title { font-size: 11pt; font-weight: 800; color: #0F172A; line-height: 1.2; flex: 1; min-width: 0; }
     .card-badges { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
-    .card-time { font-size: 9pt; font-weight: 800; color: #1E293B; background: #F1F5F9; border: 1.5px solid #CBD5E1; padding: 2px 6px; border-radius: 4px; white-space: nowrap; }
+    .card-time { font-size: 9.5pt; font-weight: 900; color: #0F172A; background: #F1F5F9; border: 1.5px solid #CBD5E1; padding: 2px 6px; border-radius: 4px; white-space: nowrap; }
     
-    .card-sender { font-size: 8.5pt; color: #475569; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .empty-text { font-size: 9pt; color: #94A3B8; text-align: center; margin-top: 24px; font-weight: 700; }
+    .card-sender { font-size: 9pt; color: #475569; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .empty-text { font-size: 9.5pt; color: #94A3B8; text-align: center; margin-top: 24px; font-weight: 700; }
 
-    /* MODALES */
+    /* MODALES REDIMENSIONABLES Y LETRA GRANDE */
     .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.55); display: none; align-items: center; justify-content: center; padding: 16px; z-index: 1000; backdrop-filter: blur(4px); }
-    .modal-detail-card { background: var(--surface); max-width: 550px; width: 100%; max-height: 90vh; border-radius: var(--radius-md); padding: 20px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; position: relative; z-index: 1001; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
-    .modal-field { display: flex; flex-direction: column; gap: 4px; }
-    .modal-label { font-size: 8.5pt; font-weight: 800; color: #475569; text-transform: uppercase; letter-spacing: 0.3px; }
-    .modal-box { background: #F8FAFC; border: 1.5px solid var(--border-subtle); padding: 10px 14px; border-radius: var(--radius-sm); font-size: 10pt; font-weight: 600; line-height: 1.45; white-space: pre-wrap; word-break: break-word; color: #0F172A; }
-    .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-
-    .modal-assistant { background: var(--surface); color: var(--text-main); max-width: 560px; width: 100%; border-radius: var(--radius-md); padding: 20px; display: flex; flex-direction: column; gap: 12px; max-height: 90vh; overflow-y: auto; position: relative; z-index: 1001; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
-    .modal-assistant label { font-size: 9pt; color: #1E293B; display: block; margin-bottom: 4px; font-weight: 800; }
-    .modal-assistant input, .modal-assistant textarea, .modal-assistant select { width: 100%; background: #F8FAFC; border: 1.5px solid var(--border-strong); border-radius: var(--radius-sm); padding: 9px 12px; font-size: 10pt; font-weight: 600; outline: none; }
-    .modal-assistant input:focus, .modal-assistant textarea:focus, .modal-assistant select:focus { border-color: var(--primary); background: #FFFFFF; }
     
-    .checkbox-container { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
-    .checkbox-container input { width: 16px; height: 16px; cursor: pointer; }
-    .aviso-duplicado { background: var(--prio-alta-bg); border: 1.5px solid var(--prio-alta-border); color: #991B1B; padding: 7px 12px; border-radius: var(--radius-sm); font-size: 8.5pt; font-weight: 800; display: none; margin-top: 4px; }
+    /* MODAL NUEVO EVENTO */
+    .modal-assistant { 
+      background: var(--surface); color: var(--text-main); 
+      width: 650px; min-width: 480px; max-width: 95vw; 
+      height: 85vh; min-height: 500px;
+      border-radius: var(--radius-md); padding: 22px; 
+      display: flex; flex-direction: column; gap: 14px; 
+      position: relative; z-index: 1001; 
+      box-shadow: 0 12px 32px rgba(0,0,0,0.2); 
+      border: 2px solid var(--border-strong);
+      resize: both; overflow: auto;
+      scrollbar-width: thin; scrollbar-color: #64748B #F1F5F9;
+    }
+    .modal-assistant::-webkit-scrollbar { width: 9px; height: 9px; }
+    .modal-assistant::-webkit-scrollbar-thumb { background: #64748B; border-radius: 6px; }
+    .modal-assistant::-webkit-scrollbar-track { background: #F1F5F9; }
 
-    .ia-results-list { display: flex; flex-direction: column; gap: 10px; max-height: 380px; overflow-y: auto; margin: 8px 0; }
+    .modal-assistant label { font-size: 10.5pt; color: #0F172A; display: block; margin-bottom: 5px; font-weight: 800; }
+    .modal-assistant input, .modal-assistant textarea, .modal-assistant select { 
+      width: 100%; background: #F8FAFC; border: 2px solid var(--border-strong); 
+      border-radius: var(--radius-sm); padding: 10px 14px; font-size: 11pt; font-weight: 600; outline: none; 
+    }
+    .modal-assistant input:focus, .modal-assistant textarea:focus, .modal-assistant select:focus { border-color: #1E3A8A; background: #FFFFFF; }
+    
+    /* MODAL AIA ARRASTRABLE */
+    .modal-draggable-header { cursor: move; user-select: none; display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 2px solid var(--border-subtle); }
+
+    .checkbox-container { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+    .checkbox-container input { width: 18px; height: 18px; cursor: pointer; }
+    .aviso-duplicado { background: var(--prio-alta-bg); border: 2px solid var(--prio-alta-border); color: #991B1B; padding: 8px 14px; border-radius: var(--radius-sm); font-size: 9.5pt; font-weight: 800; display: none; margin-top: 4px; }
+
+    /* LISTA IA CON SCROLL LATERAL GRUESO */
+    .ia-results-list { 
+      display: flex; flex-direction: column; gap: 12px; 
+      flex: 1; min-height: 220px; overflow-y: auto; margin: 8px 0; padding-right: 6px;
+      scrollbar-width: thin; scrollbar-color: #D97706 #FEF3C7;
+    }
+    .ia-results-list::-webkit-scrollbar { width: 9px; }
+    .ia-results-list::-webkit-scrollbar-thumb { background: #D97706; border-radius: 6px; }
+    .ia-results-list::-webkit-scrollbar-track { background: #FEF3C7; }
+
     .ia-item-card { 
-      background: #FFFFFF; border: 1.5px solid var(--border-subtle); border-left: 5px solid #F59E0B; 
-      padding: 10px 12px; border-radius: var(--radius-sm); display: flex; flex-direction: column; gap: 6px; 
-      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      background: #FFFFFF; border: 2px solid var(--border-subtle); border-left: 6px solid #D97706; 
+      padding: 12px 14px; border-radius: var(--radius-sm); display: flex; flex-direction: column; gap: 8px; 
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
     }
     .ia-item-header { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-    .ia-edit-input { font-size: 9pt !important; padding: 6px 8px !important; }
+    .ia-edit-input { font-size: 10.5pt !important; padding: 8px 10px !important; }
 
-    .bitacora-modal { max-width: 580px; width: 100%; max-height: 88vh; background: var(--surface); border-radius: var(--radius-md); padding: 20px; display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 1001; }
-    .bitacora-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
-    .bitacora-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-radius: var(--radius-sm); background: #FAFBFD; border: 1.5px solid var(--border-subtle); cursor: pointer; }
-    .bitacora-item:hover { background: #F1F5F9; border-color: var(--primary); }
+    /* MODAL DETALLE */
+    .modal-detail-card { 
+      background: var(--surface); max-width: 620px; width: 100%; max-height: 90vh; 
+      border-radius: var(--radius-md); padding: 22px; display: flex; flex-direction: column; 
+      gap: 14px; overflow-y: auto; position: relative; z-index: 1001; 
+      box-shadow: 0 12px 32px rgba(0,0,0,0.2); border: 2px solid var(--border-strong);
+      resize: both;
+    }
+    .modal-field { display: flex; flex-direction: column; gap: 4px; }
+    .modal-label { font-size: 9pt; font-weight: 800; color: #475569; text-transform: uppercase; letter-spacing: 0.4px; }
+    .modal-box { background: #F8FAFC; border: 2px solid var(--border-subtle); padding: 12px 16px; border-radius: var(--radius-sm); font-size: 11pt; font-weight: 600; line-height: 1.5; white-space: pre-wrap; word-break: break-word; color: #0F172A; }
+    .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .bitacora-modal { max-width: 650px; width: 100%; max-height: 88vh; background: var(--surface); border-radius: var(--radius-md); padding: 22px; display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 1001; border: 2px solid var(--border-strong); resize: both; overflow: auto; }
+    .bitacora-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; scrollbar-width: thin; scrollbar-color: #64748B transparent; }
+    .bitacora-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-radius: var(--radius-sm); background: #FAFBFD; border: 2px solid var(--border-subtle); cursor: pointer; }
+    .bitacora-item:hover { background: #F1F5F9; border-color: #1E3A8A; }
     
-    .badge-file { display: inline-flex; align-items: center; gap: 5px; background: #EFF6FF; border: 1.5px solid #BFDBFE; color: #1D4ED8; padding: 5px 10px; border-radius: 6px; font-size: 8.5pt; font-weight: 800; text-decoration: none; }
+    .badge-file { display: inline-flex; align-items: center; gap: 6px; background: #EFF6FF; border: 2px solid #93C5FD; color: #1D4ED8; padding: 6px 12px; border-radius: 6px; font-size: 9.5pt; font-weight: 800; text-decoration: none; }
     .badge-file:hover { background: #DBEAFE; }
   </style>
 </head>
@@ -221,7 +268,7 @@
       <span id="modeBadge" class="mode-badge readonly" onclick="alternarModoEdicion()" title="Haz clic para desbloquear edición con clave 25078">🔒 Solo Lectura</span>
     </div>
 
-    <!-- RELOJ DESTACADO -->
+    <!-- RELOJ DESTACADO Y ALARGADO -->
     <div class="flip-clock-container">
       <div class="flip-section"><span class="flip-label-top">Hora</span><div class="flip-card" id="fc-hour">00</div></div>
       <div class="flip-colon">:</div>
@@ -242,12 +289,12 @@
         <button class="icon-btn" onclick="abrirModalBitacora()">📋 Bitácora</button>
         <button class="icon-btn" id="btnSync" onclick="sincronizarDesdeSheets()">🔄 Sync</button>
         <button class="icon-btn" id="btnIANav" onclick="abrirModalIA()">★ AIA</button>
-        <span style="border-left:2px solid var(--border-strong); height:20px; margin:0 2px;"></span>
+        <span style="border-left:2px solid var(--border-strong); height:24px; margin:0 3px;"></span>
         <button class="icon-btn" id="btnPrev">◀</button>
         <button class="icon-btn" id="btnToday">Hoy</button>
         <div class="date-label" id="dateLabel">Semana</div>
         <button class="icon-btn" id="btnNext">▶</button>
-        <span style="border-left:2px solid var(--border-strong); height:20px; margin:0 2px;"></span>
+        <span style="border-left:2px solid var(--border-strong); height:24px; margin:0 3px;"></span>
         <button class="icon-btn btn-nuevo" id="btnNuevoManual" onclick="abrirModalNuevo()">＋ Nuevo</button>
       </div>
     </div>
@@ -259,13 +306,13 @@
 
   <!-- Modal Respaldo -->
   <div class="modal-overlay" id="modalRespaldoOverlay">
-    <div class="modal-assistant">
+    <div class="modal-assistant" style="height:auto; min-height:220px; width:480px;">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-weight:900; font-size:13pt; color:var(--primary);">💾 Respaldo Institucional</span>
+        <span style="font-weight:900; font-size:14pt; color:#1E3A8A;">💾 Respaldo Institucional</span>
         <button class="icon-btn" onclick="cerrarModalRespaldo()">✕</button>
       </div>
-      <p style="font-size:9.5pt; color:var(--text-muted);">Descarga una copia completa de la agenda laboral en formato seguro JSON.</p>
-      <button type="button" class="icon-btn btn-respaldo" style="width:100%; justify-content:center; margin-top:8px;" onclick="descargarRespaldoJSON()">⬇️ Descargar Copia (.json)</button>
+      <p style="font-size:10.5pt; color:var(--text-muted);">Descarga una copia completa de la agenda laboral en formato seguro JSON.</p>
+      <button type="button" class="icon-btn btn-respaldo" style="width:100%; justify-content:center; margin-top:8px; height:44px !important; font-size:11pt !important;" onclick="descargarRespaldoJSON()">⬇️ Descargar Copia (.json)</button>
     </div>
   </div>
 
@@ -274,15 +321,15 @@
     <div class="bitacora-modal">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <div>
-          <h3 style="font-size:12pt; font-weight:900; color:var(--primary);">📋 Bitácora Institucional Carlos Condell</h3>
-          <span id="bitacoraTotal" style="font-size:8.5pt; font-weight:700; color:var(--text-muted);">0 eventos</span>
+          <h3 style="font-size:14pt; font-weight:900; color:#1E3A8A;">📋 Bitácora Institucional Carlos Condell</h3>
+          <span id="bitacoraTotal" style="font-size:9.5pt; font-weight:800; color:var(--text-muted);">0 eventos</span>
         </div>
         <button class="icon-btn" onclick="cerrarModalBitacora()">✕</button>
       </div>
 
       <div style="display:flex; gap:8px;">
         <button type="button" class="icon-btn" style="flex:1;" onclick="renderizarBitacora()">Todos los Compromisos</button>
-        <button type="button" class="icon-btn" style="flex:1; border-color:#FCA5A5 !important; color:#C53030 !important; background:var(--prio-alta-bg) !important;" onclick="filtrarSoloDuplicados()">⚠️ Solo Duplicados</button>
+        <button type="button" class="icon-btn" style="flex:1; border-color:#F87171 !important; color:#991B1B !important; background:var(--prio-alta-bg) !important;" onclick="filtrarSoloDuplicados()">⚠️ Solo Duplicados</button>
       </div>
 
       <input type="text" id="bitacoraSearch" class="search-input" style="width:100%;" placeholder="Filtrar por asunto..." oninput="renderizarBitacora()">
@@ -297,7 +344,7 @@
         <div>
           <span id="dtPrioBadge" class="badge-tag">-</span>
           <span id="dtStateBadge" class="badge-tag" style="margin-left:4px; background:#E2E8F0;">-</span>
-          <h3 id="dtTitle" style="font-size:13pt; font-weight:900; margin-top:6px; color:#0F172A;">-</h3>
+          <h3 id="dtTitle" style="font-size:14pt; font-weight:900; margin-top:6px; color:#0F172A;">-</h3>
         </div>
         <button class="icon-btn" onclick="closeDetailModal()">✕</button>
       </div>
@@ -308,14 +355,14 @@
       </div>
 
       <div class="modal-field"><span class="modal-label">Síntesis</span><div id="dtDetail" class="modal-box">-</div></div>
-      <div class="modal-field"><span class="modal-label">Acción Requerida</span><div id="dtAccion" class="modal-box" style="border-left:4px solid #F59E0B;">-</div></div>
+      <div class="modal-field"><span class="modal-label">Acción Requerida</span><div id="dtAccion" class="modal-box" style="border-left:5px solid #D97706;">-</div></div>
 
       <div class="modal-field" id="dtRespaldosContainer">
         <span class="modal-label">Documentos y Evidencias Adjuntas</span>
         <div id="dtRespaldosList" style="display:flex; gap:8px; flex-wrap:wrap; margin-top:4px;"></div>
       </div>
 
-      <div id="detailActionFooter" style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; padding-top:10px; border-top:1.5px solid var(--border-subtle);">
+      <div id="detailActionFooter" style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; padding-top:10px; border-top:2px solid var(--border-subtle);">
         <button class="icon-btn" onclick="eliminarEventoActual()" style="color:#DC2626 !important; border-color:#FCA5A5 !important; background:#FEF2F2 !important;">🗑️ Eliminar</button>
         <button class="icon-btn" onclick="prepararEdicionActual()">✏️ Editar</button>
         <button class="icon-btn" id="btnToggleRealizado" onclick="toggleRealizadoActual()">✓ Realizado</button>
@@ -323,12 +370,12 @@
     </div>
   </div>
 
-  <!-- Modal Nuevo / Editar Evento -->
+  <!-- Modal Nuevo / Editar Evento (Redimensionable, Scroll visible, Letra Grande) -->
   <div class="modal-overlay" id="modalAssistantOverlay">
-    <div class="modal-assistant">
+    <div class="modal-assistant" id="modalNuevoEventoBox">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span id="modalTitleStr" style="font-weight:900; font-size:12.5pt; color:var(--primary);">Nuevo Evento Laboral</span>
-        <div style="display:flex; gap:6px;">
+        <span id="modalTitleStr" style="font-weight:900; font-size:14pt; color:#1E3A8A;">Nuevo Evento Laboral</span>
+        <div style="display:flex; gap:8px;">
           <button type="button" class="icon-btn" onclick="limpiarFormularioManual()">Limpiar</button>
           <button class="icon-btn" onclick="closeModal()">✕</button>
         </div>
@@ -351,13 +398,13 @@
 
       <div class="checkbox-container">
         <input type="checkbox" id="fRepetirAnual">
-        <label for="fRepetirAnual" style="margin:0; font-size:9.5pt;">🔁 Repetir anualmente</label>
+        <label for="fRepetirAnual" style="margin:0; font-size:10.5pt;">🔁 Repetir anualmente</label>
       </div>
 
       <div><label>Organizador / Convoca</label><input type="text" id="fOrganizador" placeholder="Ej: Dirección, Mineduc, UTP, SLEP"></div>
       <div>
         <label>Prioridad</label>
-        <div style="display:flex; gap:8px;">
+        <div style="display:flex; gap:10px;">
           <button type="button" class="btn-prio" id="prioAlta" onclick="selectPriority('Alta')">Alta</button>
           <button type="button" class="btn-prio selected-media" id="prioMedia" onclick="selectPriority('Media')">Media</button>
           <button type="button" class="btn-prio" id="prioBaja" onclick="selectPriority('Baja')">Baja</button>
@@ -370,39 +417,39 @@
       <div>
         <label>Adjuntar archivos de respaldo (PDF, Imágenes)</label>
         <input type="file" id="fArchivos" multiple accept="image/*,application/pdf" onchange="procesarArchivosManuales(this)">
-        <div id="listaArchivosManuales" style="display:flex; flex-wrap:wrap; gap:6px; margin-top:6px;"></div>
+        <div id="listaArchivosManuales" style="display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;"></div>
       </div>
 
-      <button type="button" id="btnGuardarEvento" class="icon-btn btn-nuevo" style="margin-top:8px; justify-content:center; height:40px !important;" onclick="guardarEventoManual()">GUARDAR EVENTO</button>
+      <button type="button" id="btnGuardarEvento" class="icon-btn btn-nuevo" style="margin-top:10px; justify-content:center; height:46px !important; font-size:11pt !important;" onclick="guardarEventoManual()">GUARDAR EVENTO</button>
     </div>
   </div>
 
-  <!-- Modal IA -->
+  <!-- Modal IA (Arrastrable, Amplio, Redimensionable, Scroll visible) -->
   <div class="modal-overlay" id="modalIAOverlay">
-    <div class="modal-assistant">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-weight:900; font-size:12.5pt; color:var(--primary);">★ Asistente Inteligente AIA</span>
+    <div class="modal-assistant" id="modalIABox" style="width:720px; min-width:520px; height:85vh;">
+      <div class="modal-draggable-header" id="dragHeaderIA">
+        <span style="font-weight:900; font-size:14pt; color:#1E3A8A;">★ Asistente Inteligente AIA (Arrastrar aquí ✢)</span>
         <button type="button" class="icon-btn" onclick="cerrarModalIA()">✕</button>
       </div>
-      <p style="font-size:9pt; color:var(--text-muted);">Sube o pega un documento institucional (PDF o captura). El análisis extrae fecha, hora y detalles automáticamente.</p>
+      <p style="font-size:10.5pt; color:var(--text-muted);">Sube o pega un documento institucional (PDF o captura). El análisis extrae fecha, hora y detalles automáticamente.</p>
       
       <input type="file" id="inputArchivoIA" accept="image/*,application/pdf" multiple style="display:none;" onchange="procesarArchivoSeleccionado(this)">
       
-      <div style="display:flex; gap:8px; margin:6px 0;">
-        <button type="button" id="btnCargarIA" class="icon-btn" style="flex:1;">📁 Cargar Documento(s)</button>
-        <button type="button" id="btnPegarIA" class="icon-btn" style="flex:1;">📋 Pegar Captura (Ctrl+V)</button>
+      <div style="display:flex; gap:10px; margin:8px 0;">
+        <button type="button" id="btnCargarIA" class="icon-btn" style="flex:1; height:46px !important; font-size:11pt !important;">📁 Cargar Documento(s)</button>
+        <button type="button" id="btnPegarIA" class="icon-btn" style="flex:1; height:46px !important; font-size:11pt !important;">📋 Pegar Captura (Ctrl+V)</button>
       </div>
 
-      <div id="iaArchivoInfo" style="font-size:8.5pt; color:#1D4ED8; background:#EFF6FF; padding:6px 10px; border-radius:6px; display:none; border:1px solid #BFDBFE;"></div>
-      <div id="iaEstado" style="font-size:9pt; color:#B45309; font-weight:bold; text-align:center; padding:8px; display:none; background:#FEF3C7; border-radius:6px; border:1px solid #FDE68A;">⚡ Analizando con Gemini (vía servidor)...</div>
+      <div id="iaArchivoInfo" style="font-size:9.5pt; color:#1D4ED8; background:#EFF6FF; padding:8px 12px; border-radius:6px; display:none; border:2px solid #93C5FD;"></div>
+      <div id="iaEstado" style="font-size:10.5pt; color:#92400E; font-weight:bold; text-align:center; padding:10px; display:none; background:#FEF3C7; border-radius:6px; border:2px solid #FCD34D;">⚡ Analizando con Gemini 3.8 Flash...</div>
       
-      <div id="iaContenedorResultados" style="display:none;">
+      <div id="iaContenedorResultados" style="display:none; flex:1; display:flex; flex-direction:column; min-height:0;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
-          <span style="font-size:9.5pt; font-weight:800; color:var(--primary);">Propuesta de Eventos Detectados:</span>
-          <span style="font-size:8pt; color:var(--text-muted);">Cada evento debe tener hora asignada</span>
+          <span style="font-size:11pt; font-weight:900; color:#1E3A8A;">Propuesta de Eventos Detectados:</span>
+          <span style="font-size:9pt; font-weight:700; color:var(--text-muted);">Cada evento debe tener hora asignada</span>
         </div>
         <div class="ia-results-list" id="iaListaEventos"></div>
-        <button type="button" id="btnAgendarTodoIA" class="icon-btn btn-nuevo" style="width:100%; margin-top:8px; justify-content:center; height:40px !important;" onclick="guardarEventosDetectadosIA()">AGENDAR PROPUESTA Y SUBIR RESPALDO</button>
+        <button type="button" id="btnAgendarTodoIA" class="icon-btn btn-nuevo" style="width:100%; margin-top:10px; justify-content:center; height:46px !important; font-size:11pt !important;" onclick="guardarEventosDetectadosIA()">AGENDAR PROPUESTA Y SUBIR RESPALDO</button>
       </div>
     </div>
   </div>
@@ -411,7 +458,6 @@
     const API_URL = "https://script.google.com/macros/s/AKfycbwjaCpLKeet-WXteRLicuov7oEaxuhRBHAvczJA_wS-9pFQa890_n7VAJm7fHHHwak/exec";
     const GEMINI_API_KEY = "AQ.Ab8RN6LB-NIAelTRt0J4ebdrjfUDyA5BWDPD1N3taArdmJGeFA";
 
-    // CLAVE DE EDICIÓN: 25078
     const CLAVE_ADMIN = "25078";
     let esModoAdmin = false;
 
@@ -515,16 +561,25 @@
       if (!str) return null;
       if (str instanceof Date) return formatDateKey(str);
       str = String(str).trim();
+
+      // Formato YYYY-MM-DD
       var mIso = str.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/);
       if (mIso) return mIso[1] + "-" + mIso[2].padStart(2, '0') + "-" + mIso[3].padStart(2, '0');
+
+      // Formato DD-MM-YYYY (Convertir siempre a 2026 para el calendario escolar actual)
       var mSlash = str.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/);
-      if (mSlash) return mSlash[3] + "-" + mSlash[2].padStart(2, '0') + "-" + mSlash[1].padStart(2, '0');
+      if (mSlash) {
+        var anio = (parseInt(mSlash[3]) < 2026) ? "2026" : mSlash[3];
+        return anio + "-" + mSlash[2].padStart(2, '0') + "-" + mSlash[1].padStart(2, '0');
+      }
+
       var meses = { ene:'01', feb:'02', mar:'03', abr:'04', may:'05', jun:'06', jul:'07', ago:'08', sep:'09', oct:'10', nov:'11', dic:'12', enero:'01', febrero:'02', marzo:'03', abril:'04', mayo:'05', junio:'06', julio:'07', agosto:'08', septiembre:'09', octubre:'10', noviembre:'11', diciembre:'12' };
       var mTexto = str.match(/(\d{1,2})\s+de\s+([a-zA-Z]+)(?:\s+de)?\s+(\d{4})/i);
       if (mTexto) {
         var dia = mTexto[1].padStart(2, '0');
         var mesNum = meses[mTexto[2].toLowerCase()] || meses[mTexto[2].toLowerCase().substring(0, 3)];
-        if (mesNum) return mTexto[3] + "-" + mesNum + "-" + dia;
+        var anioT = (parseInt(mTexto[3]) < 2026) ? "2026" : mTexto[3];
+        if (mesNum) return anioT + "-" + mesNum + "-" + dia;
       }
       return null;
     }
@@ -729,7 +784,7 @@
             card.onclick = () => openDetail(t.id);
             
             const badgeHora = t.time ? `<span class="card-time">⏰ ${t.time}</span>` : '';
-            const badgeClip = (t.respaldos && t.respaldos.length > 0) ? `<span title="${t.respaldos.length} documento(s) adjunto(s)" style="font-size:8.5pt;">📎 ${t.respaldos.length > 1 ? t.respaldos.length : ''}</span>` : '';
+            const badgeClip = (t.respaldos && t.respaldos.length > 0) ? `<span title="${t.respaldos.length} documento(s) adjunto(s)" style="font-size:9pt;">📎 ${t.respaldos.length > 1 ? t.respaldos.length : ''}</span>` : '';
 
             card.innerHTML = `
               <div class="card-top">
@@ -829,7 +884,7 @@
       archivosManualesTemporales.forEach((arch, idx) => {
         const tag = document.createElement("span");
         tag.className = "badge-file";
-        tag.innerHTML = `${arch.nombre} <b style="cursor:pointer; margin-left:5px; color:#DC2626;" onclick="quitarArchivoManual(${idx})">✕</b>`;
+        tag.innerHTML = `${arch.nombre} <b style="cursor:pointer; margin-left:6px; color:#DC2626;" onclick="quitarArchivoManual(${idx})">✕</b>`;
         container.appendChild(tag);
       });
     }
@@ -1066,12 +1121,12 @@
       }
       const matches = tasks.filter(t => (t.category || "Laboral").toLowerCase() === "laboral" && (normalizarTexto(t.subject).includes(q) || normalizarTexto(t.detail).includes(q) || normalizarTexto(t.sender).includes(q)));
       if (matches.length === 0) {
-        box.innerHTML = '<div style="padding:10px; font-size:8.5pt; color:#94A3B8; font-weight:600;">Sin coincidencias</div>';
+        box.innerHTML = '<div style="padding:10px; font-size:9pt; color:#94A3B8; font-weight:600;">Sin coincidencias</div>';
       } else {
         box.innerHTML = matches.map(m => `
           <div class="search-item" onclick="openDetail('${m.id}'); document.getElementById('searchResults').style.display='none';">
-            <span style="font-weight:800; font-size:9pt; color:#0F172A;">${m.subject}</span>
-            <span style="font-size:8pt; color:var(--text-muted);">${m.date} | ${m.time} hrs • ${m.sender || 'General'}</span>
+            <span style="font-weight:800; font-size:9.5pt; color:#0F172A;">${m.subject}</span>
+            <span style="font-size:8.5pt; color:var(--text-muted);">${m.date} | ${m.time} hrs • ${m.sender || 'General'}</span>
           </div>
         `).join("");
       }
@@ -1113,17 +1168,17 @@
       document.getElementById("bitacoraTotal").textContent = `${list.length} evento(s)`;
 
       if (list.length === 0) {
-        container.innerHTML = '<span style="font-size:9pt; color:#94A3B8; text-align:center; padding:12px;">Sin registros institucionales.</span>';
+        container.innerHTML = '<span style="font-size:10pt; color:#94A3B8; text-align:center; padding:12px;">Sin registros institucionales.</span>';
         return;
       }
 
       container.innerHTML = list.map(t => `
         <div class="bitacora-item" onclick="cerrarModalBitacora(); openDetail('${t.id}')">
           <div>
-            <div style="font-weight:800; font-size:9.5pt; color:#0F172A;">${t.subject}</div>
-            <div style="font-size:8pt; color:var(--text-muted); font-weight:600;">${t.date} | ${t.time} hrs • ${t.sender || 'General'}</div>
+            <div style="font-weight:800; font-size:10pt; color:#0F172A;">${t.subject}</div>
+            <div style="font-size:8.5pt; color:var(--text-muted); font-weight:600;">${t.date} | ${t.time} hrs • ${t.sender || 'General'}</div>
           </div>
-          <span style="font-size:9pt;">${t.status === 'managed' ? '✅' : '⏳'}</span>
+          <span style="font-size:10pt;">${t.status === 'managed' ? '✅' : '⏳'}</span>
         </div>
       `).join("");
     }
@@ -1141,7 +1196,7 @@
       dlAnchor.remove();
     }
 
-    // --- ASISTENTE AIA CON GEMINI FLASH (VÍA SERVIDOR APPS SCRIPT) ---
+    // --- ASISTENTE AIA CON GEMINI FLASH ---
     function abrirModalIA() { 
       if (!solicitarClaveAdminSiEsNecesario()) return;
       document.getElementById("iaContenedorResultados").style.display = "none";
@@ -1150,12 +1205,51 @@
       document.getElementById("iaListaEventos").innerHTML = "";
       eventosDetectadosIA = [];
       archivosRespaldoIA = [];
+      
+      const modalBox = document.getElementById("modalIABox");
+      modalBox.style.top = "0px";
+      modalBox.style.left = "0px";
+      
       document.getElementById("modalIAOverlay").style.display = "flex"; 
     }
 
     function cerrarModalIA() { 
       document.getElementById("modalIAOverlay").style.display = "none"; 
     }
+
+    // HACER MODAL ARRASTRABLE (DRAGGABLE)
+    (function hacerModalArrastrable() {
+      const header = document.getElementById("dragHeaderIA");
+      const box = document.getElementById("modalIABox");
+      if (!header || !box) return;
+
+      let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+      header.onmousedown = dragMouseDown;
+
+      function dragMouseDown(e) {
+        e.preventDefault();
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        document.onmousemove = elementDrag;
+      }
+
+      function elementDrag(e) {
+        e.preventDefault();
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        box.style.position = "relative";
+        box.style.top = (box.offsetTop - pos2) + "px";
+        box.style.left = (box.offsetLeft - pos1) + "px";
+      }
+
+      function closeDragElement() {
+        document.onmouseup = null;
+        document.onmousemove = null;
+      }
+    })();
 
     function optimizarYCodificarArchivo(file) {
       return new Promise((resolve, reject) => {
@@ -1262,12 +1356,11 @@
       }
     }
 
-    // LLAMADA A GEMINI RUTEADA POR APPS SCRIPT (EVITA CORS)
     async function ejecutarLlamadaGeminiIA(blobs, mimeTypes, nombresArchivos) {
       const elEstado = document.getElementById("iaEstado");
       const elInfo = document.getElementById("iaArchivoInfo");
       elEstado.style.display = "block";
-      elEstado.textContent = "⚡ Analizando con Gemini (vía Apps Script)...";
+      elEstado.textContent = "⚡ Analizando con Gemini 3.8 Flash...";
       document.getElementById("iaContenedorResultados").style.display = "none";
 
       try {
@@ -1293,13 +1386,14 @@
         const promptInstruccion = 
           "Eres el asistente directivo de la Escuela Comandante Carlos Condell. Analiza este documento o captura.\n" +
           "Extrae todos los eventos, plazos, reuniones y evaluaciones (Simce, DIA, UTP, Consejo, etc.).\n" +
-          "Es obligatorio asignar una hora válida (en formato HH:MM, por ejemplo 09:00 o la detectada).\n" +
+          "Formatea la fecha OBLIGATORIAMENTE en formato YYYY-MM-DD usando siempre el año 2026 (por ejemplo: 2026-10-28 o 2026-11-04).\n" +
+          "Es obligatorio asignar una hora válida (en formato HH:MM, por ejemplo 09:00 o la indicada).\n" +
           "Devuelve ÚNICAMENTE un arreglo JSON con este formato exacto, sin bloques markdown ``` ni texto adicional:\n" +
           "[\n" +
           "  {\n" +
           "    \"asunto\": \"Nombre del evento o plazo\",\n" +
           "    \"organizador\": \"Entidad que convoca\",\n" +
-          "    \"fecha\": \"YYYY-MM-DD\",\n" +
+          "    \"fecha\": \"2026-MM-DD\",\n" +
           "    \"hora\": \"09:00\",\n" +
           "    \"prioridad\": \"Alta\",\n" +
           "    \"sintesis\": \"Resumen conciso\",\n" +
@@ -1347,6 +1441,7 @@
 
         eventosDetectadosIA.forEach(ev => {
           if (!ev.hora || ev.hora.trim() === "") ev.hora = "09:00";
+          ev.fecha = parsearFecha(ev.fecha) || "2026-10-28";
         });
 
         renderizarEventosDetectados(eventosDetectadosIA);
@@ -1364,8 +1459,8 @@
       listaDiv.innerHTML = "";
 
       if (!lista || lista.length === 0) {
-        listaDiv.innerHTML = "<div style='font-size:9pt; color:#94A3B8; text-align:center; padding:10px;'>No se detectaron eventos en el documento.</div>";
-        contenedor.style.display = "block";
+        listaDiv.innerHTML = "<div style='font-size:10pt; color:#94A3B8; text-align:center; padding:10px;'>No se detectaron eventos en el documento.</div>";
+        contenedor.style.display = "flex";
         return;
       }
 
@@ -1375,30 +1470,30 @@
         const item = document.createElement("div");
         item.className = "ia-item-card";
         
-        let avisoDupHtml = dup ? `<div style="color:#DC2626; font-size:8pt; font-weight:bold;">⚠️ Ya agendado: \"${dup.subject}\"</div>` : '';
+        let avisoDupHtml = dup ? `<div style="color:#DC2626; font-size:9pt; font-weight:bold;">⚠️ Ya agendado: \"${dup.subject}\"</div>` : '';
 
         item.innerHTML = `
           <div class="ia-item-header">
-            <input type="text" class="ia-edit-input" style="font-weight:800; width:80%;" value="${ev.asunto || ''}" onchange="actualizarDatoIA(${idx}, 'asunto', this.value)">
-            <button type="button" class="icon-btn" style="color:#DC2626 !important; height:26px !important; padding:0 8px !important;" onclick="eliminarPropuestaIA(${idx})" title="Descartar evento">✕</button>
+            <input type="text" class="ia-edit-input" style="font-weight:900; width:80%;" value="${ev.asunto || ''}" onchange="actualizarDatoIA(${idx}, 'asunto', this.value)">
+            <button type="button" class="icon-btn" style="color:#DC2626 !important; height:28px !important; padding:0 10px !important;" onclick="eliminarPropuestaIA(${idx})" title="Descartar evento">✕</button>
           </div>
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
             <div>
-              <label style="font-size:7.5pt; margin:0;">Fecha *:</label>
+              <label style="font-size:8.5pt; margin:0;">Fecha *:</label>
               <input type="date" class="ia-edit-input" value="${fKey}" onchange="actualizarDatoIA(${idx}, 'fecha', this.value)">
             </div>
             <div>
-              <label style="font-size:7.5pt; margin:0;">Hora (Obligatoria) *:</label>
+              <label style="font-size:8.5pt; margin:0;">Hora (Obligatoria) *:</label>
               <input type="time" class="ia-edit-input" required value="${ev.hora || '09:00'}" onchange="actualizarDatoIA(${idx}, 'hora', this.value)" style="border-color:#3B82F6;">
             </div>
           </div>
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
             <div>
-              <label style="font-size:7.5pt; margin:0;">Organiza:</label>
+              <label style="font-size:8.5pt; margin:0;">Organiza:</label>
               <input type="text" class="ia-edit-input" value="${ev.organizador || 'General'}" onchange="actualizarDatoIA(${idx}, 'organizador', this.value)">
             </div>
             <div>
-              <label style="font-size:7.5pt; margin:0;">Prioridad:</label>
+              <label style="font-size:8.5pt; margin:0;">Prioridad:</label>
               <select class="ia-edit-input" onchange="actualizarDatoIA(${idx}, 'prioridad', this.value)">
                 <option value="Alta" ${ev.prioridad === 'Alta' ? 'selected' : ''}>Alta</option>
                 <option value="Media" ${ev.prioridad === 'Media' || !ev.prioridad ? 'selected' : ''}>Media</option>
@@ -1407,7 +1502,7 @@
             </div>
           </div>
           <div>
-            <label style="font-size:7.5pt; margin:0;">Síntesis:</label>
+            <label style="font-size:8.5pt; margin:0;">Síntesis:</label>
             <textarea class="ia-edit-input" rows="1" onchange="actualizarDatoIA(${idx}, 'sintesis', this.value)">${ev.sintesis || ''}</textarea>
           </div>
           ${avisoDupHtml}
@@ -1416,11 +1511,13 @@
       });
 
       document.getElementById("btnAgendarTodoIA").textContent = `AGENDAR LOS ${lista.length} EVENTOS Y SUBIR RESPALDO`;
-      contenedor.style.display = "block";
+      contenedor.style.display = "flex";
     }
 
     function actualizarDatoIA(idx, campo, valor) {
-      if (eventosDetectadosIA[idx]) eventosDetectadosIA[idx][campo] = valor;
+      if (eventosDetectadosIA[idx]) {
+        eventosDetectadosIA[idx][campo] = valor;
+      }
     }
 
     function eliminarPropuestaIA(idx) {
@@ -1445,8 +1542,12 @@
 
       const respaldoInfo = archivosRespaldoIA.map(a => ({ nombre: a.nombre, url: a.url || "", base64: a.base64, mimeType: a.mimeType }));
 
+      let primeraFechaEvento = null;
+
       eventosDetectadosIA.forEach((ev, idx) => {
-        const fKey = parsearFecha(ev.fecha) || formatDateKey(new Date());
+        let fKey = parsearFecha(ev.fecha) || formatDateKey(new Date());
+        if (!primeraFechaEvento) primeraFechaEvento = fKey;
+
         const hora = ev.hora || "09:00";
         const partesH = hora.split(":");
         const mins = parseInt(partesH[0]) * 60 + parseInt(partesH[1] || 0);
@@ -1470,6 +1571,13 @@
       });
 
       localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
+
+      if (primeraFechaEvento) {
+        const partes = primeraFechaEvento.split("-");
+        const fechaObj = new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2]));
+        currentMonday = getMonday(fechaObj);
+      }
+
       renderCalendar();
       cerrarModalIA();
 
