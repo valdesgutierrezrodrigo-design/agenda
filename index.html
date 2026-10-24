@@ -1317,7 +1317,7 @@
 
         for (const mod of modelosAProbar) {
           try {
-            const urlApi = `[https://generativelanguage.googleapis.com/v1beta/models/$](https://generativelanguage.googleapis.com/v1beta/models/$){mod}:generateContent?key=${encodeURIComponent(GEMINI_API_KEY)}`;
+            const urlApi = "[https://generativelanguage.googleapis.com/v1beta/models/](https://generativelanguage.googleapis.com/v1beta/models/)" + mod + ":generateContent?key=" + encodeURIComponent(GEMINI_API_KEY);
             const res = await fetch(urlApi, {
               method: "POST",
               headers: { 
