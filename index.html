@@ -3,19 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <title>Agenda Carlos Condell - San Bernardo</title>
+  <!-- Fuentes de Máxima Legibilidad y Accesibilidad para Presbicia -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&family=Lexend:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --bg-app: #F8FAFC;
       --surface: #FFFFFF;
       --border-subtle: #E2E8F0;
       --border-strong: #94A3B8;
-      --text-main: #0F172A;
-      --text-muted: #334155;
+      --text-main: #000000;
+      --text-muted: #1E293B;
 
       /* Paleta Pastel Base Columnas */
       --day-lunes-bg: #F1F5F9;
       --day-lunes-border: #CBD5E1;
-      --day-lunes-accent: #1E293B;
+      --day-lunes-accent: #0F172A;
 
       --day-martes-bg: #FEFCE8;
       --day-martes-border: #FEF08A;
@@ -33,32 +38,38 @@
       --day-viernes-border: #FED7AA;
       --day-viernes-accent: #9A3412;
 
-      /* COLORES ELÉCTRICOS VIBRANTES PARA PRIORIDADES */
+      /* COLORES ELÉCTRICOS PUROS */
       --prio-alta-elec: #FF003C;
       --prio-alta-bg: #FFF1F2;
-      --prio-alta-glow: rgba(255, 0, 60, 0.35);
+      --prio-alta-glow: rgba(255, 0, 60, 0.4);
 
-      --prio-media-elec: #FFB300;
+      --prio-media-elec: #FFE600;
       --prio-media-bg: #FFFDE7;
-      --prio-media-glow: rgba(255, 179, 0, 0.35);
+      --prio-media-glow: rgba(255, 230, 0, 0.45);
 
       --prio-baja-elec: #00E676;
       --prio-baja-bg: #F0FDF4;
-      --prio-baja-glow: rgba(0, 230, 118, 0.35);
+      --prio-baja-glow: rgba(0, 230, 118, 0.4);
 
-      /* DÍA EN CURSO (HOY) ELÉCTRICO */
-      --today-elec-border: #FFD600;
-      --today-glow: 0 0 18px rgba(255, 214, 0, 0.6);
+      --today-elec-border: #FFE600;
+      --today-glow: 0 0 18px rgba(255, 230, 0, 0.65);
 
       --radius-sm: 8px;
       --radius-md: 12px;
       --radius-lg: 16px;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif; }
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+      font-family: 'Lexend', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
     body { background-color: var(--bg-app); height: 100vh; padding: 6px 10px; color: var(--text-main); display: flex; flex-direction: column; overflow: hidden; }
     
-    /* ENCABEZADO: SAN BERNARDO Y TIEMPO AGRANDADO */
+    /* ENCABEZADO */
     header { 
       display: flex; align-items: center; justify-content: space-between;
       background: var(--surface); padding: 8px 20px; border-radius: var(--radius-md);
@@ -70,35 +81,35 @@
       display: flex; flex-direction: column; gap: 3px;
     }
     .brand-title {
-      font-size: 18pt; font-weight: 900; color: #1E3A8A; white-space: nowrap; margin: 0; line-height: 1.1; letter-spacing: -0.4px;
+      font-size: 19pt; font-weight: 900; color: #1E3A8A; white-space: nowrap; margin: 0; line-height: 1.1; letter-spacing: -0.3px;
     }
     .brand-meta {
-      font-size: 9.5pt; font-weight: 800; color: #475569; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 0.5px;
+      font-size: 10pt; font-weight: 800; color: #334155; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 0.5px;
     }
     .badge-rbd {
       background: #EFF6FF; color: #1D4ED8; padding: 2px 8px; border-radius: 4px; border: 1.5px solid #BFDBFE; font-weight: 900;
     }
 
-    /* MÓDULO ANCHO: FECHA Y NÚMEROS GIGANTES (SIN ETIQUETA HORA/MIN/SEG) */
+    /* MÓDULO FECHA Y RELOJ */
     .time-module {
       display: flex; align-items: center; background: #0A0F1D; border-radius: var(--radius-md);
-      padding: 6px 16px 6px 22px; gap: 20px; border: 2.5px solid #1E293B;
+      padding: 6px 18px 6px 22px; gap: 20px; border: 2.5px solid #1E293B;
       box-shadow: 0 4px 16px rgba(10, 15, 29, 0.35);
     }
     .date-display-text {
-      color: #F8FAFC; font-size: 13pt; font-weight: 900; text-transform: capitalize;
-      letter-spacing: 0.2px; white-space: nowrap;
+      color: #F8FAFC; font-size: 13.5pt; font-weight: 800; text-transform: capitalize;
+      letter-spacing: 0.3px; white-space: nowrap;
     }
 
     .flip-clock-container { 
       display: flex; align-items: center; gap: 8px;
     }
     .flip-card { 
-      background: #111827; color: #FFFFFF; font-size: 24pt; font-weight: 900; 
+      background: #111827; color: #FFFFFF; font-size: 25pt; font-weight: 900; 
       padding: 2px 12px; border-radius: 6px; min-width: 52px; text-align: center; line-height: 1.15; 
       letter-spacing: 1px; border: 1.5px solid #374151; box-shadow: inset 0 1px 2px rgba(255,255,255,0.1);
     }
-    .flip-colon { color: #E2E8F0; font-size: 24pt; font-weight: 900; margin: 0 2px; line-height: 1; }
+    .flip-colon { color: #E2E8F0; font-size: 25pt; font-weight: 900; margin: 0 2px; line-height: 1; }
 
     /* LAYOUT PRINCIPAL: DÍAS + BARRA LATERAL DERECHA */
     .main-workspace {
@@ -120,7 +131,7 @@
     .day-jueves { background: var(--day-jueves-bg); border: 2px solid var(--day-jueves-border); }
     .day-viernes { background: var(--day-viernes-bg); border: 2px solid var(--day-viernes-border); }
 
-    /* DÍA EN CURSO (HOY) RESALTADO CON BORDE ELÉCTRICO Y GLOW */
+    /* DÍA EN CURSO (HOY) */
     .day-column.is-today { 
       border-width: 4px !important; 
       border-color: var(--today-elec-border) !important; 
@@ -134,89 +145,95 @@
     
     .day-header { 
       text-align: center; padding: 6px 4px 7px 4px; border-radius: 8px;
-      background: rgba(255, 255, 255, 0.85); border: 1.5px solid rgba(0,0,0,0.08);
+      background: rgba(255, 255, 255, 0.88); border: 1.5px solid rgba(0,0,0,0.08);
       flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 2px;
     }
-    .day-name { font-size: 11.5pt; font-weight: 900; text-transform: uppercase; line-height: 1.1; letter-spacing: 0.4px; }
+    .day-name { font-size: 13pt; font-weight: 900; text-transform: uppercase; line-height: 1.1; letter-spacing: 0.5px; }
     .day-lunes .day-name { color: var(--day-lunes-accent); }
     .day-martes .day-name { color: var(--day-martes-accent); }
     .day-miercoles .day-name { color: var(--day-miercoles-accent); }
     .day-jueves .day-name { color: var(--day-jueves-accent); }
     .day-viernes .day-name { color: var(--day-viernes-accent); }
 
-    .day-number { font-size: 10.5pt; font-weight: 900; color: #1E293B; margin-top: 1px; }
+    .day-number { font-size: 11pt; font-weight: 800; color: #0F172A; margin-top: 2px; }
     .text-red { color: #BE123C !important; }
     
-    .badge-tag { font-size: 8pt; padding: 2px 7px; border-radius: 6px; display: inline-block; margin-top: 3px; background: #FFFFFF; color: #0F172A; font-weight: 800; text-transform: uppercase; border: 1.5px solid var(--border-strong); }
+    .badge-tag { font-size: 8.5pt; padding: 2px 8px; border-radius: 6px; display: inline-block; margin-top: 3px; background: #FFFFFF; color: #0F172A; font-weight: 900; text-transform: uppercase; border: 1.5px solid var(--border-strong); }
     .badge-today { 
-      background: #FFD600 !important; color: #000000 !important; border: 2px solid #EAB308 !important; 
-      font-weight: 900 !important; box-shadow: 0 2px 6px rgba(234, 179, 8, 0.4) !important;
+      background: #FFE600 !important; color: #000000 !important; border: 2px solid #CA8A04 !important; 
+      font-weight: 900 !important; box-shadow: 0 2px 6px rgba(202, 138, 4, 0.45) !important;
     }
     
     .cards-container { 
-      display: flex; flex-direction: column; gap: 7px; flex: 1; min-height: 0; 
+      display: flex; flex-direction: column; gap: 8px; flex: 1; min-height: 0; 
       overflow-y: auto; padding-right: 2px;
       scrollbar-width: thin; scrollbar-color: #94A3B8 transparent;
     }
     .cards-container::-webkit-scrollbar { width: 5px; }
     .cards-container::-webkit-scrollbar-thumb { background: #94A3B8; border-radius: 6px; }
     
-    /* TARJETA CON BORDES ELÉCTRICOS DE ALTO IMPACTO */
+    /* TARJETA CON FUENTE GRANDE (13.5pt) Y MÁXIMA CLARIDAD */
     .task-card { 
-      width: 100%; background: #FFFFFF; padding: 9px 11px; border-radius: var(--radius-sm);
-      display: flex; flex-direction: column; gap: 4px; cursor: pointer;
-      border: 2px solid var(--border-subtle);
-      border-left: 8px solid var(--border-strong);
+      width: 100%; background: #FFFFFF; padding: 10px 12px; border-radius: var(--radius-sm);
+      display: flex; flex-direction: column; gap: 5px; cursor: pointer;
+      border: 3px solid var(--border-subtle);
+      border-left: 9px solid var(--border-strong);
       box-shadow: 0 1px 4px rgba(0,0,0,0.05);
       transition: transform 0.1s ease, box-shadow 0.1s ease;
     }
     .task-card:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.12); }
     
-    /* PRIORIDAD ALTA: ROJO ELÉCTRICO NEÓN */
     .task-card.prio-alta { 
       border-color: #FF003C !important; 
-      border-left: 8.5px solid var(--prio-alta-elec) !important; 
+      border-left: 10px solid var(--prio-alta-elec) !important; 
       background: var(--prio-alta-bg) !important;
-      box-shadow: 0 2px 8px var(--prio-alta-glow) !important;
+      box-shadow: 0 2px 10px var(--prio-alta-glow) !important;
     } 
-    /* PRIORIDAD MEDIA: AMARILLO ELÉCTRICO */
     .task-card.prio-media { 
-      border-color: #FFB300 !important; 
-      border-left: 8.5px solid var(--prio-media-elec) !important; 
+      border-color: #FFE600 !important; 
+      border-left: 10px solid var(--prio-media-elec) !important; 
       background: var(--prio-media-bg) !important;
-      box-shadow: 0 2px 8px var(--prio-media-glow) !important;
+      box-shadow: 0 2px 10px var(--prio-media-glow) !important;
     } 
-    /* PRIORIDAD BAJA: VERDE ELÉCTRICO NEÓN */
     .task-card.prio-baja { 
       border-color: #00E676 !important; 
-      border-left: 8.5px solid var(--prio-baja-elec) !important; 
+      border-left: 10px solid var(--prio-baja-elec) !important; 
       background: var(--prio-baja-bg) !important;
-      box-shadow: 0 2px 8px var(--prio-baja-glow) !important;
+      box-shadow: 0 2px 10px var(--prio-baja-glow) !important;
     } 
     
-    .task-card.is-done { background: #F8FAFC !important; opacity: 0.85; border-color: #CBD5E1 !important; border-left-color: #94A3B8 !important; box-shadow: none !important; }
-    .task-card.is-done .card-title { text-decoration: line-through; color: #64748B !important; }
+    .task-card.is-done { 
+      opacity: 0.88; 
+      background: #F8FAFC !important;
+    }
+    .task-card.is-done .card-title { 
+      text-decoration: line-through; 
+      color: #64748B !important; 
+    }
 
-    .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 6px; }
-    .card-title { font-size: 12pt; font-weight: 900; color: #0F172A; line-height: 1.25; flex: 1; min-width: 0; }
+    .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+    .card-title { 
+      font-size: 13.5pt; font-weight: 800; color: #000000; line-height: 1.3; flex: 1; min-width: 0; 
+      letter-spacing: 0.25px;
+    }
     
-    .card-badges { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+    .card-badges { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
     .card-time { 
-      font-size: 10pt; font-weight: 900; color: #1E3A8A; background: #DBEAFE; 
-      border: 1.5px solid #93C5FD; padding: 2px 7px; border-radius: 6px; white-space: nowrap; 
+      font-size: 10.5pt; font-weight: 900; color: #1E3A8A; background: #DBEAFE; 
+      border: 1.5px solid #93C5FD; padding: 2px 8px; border-radius: 6px; white-space: nowrap; 
     }
     .card-time.time-nodefined {
-      color: #64748B; background: #F1F5F9; border-color: #CBD5E1; font-size: 8.5pt;
+      color: #475569; background: #F1F5F9; border-color: #CBD5E1; font-size: 9pt; font-weight: 800;
     }
     .card-files-badge { 
-      font-size: 9pt; font-weight: 900; color: #9A3412; background: #FFEDD5; 
-      border: 1.5px solid #FDBA74; padding: 2px 6px; border-radius: 6px; white-space: nowrap; 
+      font-size: 9.5pt; font-weight: 900; color: #9A3412; background: #FFEDD5; 
+      border: 1.5px solid #FDBA74; padding: 2px 7px; border-radius: 6px; white-space: nowrap; 
     }
     
-    .card-sender { font-size: 9pt; color: #334155; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .empty-text { font-size: 9.5pt; color: #94A3B8; text-align: center; margin-top: 24px; font-weight: 700; }
+    .card-sender { font-size: 9.5pt; color: #1E293B; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: 0.2px; }
+    .empty-text { font-size: 10pt; color: #94A3B8; text-align: center; margin-top: 24px; font-weight: 800; }
 
-    /* BARRA LATERAL DERECHA ESTRUCTURADA */
+    /* BARRA LATERAL DERECHA */
     .sidebar-actions {
       width: 220px; flex-shrink: 0; background: var(--surface);
       border: 2px solid var(--border-subtle); border-radius: var(--radius-md);
@@ -227,23 +244,23 @@
       border: 0; border-top: 1.5px dashed #CBD5E1; margin: 4px 0;
     }
     .sidebar-section-title {
-      font-size: 7.5pt; font-weight: 900; color: #64748B; text-transform: uppercase;
-      letter-spacing: 0.5px; margin-bottom: 2px;
+      font-size: 8pt; font-weight: 900; color: #475569; text-transform: uppercase;
+      letter-spacing: 0.6px; margin-bottom: 2px;
     }
 
     .btn-action-side {
-      width: 100%; height: 38px !important; border-radius: var(--radius-sm);
-      font-size: 9.5pt !important; font-weight: 800 !important; cursor: pointer;
+      width: 100%; height: 40px !important; border-radius: var(--radius-sm);
+      font-size: 10pt !important; font-weight: 800 !important; cursor: pointer;
       display: inline-flex; align-items: center; justify-content: flex-start; gap: 8px;
       padding: 0 12px !important; transition: all 0.15s ease; white-space: nowrap;
       border: 2px solid var(--border-strong) !important; background: #FFFFFF !important; color: #0F172A !important;
       text-decoration: none;
     }
     .btn-action-side:hover { background: #F1F5F9 !important; border-color: #475569 !important; }
-    .btn-icon-lg { font-size: 12pt; line-height: 1; }
+    .btn-icon-lg { font-size: 13pt; line-height: 1; }
     
     .btn-side-nuevo { 
-      background: #FEF08A !important; border-color: #EAB308 !important; color: #854D0E !important; font-weight: 900 !important; 
+      background: #FEF08A !important; border-color: #EAB308 !important; color: #713F12 !important; font-weight: 900 !important; 
       box-shadow: 0 3px 8px rgba(234, 179, 8, 0.35) !important;
     }
     .btn-side-nuevo:hover { background: #FDE047 !important; transform: translateY(-1px); }
@@ -261,8 +278,8 @@
     .btn-side-tecnico:hover { background: #E2E8F0 !important; border-color: #334155 !important; }
 
     .mode-badge-side {
-      width: 100%; height: 38px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      border-radius: var(--radius-sm); font-size: 9.5pt; font-weight: 900; border: 2px solid var(--border-strong);
+      width: 100%; height: 40px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      border-radius: var(--radius-sm); font-size: 10pt; font-weight: 900; border: 2px solid var(--border-strong);
       cursor: pointer; user-select: none;
     }
     .mode-badge-side.admin { background: #DCFCE7; color: #166534; border-color: #4ADE80; }
@@ -272,14 +289,14 @@
       display: flex; flex-direction: column; gap: 6px; background: #F8FAFC;
       border: 2px solid var(--border-subtle); padding: 8px; border-radius: var(--radius-sm);
     }
-    .date-label-side { font-size: 10pt; font-weight: 900; color: #1E3A8A; text-align: center; }
+    .date-label-side { font-size: 10.5pt; font-weight: 900; color: #1E3A8A; text-align: center; }
     .nav-arrow-group { display: flex; gap: 4px; justify-content: space-between; }
-    .nav-arrow-group button { flex: 1; height: 32px !important; font-size: 9pt !important; padding: 0 !important; justify-content: center !important; }
+    .nav-arrow-group button { flex: 1; height: 34px !important; font-size: 9.5pt !important; padding: 0 !important; justify-content: center !important; }
 
     .search-wrapper-side { position: relative; width: 100%; }
-    .search-input-side { width: 100%; height: 36px; padding: 0 8px 0 30px; font-size: 9.5pt; font-weight: 600; border: 2px solid var(--border-strong); border-radius: var(--radius-sm); outline: none; background: #FFFFFF; }
+    .search-input-side { width: 100%; height: 38px; padding: 0 8px 0 32px; font-size: 10pt; font-weight: 700; border: 2px solid var(--border-strong); border-radius: var(--radius-sm); outline: none; background: #FFFFFF; }
     .search-input-side:focus { border-color: #1E3A8A; }
-    .search-icon-side { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-size: 9.5pt; color: var(--text-muted); pointer-events: none; }
+    .search-icon-side { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-size: 10pt; color: var(--text-muted); pointer-events: none; }
     .search-results-side { position: absolute; bottom: calc(100% + 4px); left: 0; right: 0; background: var(--surface); border: 2px solid var(--border-strong); border-radius: var(--radius-sm); max-height: 240px; overflow-y: auto; box-shadow: 0 -8px 24px rgba(0,0,0,0.12); z-index: 50; display: none; }
     .search-item { padding: 8px 10px; border-bottom: 1px solid var(--border-subtle); cursor: pointer; display: flex; flex-direction: column; gap: 2px; }
     .search-item:hover { background: #F8FAFC; }
@@ -303,10 +320,10 @@
     .modal-assistant::-webkit-scrollbar-thumb { background: #64748B; border-radius: 6px; }
     .modal-assistant::-webkit-scrollbar-track { background: #F1F5F9; }
 
-    .modal-assistant label { font-size: 10.5pt; color: #0F172A; display: block; margin-bottom: 5px; font-weight: 800; }
+    .modal-assistant label { font-size: 11pt; color: #0F172A; display: block; margin-bottom: 5px; font-weight: 800; }
     .modal-assistant input, .modal-assistant textarea, .modal-assistant select { 
       width: 100%; background: #F8FAFC; border: 2px solid var(--border-strong); 
-      border-radius: var(--radius-sm); padding: 10px 14px; font-size: 11pt; font-weight: 600; outline: none; 
+      border-radius: var(--radius-sm); padding: 10px 14px; font-size: 11.5pt; font-weight: 700; outline: none; 
     }
     .modal-assistant input:focus, .modal-assistant textarea:focus, .modal-assistant select:focus { border-color: #1E3A8A; background: #FFFFFF; }
     
@@ -314,16 +331,16 @@
 
     .btn-prio { 
       background: #FFFFFF !important; color: #0F172A !important; border: 2.5px solid var(--border-strong) !important;
-      border-radius: var(--radius-sm); padding: 0 14px !important; height: 40px !important; cursor: pointer;
-      font-size: 10pt; font-weight: 900 !important; display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+      border-radius: var(--radius-sm); padding: 0 14px !important; height: 42px !important; cursor: pointer;
+      font-size: 10.5pt; font-weight: 900 !important; display: inline-flex; align-items: center; justify-content: center; gap: 5px;
     }
     .btn-prio.selected-alta { border-color: #FF003C !important; background: var(--prio-alta-bg) !important; color: #FF003C !important; }
-    .btn-prio.selected-media { border-color: #FFB300 !important; background: var(--prio-media-bg) !important; color: #B45309 !important; }
+    .btn-prio.selected-media { border-color: #FFE600 !important; background: var(--prio-media-bg) !important; color: #713F12 !important; }
     .btn-prio.selected-baja { border-color: #00E676 !important; background: var(--prio-baja-bg) !important; color: #15803D !important; }
 
     .checkbox-container { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
     .checkbox-container input { width: 18px; height: 18px; cursor: pointer; }
-    .aviso-duplicado { background: var(--prio-alta-bg); border: 2px solid var(--prio-alta-elec); color: #FF003C; padding: 8px 14px; border-radius: var(--radius-sm); font-size: 9.5pt; font-weight: 800; display: none; margin-top: 4px; }
+    .aviso-duplicado { background: var(--prio-alta-bg); border: 2px solid var(--prio-alta-elec); color: #FF003C; padding: 8px 14px; border-radius: var(--radius-sm); font-size: 10pt; font-weight: 800; display: none; margin-top: 4px; }
 
     .ia-results-list { 
       display: flex; flex-direction: column; gap: 12px; 
@@ -340,7 +357,7 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.06);
     }
     .ia-item-header { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-    .ia-edit-input { font-size: 10.5pt !important; padding: 8px 10px !important; }
+    .ia-edit-input { font-size: 11pt !important; padding: 8px 10px !important; }
 
     .modal-detail-card { 
       background: var(--surface); max-width: 620px; width: 100%; max-height: 90vh; 
@@ -350,8 +367,8 @@
       resize: both;
     }
     .modal-field { display: flex; flex-direction: column; gap: 4px; }
-    .modal-label { font-size: 9pt; font-weight: 800; color: #475569; text-transform: uppercase; letter-spacing: 0.4px; }
-    .modal-box { background: #F8FAFC; border: 2px solid var(--border-subtle); padding: 12px 16px; border-radius: var(--radius-sm); font-size: 11pt; font-weight: 600; line-height: 1.5; white-space: pre-wrap; word-break: break-word; color: #0F172A; }
+    .modal-label { font-size: 9.5pt; font-weight: 900; color: #334155; text-transform: uppercase; letter-spacing: 0.5px; }
+    .modal-box { background: #F8FAFC; border: 2px solid var(--border-subtle); padding: 12px 16px; border-radius: var(--radius-sm); font-size: 11.5pt; font-weight: 700; line-height: 1.5; white-space: pre-wrap; word-break: break-word; color: #000000; }
     .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
     .bitacora-modal { max-width: 650px; width: 100%; max-height: 88vh; background: var(--surface); border-radius: var(--radius-md); padding: 22px; display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 1001; border: 2px solid var(--border-strong); resize: both; overflow: auto; }
@@ -359,12 +376,11 @@
     .bitacora-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-radius: var(--radius-sm); background: #FAFBFD; border: 2px solid var(--border-subtle); cursor: pointer; }
     .bitacora-item:hover { background: #F1F5F9; border-color: #1E3A8A; }
     
-    .badge-file { display: inline-flex; align-items: center; gap: 6px; background: #EFF6FF; border: 2px solid #93C5FD; color: #1D4ED8; padding: 6px 12px; border-radius: 6px; font-size: 9.5pt; font-weight: 800; text-decoration: none; }
+    .badge-file { display: inline-flex; align-items: center; gap: 6px; background: #EFF6FF; border: 2px solid #93C5FD; color: #1D4ED8; padding: 6px 12px; border-radius: 6px; font-size: 10pt; font-weight: 800; text-decoration: none; }
     .badge-file:hover { background: #DBEAFE; }
   </style>
 </head>
 <body>
-  <!-- ENCABEZADO: SAN BERNARDO Y TIEMPO AGRANDADO -->
   <header>
     <div class="brand-block">
       <div class="brand-title">Agenda Carlos Condell</div>
@@ -375,7 +391,6 @@
       </div>
     </div>
 
-    <!-- MÓDULO ANCHO: FECHA Y NÚMEROS GIGANTES (SIN HORA/MIN/SEG) -->
     <div class="time-module">
       <span class="date-display-text" id="full-date-subtitle">Hoy</span>
       <div class="flip-clock-container">
@@ -389,12 +404,10 @@
   </header>
 
   <div class="main-workspace">
-    <!-- COLUMNAS DE LUNES A VIERNES -->
     <main id="plannerSection">
       <div class="week-container" id="daysGrid"></div>
     </main>
 
-    <!-- BARRA LATERAL DERECHA ESTRUCTURADA -->
     <aside class="sidebar-actions">
       <span class="sidebar-section-title">Seguridad & Enlace</span>
       <div id="modeBadge" class="mode-badge-side readonly" onclick="alternarModoEdicion()" title="Haz clic para desbloquear edición con clave 25078">🔒 Solo Lectura</div>
@@ -430,7 +443,6 @@
       <hr class="sidebar-separator">
 
       <span class="sidebar-section-title">Módulos & Herramientas</span>
-      <!-- BOTÓN DATOS COLEGIO -->
       <button class="btn-action-side btn-side-datos" id="btnDatosColegio" onclick="abrirModalDatos()">
         <span class="btn-icon-lg">🏫</span> Datos
       </button>
@@ -459,32 +471,32 @@
   <div class="modal-overlay" id="modalDatosOverlay">
     <div class="modal-assistant" style="height:auto; min-height:420px; width:540px;">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-weight:900; font-size:14pt; color:#1E3A8A;">🏫 Ficha de Datos Institucionales</span>
-        <button class="btn-action-side" style="width:auto; height:32px !important;" onclick="cerrarModalDatos()">✕</button>
+        <span style="font-weight:900; font-size:15pt; color:#1E3A8A;">🏫 Ficha de Datos Institucionales</span>
+        <button class="btn-action-side" style="width:auto; height:34px !important;" onclick="cerrarModalDatos()">✕</button>
       </div>
 
       <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:6px;">
         <div style="padding:10px 12px; background:#F8FAFC; border:1.5px solid var(--border-subtle); border-radius:8px;">
-          <span style="font-size:7.5pt; font-weight:800; color:#64748B; text-transform:uppercase;">Establecimiento</span>
-          <div style="font-size:10.5pt; font-weight:900; color:#0F172A; margin-top:2px;">Escuela Particular Comandante Carlos Condell</div>
+          <span style="font-size:8pt; font-weight:800; color:#475569; text-transform:uppercase;">Establecimiento</span>
+          <div style="font-size:11pt; font-weight:900; color:#000000; margin-top:2px;">Escuela Particular Comandante Carlos Condell</div>
         </div>
         <div style="padding:10px 12px; background:#F8FAFC; border:1.5px solid var(--border-subtle); border-radius:8px;">
-          <span style="font-size:7.5pt; font-weight:800; color:#64748B; text-transform:uppercase;">RBD Oficial</span>
-          <div style="font-size:11pt; font-weight:900; color:#1D4ED8; margin-top:2px;">25078</div>
+          <span style="font-size:8pt; font-weight:800; color:#475569; text-transform:uppercase;">RBD Oficial</span>
+          <div style="font-size:12pt; font-weight:900; color:#1D4ED8; margin-top:2px;">25078</div>
         </div>
         <div style="padding:10px 12px; background:#F8FAFC; border:1.5px solid var(--border-subtle); border-radius:8px;">
-          <span style="font-size:7.5pt; font-weight:800; color:#64748B; text-transform:uppercase;">Comuna</span>
-          <div style="font-size:10.5pt; font-weight:900; color:#0F172A; margin-top:2px;">San Bernardo</div>
+          <span style="font-size:8pt; font-weight:800; color:#475569; text-transform:uppercase;">Comuna</span>
+          <div style="font-size:11pt; font-weight:900; color:#000000; margin-top:2px;">San Bernardo</div>
         </div>
         <div style="padding:10px 12px; background:#F8FAFC; border:1.5px solid var(--border-subtle); border-radius:8px;">
-          <span style="font-size:7.5pt; font-weight:800; color:#64748B; text-transform:uppercase;">Región</span>
-          <div style="font-size:10.5pt; font-weight:900; color:#0F172A; margin-top:2px;">Metropolitana de Santiago</div>
+          <span style="font-size:8pt; font-weight:800; color:#475569; text-transform:uppercase;">Región</span>
+          <div style="font-size:11pt; font-weight:900; color:#000000; margin-top:2px;">Metropolitana de Santiago</div>
         </div>
       </div>
 
       <div style="margin-top:6px;">
-        <label style="font-size:9.5pt; font-weight:900; color:#1E3A8A; display:block; margin-bottom:4px;">📝 Block de Notas Directivas / Contactos Clave:</label>
-        <textarea id="blockNotasColegio" rows="4" placeholder="Escribe aquí teléfonos de emergencia, directrices o notas clave del colegio..." style="width:100%; border:2px solid var(--border-strong); border-radius:8px; padding:10px; font-size:10pt;" oninput="guardarNotasColegio()"></textarea>
+        <label style="font-size:10.5pt; font-weight:900; color:#1E3A8A; display:block; margin-bottom:4px;">📝 Block de Notas Directivas / Contactos Clave:</label>
+        <textarea id="blockNotasColegio" rows="4" placeholder="Escribe aquí teléfonos de emergencia, directrices o notas clave del colegio..." style="width:100%; border:2px solid var(--border-strong); border-radius:8px; padding:10px; font-size:10.5pt; font-weight:600;" oninput="guardarNotasColegio()"></textarea>
       </div>
 
       <div style="display:flex; justify-content:flex-end;">
@@ -497,26 +509,26 @@
   <div class="modal-overlay" id="modalPanelTecnicoOverlay">
     <div class="modal-assistant" style="height:auto; min-height:340px; width:520px;">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-weight:900; font-size:14pt; color:#1E3A8A;">📊 Panel Técnico Pedagógico</span>
-        <button class="btn-action-side" style="width:auto; height:32px !important;" onclick="cerrarModalPanelTecnico()">✕</button>
+        <span style="font-weight:900; font-size:15pt; color:#1E3A8A;">📊 Panel Técnico Pedagógico</span>
+        <button class="btn-action-side" style="width:auto; height:34px !important;" onclick="cerrarModalPanelTecnico()">✕</button>
       </div>
-      <p style="font-size:10.5pt; color:var(--text-muted); line-height:1.4;">
+      <p style="font-size:11pt; color:var(--text-muted); line-height:1.4;">
         Módulo modular para enlazar las bases de datos escolares de la Escuela Carlos Condell:
       </p>
 
       <div style="display:flex; flex-direction:column; gap:8px; margin:6px 0;">
-        <div style="padding:10px 14px; background:#F8FAFC; border:2px solid var(--border-subtle); border-radius:8px; font-weight:800; font-size:10pt; color:#334155;">
+        <div style="padding:10px 14px; background:#F8FAFC; border:2px solid var(--border-subtle); border-radius:8px; font-weight:800; font-size:10.5pt; color:#0F172A;">
           📅 Horarios de Clases & Jefaturas
         </div>
-        <div style="padding:10px 14px; background:#F8FAFC; border:2px solid var(--border-subtle); border-radius:8px; font-weight:800; font-size:10pt; color:#334155;">
+        <div style="padding:10px 14px; background:#F8FAFC; border:2px solid var(--border-subtle); border-radius:8px; font-weight:800; font-size:10.5pt; color:#0F172A;">
           👥 Registro de Asistencia Diaria
         </div>
-        <div style="padding:10px 14px; background:#F8FAFC; border:2px solid var(--border-subtle); border-radius:8px; font-weight:800; font-size:10pt; color:#334155;">
+        <div style="padding:10px 14px; background:#F8FAFC; border:2px solid var(--border-subtle); border-radius:8px; font-weight:800; font-size:10.5pt; color:#0F172A;">
           📖 Leccionarios y Cobertura Curricular
         </div>
       </div>
 
-      <div style="font-size:9.5pt; color:#0369A1; background:#E0F2FE; border:1.5px solid #BAE6FD; padding:8px 12px; border-radius:6px; font-weight:700;">
+      <div style="font-size:10pt; color:#0369A1; background:#E0F2FE; border:1.5px solid #BAE6FD; padding:8px 12px; border-radius:6px; font-weight:800;">
         ℹ️ Listo para conectar con Google Sheets o la base de datos institucional en la siguiente fase.
       </div>
     </div>
@@ -526,11 +538,11 @@
   <div class="modal-overlay" id="modalRespaldoOverlay">
     <div class="modal-assistant" style="height:auto; min-height:220px; width:480px;">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-weight:900; font-size:14pt; color:#1E3A8A;">💾 Respaldo Institucional</span>
-        <button class="btn-action-side" style="width:auto; height:32px !important;" onclick="cerrarModalRespaldo()">✕</button>
+        <span style="font-weight:900; font-size:15pt; color:#1E3A8A;">💾 Respaldo Institucional</span>
+        <button class="btn-action-side" style="width:auto; height:34px !important;" onclick="cerrarModalRespaldo()">✕</button>
       </div>
-      <p style="font-size:10.5pt; color:var(--text-muted);">Descarga una copia completa de la agenda laboral en formato seguro JSON.</p>
-      <button type="button" class="btn-action-side btn-side-ia" style="width:100%; justify-content:center; margin-top:8px; height:44px !important; font-size:11pt !important;" onclick="descargarRespaldoJSON()">⬇️ Descargar Copia (.json)</button>
+      <p style="font-size:11pt; color:var(--text-muted);">Descarga una copia completa de la agenda laboral en formato seguro JSON.</p>
+      <button type="button" class="btn-action-side btn-side-ia" style="width:100%; justify-content:center; margin-top:8px; height:46px !important; font-size:11.5pt !important;" onclick="descargarRespaldoJSON()">⬇️ Descargar Copia (.json)</button>
     </div>
   </div>
 
@@ -539,10 +551,10 @@
     <div class="bitacora-modal">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <div>
-          <h3 style="font-size:14pt; font-weight:900; color:#1E3A8A;">📋 Bitácora Institucional Carlos Condell</h3>
-          <span id="bitacoraTotal" style="font-size:9.5pt; font-weight:800; color:var(--text-muted);">0 eventos</span>
+          <h3 style="font-size:15pt; font-weight:900; color:#1E3A8A;">📋 Bitácora Institucional Carlos Condell</h3>
+          <span id="bitacoraTotal" style="font-size:10pt; font-weight:800; color:var(--text-muted);">0 eventos</span>
         </div>
-        <button class="btn-action-side" style="width:auto; height:32px !important;" onclick="cerrarModalBitacora()">✕</button>
+        <button class="btn-action-side" style="width:auto; height:34px !important;" onclick="cerrarModalBitacora()">✕</button>
       </div>
 
       <div style="display:flex; gap:8px;">
@@ -550,21 +562,21 @@
         <button type="button" class="btn-action-side" style="flex:1; justify-content:center; border-color:#FF003C !important; color:#FF003C !important; background:var(--prio-alta-bg) !important;" onclick="filtrarSoloDuplicados()">⚠️ Solo Duplicados</button>
       </div>
 
-      <input type="text" id="bitacoraSearch" class="search-input-side" style="width:100%; height:38px;" placeholder="Filtrar por asunto..." oninput="renderizarBitacora()">
+      <input type="text" id="bitacoraSearch" class="search-input-side" style="width:100%; height:40px;" placeholder="Filtrar por asunto..." oninput="renderizarBitacora()">
       <div class="bitacora-list" id="bitacoraListContainer"></div>
     </div>
   </div>
 
-  <!-- Modal Detalle -->
+  <!-- Modal Detalle: Edición Siempre Habilitada -->
   <div class="modal-overlay" id="modalDetailOverlay">
     <div class="modal-detail-card">
       <div style="display:flex; justify-content:space-between; align-items:flex-start;">
         <div>
           <span id="dtPrioBadge" class="badge-tag">-</span>
           <span id="dtStateBadge" class="badge-tag" style="margin-left:4px; background:#E2E8F0;">-</span>
-          <h3 id="dtTitle" style="font-size:14pt; font-weight:900; margin-top:6px; color:#0F172A;">-</h3>
+          <h3 id="dtTitle" style="font-size:15pt; font-weight:900; margin-top:6px; color:#000000; line-height:1.25;">-</h3>
         </div>
-        <button class="btn-action-side" style="width:auto; height:32px !important;" onclick="closeDetailModal()">✕</button>
+        <button class="btn-action-side" style="width:auto; height:34px !important;" onclick="closeDetailModal()">✕</button>
       </div>
 
       <div class="grid-2col">
@@ -573,7 +585,7 @@
       </div>
 
       <div class="modal-field"><span class="modal-label">Síntesis</span><div id="dtDetail" class="modal-box">-</div></div>
-      <div class="modal-field"><span class="modal-label">Acción Requerida</span><div id="dtAccion" class="modal-box" style="border-left:5px solid #FFB300;">-</div></div>
+      <div class="modal-field"><span class="modal-label">Acción Requerida</span><div id="dtAccion" class="modal-box" style="border-left:5px solid #FFE600;">-</div></div>
 
       <div class="modal-field" id="dtRespaldosContainer">
         <span class="modal-label">Documentos y Evidencias Adjuntas</span>
@@ -582,20 +594,20 @@
 
       <div id="detailActionFooter" style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; padding-top:10px; border-top:2px solid var(--border-subtle);">
         <button class="btn-action-side" style="width:auto; color:#FF003C !important; border-color:#FF003C !important; background:#FEF2F2 !important;" onclick="eliminarEventoActual()">🗑️ Eliminar</button>
-        <button class="btn-action-side" style="width:auto;" onclick="prepararEdicionActual()">✏️ Editar</button>
+        <button class="btn-action-side" style="width:auto; border-color:#1E3A8A !important; color:#1E3A8A !important; font-weight:900;" onclick="prepararEdicionActual()">✏️ Editar Evento</button>
         <button class="btn-action-side btn-side-sync" style="width:auto;" id="btnToggleRealizado" onclick="toggleRealizadoActual()">✓ Realizado</button>
       </div>
     </div>
   </div>
 
-  <!-- Modal Nuevo / Editar Evento con Colores Eléctricos -->
+  <!-- Modal Nuevo / Editar Evento -->
   <div class="modal-overlay" id="modalAssistantOverlay">
     <div class="modal-assistant" id="modalNuevoEventoBox">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span id="modalTitleStr" style="font-weight:900; font-size:14pt; color:#1E3A8A;">Nuevo Evento Laboral</span>
+        <span id="modalTitleStr" style="font-weight:900; font-size:15pt; color:#1E3A8A;">Nuevo Evento Laboral</span>
         <div style="display:flex; gap:8px;">
-          <button type="button" class="btn-action-side" style="width:auto; height:32px !important;" onclick="limpiarFormularioManual()">Limpiar</button>
-          <button class="btn-action-side" style="width:auto; height:32px !important;" onclick="closeModal()">✕</button>
+          <button type="button" class="btn-action-side" style="width:auto; height:34px !important;" onclick="limpiarFormularioManual()">Limpiar</button>
+          <button class="btn-action-side" style="width:auto; height:34px !important;" onclick="closeModal()">✕</button>
         </div>
       </div>
 
@@ -616,7 +628,7 @@
 
       <div class="checkbox-container">
         <input type="checkbox" id="fRepetirAnual">
-        <label for="fRepetirAnual" style="margin:0; font-size:10.5pt;">🔁 Repetir anualmente</label>
+        <label for="fRepetirAnual" style="margin:0; font-size:11pt;">🔁 Repetir anualmente</label>
       </div>
 
       <div><label>Organizador / Convoca</label><input type="text" id="fOrganizador" placeholder="Ej: Dirección, Mineduc, UTP, SLEP"></div>
@@ -638,7 +650,7 @@
         <div id="listaArchivosManuales" style="display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;"></div>
       </div>
 
-      <button type="button" id="btnGuardarEvento" class="btn-action-side btn-side-nuevo" style="margin-top:10px; justify-content:center; height:46px !important; font-size:11pt !important;" onclick="guardarEventoManual()">GUARDAR EVENTO</button>
+      <button type="button" id="btnGuardarEvento" class="btn-action-side btn-side-nuevo" style="margin-top:10px; justify-content:center; height:46px !important; font-size:11.5pt !important;" onclick="guardarEventoManual()">GUARDAR EVENTO</button>
     </div>
   </div>
 
@@ -646,28 +658,28 @@
   <div class="modal-overlay" id="modalIAOverlay">
     <div class="modal-assistant" id="modalIABox" style="width:720px; min-width:520px; height:85vh;">
       <div class="modal-draggable-header" id="dragHeaderIA">
-        <span style="font-weight:900; font-size:14pt; color:#1E3A8A;">★ Asistente Inteligente AIA (Arrastrar aquí ✢)</span>
-        <button type="button" class="btn-action-side" style="width:auto; height:32px !important;" onclick="cerrarModalIA()">✕</button>
+        <span style="font-weight:900; font-size:15pt; color:#1E3A8A;">★ Asistente Inteligente AIA (Arrastrar aquí ✢)</span>
+        <button type="button" class="btn-action-side" style="width:auto; height:34px !important;" onclick="cerrarModalIA()">✕</button>
       </div>
-      <p style="font-size:10.5pt; color:var(--text-muted);">Sube o pega un documento institucional (PDF o captura). El análisis extrae fecha, hora y detalles automáticamente.</p>
+      <p style="font-size:11pt; color:var(--text-muted);">Sube o pega un documento institucional (PDF o captura). El análisis extrae fecha, hora y detalles automáticamente.</p>
       
       <input type="file" id="inputArchivoIA" accept="image/*,application/pdf" multiple style="display:none;" onchange="procesarArchivoSeleccionado(this)">
       
       <div style="display:flex; gap:10px; margin:8px 0;">
-        <button type="button" id="btnCargarIA" class="btn-action-side btn-side-ia" style="flex:1; justify-content:center; height:46px !important; font-size:11pt !important;">📁 Cargar Documento(s)</button>
-        <button type="button" id="btnPegarIA" class="btn-action-side btn-side-ia" style="flex:1; justify-content:center; height:46px !important; font-size:11pt !important;">📋 Pegar Captura (Ctrl+V)</button>
+        <button type="button" id="btnCargarIA" class="btn-action-side btn-side-ia" style="flex:1; justify-content:center; height:46px !important; font-size:11.5pt !important;">📁 Cargar Documento(s)</button>
+        <button type="button" id="btnPegarIA" class="btn-action-side btn-side-ia" style="flex:1; justify-content:center; height:46px !important; font-size:11.5pt !important;">📋 Pegar Captura (Ctrl+V)</button>
       </div>
 
-      <div id="iaArchivoInfo" style="font-size:9.5pt; color:#1D4ED8; background:#EFF6FF; padding:8px 12px; border-radius:6px; display:none; border:2px solid #93C5FD;"></div>
-      <div id="iaEstado" style="font-size:10.5pt; color:#92400E; font-weight:bold; text-align:center; padding:10px; display:none; background:#FEF3C7; border-radius:6px; border:2px solid #FCD34D;">⚡ Analizando con Gemini 3.8 Flash...</div>
+      <div id="iaArchivoInfo" style="font-size:10pt; color:#1D4ED8; background:#EFF6FF; padding:8px 12px; border-radius:6px; display:none; border:2px solid #93C5FD;"></div>
+      <div id="iaEstado" style="font-size:11pt; color:#92400E; font-weight:bold; text-align:center; padding:10px; display:none; background:#FEF3C7; border-radius:6px; border:2px solid #FCD34D;">⚡ Analizando con Gemini 3.8 Flash...</div>
       
       <div id="iaContenedorResultados" style="display:none; flex:1; display:flex; flex-direction:column; min-height:0;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
-          <span style="font-size:11pt; font-weight:900; color:#1E3A8A;">Propuesta de Eventos Detectados:</span>
-          <span style="font-size:9pt; font-weight:700; color:var(--text-muted);">Cada evento debe tener hora asignada</span>
+          <span style="font-size:11.5pt; font-weight:900; color:#1E3A8A;">Propuesta de Eventos Detectados:</span>
+          <span style="font-size:9.5pt; font-weight:700; color:var(--text-muted);">Cada evento debe tener hora asignada</span>
         </div>
         <div class="ia-results-list" id="iaListaEventos"></div>
-        <button type="button" id="btnAgendarTodoIA" class="btn-action-side btn-side-nuevo" style="width:100%; margin-top:10px; justify-content:center; height:46px !important; font-size:11pt !important;" onclick="guardarEventosDetectadosIA()">AGENDAR PROPUESTA Y SUBIR RESPALDO</button>
+        <button type="button" id="btnAgendarTodoIA" class="btn-action-side btn-side-nuevo" style="width:100%; margin-top:10px; justify-content:center; height:46px !important; font-size:11.5pt !important;" onclick="guardarEventosDetectadosIA()">AGENDAR PROPUESTA Y SUBIR RESPALDO</button>
       </div>
     </div>
   </div>
@@ -753,7 +765,7 @@
         if (btnNuevo) btnNuevo.style.display = "inline-flex";
         if (btnAIA) btnAIA.style.display = "inline-flex";
         if (btnRespaldo) btnRespaldo.style.display = "inline-flex";
-        if (footerActions) footerActions.style.display = "none";
+        if (footerActions) footerActions.style.display = "flex";
       }
     }
 
@@ -1130,7 +1142,7 @@
       archivosManualesTemporales.forEach((arch, idx) => {
         const tag = document.createElement("span");
         tag.className = "badge-file";
-        tag.innerHTML = `${arch.nombre} <b style="cursor:pointer; margin-left:6px; color:#DC2626;" onclick="quitarArchivoManual(${idx})">✕</b>`;
+        tag.innerHTML = `${arch.nombre} <b style="cursor:pointer; margin-left:6px; color:#FF003C;" onclick="quitarArchivoManual(${idx})">✕</b>`;
         container.appendChild(tag);
       });
     }
@@ -1281,6 +1293,7 @@
       }
     }
 
+    // EDICIÓN DIRECTA HABILITADA
     function prepararEdicionActual() {
       if (!solicitarClaveAdminSiEsNecesario()) return;
       if (!currentEventId) return;
@@ -1295,7 +1308,7 @@
       document.getElementById("fAsunto").value = t.subject || "";
       document.getElementById("fFechaInicio").value = t.date || "";
       document.getElementById("fFechaFin").value = t.date || "";
-      document.getElementById("fHora").value = t.time || "";
+      document.getElementById("fHora").value = (t.time && t.time !== "00:00") ? t.time : "";
       document.getElementById("fOrganizador").value = t.sender || "";
       document.getElementById("fDetalle").value = t.detail || "";
       document.getElementById("fAccion").value = t.accion || "";
@@ -1367,12 +1380,12 @@
       }
       const matches = tasks.filter(t => (t.category || "Laboral").toLowerCase() === "laboral" && (normalizarTexto(t.subject).includes(q) || normalizarTexto(t.detail).includes(q) || normalizarTexto(t.sender).includes(q)));
       if (matches.length === 0) {
-        box.innerHTML = '<div style="padding:10px; font-size:9pt; color:#94A3B8; font-weight:600;">Sin coincidencias</div>';
+        box.innerHTML = '<div style="padding:10px; font-size:10pt; color:#94A3B8; font-weight:700;">Sin coincidencias</div>';
       } else {
         box.innerHTML = matches.map(m => `
           <div class="search-item" onclick="openDetail('${m.id}'); document.getElementById('searchResults').style.display='none';">
-            <span style="font-weight:800; font-size:9.5pt; color:#0F172A;">${m.subject}</span>
-            <span style="font-size:8.5pt; color:var(--text-muted);">${m.date} | ${m.time ? m.time + ' hrs' : 'Por definir'} • ${m.sender || 'General'}</span>
+            <span style="font-weight:900; font-size:10pt; color:#000000;">${m.subject}</span>
+            <span style="font-size:9pt; color:var(--text-muted); font-weight:700;">${m.date} | ${m.time ? m.time + ' hrs' : 'Por definir'} • ${m.sender || 'General'}</span>
           </div>
         `).join("");
       }
@@ -1387,7 +1400,6 @@
       }
     });
 
-    // --- PANEL TÉCNICO ---
     function abrirModalPanelTecnico() {
       document.getElementById("modalPanelTecnicoOverlay").style.display = "flex";
     }
@@ -1422,17 +1434,17 @@
       document.getElementById("bitacoraTotal").textContent = `${list.length} evento(s)`;
 
       if (list.length === 0) {
-        container.innerHTML = '<span style="font-size:10pt; color:#94A3B8; text-align:center; padding:12px;">Sin registros institucionales.</span>';
+        container.innerHTML = '<span style="font-size:10.5pt; color:#94A3B8; text-align:center; padding:12px; font-weight:800;">Sin registros institucionales.</span>';
         return;
       }
 
       container.innerHTML = list.map(t => `
         <div class="bitacora-item" onclick="cerrarModalBitacora(); openDetail('${t.id}')">
           <div>
-            <div style="font-weight:800; font-size:10pt; color:#0F172A;">${t.subject}</div>
-            <div style="font-size:8.5pt; color:var(--text-muted); font-weight:600;">${t.date} | ${t.time ? t.time + ' hrs' : 'Por definir'} • ${t.sender || 'General'}</div>
+            <div style="font-weight:900; font-size:11pt; color:#000000;">${t.subject}</div>
+            <div style="font-size:9pt; color:var(--text-muted); font-weight:700;">${t.date} | ${t.time ? t.time + ' hrs' : 'Por definir'} • ${t.sender || 'General'}</div>
           </div>
-          <span style="font-size:10pt;">${t.status === 'managed' ? '✅' : '⏳'}</span>
+          <span style="font-size:11pt;">${t.status === 'managed' ? '✅' : '⏳'}</span>
         </div>
       `).join("");
     }
@@ -1712,7 +1724,7 @@
       listaDiv.innerHTML = "";
 
       if (!lista || lista.length === 0) {
-        listaDiv.innerHTML = "<div style='font-size:10pt; color:#94A3B8; text-align:center; padding:10px;'>No se detectaron eventos en el documento.</div>";
+        listaDiv.innerHTML = "<div style='font-size:10.5pt; color:#94A3B8; text-align:center; padding:10px; font-weight:800;'>No se detectaron eventos en el documento.</div>";
         contenedor.style.display = "flex";
         return;
       }
@@ -1723,30 +1735,30 @@
         const item = document.createElement("div");
         item.className = "ia-item-card";
         
-        let avisoDupHtml = dup ? `<div style="color:#FF003C; font-size:9pt; font-weight:bold;">⚠️ Ya agendado: \"${dup.subject}\"</div>` : '';
+        let avisoDupHtml = dup ? `<div style="color:#FF003C; font-size:9.5pt; font-weight:bold;">⚠️ Ya agendado: \"${dup.subject}\"</div>` : '';
 
         item.innerHTML = `
           <div class="ia-item-header">
             <input type="text" class="ia-edit-input" style="font-weight:900; width:80%;" value="${ev.asunto || ''}" onchange="actualizarDatoIA(${idx}, 'asunto', this.value)">
-            <button type="button" class="btn-action-side" style="width:auto; color:#FF003C !important; height:28px !important; padding:0 10px !important;" onclick="eliminarPropuestaIA(${idx})" title="Descartar evento">✕</button>
+            <button type="button" class="btn-action-side" style="width:auto; color:#FF003C !important; height:30px !important; padding:0 10px !important;" onclick="eliminarPropuestaIA(${idx})" title="Descartar evento">✕</button>
           </div>
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
             <div>
-              <label style="font-size:8.5pt; margin:0;">Fecha *:</label>
+              <label style="font-size:9pt; margin:0; font-weight:800;">Fecha *:</label>
               <input type="date" class="ia-edit-input" value="${fKey}" onchange="actualizarDatoIA(${idx}, 'fecha', this.value)">
             </div>
             <div>
-              <label style="font-size:8.5pt; margin:0;">Hora (Obligatoria) *:</label>
+              <label style="font-size:9pt; margin:0; font-weight:800;">Hora (Obligatoria) *:</label>
               <input type="time" class="ia-edit-input" required value="${ev.hora || '09:00'}" onchange="actualizarDatoIA(${idx}, 'hora', this.value)" style="border-color:#3B82F6;">
             </div>
           </div>
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
             <div>
-              <label style="font-size:8.5pt; margin:0;">Organiza:</label>
+              <label style="font-size:9pt; margin:0; font-weight:800;">Organiza:</label>
               <input type="text" class="ia-edit-input" value="${ev.organizador || 'General'}" onchange="actualizarDatoIA(${idx}, 'organizador', this.value)">
             </div>
             <div>
-              <label style="font-size:8.5pt; margin:0;">Prioridad:</label>
+              <label style="font-size:9pt; margin:0; font-weight:800;">Prioridad:</label>
               <select class="ia-edit-input" onchange="actualizarDatoIA(${idx}, 'prioridad', this.value)">
                 <option value="Alta" ${ev.prioridad === 'Alta' ? 'selected' : ''}>Alta</option>
                 <option value="Media" ${ev.prioridad === 'Media' || !ev.prioridad ? 'selected' : ''}>Media</option>
@@ -1755,7 +1767,7 @@
             </div>
           </div>
           <div>
-            <label style="font-size:8.5pt; margin:0;">Síntesis:</label>
+            <label style="font-size:9pt; margin:0; font-weight:800;">Síntesis:</label>
             <textarea class="ia-edit-input" rows="1" onchange="actualizarDatoIA(${idx}, 'sintesis', this.value)">${ev.sintesis || ''}</textarea>
           </div>
           ${avisoDupHtml}
