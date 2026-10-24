@@ -36,19 +36,19 @@
       /* COLORES ELÉCTRICOS VIBRANTES PARA PRIORIDADES */
       --prio-alta-elec: #FF003C;
       --prio-alta-bg: #FFF1F2;
-      --prio-alta-glow: rgba(255, 0, 60, 0.25);
+      --prio-alta-glow: rgba(255, 0, 60, 0.35);
 
       --prio-media-elec: #FFB300;
       --prio-media-bg: #FFFDE7;
-      --prio-media-glow: rgba(255, 179, 0, 0.28);
+      --prio-media-glow: rgba(255, 179, 0, 0.35);
 
       --prio-baja-elec: #00E676;
       --prio-baja-bg: #F0FDF4;
-      --prio-baja-glow: rgba(0, 230, 118, 0.28);
+      --prio-baja-glow: rgba(0, 230, 118, 0.35);
 
       /* DÍA EN CURSO (HOY) ELÉCTRICO */
       --today-elec-border: #FFD600;
-      --today-glow: 0 0 16px rgba(255, 214, 0, 0.45);
+      --today-glow: 0 0 18px rgba(255, 214, 0, 0.6);
 
       --radius-sm: 8px;
       --radius-md: 12px;
@@ -58,31 +58,31 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif; }
     body { background-color: var(--bg-app); height: 100vh; padding: 6px 10px; color: var(--text-main); display: flex; flex-direction: column; overflow: hidden; }
     
-    /* ENCABEZADO EQUILIBRADO CON SAN BERNARDO */
+    /* ENCABEZADO: SAN BERNARDO Y TIEMPO AGRANDADO */
     header { 
       display: flex; align-items: center; justify-content: space-between;
-      background: var(--surface); padding: 6px 20px; border-radius: var(--radius-md);
+      background: var(--surface); padding: 8px 20px; border-radius: var(--radius-md);
       border: 2px solid var(--border-subtle); box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
-      flex-shrink: 0; margin-bottom: 6px; width: 100%; min-height: 60px; box-sizing: border-box;
+      flex-shrink: 0; margin-bottom: 6px; width: 100%; min-height: 64px; box-sizing: border-box;
     }
     
     .brand-block {
-      display: flex; flex-direction: column; gap: 2px;
+      display: flex; flex-direction: column; gap: 3px;
     }
     .brand-title {
-      font-size: 17pt; font-weight: 900; color: #1E3A8A; white-space: nowrap; margin: 0; line-height: 1.1; letter-spacing: -0.4px;
+      font-size: 18pt; font-weight: 900; color: #1E3A8A; white-space: nowrap; margin: 0; line-height: 1.1; letter-spacing: -0.4px;
     }
     .brand-meta {
-      font-size: 9pt; font-weight: 800; color: #475569; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 0.5px;
+      font-size: 9.5pt; font-weight: 800; color: #475569; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 0.5px;
     }
     .badge-rbd {
-      background: #EFF6FF; color: #1D4ED8; padding: 1px 7px; border-radius: 4px; border: 1.5px solid #BFDBFE; font-weight: 900;
+      background: #EFF6FF; color: #1D4ED8; padding: 2px 8px; border-radius: 4px; border: 1.5px solid #BFDBFE; font-weight: 900;
     }
 
-    /* MÓDULO ANCHO: FECHA Y NÚMEROS GIGANTES SIN HORA/MIN/SEG */
+    /* MÓDULO ANCHO: FECHA Y NÚMEROS GIGANTES (SIN ETIQUETA HORA/MIN/SEG) */
     .time-module {
       display: flex; align-items: center; background: #0A0F1D; border-radius: var(--radius-md);
-      padding: 4px 12px 4px 20px; gap: 18px; border: 2.5px solid #1E293B;
+      padding: 6px 16px 6px 22px; gap: 20px; border: 2.5px solid #1E293B;
       box-shadow: 0 4px 16px rgba(10, 15, 29, 0.35);
     }
     .date-display-text {
@@ -91,14 +91,14 @@
     }
 
     .flip-clock-container { 
-      display: flex; align-items: center; gap: 6px;
+      display: flex; align-items: center; gap: 8px;
     }
     .flip-card { 
       background: #111827; color: #FFFFFF; font-size: 24pt; font-weight: 900; 
-      padding: 0 10px; border-radius: 6px; min-width: 46px; text-align: center; line-height: 1.15; 
+      padding: 2px 12px; border-radius: 6px; min-width: 52px; text-align: center; line-height: 1.15; 
       letter-spacing: 1px; border: 1.5px solid #374151; box-shadow: inset 0 1px 2px rgba(255,255,255,0.1);
     }
-    .flip-colon { color: #E2E8F0; font-size: 22pt; font-weight: 900; margin: 0 1px; line-height: 1; }
+    .flip-colon { color: #E2E8F0; font-size: 24pt; font-weight: 900; margin: 0 2px; line-height: 1; }
 
     /* LAYOUT PRINCIPAL: DÍAS + BARRA LATERAL DERECHA */
     .main-workspace {
@@ -161,35 +161,35 @@
     .cards-container::-webkit-scrollbar { width: 5px; }
     .cards-container::-webkit-scrollbar-thumb { background: #94A3B8; border-radius: 6px; }
     
-    /* TARJETA CON COLORES ELÉCTRICOS DE IMPACTO */
+    /* TARJETA CON BORDES ELÉCTRICOS DE ALTO IMPACTO */
     .task-card { 
       width: 100%; background: #FFFFFF; padding: 9px 11px; border-radius: var(--radius-sm);
       display: flex; flex-direction: column; gap: 4px; cursor: pointer;
       border: 2px solid var(--border-subtle);
-      border-left: 7.5px solid var(--border-strong);
+      border-left: 8px solid var(--border-strong);
       box-shadow: 0 1px 4px rgba(0,0,0,0.05);
       transition: transform 0.1s ease, box-shadow 0.1s ease;
     }
-    .task-card:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
+    .task-card:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.12); }
     
     /* PRIORIDAD ALTA: ROJO ELÉCTRICO NEÓN */
     .task-card.prio-alta { 
       border-color: #FF003C !important; 
-      border-left: 8px solid var(--prio-alta-elec) !important; 
+      border-left: 8.5px solid var(--prio-alta-elec) !important; 
       background: var(--prio-alta-bg) !important;
       box-shadow: 0 2px 8px var(--prio-alta-glow) !important;
     } 
     /* PRIORIDAD MEDIA: AMARILLO ELÉCTRICO */
     .task-card.prio-media { 
       border-color: #FFB300 !important; 
-      border-left: 8px solid var(--prio-media-elec) !important; 
+      border-left: 8.5px solid var(--prio-media-elec) !important; 
       background: var(--prio-media-bg) !important;
       box-shadow: 0 2px 8px var(--prio-media-glow) !important;
     } 
     /* PRIORIDAD BAJA: VERDE ELÉCTRICO NEÓN */
     .task-card.prio-baja { 
       border-color: #00E676 !important; 
-      border-left: 8px solid var(--prio-baja-elec) !important; 
+      border-left: 8.5px solid var(--prio-baja-elec) !important; 
       background: var(--prio-baja-bg) !important;
       box-shadow: 0 2px 8px var(--prio-baja-glow) !important;
     } 
@@ -364,7 +364,7 @@
   </style>
 </head>
 <body>
-  <!-- ENCABEZADO: IDENTIDAD SAN BERNARDO Y TIEMPO AGRANDADO -->
+  <!-- ENCABEZADO: SAN BERNARDO Y TIEMPO AGRANDADO -->
   <header>
     <div class="brand-block">
       <div class="brand-title">Agenda Carlos Condell</div>
@@ -455,7 +455,7 @@
     </aside>
   </div>
 
-  <!-- MODAL: DATOS INSTITUCIONALES (BLOCK DE INFORMACIÓN) -->
+  <!-- MODAL: DATOS INSTITUCIONALES -->
   <div class="modal-overlay" id="modalDatosOverlay">
     <div class="modal-assistant" style="height:auto; min-height:420px; width:540px;">
       <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -835,6 +835,7 @@
       if (match) {
         var hh = parseInt(match[1]);
         var mm = parseInt(match[2]);
+        if (hh === 0 && mm === 0) return { horaStr: "", minutos: 9999, tieneHora: false };
         return { horaStr: String(hh).padStart(2, '0') + ":" + String(mm).padStart(2, '0'), minutos: hh * 60 + mm, tieneHora: true };
       }
       return { horaStr: "", minutos: 9999, tieneHora: false };
