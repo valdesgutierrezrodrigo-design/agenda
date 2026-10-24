@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Agenda Carlos Condell - San Bernardo</title>
-  <!-- Fuentes de Máxima Legibilidad y Accesibilidad para Presbicia -->
+  <!-- Fuentes de Alta Legibilidad -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&family=Lexend:wght@500;600;700;800;900&display=swap" rel="stylesheet">
@@ -69,7 +69,6 @@
     }
     body { background-color: var(--bg-app); height: 100vh; padding: 6px 10px; color: var(--text-main); display: flex; flex-direction: column; overflow: hidden; }
     
-    /* ENCABEZADO */
     header { 
       display: flex; align-items: center; justify-content: space-between;
       background: var(--surface); padding: 8px 20px; border-radius: var(--radius-md);
@@ -90,7 +89,6 @@
       background: #EFF6FF; color: #1D4ED8; padding: 2px 8px; border-radius: 4px; border: 1.5px solid #BFDBFE; font-weight: 900;
     }
 
-    /* MÓDULO FECHA Y RELOJ */
     .time-module {
       display: flex; align-items: center; background: #0A0F1D; border-radius: var(--radius-md);
       padding: 6px 18px 6px 22px; gap: 20px; border: 2.5px solid #1E293B;
@@ -111,12 +109,10 @@
     }
     .flip-colon { color: #E2E8F0; font-size: 25pt; font-weight: 900; margin: 0 2px; line-height: 1; }
 
-    /* LAYOUT PRINCIPAL: DÍAS + BARRA LATERAL DERECHA */
     .main-workspace {
       flex: 1; display: flex; gap: 8px; min-height: 0; width: 100%;
     }
 
-    /* CUADRÍCULA DE 5 DÍAS */
     main#plannerSection { flex: 1; display: flex; min-height: 0; min-width: 0; }
     .week-container { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; width: 100%; height: 100%; }
     
@@ -131,7 +127,6 @@
     .day-jueves { background: var(--day-jueves-bg); border: 2px solid var(--day-jueves-border); }
     .day-viernes { background: var(--day-viernes-bg); border: 2px solid var(--day-viernes-border); }
 
-    /* DÍA EN CURSO (HOY) */
     .day-column.is-today { 
       border-width: 4px !important; 
       border-color: var(--today-elec-border) !important; 
@@ -172,7 +167,6 @@
     .cards-container::-webkit-scrollbar { width: 5px; }
     .cards-container::-webkit-scrollbar-thumb { background: #94A3B8; border-radius: 6px; }
     
-    /* TARJETA CON FUENTE GRANDE (13.5pt) Y MÁXIMA CLARIDAD */
     .task-card { 
       width: 100%; background: #FFFFFF; padding: 10px 12px; border-radius: var(--radius-sm);
       display: flex; flex-direction: column; gap: 5px; cursor: pointer;
@@ -233,7 +227,6 @@
     .card-sender { font-size: 9.5pt; color: #1E293B; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: 0.2px; }
     .empty-text { font-size: 10pt; color: #94A3B8; text-align: center; margin-top: 24px; font-weight: 800; }
 
-    /* BARRA LATERAL DERECHA */
     .sidebar-actions {
       width: 220px; flex-shrink: 0; background: var(--surface);
       border: 2px solid var(--border-subtle); border-radius: var(--radius-md);
@@ -886,6 +879,9 @@
       return palabrasPersonales.some(p => texto.includes(p));
     }
 
+    // =======================================================
+    // SINCRONIZACIÓN RESPETANDO LISTA NEGRA DE ELIMINADOS
+    // =======================================================
     async function sincronizarDesdeSheets() {
       const btn = document.getElementById("btnSync");
       if (btn) btn.innerHTML = "<span class='btn-icon-lg'>⏳</span> Sincronizando...";
@@ -909,7 +905,14 @@
 
             const claveUnica = `${fValida}_${normalizarTexto(asunto)}`;
             
-            const yaFueEliminado = eventosEliminados.some(e => e.clave === claveUnica || (e.fila && String(e.fila) === String(filaNum)));
+            // FILTRO ESTRICTO: Si fue eliminado por el usuario, se omite por completo
+            const yaFueEliminado = eventosEliminados.some(e => {
+              if (e.clave && e.clave === claveUnica) return true;
+              if (e.asunto && normalizarTexto(e.asunto) === normalizarTexto(asunto) && e.fecha === fValida) return true;
+              if (e.fila && String(e.fila) === String(filaNum)) return true;
+              return false;
+            });
+
             if (yaFueEliminado) return;
 
             if (vistos.has(claveUnica)) return;
@@ -964,11 +967,15 @@
             });
           });
 
-          if (remoteTasks.length > 0) {
-            tasks = remoteTasks;
-            localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
-            renderCalendar();
-          }
+          // Unir con tareas locales que aún no estén en remoto
+          const tareasLocalesNoSincronizadas = tasks.filter(t => 
+            String(t.id).startsWith("local_") && 
+            !eventosEliminados.some(e => e.clave === `${t.date}_${normalizarTexto(t.subject)}`)
+          );
+
+          tasks = [...remoteTasks, ...tareasLocalesNoSincronizadas];
+          localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
+          renderCalendar();
         }
       } catch (err) {
         console.warn("Aviso sync:", err);
@@ -1293,7 +1300,6 @@
       }
     }
 
-    // EDICIÓN DIRECTA HABILITADA
     function prepararEdicionActual() {
       if (!solicitarClaveAdminSiEsNecesario()) return;
       if (!currentEventId) return;
@@ -1321,6 +1327,9 @@
       document.getElementById("modalAssistantOverlay").style.display = "flex";
     }
 
+    // =======================================================
+    // ELIMINACIÓN DEFINITIVA: LOCAL + LISTA NEGRA + REMOTO
+    // =======================================================
     async function eliminarEventoActual() {
       if (!solicitarClaveAdminSiEsNecesario()) return;
       if (!currentEventId) return;
@@ -1328,28 +1337,37 @@
       const t = tasks.find(x => x.id === currentEventId);
       if (!t) return;
 
-      if (!confirm(`¿Estás seguro de eliminar definitivamente "${t.subject}"? No volverá a aparecer en las sincronizaciones.`)) {
+      if (!confirm(`¿Eliminar definitivamente "${t.subject}"? No volverá a aparecer en la agenda.`)) {
         return;
       }
 
-      const filaRemota = t.fila;
+      const filaRemota = t.fila || "";
       const claveUnica = `${t.date}_${normalizarTexto(t.subject)}`;
 
-      eventosEliminados.push({ clave: claveUnica, fila: filaRemota, fecha: t.date, asunto: t.subject });
+      // 1. Guardar en Lista Negra Local
+      eventosEliminados.push({ 
+        clave: claveUnica, 
+        fila: filaRemota, 
+        fecha: t.date, 
+        asunto: t.subject 
+      });
       localStorage.setItem("agenda_carlos_condell_eliminados", JSON.stringify(eventosEliminados));
 
+      // 2. Quitar del arreglo de la sesión
       tasks = tasks.filter(x => x.id !== currentEventId);
       localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
+      
       closeDetailModal();
       renderCalendar();
 
+      // 3. Borrar físicamente de Google Sheets
       try {
         await fetch(API_URL, {
           method: "POST",
           headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify({
             accion: "eliminar_evento",
-            fila: filaRemota || "",
+            fila: filaRemota,
             fechaDoc: t.date,
             asunto: t.subject
           })
@@ -1790,6 +1808,9 @@
       renderizarEventosDetectados(eventosDetectadosIA);
     }
 
+    // =======================================================
+    // GUARDADO INMEDIATO DE EVENTOS DETECTADOS POR IA
+    // =======================================================
     async function guardarEventosDetectadosIA() {
       if (!eventosDetectadosIA || eventosDetectadosIA.length === 0) return;
 
@@ -1809,6 +1830,7 @@
 
       let primeraFechaEvento = null;
 
+      // 1. Guardar en memoria local primero
       eventosDetectadosIA.forEach((ev, idx) => {
         let fKey = parsearFecha(ev.fecha) || formatDateKey(new Date());
         if (!primeraFechaEvento) primeraFechaEvento = fKey;
@@ -1818,7 +1840,7 @@
         const mins = parseInt(partesH[0]) * 60 + parseInt(partesH[1] || 0);
 
         tasks.push({
-          id: baseId + idx,
+          id: "local_ia_" + (baseId + idx),
           date: fKey,
           time: hora,
           timeMinutos: mins,
@@ -1835,8 +1857,10 @@
         });
       });
 
+      // 2. Persistir localmente de inmediato
       localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
 
+      // 3. Mover el calendario a la semana del evento detectado
       if (primeraFechaEvento) {
         const partes = primeraFechaEvento.split("-");
         const fechaObj = new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2]));
@@ -1845,7 +1869,9 @@
 
       renderCalendar();
       cerrarModalIA();
+      alert(`✅ ¡Se agendaron ${eventosDetectadosIA.length} evento(s) exitosamente! La vista se movió a su fecha.`);
 
+      // 4. Guardar en Google Sheets en segundo plano
       for (const ev of eventosDetectadosIA) {
         const fKey = parsearFecha(ev.fecha) || formatDateKey(new Date());
         try {
