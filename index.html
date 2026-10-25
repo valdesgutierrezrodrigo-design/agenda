@@ -38,7 +38,7 @@
       --day-viernes-border: #FED7AA;
       --day-viernes-accent: #9A3412;
 
-      /* Colores de Prioridad */
+      /* COLORES ELÉCTRICOS PUROS */
       --prio-alta-elec: #FF003C;
       --prio-alta-bg: #FFF1F2;
       --prio-alta-glow: rgba(255, 0, 60, 0.4);
@@ -76,19 +76,32 @@
       flex-shrink: 0; margin-bottom: 6px; width: 100%; min-height: 64px; box-sizing: border-box;
     }
     
-    .brand-block { display: flex; flex-direction: column; gap: 3px; }
-    .brand-title { font-size: 19pt; font-weight: 900; color: #1E3A8A; white-space: nowrap; margin: 0; line-height: 1.1; letter-spacing: -0.3px; }
-    .brand-meta { font-size: 10pt; font-weight: 800; color: #334155; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .badge-rbd { background: #EFF6FF; color: #1D4ED8; padding: 2px 8px; border-radius: 4px; border: 1.5px solid #BFDBFE; font-weight: 900; }
+    .brand-block {
+      display: flex; flex-direction: column; gap: 3px;
+    }
+    .brand-title {
+      font-size: 19pt; font-weight: 900; color: #1E3A8A; white-space: nowrap; margin: 0; line-height: 1.1; letter-spacing: -0.3px;
+    }
+    .brand-meta {
+      font-size: 10pt; font-weight: 800; color: #334155; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .badge-rbd {
+      background: #EFF6FF; color: #1D4ED8; padding: 2px 8px; border-radius: 4px; border: 1.5px solid #BFDBFE; font-weight: 900;
+    }
 
     .time-module {
       display: flex; align-items: center; background: #0A0F1D; border-radius: var(--radius-md);
       padding: 6px 18px 6px 22px; gap: 20px; border: 2.5px solid #1E293B;
       box-shadow: 0 4px 16px rgba(10, 15, 29, 0.35);
     }
-    .date-display-text { color: #F8FAFC; font-size: 13.5pt; font-weight: 800; text-transform: capitalize; letter-spacing: 0.3px; white-space: nowrap; }
+    .date-display-text {
+      color: #F8FAFC; font-size: 13.5pt; font-weight: 800; text-transform: capitalize;
+      letter-spacing: 0.3px; white-space: nowrap;
+    }
 
-    .flip-clock-container { display: flex; align-items: center; gap: 8px; }
+    .flip-clock-container { 
+      display: flex; align-items: center; gap: 8px;
+    }
     .flip-card { 
       background: #111827; color: #FFFFFF; font-size: 25pt; font-weight: 900; 
       padding: 2px 12px; border-radius: 6px; min-width: 52px; text-align: center; line-height: 1.15; 
@@ -96,7 +109,9 @@
     }
     .flip-colon { color: #E2E8F0; font-size: 25pt; font-weight: 900; margin: 0 2px; line-height: 1; }
 
-    .main-workspace { flex: 1; display: flex; gap: 8px; min-height: 0; width: 100%; }
+    .main-workspace {
+      flex: 1; display: flex; gap: 8px; min-height: 0; width: 100%;
+    }
 
     main#plannerSection { flex: 1; display: flex; min-height: 0; min-width: 0; }
     .week-container { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; width: 100%; height: 100%; }
@@ -118,7 +133,10 @@
       box-shadow: var(--today-glow) !important;
       background: #FFFFFF !important;
     }
-    .day-column.is-today .day-header { background: #FEF9C3 !important; border-color: #FACC15 !important; }
+    .day-column.is-today .day-header {
+      background: #FEF9C3 !important;
+      border-color: #FACC15 !important;
+    }
     
     .day-header { 
       text-align: center; padding: 6px 4px 7px 4px; border-radius: 8px;
@@ -178,18 +196,29 @@
       box-shadow: 0 2px 10px var(--prio-baja-glow) !important;
     } 
     
-    .task-card.is-done { opacity: 0.88; background: #F8FAFC !important; }
-    .task-card.is-done .card-title { text-decoration: line-through; color: #64748B !important; }
+    .task-card.is-done { 
+      opacity: 0.88; 
+      background: #F8FAFC !important;
+    }
+    .task-card.is-done .card-title { 
+      text-decoration: line-through; 
+      color: #64748B !important; 
+    }
 
     .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
-    .card-title { font-size: 13.5pt; font-weight: 800; color: #000000; line-height: 1.3; flex: 1; min-width: 0; letter-spacing: 0.25px; }
+    .card-title { 
+      font-size: 13.5pt; font-weight: 800; color: #000000; line-height: 1.3; flex: 1; min-width: 0; 
+      letter-spacing: 0.25px;
+    }
     
     .card-badges { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
     .card-time { 
       font-size: 10.5pt; font-weight: 900; color: #1E3A8A; background: #DBEAFE; 
       border: 1.5px solid #93C5FD; padding: 2px 8px; border-radius: 6px; white-space: nowrap; 
     }
-    .card-time.time-nodefined { color: #475569; background: #F1F5F9; border-color: #CBD5E1; font-size: 9pt; font-weight: 800; }
+    .card-time.time-nodefined {
+      color: #475569; background: #F1F5F9; border-color: #CBD5E1; font-size: 9pt; font-weight: 800;
+    }
     .card-files-badge { 
       font-size: 9.5pt; font-weight: 900; color: #9A3412; background: #FFEDD5; 
       border: 1.5px solid #FDBA74; padding: 2px 7px; border-radius: 6px; white-space: nowrap; 
@@ -204,8 +233,13 @@
       padding: 12px 10px; display: flex; flex-direction: column; gap: 8px;
       box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05); overflow-y: auto;
     }
-    .sidebar-separator { border: 0; border-top: 1.5px dashed #CBD5E1; margin: 4px 0; }
-    .sidebar-section-title { font-size: 8pt; font-weight: 900; color: #475569; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 2px; }
+    .sidebar-separator {
+      border: 0; border-top: 1.5px dashed #CBD5E1; margin: 4px 0;
+    }
+    .sidebar-section-title {
+      font-size: 8pt; font-weight: 900; color: #475569; text-transform: uppercase;
+      letter-spacing: 0.6px; margin-bottom: 2px;
+    }
 
     .btn-action-side {
       width: 100%; height: 40px !important; border-radius: var(--radius-sm);
@@ -260,7 +294,7 @@
     .search-item { padding: 8px 10px; border-bottom: 1px solid var(--border-subtle); cursor: pointer; display: flex; flex-direction: column; gap: 2px; }
     .search-item:hover { background: #F8FAFC; }
 
-    /* Modales */
+    /* MODALES */
     .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.55); display: none; align-items: center; justify-content: center; padding: 16px; z-index: 1000; backdrop-filter: blur(4px); }
     
     .modal-assistant { 
@@ -526,7 +560,7 @@
     </div>
   </div>
 
-  <!-- Modal Detalle -->
+  <!-- Modal Detalle: Edición Siempre Habilitada -->
   <div class="modal-overlay" id="modalDetailOverlay">
     <div class="modal-detail-card">
       <div style="display:flex; justify-content:space-between; align-items:flex-start;">
@@ -613,7 +647,7 @@
     </div>
   </div>
 
-  <!-- Modal IA -->
+  <!-- Modal IA (Arrastrable, Amplio, Redimensionable, Scroll visible) -->
   <div class="modal-overlay" id="modalIAOverlay">
     <div class="modal-assistant" id="modalIABox" style="width:720px; min-width:520px; height:85vh;">
       <div class="modal-draggable-header" id="dragHeaderIA">
@@ -630,7 +664,7 @@
       </div>
 
       <div id="iaArchivoInfo" style="font-size:10pt; color:#1D4ED8; background:#EFF6FF; padding:8px 12px; border-radius:6px; display:none; border:2px solid #93C5FD;"></div>
-      <div id="iaEstado" style="font-size:11pt; color:#92400E; font-weight:bold; text-align:center; padding:10px; display:none; background:#FEF3C7; border-radius:6px; border:2px solid #FCD34D;">⚡ Analizando con Gemini 3.8 Flash...</div>
+      <div id="iaEstado" style="font-size:11pt; color:#92400E; font-weight:bold; text-align:center; padding:10px; display:none; background:#FEF3C7; border-radius:6px; border:2px solid #FCD34D;">⚡ Analizando con Gemini 1.5 Flash...</div>
       
       <div id="iaContenedorResultados" style="display:none; flex:1; display:flex; flex-direction:column; min-height:0;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
@@ -713,15 +747,19 @@
         badge.textContent = "🔓 Modo Edición";
         badge.className = "mode-badge-side admin";
         badge.title = "Haz clic para volver a modo Solo Lectura";
+        if (btnNuevo) btnNuevo.style.display = "inline-flex";
+        if (btnAIA) btnAIA.style.display = "inline-flex";
+        if (btnRespaldo) btnRespaldo.style.display = "inline-flex";
+        if (footerActions) footerActions.style.display = "flex";
       } else {
         badge.textContent = "🔒 Solo Lectura";
         badge.className = "mode-badge-side readonly";
         badge.title = "Haz clic para ingresar clave y editar";
+        if (btnNuevo) btnNuevo.style.display = "inline-flex";
+        if (btnAIA) btnAIA.style.display = "inline-flex";
+        if (btnRespaldo) btnRespaldo.style.display = "inline-flex";
+        if (footerActions) footerActions.style.display = "flex";
       }
-      if (btnNuevo) btnNuevo.style.display = "inline-flex";
-      if (btnAIA) btnAIA.style.display = "inline-flex";
-      if (btnRespaldo) btnRespaldo.style.display = "inline-flex";
-      if (footerActions) footerActions.style.display = "flex";
     }
 
     function solicitarClaveAdminSiEsNecesario() {
@@ -841,6 +879,9 @@
       return palabrasPersonales.some(p => texto.includes(p));
     }
 
+    // =======================================================
+    // SINCRONIZACIÓN RESPETANDO LISTA NEGRA DE ELIMINADOS
+    // =======================================================
     async function sincronizarDesdeSheets() {
       const btn = document.getElementById("btnSync");
       if (btn) btn.innerHTML = "<span class='btn-icon-lg'>⏳</span> Sincronizando...";
@@ -864,6 +905,7 @@
 
             const claveUnica = `${fValida}_${normalizarTexto(asunto)}`;
             
+            // FILTRO ESTRICTO: Si fue eliminado por el usuario, se omite por completo
             const yaFueEliminado = eventosEliminados.some(e => {
               if (e.clave && e.clave === claveUnica) return true;
               if (e.asunto && normalizarTexto(e.asunto) === normalizarTexto(asunto) && e.fecha === fValida) return true;
@@ -872,6 +914,7 @@
             });
 
             if (yaFueEliminado) return;
+
             if (vistos.has(claveUnica)) return;
             vistos.add(claveUnica);
 
@@ -924,14 +967,13 @@
             });
           });
 
-          // Unir manteniendo tareas locales no eliminadas
-          const localesValidos = tasks.filter(t => 
+          // Unir con tareas locales que aún no estén en remoto
+          const tareasLocalesNoSincronizadas = tasks.filter(t => 
             String(t.id).startsWith("local_") && 
-            !vistos.has(`${t.date}_${normalizarTexto(t.subject)}`) &&
             !eventosEliminados.some(e => e.clave === `${t.date}_${normalizarTexto(t.subject)}`)
           );
 
-          tasks = [...remoteTasks, ...localesValidos];
+          tasks = [...remoteTasks, ...tareasLocalesNoSincronizadas];
           localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
           renderCalendar();
         }
@@ -1055,7 +1097,7 @@
             enlace.rel = "noopener noreferrer";
           } else {
             enlace.href = "javascript:void(0);";
-            enlace.onclick = () => alert("Documento local guardado.");
+            enlace.onclick = () => alert("El archivo está sincronizándose o no tiene enlace disponible.");
           }
           enlace.className = "badge-file";
           enlace.textContent = `📎 ${f.nombre || 'Ver Documento'}`;
@@ -1150,9 +1192,6 @@
       aviso.style.display = existe ? "block" : "none";
     }
 
-    // =======================================================
-    // GUARDADO SEGURO: PERSISTENCIA GARANTIZADA
-    // =======================================================
     async function guardarEventoManual() {
       const asunto = document.getElementById("fAsunto").value.trim();
       const fecha = document.getElementById("fFechaInicio").value;
@@ -1175,14 +1214,13 @@
       }
 
       const partes = hora.split(":");
-      const min = parseInt(partes[0]) * 60 + parseInt(partes[1] || 0);
+      const min = parseInt(partes[0]) * 60 + parseInt(partes[1]);
 
       const btnGuardar = document.getElementById("btnGuardarEvento");
       btnGuardar.disabled = true;
       btnGuardar.textContent = "⏳ Guardando...";
 
       let adjuntosFinales = [...archivosManualesTemporales];
-      let nuevoId = isEditing && editEventId ? editEventId : "local_" + Date.now();
 
       if (isEditing && editEventId) {
         const item = tasks.find(t => t.id === editEventId);
@@ -1201,7 +1239,7 @@
         }
       } else {
         const nuevo = {
-          id: nuevoId,
+          id: "local_" + Date.now(),
           date: fecha,
           time: hora,
           tieneHora: true,
@@ -1218,18 +1256,10 @@
         tasks.push(nuevo);
       }
 
-      // 1. Guardar siempre en local storage de inmediato
       localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
-      
-      // Mover vista hacia la semana del evento guardado
-      const partesF = fecha.split("-");
-      const dTarget = new Date(parseInt(partesF[0]), parseInt(partesF[1]) - 1, parseInt(partesF[2]));
-      currentMonday = getMonday(dTarget);
-      
       closeModal();
       renderCalendar();
 
-      // 2. Enviar a Google Sheets sin payload pesado
       try {
         const payload = {
           accion: isEditing ? "editar_evento" : "crear_evento",
@@ -1241,7 +1271,7 @@
           prioridad: selectedPriority,
           sintesis: document.getElementById("fDetalle").value.trim(),
           accionReq: document.getElementById("fAccion").value.trim(),
-          archivos: adjuntosFinales.map(a => ({ nombre: a.nombre, url: a.url || "" })),
+          archivos: adjuntosFinales,
           anual: document.getElementById("fRepetirAnual").checked ? "Si" : "No"
         };
 
@@ -1253,7 +1283,7 @@
         const resJson = await res.json();
         
         if (resJson && resJson.urls && Array.isArray(resJson.urls)) {
-          const target = tasks.find(t => t.id === nuevoId);
+          const target = tasks.find(t => t.id === (isEditing ? editEventId : tasks[tasks.length - 1].id));
           if (target && target.respaldos) {
             target.respaldos.forEach((r, i) => {
               if (resJson.urls[i]) r.url = resJson.urls[i];
@@ -1297,6 +1327,9 @@
       document.getElementById("modalAssistantOverlay").style.display = "flex";
     }
 
+    // =======================================================
+    // ELIMINACIÓN DEFINITIVA: LOCAL + LISTA NEGRA + REMOTO
+    // =======================================================
     async function eliminarEventoActual() {
       if (!solicitarClaveAdminSiEsNecesario()) return;
       if (!currentEventId) return;
@@ -1311,6 +1344,7 @@
       const filaRemota = t.fila || "";
       const claveUnica = `${t.date}_${normalizarTexto(t.subject)}`;
 
+      // 1. Guardar en Lista Negra Local
       eventosEliminados.push({ 
         clave: claveUnica, 
         fila: filaRemota, 
@@ -1319,12 +1353,14 @@
       });
       localStorage.setItem("agenda_carlos_condell_eliminados", JSON.stringify(eventosEliminados));
 
+      // 2. Quitar del arreglo de la sesión
       tasks = tasks.filter(x => x.id !== currentEventId);
       localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
       
       closeDetailModal();
       renderCalendar();
 
+      // 3. Borrar físicamente de Google Sheets
       try {
         await fetch(API_URL, {
           method: "POST",
@@ -1444,6 +1480,7 @@
       dlAnchor.remove();
     }
 
+    // --- ASISTENTE AIA CON GEMINI FLASH ---
     function abrirModalIA() { 
       if (!solicitarClaveAdminSiEsNecesario()) return;
       document.getElementById("iaContenedorResultados").style.display = "none";
@@ -1606,7 +1643,7 @@
       const elEstado = document.getElementById("iaEstado");
       const elInfo = document.getElementById("iaArchivoInfo");
       elEstado.style.display = "block";
-      elEstado.textContent = "⚡ Analizando con Gemini 3.8 Flash...";
+      elEstado.textContent = "⚡ Analizando con Gemini 1.5 Flash...";
       document.getElementById("iaContenedorResultados").style.display = "none";
 
       try {
@@ -1771,6 +1808,9 @@
       renderizarEventosDetectados(eventosDetectadosIA);
     }
 
+    // =======================================================
+    // GUARDADO INMEDIATO DE EVENTOS DETECTADOS POR IA
+    // =======================================================
     async function guardarEventosDetectadosIA() {
       if (!eventosDetectadosIA || eventosDetectadosIA.length === 0) return;
 
@@ -1790,6 +1830,7 @@
 
       let primeraFechaEvento = null;
 
+      // 1. Guardar en memoria local primero
       eventosDetectadosIA.forEach((ev, idx) => {
         let fKey = parsearFecha(ev.fecha) || formatDateKey(new Date());
         if (!primeraFechaEvento) primeraFechaEvento = fKey;
@@ -1816,8 +1857,10 @@
         });
       });
 
+      // 2. Persistir localmente de inmediato
       localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
 
+      // 3. Mover el calendario a la semana del evento detectado
       if (primeraFechaEvento) {
         const partes = primeraFechaEvento.split("-");
         const fechaObj = new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2]));
@@ -1826,13 +1869,13 @@
 
       renderCalendar();
       cerrarModalIA();
-      alert(`✅ ¡Se agendaron ${eventosDetectadosIA.length} evento(s) exitosamente!`);
+      alert(`✅ ¡Se agendaron ${eventosDetectadosIA.length} evento(s) exitosamente! La vista se movió a su fecha.`);
 
-      // Guardar en Google Sheets
+      // 4. Guardar en Google Sheets en segundo plano
       for (const ev of eventosDetectadosIA) {
         const fKey = parsearFecha(ev.fecha) || formatDateKey(new Date());
         try {
-          await fetch(API_URL, {
+          const res = await fetch(API_URL, {
             method: "POST",
             headers: { "Content-Type": "text/plain;charset=utf-8" },
             body: JSON.stringify({
@@ -1844,10 +1887,22 @@
               prioridad: ev.prioridad || "Media", 
               sintesis: ev.sintesis || "", 
               accionReq: ev.accion || "Gestionar", 
-              archivos: archivosRespaldoIA.map(a => ({ nombre: a.nombre, url: a.url || "" })), 
+              archivos: archivosRespaldoIA, 
               anual: "No"
             })
           });
+          const resJson = await res.json();
+          if (resJson && resJson.urls && Array.isArray(resJson.urls)) {
+            tasks.forEach(t => {
+              if (t.respaldos && t.subject === ev.asunto) {
+                t.respaldos.forEach((r, i) => {
+                  if (resJson.urls[i]) r.url = resJson.urls[i];
+                });
+              }
+            });
+            localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
+            renderCalendar();
+          }
         } catch (e) {
           console.warn("Aviso al guardar en Google Sheets:", e);
         }
@@ -1857,7 +1912,7 @@
       btn.textContent = "AGENDAR PROPUESTA Y SUBIR RESPALDO";
     }
 
-    // Reloj en vivo
+    // --- RELOJ EN VIVO (DÍGITOS GIGANTES) ---
     function updateLiveClock() {
       const now = new Date();
       if(document.getElementById("fc-hour")) document.getElementById("fc-hour").textContent = String(now.getHours()).padStart(2, '0');
