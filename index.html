@@ -560,7 +560,7 @@
     </div>
   </div>
 
-  <!-- Modal Detalle: Edición Siempre Habilitada -->
+  <!-- Modal Detalle -->
   <div class="modal-overlay" id="modalDetailOverlay">
     <div class="modal-detail-card">
       <div style="display:flex; justify-content:space-between; align-items:flex-start;">
@@ -647,7 +647,7 @@
     </div>
   </div>
 
-  <!-- Modal IA (Arrastrable, Amplio, Redimensionable, Scroll visible) -->
+  <!-- Modal IA -->
   <div class="modal-overlay" id="modalIAOverlay">
     <div class="modal-assistant" id="modalIABox" style="width:720px; min-width:520px; height:85vh;">
       <div class="modal-draggable-header" id="dragHeaderIA">
@@ -664,7 +664,7 @@
       </div>
 
       <div id="iaArchivoInfo" style="font-size:10pt; color:#1D4ED8; background:#EFF6FF; padding:8px 12px; border-radius:6px; display:none; border:2px solid #93C5FD;"></div>
-      <div id="iaEstado" style="font-size:11pt; color:#92400E; font-weight:bold; text-align:center; padding:10px; display:none; background:#FEF3C7; border-radius:6px; border:2px solid #FCD34D;">⚡ Analizando con Gemini 1.5 Flash...</div>
+      <div id="iaEstado" style="font-size:11pt; color:#92400E; font-weight:bold; text-align:center; padding:10px; display:none; background:#FEF3C7; border-radius:6px; border:2px solid #FCD34D;">⚡ Analizando con Gemini 3.8 Flash...</div>
       
       <div id="iaContenedorResultados" style="display:none; flex:1; display:flex; flex-direction:column; min-height:0;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
@@ -879,9 +879,6 @@
       return palabrasPersonales.some(p => texto.includes(p));
     }
 
-    // =======================================================
-    // SINCRONIZACIÓN RESPETANDO LISTA NEGRA DE ELIMINADOS
-    // =======================================================
     async function sincronizarDesdeSheets() {
       const btn = document.getElementById("btnSync");
       if (btn) btn.innerHTML = "<span class='btn-icon-lg'>⏳</span> Sincronizando...";
@@ -905,7 +902,6 @@
 
             const claveUnica = `${fValida}_${normalizarTexto(asunto)}`;
             
-            // FILTRO ESTRICTO: Si fue eliminado por el usuario, se omite por completo
             const yaFueEliminado = eventosEliminados.some(e => {
               if (e.clave && e.clave === claveUnica) return true;
               if (e.asunto && normalizarTexto(e.asunto) === normalizarTexto(asunto) && e.fecha === fValida) return true;
@@ -967,7 +963,6 @@
             });
           });
 
-          // Unir con tareas locales que aún no estén en remoto
           const tareasLocalesNoSincronizadas = tasks.filter(t => 
             String(t.id).startsWith("local_") && 
             !eventosEliminados.some(e => e.clave === `${t.date}_${normalizarTexto(t.subject)}`)
@@ -1327,9 +1322,6 @@
       document.getElementById("modalAssistantOverlay").style.display = "flex";
     }
 
-    // =======================================================
-    // ELIMINACIÓN DEFINITIVA: LOCAL + LISTA NEGRA + REMOTO
-    // =======================================================
     async function eliminarEventoActual() {
       if (!solicitarClaveAdminSiEsNecesario()) return;
       if (!currentEventId) return;
@@ -1344,7 +1336,6 @@
       const filaRemota = t.fila || "";
       const claveUnica = `${t.date}_${normalizarTexto(t.subject)}`;
 
-      // 1. Guardar en Lista Negra Local
       eventosEliminados.push({ 
         clave: claveUnica, 
         fila: filaRemota, 
@@ -1353,14 +1344,12 @@
       });
       localStorage.setItem("agenda_carlos_condell_eliminados", JSON.stringify(eventosEliminados));
 
-      // 2. Quitar del arreglo de la sesión
       tasks = tasks.filter(x => x.id !== currentEventId);
       localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
       
       closeDetailModal();
       renderCalendar();
 
-      // 3. Borrar físicamente de Google Sheets
       try {
         await fetch(API_URL, {
           method: "POST",
@@ -1643,7 +1632,7 @@
       const elEstado = document.getElementById("iaEstado");
       const elInfo = document.getElementById("iaArchivoInfo");
       elEstado.style.display = "block";
-      elEstado.textContent = "⚡ Analizando con Gemini 1.5 Flash...";
+      elEstado.textContent = "⚡ Analizando con Gemini 3.8 Flash...";
       document.getElementById("iaContenedorResultados").style.display = "none";
 
       try {
@@ -1808,9 +1797,6 @@
       renderizarEventosDetectados(eventosDetectadosIA);
     }
 
-    // =======================================================
-    // GUARDADO INMEDIATO DE EVENTOS DETECTADOS POR IA
-    // =======================================================
     async function guardarEventosDetectadosIA() {
       if (!eventosDetectadosIA || eventosDetectadosIA.length === 0) return;
 
@@ -1830,7 +1816,6 @@
 
       let primeraFechaEvento = null;
 
-      // 1. Guardar en memoria local primero
       eventosDetectadosIA.forEach((ev, idx) => {
         let fKey = parsearFecha(ev.fecha) || formatDateKey(new Date());
         if (!primeraFechaEvento) primeraFechaEvento = fKey;
@@ -1857,10 +1842,8 @@
         });
       });
 
-      // 2. Persistir localmente de inmediato
       localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
 
-      // 3. Mover el calendario a la semana del evento detectado
       if (primeraFechaEvento) {
         const partes = primeraFechaEvento.split("-");
         const fechaObj = new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2]));
@@ -1871,7 +1854,6 @@
       cerrarModalIA();
       alert(`✅ ¡Se agendaron ${eventosDetectadosIA.length} evento(s) exitosamente! La vista se movió a su fecha.`);
 
-      // 4. Guardar en Google Sheets en segundo plano
       for (const ev of eventosDetectadosIA) {
         const fKey = parsearFecha(ev.fecha) || formatDateKey(new Date());
         try {
@@ -1912,7 +1894,6 @@
       btn.textContent = "AGENDAR PROPUESTA Y SUBIR RESPALDO";
     }
 
-    // --- RELOJ EN VIVO (DÍGITOS GIGANTES) ---
     function updateLiveClock() {
       const now = new Date();
       if(document.getElementById("fc-hour")) document.getElementById("fc-hour").textContent = String(now.getHours()).padStart(2, '0');
