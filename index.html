@@ -2,1995 +2,967 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Agenda Carlos Condell - San Bernardo</title>
-  <!-- Fuentes de Alta Legibilidad -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&family=Lexend:wght@500;600;700;800;900&display=swap" rel="stylesheet">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HERRAMIENTASTDAH - Editor y Captura</title>
+  <!-- Librerías PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
   <style>
-    :root {
-      --bg-app: #F8FAFC;
-      --surface: #FFFFFF;
-      --border-subtle: #E2E8F0;
-      --border-strong: #94A3B8;
-      --text-main: #000000;
-      --text-muted: #1E293B;
-
-      /* Paleta Pastel Base Columnas */
-      --day-lunes-bg: #F1F5F9;
-      --day-lunes-border: #CBD5E1;
-      --day-lunes-accent: #0F172A;
-
-      --day-martes-bg: #FEFCE8;
-      --day-martes-border: #FEF08A;
-      --day-martes-accent: #713F12;
-
-      --day-miercoles-bg: #E0F2FE;
-      --day-miercoles-border: #BAE6FD;
-      --day-miercoles-accent: #0369A1;
-
-      --day-jueves-bg: #FEF3C7;
-      --day-jueves-border: #FDE68A;
-      --day-jueves-accent: #78350F;
-
-      --day-viernes-bg: #FFEDD5;
-      --day-viernes-border: #FED7AA;
-      --day-viernes-accent: #9A3412;
-
-      /* COLORES ELÉCTRICOS PUROS */
-      --prio-alta-elec: #FF003C;
-      --prio-alta-bg: #FFF1F2;
-      --prio-alta-glow: rgba(255, 0, 60, 0.4);
-
-      --prio-media-elec: #FFE600;
-      --prio-media-bg: #FFFDE7;
-      --prio-media-glow: rgba(255, 230, 0, 0.45);
-
-      --prio-baja-elec: #00E676;
-      --prio-baja-bg: #F0FDF4;
-      --prio-baja-glow: rgba(0, 230, 118, 0.4);
-
-      --today-elec-border: #FFE600;
-      --today-glow: 0 0 18px rgba(255, 230, 0, 0.65);
-
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 16px;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     }
 
-    * { 
-      box-sizing: border-box; 
-      margin: 0; 
-      padding: 0; 
-      font-family: 'Lexend', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-    body { background-color: var(--bg-app); height: 100vh; padding: 6px 10px; color: var(--text-main); display: flex; flex-direction: column; overflow: hidden; }
-    
-    header { 
-      display: flex; align-items: center; justify-content: space-between;
-      background: var(--surface); padding: 8px 20px; border-radius: var(--radius-md);
-      border: 2px solid var(--border-subtle); box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
-      flex-shrink: 0; margin-bottom: 6px; width: 100%; min-height: 64px; box-sizing: border-box;
-    }
-    
-    .brand-block {
-      display: flex; flex-direction: column; gap: 3px;
-    }
-    .brand-title {
-      font-size: 19pt; font-weight: 900; color: #1E3A8A; white-space: nowrap; margin: 0; line-height: 1.1; letter-spacing: -0.3px;
-    }
-    .brand-meta {
-      font-size: 10pt; font-weight: 800; color: #334155; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 0.5px;
-    }
-    .badge-rbd {
-      background: #EFF6FF; color: #1D4ED8; padding: 2px 8px; border-radius: 4px; border: 1.5px solid #BFDBFE; font-weight: 900;
+    body {
+      background-color: #e5e7eb;
+      color: #111827;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
     }
 
-    .time-module {
-      display: flex; align-items: center; background: #0A0F1D; border-radius: var(--radius-md);
-      padding: 6px 18px 6px 22px; gap: 20px; border: 2.5px solid #1E293B;
-      box-shadow: 0 4px 16px rgba(10, 15, 29, 0.35);
-    }
-    .date-display-text {
-      color: #F8FAFC; font-size: 13.5pt; font-weight: 800; text-transform: capitalize;
-      letter-spacing: 0.3px; white-space: nowrap;
-    }
-
-    .flip-clock-container { 
-      display: flex; align-items: center; gap: 8px;
-    }
-    .flip-card { 
-      background: #111827; color: #FFFFFF; font-size: 25pt; font-weight: 900; 
-      padding: 2px 12px; border-radius: 6px; min-width: 52px; text-align: center; line-height: 1.15; 
-      letter-spacing: 1px; border: 1.5px solid #374151; box-shadow: inset 0 1px 2px rgba(255,255,255,0.1);
-    }
-    .flip-colon { color: #E2E8F0; font-size: 25pt; font-weight: 900; margin: 0 2px; line-height: 1; }
-
-    .main-workspace {
-      flex: 1; display: flex; gap: 8px; min-height: 0; width: 100%;
+    /* Barra Superior Gris Neutro */
+    .toolbar {
+      background-color: #4b5563;
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      border-bottom: 2px solid #374151;
+      z-index: 10;
     }
 
-    main#plannerSection { flex: 1; display: flex; min-height: 0; min-width: 0; }
-    .week-container { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; width: 100%; height: 100%; }
-    
-    .day-column { 
-      border-radius: var(--radius-md); padding: 8px 8px; display: flex; flex-direction: column; gap: 6px; 
-      min-height: 0; overflow: hidden; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-      transition: all 0.2s ease;
-    }
-    .day-lunes { background: var(--day-lunes-bg); border: 2px solid var(--day-lunes-border); }
-    .day-martes { background: var(--day-martes-bg); border: 2px solid var(--day-martes-border); }
-    .day-miercoles { background: var(--day-miercoles-bg); border: 2px solid var(--day-miercoles-border); }
-    .day-jueves { background: var(--day-jueves-bg); border: 2px solid var(--day-jueves-border); }
-    .day-viernes { background: var(--day-viernes-bg); border: 2px solid var(--day-viernes-border); }
-
-    .day-column.is-today { 
-      border-width: 4px !important; 
-      border-color: var(--today-elec-border) !important; 
-      box-shadow: var(--today-glow) !important; 
-      background: #FFFFFF !important;
-    }
-    .day-column.is-today .day-header {
-      background: #FEF9C3 !important;
-      border-color: #FACC15 !important;
-    }
-    
-    .day-header { 
-      text-align: center; padding: 6px 4px 7px 4px; border-radius: 8px;
-      background: rgba(255, 255, 255, 0.88); border: 1.5px solid rgba(0,0,0,0.08);
-      flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 2px;
-    }
-    .day-name { font-size: 13pt; font-weight: 900; text-transform: uppercase; line-height: 1.1; letter-spacing: 0.5px; }
-    .day-lunes .day-name { color: var(--day-lunes-accent); }
-    .day-martes .day-name { color: var(--day-martes-accent); }
-    .day-miercoles .day-name { color: var(--day-miercoles-accent); }
-    .day-jueves .day-name { color: var(--day-jueves-accent); }
-    .day-viernes .day-name { color: var(--day-viernes-accent); }
-
-    .day-number { font-size: 11pt; font-weight: 800; color: #0F172A; margin-top: 2px; }
-    .text-red { color: #BE123C !important; }
-    
-    .badge-tag { font-size: 8.5pt; padding: 2px 8px; border-radius: 6px; display: inline-block; margin-top: 3px; background: #FFFFFF; color: #0F172A; font-weight: 900; text-transform: uppercase; border: 1.5px solid var(--border-strong); }
-    .badge-today { 
-      background: #FFE600 !important; color: #000000 !important; border: 2px solid #CA8A04 !important; 
-      font-weight: 900 !important; box-shadow: 0 2px 6px rgba(202, 138, 4, 0.45) !important;
-    }
-    
-    .cards-container { 
-      display: flex; flex-direction: column; gap: 8px; flex: 1; min-height: 0; 
-      overflow-y: auto; padding-right: 2px;
-      scrollbar-width: thin; scrollbar-color: #94A3B8 transparent;
-    }
-    .cards-container::-webkit-scrollbar { width: 5px; }
-    .cards-container::-webkit-scrollbar-thumb { background: #94A3B8; border-radius: 6px; }
-    
-    .task-card { 
-      width: 100%; background: #FFFFFF; padding: 10px 12px; border-radius: var(--radius-sm);
-      display: flex; flex-direction: column; gap: 5px; cursor: pointer;
-      border: 3px solid var(--border-subtle);
-      border-left: 9px solid var(--border-strong);
-      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-      transition: transform 0.1s ease, box-shadow 0.1s ease;
-    }
-    .task-card:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.12); }
-    
-    .task-card.prio-alta { 
-      border-color: #FF003C !important; 
-      border-left: 10px solid var(--prio-alta-elec) !important; 
-      background: var(--prio-alta-bg) !important; 
-      box-shadow: 0 2px 10px var(--prio-alta-glow) !important;
-    } 
-    .task-card.prio-media { 
-      border-color: #FFE600 !important; 
-      border-left: 10px solid var(--prio-media-elec) !important; 
-      background: var(--prio-media-bg) !important; 
-      box-shadow: 0 2px 10px var(--prio-media-glow) !important;
-    } 
-    .task-card.prio-baja { 
-      border-color: #00E676 !important; 
-      border-left: 10px solid var(--prio-baja-elec) !important; 
-      background: var(--prio-baja-bg) !important; 
-      box-shadow: 0 2px 10px var(--prio-baja-glow) !important;
-    } 
-    
-    .task-card.is-done { 
-      opacity: 0.88; 
-      background: #F8FAFC !important;
-    }
-    .task-card.is-done .card-title { 
-      text-decoration: line-through; 
-      color: #64748B !important; 
+    /* Checkboxes de Formato */
+    .format-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #ffffff;
+      padding: 5px 10px;
+      border-radius: 6px;
+      border: 1px solid #9ca3af;
     }
 
-    .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
-    .card-title { 
-      font-size: 13.5pt; font-weight: 800; color: #000000; line-height: 1.3; flex: 1; min-width: 0; 
-      letter-spacing: 0.25px;
-    }
-    
-    .card-badges { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
-    .card-time { 
-      font-size: 10.5pt; font-weight: 900; color: #1E3A8A; background: #DBEAFE; 
-      border: 1.5px solid #93C5FD; padding: 2px 8px; border-radius: 6px; white-space: nowrap; 
-    }
-    .card-time.time-nodefined { 
-      color: #475569; background: #F1F5F9; border-color: #CBD5E1; font-size: 9pt; font-weight: 800;
-    }
-    .card-files-badge { 
-      font-size: 9.5pt; font-weight: 900; color: #9A3412; background: #FFEDD5; 
-      border: 1.5px solid #FDBA74; padding: 2px 7px; border-radius: 6px; white-space: nowrap; 
-    }
-    
-    .card-sender { font-size: 9.5pt; color: #1E293B; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: 0.2px; }
-    .empty-text { font-size: 10pt; color: #94A3B8; text-align: center; margin-top: 24px; font-weight: 800; }
-
-    .sidebar-actions {
-      width: 220px; flex-shrink: 0; background: var(--surface);
-      border: 2px solid var(--border-subtle); border-radius: var(--radius-md);
-      padding: 12px 10px; display: flex; flex-direction: column; gap: 8px;
-      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05); overflow-y: auto;
-    }
-    .sidebar-separator {
-      border: 0; border-top: 1.5px dashed #CBD5E1; margin: 4px 0;
-    }
-    .sidebar-section-title {
-      font-size: 8pt; font-weight: 900; color: #475569; text-transform: uppercase;
-      letter-spacing: 0.6px; margin-bottom: 2px;
+    .format-group label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      color: #111827;
+      user-select: none;
     }
 
-    .btn-action-side {
-      width: 100%; height: 40px !important; border-radius: var(--radius-sm);
-      font-size: 10pt !important; font-weight: 800 !important; cursor: pointer;
-      display: inline-flex; align-items: center; justify-content: flex-start; gap: 8px;
-      padding: 0 12px !important; transition: all 0.15s ease; white-space: nowrap;
-      border: 2px solid var(--border-strong) !important; background: #FFFFFF !important; color: #0F172A !important;
-      text-decoration: none;
+    .format-group input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
     }
-    .btn-action-side:hover { background: #F1F5F9 !important; border-color: #475569 !important; }
-    .btn-icon-lg { font-size: 13pt; line-height: 1; }
-    
-    .btn-side-nuevo { 
-      background: #FEF08A !important; border-color: #EAB308 !important; color: #713F12 !important; font-weight: 900 !important; 
-      box-shadow: 0 3px 8px rgba(234, 179, 8, 0.35) !important;
+
+    /* Botones de Acción */
+    button, label.btn-action {
+      background-color: #111827;
+      color: #ffffff;
+      padding: 7px 12px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 6px;
+      border: 1px solid #000000;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      user-select: none;
+      transition: background 0.15s ease, transform 0.1s ease;
+      white-space: nowrap;
     }
-    .btn-side-nuevo:hover { background: #FDE047 !important; transform: translateY(-1px); }
 
-    .btn-side-ia { background: #EFF6FF !important; border-color: #60A5FA !important; color: #1D4ED8 !important; }
-    .btn-side-ia:hover { background: #DBEAFE !important; }
-
-    .btn-side-sync { background: #F0FDF4 !important; border-color: #86EFAC !important; color: #166534 !important; }
-    .btn-side-sync:hover { background: #DCFCE7 !important; }
-
-    .btn-side-datos { background: #EEF2FF !important; border-color: #818CF8 !important; color: #3730A3 !important; font-weight: 900 !important; }
-    .btn-side-datos:hover { background: #E0E7FF !important; }
-
-    .btn-side-tecnico { background: #F8FAFC !important; border-color: #64748B !important; color: #0F172A !important; font-weight: 900 !important; }
-    .btn-side-tecnico:hover { background: #E2E8F0 !important; border-color: #334155 !important; }
-
-    .mode-badge-side {
-      width: 100%; height: 40px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      border-radius: var(--radius-sm); font-size: 10pt; font-weight: 900; border: 2px solid var(--border-strong);
-      cursor: pointer; user-select: none;
+    button:hover, label.btn-action:hover {
+      background-color: #1f2937;
+      transform: translateY(-1px);
     }
-    .mode-badge-side.admin { background: #DCFCE7; color: #166534; border-color: #4ADE80; }
-    .mode-badge-side.readonly { background: #FEF3C7; color: #92400E; border-color: #FCD34D; }
 
-    .sidebar-nav-dates {
-      display: flex; flex-direction: column; gap: 6px; background: #F8FAFC;
-      border: 2px solid var(--border-subtle); padding: 8px; border-radius: var(--radius-sm);
+    button:active, label.btn-action:active {
+      transform: translateY(1px);
     }
-    .date-label-side { font-size: 10.5pt; font-weight: 900; color: #1E3A8A; text-align: center; }
-    .nav-arrow-group { display: flex; gap: 4px; justify-content: space-between; }
-    .nav-arrow-group button { flex: 1; height: 34px !important; font-size: 9.5pt !important; padding: 0 !important; justify-content: center !important; }
 
-    .search-wrapper-side { position: relative; width: 100%; }
-    .search-input-side { width: 100%; height: 38px; padding: 0 8px 0 32px; font-size: 10pt; font-weight: 700; border: 2px solid var(--border-strong); border-radius: var(--radius-sm); outline: none; background: #FFFFFF; }
-    .search-input-side:focus { border-color: #1E3A8A; }
-    .search-icon-side { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-size: 10pt; color: var(--text-muted); pointer-events: none; }
-    .search-results-side { position: absolute; bottom: calc(100% + 4px); left: 0; right: 0; background: var(--surface); border: 2px solid var(--border-strong); border-radius: var(--radius-sm); max-height: 240px; overflow-y: auto; box-shadow: 0 -8px 24px rgba(0,0,0,0.12); z-index: 50; display: none; }
-    .search-item { padding: 8px 10px; border-bottom: 1px solid var(--border-subtle); cursor: pointer; display: flex; flex-direction: column; gap: 2px; }
-    .search-item:hover { background: #F8FAFC; }
-
-    /* MODALES */
-    .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.55); display: none; align-items: center; justify-content: center; padding: 16px; z-index: 1000; backdrop-filter: blur(4px); }
-    
-    .modal-assistant { 
-      background: var(--surface); color: var(--text-main); 
-      width: 650px; min-width: 480px; max-width: 95vw; 
-      height: 85vh; min-height: 500px;
-      border-radius: var(--radius-md); padding: 22px; 
-      display: flex; flex-direction: column; gap: 14px; 
-      position: relative; z-index: 1001; 
-      box-shadow: 0 12px 32px rgba(0,0,0,0.2); 
-      border: 2px solid var(--border-strong);
-      resize: both; overflow: auto;
-      scrollbar-width: thin; scrollbar-color: #64748B #F1F5F9;
+    button.active {
+      background-color: #ffffff !important;
+      color: #111827 !important;
+      border: 2px solid #111827;
     }
-    .modal-assistant::-webkit-scrollbar { width: 9px; height: 9px; }
-    .modal-assistant::-webkit-scrollbar-thumb { background: #64748B; border-radius: 6px; }
-    .modal-assistant::-webkit-scrollbar-track { background: #F1F5F9; }
 
-    .modal-assistant label { font-size: 11pt; color: #0F172A; display: block; margin-bottom: 5px; font-weight: 800; }
-    .modal-assistant input, .modal-assistant textarea, .modal-assistant select { 
-      width: 100%; background: #F8FAFC; border: 2px solid var(--border-strong); 
-      border-radius: var(--radius-sm); padding: 10px 14px; font-size: 11.5pt; font-weight: 700; outline: none; 
+    /* Botón especial Excell */
+    #btnExcel {
+      background-color: #065f46;
+      border-color: #047857;
     }
-    .modal-assistant input:focus, .modal-assistant textarea:focus, .modal-assistant select:focus { border-color: #1E3A8A; background: #FFFFFF; }
-    
-    .modal-draggable-header { cursor: move; user-select: none; display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 2px solid var(--border-subtle); }
 
-    .btn-prio { 
-      background: #FFFFFF !important; color: #0F172A !important; border: 2.5px solid var(--border-strong) !important;
-      border-radius: var(--radius-sm); padding: 0 14px !important; height: 42px !important; cursor: pointer;
-      font-size: 10.5pt; font-weight: 900 !important; display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+    #btnExcel:hover {
+      background-color: #047857;
     }
-    .btn-prio.selected-alta { border-color: #FF003C !important; background: var(--prio-alta-bg) !important; color: #FF003C !important; }
-    .btn-prio.selected-media { border-color: #FFE600 !important; background: var(--prio-media-bg) !important; color: #713F12 !important; }
-    .btn-prio.selected-baja { border-color: #00E676 !important; background: var(--prio-baja-bg) !important; color: #15803D !important; }
 
-    .checkbox-container { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
-    .checkbox-container input { width: 18px; height: 18px; cursor: pointer; }
-    .aviso-duplicado { background: var(--prio-alta-bg); border: 2px solid var(--prio-alta-elec); color: #FF003C; padding: 8px 14px; border-radius: var(--radius-sm); font-size: 10pt; font-weight: 800; display: none; margin-top: 4px; }
-
-    .ia-results-list { 
-      display: flex; flex-direction: column; gap: 12px; 
-      flex: 1; min-height: 220px; overflow-y: auto; margin: 8px 0; padding-right: 6px;
-      scrollbar-width: thin; scrollbar-color: #D97706 #FEF3C7;
+    .btn-salir {
+      margin-left: auto;
     }
-    .ia-results-list::-webkit-scrollbar { width: 9px; }
-    .ia-results-list::-webkit-scrollbar-thumb { background: #D97706; border-radius: 6px; }
-    .ia-results-list::-webkit-scrollbar-track { background: #FEF3C7; }
 
-    .ia-item-card { 
-      background: #FFFFFF; border: 2px solid var(--border-subtle); border-left: 6px solid #D97706; 
-      padding: 12px 14px; border-radius: var(--radius-sm); display: flex; flex-direction: column; gap: 8px; 
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    /* Regulador de Grosor */
+    .slider-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      background: #ffffff;
+      color: #111827;
+      padding: 5px 10px;
+      border-radius: 6px;
+      border: 1px solid #9ca3af;
     }
-    .ia-item-header { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-    .ia-edit-input { font-size: 11pt !important; padding: 8px 10px !important; }
 
-    .modal-detail-card { 
-      background: var(--surface); max-width: 620px; width: 100%; max-height: 90vh; 
-      border-radius: var(--radius-md); padding: 22px; display: flex; flex-direction: column; 
-      gap: 14px; overflow-y: auto; position: relative; z-index: 1001; 
-      box-shadow: 0 12px 32px rgba(0,0,0,0.2); border: 2px solid var(--border-strong);
+    .slider-group input[type="range"] {
+      width: 90px;
+      cursor: pointer;
+    }
+
+    /* Paginación */
+    .page-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: bold;
+      background: #ffffff;
+      color: #111827;
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid #9ca3af;
+    }
+
+    .page-group button {
+      padding: 4px 8px;
+      font-size: 12px;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    /* Lista visible de PDFs creados */
+    .pdf-list-bar {
+      background: #d1d5db;
+      padding: 6px 14px;
+      border-bottom: 1px solid #9ca3af;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      overflow-x: auto;
+      min-height: 40px;
+    }
+
+    .pdf-list-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #1f2937;
+      white-space: nowrap;
+    }
+
+    .pdf-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: nowrap;
+    }
+
+    .pdf-chip {
+      background: #ffffff;
+      color: #111827;
+      border: 1px solid #9ca3af;
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .pdf-chip span.remove {
+      color: #dc2626;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* Área de Trabajo Gris */
+    .workspace {
+      flex: 1;
+      overflow: auto;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 20px;
+      background-color: #e5e7eb;
+    }
+
+    .canvas-wrapper {
+      position: relative;
+      background: #ffffff;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      border-radius: 4px;
+      min-width: 320px;
+      min-height: 220px;
+    }
+
+    #pdfCanvas {
+      display: block;
+    }
+
+    #drawCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      touch-action: none;
+      cursor: default;
+    }
+
+    .text-box-input {
+      position: absolute;
+      border: 2px dashed #111827;
+      background: rgba(255, 255, 255, 0.95);
+      color: #000000;
+      outline: none;
+      padding: 4px;
+      font-size: 18px;
       resize: both;
+      overflow: auto;
+      z-index: 20;
     }
-    .modal-field { display: flex; flex-direction: column; gap: 4px; }
-    .modal-label { font-size: 9.5pt; font-weight: 900; color: #334155; text-transform: uppercase; letter-spacing: 0.5px; }
-    .modal-box { background: #F8FAFC; border: 2px solid var(--border-subtle); padding: 12px 16px; border-radius: var(--radius-sm); font-size: 11.5pt; font-weight: 700; line-height: 1.5; white-space: pre-wrap; word-break: break-word; color: #000000; }
-    .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-    .bitacora-modal { max-width: 650px; width: 100%; max-height: 88vh; background: var(--surface); border-radius: var(--radius-md); padding: 22px; display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 1001; border: 2px solid var(--border-strong); resize: both; overflow: auto; }
-    .bitacora-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; scrollbar-width: thin; scrollbar-color: #64748B transparent; }
-    .bitacora-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-radius: var(--radius-sm); background: #FAFBFD; border: 2px solid var(--border-subtle); cursor: pointer; }
-    .bitacora-item:hover { background: #F1F5F9; border-color: #1E3A8A; }
-    
-    .badge-file { display: inline-flex; align-items: center; gap: 6px; background: #EFF6FF; border: 2px solid #93C5FD; color: #1D4ED8; padding: 6px 12px; border-radius: 6px; font-size: 10pt; font-weight: 800; text-decoration: none; }
-    .badge-file:hover { background: #DBEAFE; }
+    .badge {
+      background: #ffffff;
+      color: #000000;
+      border-radius: 10px;
+      padding: 1px 6px;
+      font-size: 11px;
+      font-weight: 800;
+      margin-left: 5px;
+      display: none;
+    }
   </style>
 </head>
 <body>
-  <header>
-    <div class="brand-block">
-      <div class="brand-title">Agenda Carlos Condell</div>
-      <div class="brand-meta">
-        <span>San Bernardo</span>
-        <span>•</span>
-        <span>RBD <span class="badge-rbd">25078</span></span>
-      </div>
+
+  <!-- Barra Superior -->
+  <div class="toolbar">
+    <!-- Formato -->
+    <div class="format-group">
+      <label><input type="checkbox" id="chkPdf" checked> PDF</label>
+      <label><input type="checkbox" id="chkJpg"> JPG</label>
+      <label><input type="checkbox" id="chkHd" checked> Mejora HD</label>
     </div>
 
-    <div class="time-module">
-      <span class="date-display-text" id="full-date-subtitle">Hoy</span>
-      <div class="flip-clock-container">
-        <div class="flip-card" id="fc-hour">00</div>
-        <div class="flip-colon">:</div>
-        <div class="flip-card" id="fc-minute">00</div>
-        <div class="flip-colon">:</div>
-        <div class="flip-card" id="fc-second">00</div>
-      </div>
+    <!-- Abrir PDFs (múltiples) -->
+    <label class="btn-action">
+      Abrir PDF
+      <input type="file" id="filePdfInput" accept="application/pdf" multiple>
+    </label>
+
+    <!-- Botón Guardar con selector de ruta -->
+    <button id="btnGuardar">Guardar</button>
+
+    <!-- Botón Excell (Copia Fiel a PDF Carta) -->
+    <button id="btnExcel" title="Transforma celdas copiadas de Excel a PDF Carta">📊 Excell</button>
+
+    <!-- Pegar Foxit -->
+    <button id="btnFoxit">Pegar Foxit</button>
+
+    <!-- Cuadro de Texto -->
+    <button id="btnTexto">Cuadro de texto</button>
+
+    <!-- Gomas -->
+    <button id="btnEraserRect">Goma rectangular</button>
+    <button id="btnEraserCircle">Goma redonda</button>
+
+    <!-- Capturas -->
+    <button id="btnLetter">Captura letter</button>
+    <button id="btnTira">Captura en tira <span class="badge" id="badgeTira">0</span></button>
+
+    <!-- Grosor -->
+    <div class="slider-group">
+      <span>Grosor:</span>
+      <input type="range" id="sizeRange" min="2" max="80" value="25">
+      <span id="sizeVal">25px</span>
     </div>
-  </header>
 
-  <div class="main-workspace">
-    <main id="plannerSection">
-      <div class="week-container" id="daysGrid"></div>
-    </main>
+    <!-- Unir PDFs creados -->
+    <button id="btnUnirCreados">Unir varios PDFs</button>
 
-    <aside class="sidebar-actions">
-      <span class="sidebar-section-title">Seguridad & Enlace</span>
-      <div id="modeBadge" class="mode-badge-side readonly" onclick="alternarModoEdicion()" title="Haz clic para alternar modo">🔒 Solo Lectura</div>
-      <a href="https://valdesgutierrezrodrigo-design.github.io/agenda/" target="_blank" class="btn-action-side" style="color:#1D4ED8 !important; border-color:#93C5FD !important; background:#EFF6FF !important;">
-        <span class="btn-icon-lg">🔗</span> Agenda TDAH
-      </a>
+    <!-- Paginación -->
+    <div class="page-group">
+      <button id="btnPrev">◀</button>
+      <span id="pageInfo">0 / 0</span>
+      <button id="btnNext">▶</button>
+    </div>
 
-      <hr class="sidebar-separator">
-
-      <span class="sidebar-section-title">Navegación Semanal</span>
-      <div class="sidebar-nav-dates">
-        <div class="date-label-side" id="dateLabel">Semana</div>
-        <div class="nav-arrow-group">
-          <button class="btn-action-side" id="btnPrev">◀ Ant</button>
-          <button class="btn-action-side" id="btnToday">Hoy</button>
-          <button class="btn-action-side" id="btnNext">Sig ▶</button>
-        </div>
-      </div>
-
-      <hr class="sidebar-separator">
-
-      <span class="sidebar-section-title">Gestión de Eventos</span>
-      <button class="btn-action-side btn-side-nuevo" id="btnNuevoManual" onclick="abrirModalNuevo()">
-        <span class="btn-icon-lg">＋</span> Nuevo Evento
-      </button>
-      <button class="btn-action-side btn-side-ia" id="btnIANav" onclick="abrirModalIA()">
-        <span class="btn-icon-lg">★</span> Asistente AIA
-      </button>
-      <button class="btn-action-side btn-side-sync" id="btnSync" onclick="sincronizarDesdeSheets()">
-        <span class="btn-icon-lg">🔄</span> Sincronizar
-      </button>
-
-      <hr class="sidebar-separator">
-
-      <span class="sidebar-section-title">Módulos & Herramientas</span>
-      <button class="btn-action-side btn-side-datos" id="btnDatosColegio" onclick="abrirModalDatos()">
-        <span class="btn-icon-lg">🏫</span> Datos
-      </button>
-      <button class="btn-action-side btn-side-tecnico" id="btnPanelTecnico" onclick="abrirModalPanelTecnico()">
-        <span class="btn-icon-lg">📊</span> Panel Técnico
-      </button>
-      <button class="btn-action-side" onclick="abrirModalBitacora()">
-        <span class="btn-icon-lg">📋</span> Bitácora General
-      </button>
-      <button class="btn-action-side" id="btnRespaldoNav" onclick="abrirModalRespaldo()">
-        <span class="btn-icon-lg">💾</span> Guardar Respaldo
-      </button>
-
-      <div style="margin-top:auto; padding-top:6px;">
-        <span class="sidebar-section-title">Buscar Compromiso</span>
-        <div class="search-wrapper-side">
-          <span class="search-icon-side">🔍</span>
-          <input type="text" id="globalSearchInput" class="search-input-side" placeholder="Buscar..." oninput="ejecutarBusqueda()" onfocus="ejecutarBusqueda()">
-          <div id="searchResults" class="search-results-side"></div>
-        </div>
-      </div>
-    </aside>
+    <!-- Salir -->
+    <button class="btn-salir" id="btnSalir">Salir</button>
   </div>
 
-  <!-- MODAL: DATOS INSTITUCIONALES -->
-  <div class="modal-overlay" id="modalDatosOverlay">
-    <div class="modal-assistant" style="height:auto; min-height:420px; width:540px;">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-weight:900; font-size:15pt; color:#1E3A8A;">🏫 Ficha de Datos Institucionales</span>
-        <button class="btn-action-side" style="width:auto; height:34px !important;" onclick="cerrarModalDatos()">✕</button>
-      </div>
-
-      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:6px;">
-        <div style="padding:10px 12px; background:#F8FAFC; border:1.5px solid var(--border-subtle); border-radius:8px;">
-          <span style="font-size:8pt; font-weight:800; color:#475569; text-transform:uppercase;">Establecimiento</span>
-          <div style="font-size:11pt; font-weight:900; color:#000000; margin-top:2px;">Escuela Particular Comandante Carlos Condell</div>
-        </div>
-        <div style="padding:10px 12px; background:#F8FAFC; border:1.5px solid var(--border-subtle); border-radius:8px;">
-          <span style="font-size:8pt; font-weight:800; color:#475569; text-transform:uppercase;">RBD Oficial</span>
-          <div style="font-size:12pt; font-weight:900; color:#1D4ED8; margin-top:2px;">25078</div>
-        </div>
-        <div style="padding:10px 12px; background:#F8FAFC; border:1.5px solid var(--border-subtle); border-radius:8px;">
-          <span style="font-size:8pt; font-weight:800; color:#475569; text-transform:uppercase;">Comuna</span>
-          <div style="font-size:11pt; font-weight:900; color:#000000; margin-top:2px;">San Bernardo</div>
-        </div>
-        <div style="padding:10px 12px; background:#F8FAFC; border:1.5px solid var(--border-subtle); border-radius:8px;">
-          <span style="font-size:8pt; font-weight:800; color:#475569; text-transform:uppercase;">Región</span>
-          <div style="font-size:11pt; font-weight:900; color:#000000; margin-top:2px;">Metropolitana de Santiago</div>
-        </div>
-      </div>
-
-      <div style="margin-top:6px;">
-        <label style="font-size:10.5pt; font-weight:900; color:#1E3A8A; display:block; margin-bottom:4px;">📝 Block de Notas Directivas / Contactos Clave:</label>
-        <textarea id="blockNotasColegio" rows="4" placeholder="Escribe aquí teléfonos de emergencia, directrices o notas clave del colegio..." style="width:100%; border:2px solid var(--border-strong); border-radius:8px; padding:10px; font-size:10.5pt; font-weight:600;" oninput="guardarNotasColegio()"></textarea>
-      </div>
-
-      <div style="display:flex; justify-content:flex-end;">
-        <button type="button" class="btn-action-side btn-side-nuevo" style="width:auto; justify-content:center;" onclick="cerrarModalDatos()">Cerrar</button>
-      </div>
+  <!-- Barra de PDFs Creados Visibles -->
+  <div class="pdf-list-bar">
+    <span class="pdf-list-title">PDFs creados listos para unir:</span>
+    <div class="pdf-tags" id="pdfTags">
+      <span id="emptyPdfMsg" style="font-size: 12px; color: #4b5563;">(No hay capturas aún. Cada captura generará un PDF en esta lista).</span>
     </div>
   </div>
 
-  <!-- Modal Panel Técnico -->
-  <div class="modal-overlay" id="modalPanelTecnicoOverlay">
-    <div class="modal-assistant" style="height:auto; min-height:340px; width:520px;">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-weight:900; font-size:15pt; color:#1E3A8A;">📊 Panel Técnico Pedagógico</span>
-        <button class="btn-action-side" style="width:auto; height:34px !important;" onclick="cerrarModalPanelTecnico()">✕</button>
-      </div>
-      <p style="font-size:11pt; color:var(--text-muted); line-height:1.4;">
-        Módulo modular para enlazar las bases de datos escolares de la Escuela Carlos Condell:
-      </p>
-
-      <div style="display:flex; flex-direction:column; gap:8px; margin:6px 0;">
-        <div style="padding:10px 14px; background:#F8FAFC; border:2px solid var(--border-subtle); border-radius:8px; font-weight:800; font-size:10.5pt; color:#0F172A;">
-          📅 Horarios de Clases & Jefaturas
-        </div>
-        <div style="padding:10px 14px; background:#F8FAFC; border:2px solid var(--border-subtle); border-radius:8px; font-weight:800; font-size:10.5pt; color:#0F172A;">
-          👥 Registro de Asistencia Diaria
-        </div>
-        <div style="padding:10px 14px; background:#F8FAFC; border:2px solid var(--border-subtle); border-radius:8px; font-weight:800; font-size:10.5pt; color:#0F172A;">
-          📖 Leccionarios y Cobertura Curricular
-        </div>
-      </div>
-
-      <div style="font-size:10pt; color:#0369A1; background:#E0F2FE; border:1.5px solid #BAE6FD; padding:8px 12px; border-radius:6px; font-weight:800;">
-        ℹ️ Listo para conectar con Google Sheets o la base de datos institucional en la siguiente fase.
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Respaldo -->
-  <div class="modal-overlay" id="modalRespaldoOverlay">
-    <div class="modal-assistant" style="height:auto; min-height:220px; width:480px;">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-weight:900; font-size:15pt; color:#1E3A8A;">💾 Respaldo Institucional</span>
-        <button class="btn-action-side" style="width:auto; height:34px !important;" onclick="cerrarModalRespaldo()">✕</button>
-      </div>
-      <p style="font-size:11pt; color:var(--text-muted);">Descarga una copia completa de la agenda laboral en formato seguro JSON.</p>
-      <button type="button" class="btn-action-side btn-side-ia" style="width:100%; justify-content:center; margin-top:8px; height:46px !important; font-size:11.5pt !important;" onclick="descargarRespaldoJSON()">⬇️ Descargar Copia (.json)</button>
-    </div>
-  </div>
-
-  <!-- Modal Bitácora -->
-  <div class="modal-overlay" id="modalBitacoraOverlay">
-    <div class="bitacora-modal">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <div>
-          <h3 style="font-size:15pt; font-weight:900; color:#1E3A8A;">📋 Bitácora Institucional Carlos Condell</h3>
-          <span id="bitacoraTotal" style="font-size:10pt; font-weight:800; color:var(--text-muted);">0 eventos</span>
-        </div>
-        <button class="btn-action-side" style="width:auto; height:34px !important;" onclick="cerrarModalBitacora()">✕</button>
-      </div>
-
-      <div style="display:flex; gap:8px;">
-        <button type="button" class="btn-action-side" style="flex:1; justify-content:center;" onclick="renderizarBitacora()">Todos los Compromisos</button>
-        <button type="button" class="btn-action-side" style="flex:1; justify-content:center; border-color:#FF003C !important; color:#FF003C !important; background:var(--prio-alta-bg) !important;" onclick="filtrarSoloDuplicados()">⚠️ Solo Duplicados</button>
-      </div>
-
-      <input type="text" id="bitacoraSearch" class="search-input-side" style="width:100%; height:40px;" placeholder="Filtrar por asunto..." oninput="renderizarBitacora()">
-      <div class="bitacora-list" id="bitacoraListContainer"></div>
-    </div>
-  </div>
-
-  <!-- Modal Detalle -->
-  <div class="modal-overlay" id="modalDetailOverlay">
-    <div class="modal-detail-card">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-        <div>
-          <span id="dtPrioBadge" class="badge-tag">-</span>
-          <span id="dtStateBadge" class="badge-tag" style="margin-left:4px; background:#E2E8F0;">-</span>
-          <h3 id="dtTitle" style="font-size:15pt; font-weight:900; margin-top:6px; color:#000000; line-height:1.25;">-</h3>
-        </div>
-        <button class="btn-action-side" style="width:auto; height:34px !important;" onclick="closeDetailModal()">✕</button>
-      </div>
-
-      <div class="grid-2col">
-        <div class="modal-field"><span class="modal-label">Organización / Convocante</span><div id="dtSender" class="modal-box">-</div></div>
-        <div class="modal-field"><span class="modal-label">Fecha y Hora</span><div id="dtDateTime" class="modal-box">-</div></div>
-      </div>
-
-      <div class="modal-field"><span class="modal-label">Síntesis</span><div id="dtDetail" class="modal-box">-</div></div>
-      <div class="modal-field"><span class="modal-label">Acción Requerida</span><div id="dtAccion" class="modal-box" style="border-left:5px solid #FFE600;">-</div></div>
-
-      <div class="modal-field" id="dtRespaldosContainer">
-        <span class="modal-label">Documentos y Evidencias Adjuntas</span>
-        <div id="dtRespaldosList" style="display:flex; gap:8px; flex-wrap:wrap; margin-top:4px;"></div>
-      </div>
-
-      <div id="detailActionFooter" style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; padding-top:10px; border-top:2px solid var(--border-subtle);">
-        <button class="btn-action-side" style="width:auto; color:#FF003C !important; border-color:#FF003C !important; background:#FEF2F2 !important;" onclick="eliminarEventoActual()">🗑️ Eliminar</button>
-        <button class="btn-action-side" style="width:auto; border-color:#1E3A8A !important; color:#1E3A8A !important; font-weight:900;" onclick="prepararEdicionActual()">✏️ Editar Evento</button>
-        <button class="btn-action-side btn-side-sync" style="width:auto;" id="btnToggleRealizado" onclick="toggleRealizadoActual()">✓ Realizado</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Nuevo / Editar Evento -->
-  <div class="modal-overlay" id="modalAssistantOverlay">
-    <div class="modal-assistant" id="modalNuevoEventoBox">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span id="modalTitleStr" style="font-weight:900; font-size:15pt; color:#1E3A8A;">Nuevo Evento Laboral</span>
-        <div style="display:flex; gap:8px;">
-          <button type="button" class="btn-action-side" style="width:auto; height:34px !important;" onclick="limpiarFormularioManual()">Limpiar</button>
-          <button class="btn-action-side" style="width:auto; height:34px !important;" onclick="closeModal()">✕</button>
-        </div>
-      </div>
-
-      <div>
-        <label>Asunto / Compromiso *</label>
-        <input type="text" id="fAsunto" placeholder="Ej: Simce, Reunión UTP, Consejo de Profesores..." oninput="verificarDuplicadoEnFormulario()">
-        <div id="avisoDuplicadoManual" class="aviso-duplicado">⚠️ Ya existe un evento similar agendado para esta fecha.</div>
-      </div>
-      <div>
-        <label>Hora del Evento (Obligatoria) *</label>
-        <input type="time" id="fHora" required style="border-color:#3B82F6;">
-      </div>
-      
-      <div class="grid-2col">
-        <div><label>Fecha Inicio *</label><input type="date" id="fFechaInicio" onchange="autoCompletarFechaFin(); verificarDuplicadoEnFormulario();"></div>
-        <div id="fFechaFinContainer"><label>Fecha Término</label><input type="date" id="fFechaFin"></div>
-      </div>
-
-      <div class="checkbox-container">
-        <input type="checkbox" id="fRepetirAnual">
-        <label for="fRepetirAnual" style="margin:0; font-size:11pt;">🔁 Repetir anualmente</label>
-      </div>
-
-      <div><label>Organizador / Convoca</label><input type="text" id="fOrganizador" placeholder="Ej: Dirección, Mineduc, UTP, SLEP"></div>
-      <div>
-        <label>Prioridad (Color Eléctrico)</label>
-        <div style="display:flex; gap:10px;">
-          <button type="button" class="btn-prio" id="prioAlta" onclick="selectPriority('Alta')">Alta (Rojo)</button>
-          <button type="button" class="btn-prio selected-media" id="prioMedia" onclick="selectPriority('Media')">Media (Amarillo)</button>
-          <button type="button" class="btn-prio" id="prioBaja" onclick="selectPriority('Baja')">Baja (Verde)</button>
-        </div>
-      </div>
-
-      <div><label>Síntesis</label><textarea id="fDetalle" rows="2" placeholder="Resumen clave..."></textarea></div>
-      <div><label>Acción Requerida</label><textarea id="fAccion" rows="2" placeholder="Ej: Notificar, Solicitar informe..."></textarea></div>
-      
-      <div>
-        <label>Adjuntar archivos de respaldo (PDF, Imágenes)</label>
-        <input type="file" id="fArchivos" multiple accept="image/*,application/pdf" onchange="procesarArchivosManuales(this)">
-        <div id="listaArchivosManuales" style="display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;"></div>
-      </div>
-
-      <button type="button" id="btnGuardarEvento" class="btn-action-side btn-side-nuevo" style="margin-top:10px; justify-content:center; height:46px !important; font-size:11.5pt !important;" onclick="guardarEventoManual()">GUARDAR EVENTO</button>
-    </div>
-  </div>
-
-  <!-- Modal IA -->
-  <div class="modal-overlay" id="modalIAOverlay">
-    <div class="modal-assistant" id="modalIABox" style="width:720px; min-width:520px; height:85vh;">
-      <div class="modal-draggable-header" id="dragHeaderIA">
-        <span style="font-weight:900; font-size:15pt; color:#1E3A8A;">★ Asistente Inteligente AIA (Arrastrar aquí ✢)</span>
-        <button type="button" class="btn-action-side" style="width:auto; height:34px !important;" onclick="cerrarModalIA()">✕</button>
-      </div>
-      <p style="font-size:11pt; color:var(--text-muted);">Sube o pega un documento institucional (PDF o captura). El análisis extrae fecha, hora y detalles automáticamente.</p>
-      
-      <input type="file" id="inputArchivoIA" accept="image/*,application/pdf" multiple style="display:none;" onchange="procesarArchivoSeleccionado(this)">
-      
-      <div style="display:flex; gap:10px; margin:8px 0;">
-        <button type="button" id="btnCargarIA" class="btn-action-side btn-side-ia" style="flex:1; justify-content:center; height:46px !important; font-size:11.5pt !important;">📁 Cargar Documento(s)</button>
-        <button type="button" id="btnPegarIA" class="btn-action-side btn-side-ia" style="flex:1; justify-content:center; height:46px !important; font-size:11.5pt !important;">📋 Pegar Captura (Ctrl+V)</button>
-      </div>
-
-      <div id="iaArchivoInfo" style="font-size:10pt; color:#1D4ED8; background:#EFF6FF; padding:8px 12px; border-radius:6px; display:none; border:2px solid #93C5FD;"></div>
-      <div id="iaEstado" style="font-size:11pt; color:#92400E; font-weight:bold; text-align:center; padding:10px; display:none; background:#FEF3C7; border-radius:6px; border:2px solid #FCD34D;">⚡ Analizando con Gemini 3.8 Flash...</div>
-      
-      <div id="iaContenedorResultados" style="display:none; flex:1; display:flex; flex-direction:column; min-height:0;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
-          <span style="font-size:11.5pt; font-weight:900; color:#1E3A8A;">Propuesta de Eventos Detectados:</span>
-          <span style="font-size:9.5pt; font-weight:700; color:var(--text-muted);">Cada evento debe tener hora asignada</span>
-        </div>
-        <div class="ia-results-list" id="iaListaEventos"></div>
-        <button type="button" id="btnAgendarTodoIA" class="btn-action-side btn-side-nuevo" style="width:100%; margin-top:10px; justify-content:center; height:46px !important; font-size:11.5pt !important;" onclick="guardarEventosDetectadosIA()">AGENDAR PROPUESTA Y SUBIR RESPALDO</button>
-      </div>
+  <!-- Área de Trabajo -->
+  <div class="workspace">
+    <div class="canvas-wrapper" id="canvasWrapper">
+      <canvas id="pdfCanvas"></canvas>
+      <canvas id="drawCanvas"></canvas>
     </div>
   </div>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbwjaCpLKeet-WXteRLicuov7oEaxuhRBHAvczJA_wS-9pFQa890_n7VAJm7fHHHwak/exec";
-    const GEMINI_API_KEY = "AQ.Ab8RN6LB-NIAelTRt0J4ebdrjfUDyA5BWDPD1N3taArdmJGeFA";
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-    const CLAVE_ADMIN = "25078";
-    let esModoAdmin = false;
+    // Elementos
+    const filePdfInput = document.getElementById('filePdfInput');
+    const btnGuardar = document.getElementById('btnGuardar');
+    const btnExcel = document.getElementById('btnExcel');
+    const btnFoxit = document.getElementById('btnFoxit');
+    const btnTexto = document.getElementById('btnTexto');
+    const btnEraserRect = document.getElementById('btnEraserRect');
+    const btnEraserCircle = document.getElementById('btnEraserCircle');
+    const btnLetter = document.getElementById('btnLetter');
+    const btnTira = document.getElementById('btnTira');
+    const badgeTira = document.getElementById('badgeTira');
+    const btnUnirCreados = document.getElementById('btnUnirCreados');
+    const btnSalir = document.getElementById('btnSalir');
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+    const pageInfo = document.getElementById('pageInfo');
+    const sizeRange = document.getElementById('sizeRange');
+    const sizeVal = document.getElementById('sizeVal');
+    const chkPdf = document.getElementById('chkPdf');
+    const chkJpg = document.getElementById('chkJpg');
+    const canvasWrapper = document.getElementById('canvasWrapper');
+    const pdfTags = document.getElementById('pdfTags');
+    const emptyPdfMsg = document.getElementById('emptyPdfMsg');
 
-    const holidaysChile = { 
-      "2026-01-01": "Año Nuevo", "2026-04-03": "Viernes Santo", "2026-05-01": "Día del Trabajador",
-      "2026-05-21": "Glorias Navales", "2026-06-21": "Pueblos Indígenas", "2026-06-29": "San Pedro y San Pablo",
-      "2026-07-16": "Virgen del Carmen", "2026-08-15": "Asunción", "2026-09-18": "Independencia",
-      "2026-09-19": "Glorias Ejército", "2026-10-12": "Encuentro Mundos", "2026-10-31": "Iglesias Evangélicas",
-      "2026-11-01": "Todos los Santos", "2026-12-08": "Inmaculada", "2026-12-25": "Navidad"
+    const pdfCanvas = document.getElementById('pdfCanvas');
+    const pdfCtx = pdfCanvas.getContext('2d');
+    const drawCanvas = document.getElementById('drawCanvas');
+    const drawCtx = drawCanvas.getContext('2d');
+
+    let pdfDoc = null;
+    let pageNum = 1;
+    let totalPages = 0;
+    const scale = 1.4;
+
+    let toolMode = 'none';
+    let isDrawing = false;
+    let startX = 0, startY = 0;
+    let lastX = 0, lastY = 0;
+    let tramosTira = [];
+    let pdfsCreados = [];
+
+    // Dimensiones estándar Carta a 300 DPI (alta fidelidad)
+    const LETTER_WIDTH = 2550;
+    const LETTER_HEIGHT = 3300;
+
+    function setTool(mode) {
+      toolMode = (toolMode === mode) ? 'none' : mode;
+
+      btnTexto.classList.toggle('active', toolMode === 'text');
+      btnEraserCircle.classList.toggle('active', toolMode === 'eraser-circle');
+      btnEraserRect.classList.toggle('active', toolMode === 'eraser-rect');
+      btnLetter.classList.toggle('active', toolMode === 'letter');
+
+      drawCanvas.style.cursor = (toolMode !== 'none') ? 'crosshair' : 'default';
+    }
+
+    btnTexto.onclick = () => setTool('text');
+    btnEraserCircle.onclick = () => setTool('eraser-circle');
+    btnEraserRect.onclick = () => setTool('eraser-rect');
+    btnLetter.onclick = () => setTool('letter');
+
+    sizeRange.oninput = (e) => { sizeVal.textContent = e.target.value + 'px'; };
+
+    // Cargar y Renderizar PDFs
+    filePdfInput.onchange = async (e) => {
+      const files = Array.from(e.target.files);
+      if (files.length === 0) return;
+
+      try {
+        let finalBytes;
+        if (files.length === 1) {
+          finalBytes = await files[0].arrayBuffer();
+        } else {
+          const mergedDoc = await PDFLib.PDFDocument.create();
+          for (const file of files) {
+            const bytes = await file.arrayBuffer();
+            const doc = await PDFLib.PDFDocument.load(bytes);
+            const copiedPages = await mergedDoc.copyPages(doc, doc.getPageIndices());
+            copiedPages.forEach(p => mergedDoc.addPage(p));
+          }
+          finalBytes = await mergedDoc.save();
+        }
+
+        const loadingTask = pdfjsLib.getDocument(new Uint8Array(finalBytes));
+        loadingTask.promise.then(pdf => {
+          pdfDoc = pdf;
+          totalPages = pdf.numPages;
+          pageNum = 1;
+          renderPage(pageNum);
+        });
+      } catch (err) {
+        alert("Error al cargar los PDFs: " + err.message);
+      }
     };
 
-    let tasks = [];
-    let eventosEliminados = [];
-    let eventosDetectadosIA = [];
-    let archivosRespaldoIA = []; 
-    let archivosManualesTemporales = []; 
-    let selectedPriority = "Media";
-    let currentEventId = null;
-    let isEditing = false;
-    let editEventId = null;
+    function renderPage(num) {
+      if (!pdfDoc) return;
+      pdfDoc.getPage(num).then(page => {
+        const viewport = page.getViewport({ scale: scale });
 
-    try {
-      const guardado = localStorage.getItem("agenda_carlos_condell_local") || localStorage.getItem("agenda_tdah_local");
-      if (guardado) {
-        const parsed = JSON.parse(guardado);
-        if (Array.isArray(parsed) && parsed.length > 0) tasks = parsed;
-      }
-      const eliminadosGuardados = localStorage.getItem("agenda_carlos_condell_eliminados");
-      if (eliminadosGuardados) {
-        eventosEliminados = JSON.parse(eliminadosGuardados);
-      }
-      const notasGuardadas = localStorage.getItem("agenda_carlos_condell_notas_colegio");
-      if (notasGuardadas) {
-        setTimeout(() => {
-          const area = document.getElementById("blockNotasColegio");
-          if (area) area.value = notasGuardadas;
-        }, 500);
-      }
-    } catch (e) {}
+        pdfCanvas.height = viewport.height;
+        pdfCanvas.width = viewport.width;
+        drawCanvas.height = viewport.height;
+        drawCanvas.width = viewport.width;
 
-    function guardarNotasColegio() {
-      const txt = document.getElementById("blockNotasColegio").value;
-      localStorage.setItem("agenda_carlos_condell_notas_colegio", txt);
-    }
+        pageInfo.textContent = `${num} / ${totalPages}`;
 
-    function abrirModalDatos() {
-      const notas = localStorage.getItem("agenda_carlos_condell_notas_colegio") || "";
-      const area = document.getElementById("blockNotasColegio");
-      if (area) area.value = notas;
-      document.getElementById("modalDatosOverlay").style.display = "flex";
-    }
-    function cerrarModalDatos() {
-      document.getElementById("modalDatosOverlay").style.display = "none";
-    }
-
-    function actualizarModoUI() {
-      const badge = document.getElementById("modeBadge");
-      const btnNuevo = document.getElementById("btnNuevoManual");
-      const btnAIA = document.getElementById("btnIANav");
-      const btnRespaldo = document.getElementById("btnRespaldoNav");
-      const footerActions = document.getElementById("detailActionFooter");
-
-      if (esModoAdmin) {
-        badge.textContent = "🔓 Modo Edición";
-        badge.className = "mode-badge-side admin";
-        badge.title = "Haz clic para volver a modo Solo Lectura";
-      } else {
-        badge.textContent = "🔒 Solo Lectura";
-        badge.className = "mode-badge-side readonly";
-        badge.title = "Haz clic para ingresar clave directiva y editar";
-      }
-      if (btnNuevo) btnNuevo.style.display = "inline-flex";
-      if (btnAIA) btnAIA.style.display = "inline-flex";
-      if (btnRespaldo) btnRespaldo.style.display = "inline-flex";
-      if (footerActions) footerActions.style.display = "flex";
-    }
-
-    function solicitarClaveAdminSiEsNecesario() {
-      if (esModoAdmin) return true;
-      const pass = prompt("Acción protegida. Ingresa la clave directiva para editar:");
-      if (pass === CLAVE_ADMIN) {
-        esModoAdmin = true;
-        actualizarModoUI();
-        alert("Modo edición habilitado exitosamente.");
-        return true;
-      } else if (pass !== null) {
-        alert("Clave incorrecta. Permaneces en modo Solo Lectura.");
-      }
-      return false;
-    }
-
-    function alternarModoEdicion() {
-      if (esModoAdmin) {
-        esModoAdmin = false;
-        actualizarModoUI();
-        alert("Modo Solo Lectura activado.");
-      } else {
-        solicitarClaveAdminSiEsNecesario();
-      }
-    }
-
-    function formatDateKey(d) {
-      return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, '0') + "-" + String(d.getDate()).padStart(2, '0');
-    }
-
-    function formatFechaCompleta(d) {
-      const diasSemana = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
-      const meses = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
-      return `${diasSemana[d.getDay()]}, ${d.getDate()} de ${meses[d.getMonth()]} de ${d.getFullYear()}`;
-    }
-
-    function parsearFecha(str) {
-      if (!str) return null;
-      if (str instanceof Date) return formatDateKey(str);
-      str = String(str).trim();
-
-      var mIso = str.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/);
-      if (mIso) return mIso[1] + "-" + mIso[2].padStart(2, '0') + "-" + mIso[3].padStart(2, '0');
-
-      var mSlash = str.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/);
-      if (mSlash) {
-        var anio = (parseInt(mSlash[3]) < 2026) ? "2026" : mSlash[3];
-        return anio + "-" + mSlash[2].padStart(2, '0') + "-" + mSlash[1].padStart(2, '0');
-      }
-
-      var meses = { ene:'01', feb:'02', mar:'03', abr:'04', may:'05', jun:'06', jul:'07', ago:'08', sep:'09', oct:'10', nov:'11', dic:'12', enero:'01', febrero:'02', marzo:'03', abril:'04', mayo:'05', junio:'06', julio:'07', agosto:'08', septiembre:'09', octubre:'10', noviembre:'11', diciembre:'12' };
-      var mTexto = str.match(/(\d{1,2})\s+de\s+([a-zA-Z]+)(?:\s+de)?\s+(\d{4})/i);
-      if (mTexto) {
-        var dia = mTexto[1].padStart(2, '0');
-        var mesNum = meses[mTexto[2].toLowerCase()] || meses[mTexto[2].toLowerCase().substring(0, 3)];
-        var anioT = (parseInt(mTexto[3]) < 2026) ? "2026" : mTexto[3];
-        if (mesNum) return anioT + "-" + mesNum + "-" + dia;
-      }
-      return null;
-    }
-
-    function extraerHora(textoCompleto) {
-      if (!textoCompleto) return { horaStr: "", minutos: 9999, tieneHora: false };
-      if (textoCompleto instanceof Date) {
-        var h = textoCompleto.getHours();
-        var m = textoCompleto.getMinutes();
-        if (h === 0 && m === 0) return { horaStr: "", minutos: 9999, tieneHora: false };
-        return { horaStr: String(h).padStart(2, '0') + ":" + String(m).padStart(2, '0'), minutos: h * 60 + m, tieneHora: true };
-      }
-      var str = String(textoCompleto);
-      var match = str.match(/\b([01]?\d|2[0-3]):([0-5]\d)\b/);
-      if (match) {
-        var hh = parseInt(match[1]);
-        var mm = parseInt(match[2]);
-        if (hh === 0 && mm === 0) return { horaStr: "", minutos: 9999, tieneHora: false };
-        return { horaStr: String(hh).padStart(2, '0') + ":" + String(mm).padStart(2, '0'), minutos: hh * 60 + mm, tieneHora: true };
-      }
-      return { horaStr: "", minutos: 9999, tieneHora: false };
-    }
-
-    function normalizarTexto(txt) {
-      return (txt || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
-    }
-
-    function verificarDuplicado(asunto, fecha, ignorarId = null) {
-      if (!asunto || !fecha) return null;
-      const asuntoNorm = normalizarTexto(asunto);
-      return tasks.find(t => {
-        if (ignorarId && t.id === ignorarId) return false;
-        if (t.date !== fecha) return false;
-        const subNorm = normalizarTexto(t.subject);
-        return subNorm === asuntoNorm || subNorm.includes(asuntoNorm) || asuntoNorm.includes(subNorm);
+        const renderContext = { canvasContext: pdfCtx, viewport: viewport };
+        page.render(renderContext);
       });
     }
 
-    function getMonday(d) {
-      const date = new Date(d);
-      const day = date.getDay();
-      const diff = date.getDate() - day + (day === 0 ? -6 : 1);
-      return new Date(date.setDate(diff));
-    }
+    btnPrev.onclick = () => { if (pdfDoc && pageNum > 1) { pageNum--; renderPage(pageNum); } };
+    btnNext.onclick = () => { if (pdfDoc && pageNum < totalPages) { pageNum++; renderPage(pageNum); } };
 
-    let currentMonday = getMonday(new Date());
-    const dayNames = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"];
-    const dayClassNames = ["day-lunes", "day-martes", "day-miercoles", "day-jueves", "day-viernes"];
-    const monthNames = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
-
-    function esEventoPersonal(row) {
-      const texto = `${row.asunto || row[4] || ''} ${row.remitente || row[5] || ''} ${row.sintesis || row[6] || ''}`.toLowerCase();
-      const palabrasPersonales = ["veterinario", "mascota", "ramon", "ramona", "jackson", "compra personal", "medico personal", "dentista", "casa", "familia"];
-      return palabrasPersonales.some(p => texto.includes(p));
-    }
-
-    async function sincronizarDesdeSheets() {
-      const btn = document.getElementById("btnSync");
-      if (btn) btn.innerHTML = "<span class='btn-icon-lg'>⏳</span> Sincronizando...";
+    // Pegar Imagen / Foxit
+    async function pegarPortapapeles() {
       try {
-        const res = await fetch(API_URL);
-        const data = await res.json();
-        const rawRows = Array.isArray(data) ? data : (data.datos || []);
-        
-        if (Array.isArray(rawRows) && rawRows.length > 0) {
-          const remoteTasks = [];
-          const vistos = new Set();
-
-          rawRows.forEach((row, idx) => {
-            if (esEventoPersonal(row)) return;
-
-            const filaNum = row.fila || (Array.isArray(row) ? row[0] : (idx + 1));
-            const asunto = String(row.asunto || (Array.isArray(row) ? row[4] : "(Sin asunto)")).trim();
-            const fDoc = row.fechaDoc || (Array.isArray(row) ? row[1] : null);
-            const fFinDoc = row.fechaTermino || (Array.isArray(row) ? row[9] : null);
-            const fValida = parsearFecha(fDoc);
-            if (!fValida) return;
-            const fFinValida = parsearFecha(fFinDoc) || fValida;
-
-            const claveUnica = `${fValida}_${normalizarTexto(asunto)}`;
-            
-            const yaFueEliminado = eventosEliminados.some(e => {
-              if (e.clave && e.clave === claveUnica) return true;
-              if (e.asunto && normalizarTexto(e.asunto) === normalizarTexto(asunto) && e.fecha === fValida) return true;
-              if (e.fila && String(e.fila) === String(filaNum)) return true;
-              return false;
-            });
-
-            if (yaFueEliminado) return;
-            if (vistos.has(claveUnica)) return;
-            vistos.add(claveUnica);
-
-            let horaParam = row.hora || (Array.isArray(row) ? row[10] : null);
-            let infoHora = extraerHora(horaParam);
-            if (!infoHora.tieneHora) infoHora = extraerHora(fDoc);
-            if (!infoHora.tieneHora) {
-              const infoExtra = `${asunto} ${row.sintesis || (Array.isArray(row) ? row[6] : '')}`;
-              infoHora = extraerHora(infoExtra);
-            }
-
-            const tieneHoraReal = infoHora.tieneHora;
-            const horaFinal = tieneHoraReal ? infoHora.horaStr : "";
-            const minutosFinales = tieneHoraReal ? infoHora.minutos : 9999;
-
-            const estado = String(row.estado || (Array.isArray(row) ? row[3] : "")).trim().toLowerCase();
-            const isManaged = (estado === "finalizado" || estado === "gestionado" || estado === "realizado");
-
-            let adjuntos = [];
-            const rawRespaldos = row.respaldos || (Array.isArray(row) ? row[8] : null);
-            if (rawRespaldos) {
-              try {
-                adjuntos = typeof rawRespaldos === "string" ? JSON.parse(rawRespaldos) : rawRespaldos;
-                if (!Array.isArray(adjuntos)) adjuntos = [adjuntos];
-              } catch (e) {
-                if (typeof rawRespaldos === "string" && rawRespaldos.includes(",")) {
-                  adjuntos = rawRespaldos.split(",").map((u, i) => ({ url: u.trim(), nombre: `Documento ${i+1}` }));
-                } else {
-                  adjuntos = [{ url: String(rawRespaldos).trim(), nombre: "Documento" }];
-                }
-              }
-            }
-
-            const grupoId = `remote_grp_${filaNum || idx}`;
-            const rangoFechas = obtenerFechasRango(fValida, fFinValida);
-            rangoFechas.forEach((diaRango, rIdx) => {
-              remoteTasks.push({
-                id: filaNum ? `remote_${filaNum}_${rIdx}` : `remote_idx_${idx + 1}_${rIdx}`,
-                groupId: grupoId,
-                fila: filaNum,
-                date: diaRango,
-                startDate: fValida,
-                endDate: fFinValida,
-                isAnnual: false,
-                time: horaFinal,
-                timeMinutos: minutosFinales,
-                tieneHora: tieneHoraReal,
-                subject: asunto,
-                sender: row.remitente || (Array.isArray(row) ? row[5] : "General"),
-                detail: row.sintesis || (Array.isArray(row) ? row[6] : ""),
-                accion: row.accionReq || (Array.isArray(row) ? row[7] : ""),
-                priority: row.prioridad || (Array.isArray(row) ? row[2] : "Media"),
-                category: "Laboral",
-                status: isManaged ? "managed" : "pending",
-                respaldos: adjuntos
-              });
-            });
-          });
-
-          const tareasLocalesNoSincronizadas = tasks.filter(t => 
-            String(t.id).startsWith("local_") && 
-            !eventosEliminados.some(e => e.clave === `${t.date}_${normalizarTexto(t.subject)}`)
-          );
-
-          tasks = [...remoteTasks, ...tareasLocalesNoSincronizadas];
-          localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
-          renderCalendar();
-        }
-      } catch (err) {
-        console.warn("Aviso sync:", err);
-      } finally {
-        if (btn) btn.innerHTML = "<span class='btn-icon-lg'>🔄</span> Sincronizar";
-        const sub = document.getElementById("full-date-subtitle");
-        if (lblSub) lblSub.textContent = formatFechaCompleta(new Date());
-      }
-    }
-
-    function selectPriority(prio) {
-      selectedPriority = prio;
-      document.getElementById('prioAlta').className = "btn-prio" + (prio === "Alta" ? " selected-alta" : "");
-      document.getElementById('prioMedia').className = "btn-prio" + (prio === "Media" ? " selected-media" : "");
-      document.getElementById('prioBaja').className = "btn-prio" + (prio === "Baja" ? " selected-baja" : "");
-    }
-
-    function renderCalendar() {
-      const grid = document.getElementById("daysGrid");
-      if (!grid) return;
-      grid.innerHTML = "";
-      const todayKey = formatDateKey(new Date());
-      const weekDates = [];
-      
-      for (let i = 0; i < 5; i++) {
-        const d = new Date(currentMonday);
-        d.setDate(currentMonday.getDate() + i);
-        weekDates.push(d);
-      }
-
-      const label = document.getElementById('dateLabel');
-      if (label) label.textContent = `${weekDates[0].getDate()} ${monthNames[weekDates[0].getMonth()]} - ${weekDates[4].getDate()} ${monthNames[weekDates[4].getMonth()]}`;
-
-      weekDates.forEach((d, idx) => {
-        const key = formatDateKey(d);
-        const hol = holidaysChile[key];
-        const isRed = Boolean(hol);
-        const isToday = (key === todayKey);
-
-        const col = document.createElement("div");
-        col.className = `day-column ${dayClassNames[idx]} ${isToday ? 'is-today' : ''}`;
-        let badgeHtml = hol ? `<div class="badge-tag">${hol}</div>` : '';
-        if (isToday) badgeHtml += `<div class="badge-tag badge-today">★ HOY</div>`;
-
-        col.innerHTML = `
-          <div class="day-header">
-            <div class="day-name ${isRed ? 'text-red' : ''}">${dayNames[idx]}</div>
-            <div class="day-number ${isRed ? 'text-red' : ''}">${d.getDate()} de ${monthNames[d.getMonth()]}</div>
-            ${badgeHtml}
-          </div>
-          <div class="cards-container" id="list-${key}"></div>
-        `;
-
-        const list = col.querySelector(`#list-${key}`);
-        const dayTasks = tasks.filter(t => t.date === key && (t.category || "Laboral").toLowerCase() === "laboral");
-        dayTasks.sort((a, b) => (a.timeMinutos || 0) - (b.timeMinutos || 0));
-
-        if (dayTasks.length === 0) {
-          list.innerHTML = '<span class="empty-text">Sin tareas agendadas</span>';
-        } else {
-          dayTasks.forEach(t => {
-            const card = document.createElement("div");
-            let prioClass = t.priority === "Alta" ? "prio-alta" : (t.priority === "Baja" ? "prio-baja" : "prio-media");
-            card.className = `task-card ${prioClass} ${t.status === "managed" ? 'is-done' : ''}`;
-            card.onclick = () => openDetail(t.id);
-            
-            let badgeHora = "";
-            if (t.time && t.time !== "00:00") {
-              badgeHora = `<span class="card-time">⏰ ${t.time}</span>`;
-            } else {
-              badgeHora = `<span class="card-time time-nodefined">📅 Por definir</span>`;
-            }
-
-            const badgeClip = (t.respaldos && t.respaldos.length > 0) ? `<span class="card-files-badge" title="${t.respaldos.length} documento(s) adjunto(s)">📎 ${t.respaldos.length}</span>` : '';
-
-            card.innerHTML = `
-              <div class="card-top">
-                <span class="card-title">${t.subject}</span>
-                <div class="card-badges">${badgeClip} ${badgeHora}</div>
-              </div>
-              <div class="card-sender">👤 ${t.sender || 'General'}</div>
-            `;
-            list.appendChild(card);
-          });
-        }
-        grid.appendChild(col);
-      });
-      actualizarModoUI();
-    }
-
-    function openDetail(id) {
-      currentEventId = id;
-      const t = tasks.find(x => x.id === id);
-      if (!t) return;
-
-      document.getElementById("dtTitle").textContent = t.subject;
-      document.getElementById("dtSender").textContent = t.sender || "General";
-      
-      const fIni = t.startDate || t.date;
-      const fFin = t.endDate || t.date;
-      const textoFecha = (fFin && fFin !== fIni) ? `${fIni} al ${fFin}` : t.date;
-      document.getElementById("dtDateTime").textContent = `${textoFecha} | ${t.time && t.time !== '00:00' ? t.time + ' hrs' : 'Horario por definir'}`;
-      document.getElementById("dtDetail").textContent = t.detail || "Sin síntesis.";
-      document.getElementById("dtAccion").textContent = t.accion || "Revisar y gestionar.";
-
-      document.getElementById("dtPrioBadge").textContent = `Prioridad: ${t.priority || 'Media'}`;
-      document.getElementById("dtStateBadge").textContent = (t.status === "managed") ? "ESTADO: REALIZADO" : "ESTADO: PENDIENTE";
-      document.getElementById("btnToggleRealizado").innerHTML = (t.status === "managed") ? "↩ Reabrir" : "✓ Realizado";
-
-      const rContainer = document.getElementById("dtRespaldosContainer");
-      const rList = document.getElementById("dtRespaldosList");
-      rList.innerHTML = "";
-      if (t.respaldos && t.respaldos.length > 0) {
-        t.respaldos.forEach(f => {
-          const enlace = document.createElement("a");
-          let hrefReal = f.url;
-          if (!hrefReal && f.base64) {
-            hrefReal = `data:${f.mimeType || 'application/octet-stream'};base64,${f.base64}`;
-          }
-          if (hrefReal && hrefReal.trim() !== "" && hrefReal !== "#") {
-            enlace.href = hrefReal;
-            enlace.target = "_blank";
-            enlace.rel = "noopener noreferrer";
-          } else {
-            enlace.href = "javascript:void(0);";
-            enlace.onclick = () => alert("El archivo está sincronizándose o no tiene enlace disponible.");
-          }
-          enlace.className = "badge-file";
-          enlace.textContent = `📎 ${f.nombre || 'Ver Documento'}`;
-          rList.appendChild(enlace);
-        });
-        rContainer.style.display = "flex";
-      } else {
-        rContainer.style.display = "none";
-      }
-
-      document.getElementById("modalDetailOverlay").style.display = "flex";
-      actualizarModoUI();
-    }
-
-    function closeDetailModal() { document.getElementById("modalDetailOverlay").style.display = "none"; }
-    function closeModal() { document.getElementById("modalAssistantOverlay").style.display = "none"; }
-
-    function limpiarFormularioManual() {
-      document.getElementById("fAsunto").value = "";
-      document.getElementById("fOrganizador").value = "";
-      document.getElementById("fHora").value = "";
-      document.getElementById("fDetalle").value = "";
-      document.getElementById("fAccion").value = "";
-      document.getElementById("fArchivos").value = "";
-      archivosManualesTemporales = [];
-      renderizarListaArchivosManuales();
-      document.getElementById("avisoDuplicadoManual").style.display = "none";
-      selectPriority("Media");
-    }
-
-    async function procesarArchivosManuales(input) {
-      if (!input.files || input.files.length === 0) return;
-      for (let i = 0; i < input.files.length; i++) {
-        const file = input.files[i];
-        const b64 = await optimizarYCodificarArchivo(file);
-        archivosManualesTemporales.push({
-          nombre: file.name,
-          mimeType: file.type || "application/octet-stream",
-          base64: b64,
-          url: ""
-        });
-      }
-      renderizarListaArchivosManuales();
-    }
-
-    function renderizarListaArchivosManuales() {
-      const container = document.getElementById("listaArchivosManuales");
-      container.innerHTML = "";
-      archivosManualesTemporales.forEach((arch, idx) => {
-        const tag = document.createElement("span");
-        tag.className = "badge-file";
-        tag.innerHTML = `${arch.nombre} <b style="cursor:pointer; margin-left:6px; color:#FF003C;" onclick="quitarArchivoManual(${idx})">✕</b>`;
-        container.appendChild(tag);
-      });
-    }
-
-    function quitarArchivoManual(idx) {
-      archivosManualesTemporales.splice(idx, 1);
-      renderizarListaArchivosManuales();
-    }
-
-    function abrirModalNuevo() {
-      if (!solicitarClaveAdminSiEsNecesario()) return;
-      isEditing = false;
-      editEventId = null;
-      document.getElementById("modalTitleStr").textContent = "Nuevo Evento Laboral";
-      document.getElementById("btnGuardarEvento").textContent = "GUARDAR EVENTO";
-      limpiarFormularioManual();
-      const hoyKey = formatDateKey(new Date());
-      document.getElementById("fFechaInicio").value = hoyKey;
-      document.getElementById("fFechaFin").value = hoyKey;
-      document.getElementById("modalAssistantOverlay").style.display = "flex";
-    }
-
-    function autoCompletarFechaFin() {
-      const fIni = document.getElementById("fFechaInicio").value;
-      const fFin = document.getElementById("fFechaFin");
-      if (fIni && (!fFin.value || fFin.value < fIni)) {
-        fFin.value = fIni;
-      }
-    }
-
-    function verificarDuplicadoEnFormulario() {
-      const asunto = normalizarTexto(document.getElementById("fAsunto").value);
-      const fecha = document.getElementById("fFechaInicio").value;
-      const aviso = document.getElementById("avisoDuplicadoManual");
-      if (!asunto || !fecha) {
-        aviso.style.display = "none";
-        return;
-      }
-      const existe = tasks.some(t => t.date === fecha && normalizarTexto(t.subject) === asunto && t.id !== editEventId);
-      aviso.style.display = existe ? "block" : "none";
-    }
-
-    function obtenerFechasRango(fechaInicioStr, fechaFinStr) {
-      const lista = [];
-      if (!fechaInicioStr) return lista;
-      if (!fechaFinStr || fechaFinStr < fechaInicioStr) {
-        lista.push(fechaInicioStr);
-        return lista;
-      }
-      let curr = new Date(fechaInicioStr + "T00:00:00");
-      const fin = new Date(fechaFinStr + "T00:00:00");
-      while (curr <= fin) {
-        lista.push(formatDateKey(curr));
-        curr.setDate(curr.getDate() + 1);
-      }
-      return lista;
-    }
-
-    async function guardarEventoManual() {
-      const asunto = document.getElementById("fAsunto").value.trim();
-      const fInicio = document.getElementById("fFechaInicio").value;
-      let fTermino = document.getElementById("fFechaFin").value;
-      const hora = document.getElementById("fHora").value;
-
-      if (!asunto) {
-        alert("Por favor ingresa el Asunto del evento.");
-        document.getElementById("fAsunto").focus();
-        return;
-      }
-      if (!fInicio) {
-        alert("Por favor selecciona la Fecha de inicio.");
-        document.getElementById("fFechaInicio").focus();
-        return;
-      }
-      if (!fTermino || fTermino < fInicio) {
-        fTermino = fInicio;
-      }
-      if (!hora) {
-        alert("⏰ LA HORA ES OBLIGATORIA: Por favor indica a qué hora se realiza el evento.");
-        document.getElementById("fHora").focus();
-        return;
-      }
-
-      const partes = hora.split(":");
-      const min = parseInt(partes[0]) * 60 + parseInt(partes[1]);
-
-      const btnGuardar = document.getElementById("btnGuardarEvento");
-      btnGuardar.disabled = true;
-      btnGuardar.textContent = "⏳ Guardando...";
-
-      let adjuntosFinales = [...archivosManualesTemporales];
-      const diasDelRango = obtenerFechasRango(fInicio, fTermino);
-
-      if (isEditing && editEventId) {
-        const itemOriginal = tasks.find(t => t.id === editEventId);
-        const grupoExistente = itemOriginal?.groupId || null;
-        const filaAsociada = itemOriginal?.fila || "";
-        const remitenteOriginal = itemOriginal?.sender || "General";
-        const subjectOriginal = itemOriginal?.subject || "";
-
-        // Remover todas las instancias previas del mismo grupo o evento
-        tasks = tasks.filter(t => {
-          if (grupoExistente && t.groupId === grupoExistente) return false;
-          if (itemOriginal && t.subject === subjectOriginal && t.startDate === itemOriginal.startDate) return false;
-          return t.id !== editEventId;
-        });
-
-        // Regenerar evento en TODOS los días del rango nuevo
-        const nuevoGroupId = grupoExistente || ("grp_" + Date.now());
-        diasDelRango.forEach((dia, i) => {
-          tasks.push({
-            id: `edit_${Date.now()}_${i}`,
-            groupId: nuevoGroupId,
-            fila: filaAsociada,
-            date: dia,
-            startDate: fInicio,
-            endDate: fTermino,
-            time: hora,
-            tieneHora: true,
-            timeMinutos: min,
-            subject: asunto,
-            sender: document.getElementById("fOrganizador").value.trim() || remitenteOriginal,
-            detail: document.getElementById("fDetalle").value.trim(),
-            accion: document.getElementById("fAccion").value.trim(),
-            priority: selectedPriority,
-            category: "Laboral",
-            status: itemOriginal ? itemOriginal.status : "pending",
-            respaldos: adjuntosFinales
-          });
-        });
-
-      } else {
-        const baseId = Date.now();
-        const nuevoGroupId = "grp_" + baseId;
-        diasDelRango.forEach((dia, i) => {
-          tasks.push({
-            id: "local_" + (baseId + i),
-            groupId: nuevoGroupId,
-            date: dia,
-            startDate: fInicio,
-            endDate: fTermino,
-            time: hora,
-            tieneHora: true,
-            timeMinutos: min,
-            subject: asunto,
-            sender: document.getElementById("fOrganizador").value.trim() || "General",
-            detail: document.getElementById("fDetalle").value.trim(),
-            accion: document.getElementById("fAccion").value.trim(),
-            priority: selectedPriority,
-            category: "Laboral",
-            status: "pending",
-            respaldos: adjuntosFinales
-          });
-        });
-      }
-
-      localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
-      closeModal();
-      renderCalendar();
-
-      try {
-        const payload = {
-          accion: isEditing ? "editar_evento" : "crear_evento",
-          fila: isEditing ? (tasks.find(t => t.id === editEventId)?.fila || "") : "",
-          fechaDoc: fInicio,
-          fechaTermino: fTermino,
-          hora: hora,
-          asunto: asunto,
-          remitente: document.getElementById("fOrganizador").value.trim() || "General",
-          prioridad: selectedPriority,
-          sintesis: document.getElementById("fDetalle").value.trim(),
-          accionReq: document.getElementById("fAccion").value.trim(),
-          archivos: adjuntosFinales,
-          anual: document.getElementById("fRepetirAnual").checked ? "Si" : "No"
-        };
-
-        const res = await fetch(API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify(payload)
-        });
-        const resJson = await res.json();
-        
-        if (resJson && resJson.urls && Array.isArray(resJson.urls)) {
-          tasks.forEach(t => {
-            if (t.subject === asunto && t.respaldos) {
-              t.respaldos.forEach((r, i) => {
-                if (resJson.urls[i]) r.url = resJson.urls[i];
-              });
-            }
-          });
-          localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
-          renderCalendar();
-        }
-      } catch (err) {
-        console.warn("Aviso guardado remoto:", err);
-      } finally {
-        btnGuardar.disabled = false;
-        btnGuardar.textContent = isEditing ? "ACTUALIZAR EVENTO" : "GUARDAR EVENTO";
-      }
-    }
-
-    function prepararEdicionActual() {
-      if (!solicitarClaveAdminSiEsNecesario()) return;
-      if (!currentEventId) return;
-      const t = tasks.find(x => x.id === currentEventId);
-      if (!t) return;
-
-      isEditing = true;
-      editEventId = t.id;
-      document.getElementById("modalTitleStr").textContent = "Editar Evento";
-      document.getElementById("btnGuardarEvento").textContent = "ACTUALIZAR EVENTO";
-
-      document.getElementById("fAsunto").value = t.subject || "";
-      document.getElementById("fFechaInicio").value = t.startDate || t.date || "";
-      document.getElementById("fFechaFin").value = t.endDate || t.date || "";
-      document.getElementById("fHora").value = (t.time && t.time !== "00:00") ? t.time : "";
-      document.getElementById("fOrganizador").value = t.sender || "";
-      document.getElementById("fDetalle").value = t.detail || "";
-      document.getElementById("fAccion").value = t.accion || "";
-
-      archivosManualesTemporales = t.respaldos ? [...t.respaldos] : [];
-      renderizarListaArchivosManuales();
-      selectPriority(t.priority || "Media");
-
-      closeDetailModal();
-      document.getElementById("modalAssistantOverlay").style.display = "flex";
-    }
-
-    async function eliminarEventoActual() {
-      if (!solicitarClaveAdminSiEsNecesario()) return;
-      if (!currentEventId) return;
-      
-      const t = tasks.find(x => x.id === currentEventId);
-      if (!t) return;
-
-      if (!confirm(`¿Eliminar definitivamente "${t.subject}"? Se quitará de todos los días asociados.`)) {
-        return;
-      }
-
-      const idEliminado = currentEventId;
-      const filaRemota = t.fila || "";
-      const claveUnica = `${t.date}_${normalizarTexto(t.subject)}`;
-      const grupoId = t.groupId || null;
-      const subjectEliminado = t.subject;
-      const startDateEliminado = t.startDate || t.date;
-
-      eventosEliminados.push({ 
-        clave: claveUnica, 
-        fila: filaRemota, 
-        fecha: t.date, 
-        asunto: t.subject 
-      });
-      localStorage.setItem("agenda_carlos_condell_eliminados", JSON.stringify(eventosEliminados));
-
-      // Eliminar todas las tarjetas del rango
-      tasks = tasks.filter(x => {
-        if (grupoId && x.groupId === grupoId) return false;
-        if (x.subject === subjectEliminado && (x.startDate || x.date) === startDateEliminado) return false;
-        return x.id !== idEliminado;
-      });
-      localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
-      
-      currentEventId = null;
-      closeDetailModal();
-      renderCalendar();
-
-      try {
-        await fetch(API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({
-            accion: "eliminar_evento",
-            fila: filaRemota,
-            fechaDoc: t.date,
-            asunto: t.subject
-          })
-        });
-      } catch (err) {
-        console.warn("Aviso al eliminar en Sheets:", err);
-      }
-    }
-
-    function toggleRealizadoActual() {
-      if (!solicitarClaveAdminSiEsNecesario()) return;
-      if (!currentEventId) return;
-      const t = tasks.find(x => x.id === currentEventId);
-      if (!t) return;
-
-      const nuevoEstado = (t.status === "managed") ? "pending" : "managed";
-      const grupoId = t.groupId;
-      const sub = t.subject;
-
-      // Actualizar estado en todos los días del evento
-      tasks.forEach(item => {
-        if ((grupoId && item.groupId === grupoId) || (item.subject === sub && item.startDate === t.startDate)) {
-          item.status = nuevoEstado;
-        }
-      });
-
-      localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
-      openDetail(currentEventId);
-      renderCalendar();
-    }
-
-    function ejecutarBusqueda() {
-      const q = normalizarTexto(document.getElementById("globalSearchInput").value);
-      const box = document.getElementById("searchResults");
-      if (!q) {
-        box.style.display = "none";
-        box.innerHTML = "";
-        return;
-      }
-      const matches = tasks.filter(t => (t.category || "Laboral").toLowerCase() === "laboral" && (normalizarTexto(t.subject).includes(q) || normalizarTexto(t.detail).includes(q) || normalizarTexto(t.sender).includes(q)));
-      if (matches.length === 0) {
-        box.innerHTML = '<div style="padding:10px; font-size:10pt; color:#94A3B8; font-weight:700;">Sin coincidencias</div>';
-      } else {
-        box.innerHTML = matches.map(m => `
-          <div class="search-item" onclick="openDetail('${m.id}'); document.getElementById('searchResults').style.display='none';">
-            <span style="font-weight:900; font-size:10pt; color:#000000;">${m.subject}</span>
-            <span style="font-size:9pt; color:var(--text-muted); font-weight:700;">${m.date} | ${m.time ? m.time + ' hrs' : 'Por definir'} • ${m.sender || 'General'}</span>
-          </div>
-        `).join("");
-      }
-      box.style.display = "block";
-    }
-
-    document.addEventListener("click", (e) => {
-      const wrap = document.querySelector(".search-wrapper-side");
-      if (wrap && !wrap.contains(e.target)) {
-        const box = document.getElementById("searchResults");
-        if (box) box.style.display = "none";
-      }
-    });
-
-    function abrirModalPanelTecnico() {
-      document.getElementById("modalPanelTecnicoOverlay").style.display = "flex";
-    }
-    function cerrarModalPanelTecnico() {
-      document.getElementById("modalPanelTecnicoOverlay").style.display = "none";
-    }
-
-    function abrirModalBitacora() {
-      renderizarBitacora();
-      document.getElementById("modalBitacoraOverlay").style.display = "flex";
-    }
-    function cerrarModalBitacora() { document.getElementById("modalBitacoraOverlay").style.display = "none"; }
-
-    function renderizarBitacora(filtrarDuplicados = false) {
-      const container = document.getElementById("bitacoraListContainer");
-      const q = normalizarTexto(document.getElementById("bitacoraSearch").value);
-      let list = tasks.filter(t => (t.category || "Laboral").toLowerCase() === "laboral");
-
-      if (q) list = list.filter(t => normalizarTexto(t.subject).includes(q));
-
-      if (filtrarDuplicados) {
-        const conteo = {};
-        tasks.forEach(t => {
-          const k = `${t.date}_${normalizarTexto(t.subject)}`;
-          conteo[k] = (conteo[k] || 0) + 1;
-        });
-        list = list.filter(t => conteo[`${t.date}_${normalizarTexto(t.subject)}`] > 1);
-      }
-
-      list.sort((a, b) => (a.date > b.date ? 1 : (a.date < b.date ? -1 : (a.timeMinutos || 0) - (b.timeMinutos || 0))));
-
-      document.getElementById("bitacoraTotal").textContent = `${list.length} evento(s)`;
-
-      if (list.length === 0) {
-        container.innerHTML = '<span style="font-size:10.5pt; color:#94A3B8; text-align:center; padding:12px; font-weight:800;">Sin registros institucionales.</span>';
-        return;
-      }
-
-      container.innerHTML = list.map(t => `
-        <div class="bitacora-item" onclick="cerrarModalBitacora(); openDetail('${t.id}')">
-          <div>
-            <div style="font-weight:900; font-size:11pt; color:#000000;">${t.subject}</div>
-            <div style="font-size:9pt; color:var(--text-muted); font-weight:700;">${t.date} | ${t.time ? t.time + ' hrs' : 'Por definir'} • ${t.sender || 'General'}</div>
-          </div>
-          <span style="font-size:11pt;">${t.status === 'managed' ? '✅' : '⏳'}</span>
-        </div>
-      `).join("");
-    }
-    function filtrarSoloDuplicados() { renderizarBitacora(true); }
-
-    function abrirModalRespaldo() { document.getElementById("modalRespaldoOverlay").style.display = "flex"; }
-    function cerrarModalRespaldo() { document.getElementById("modalRespaldoOverlay").style.display = "none"; }
-
-    function descargarRespaldoJSON() {
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(tasks, null, 2));
-      const dlAnchor = document.createElement('a');
-      dlAnchor.setAttribute("href", dataStr);
-      dlAnchor.setAttribute("download", `respaldo_agenda_carlos_condell_${formatDateKey(new Date())}.json`);
-      dlAnchor.click();
-      dlAnchor.remove();
-    }
-
-    // --- ASISTENTE AIA CON GEMINI FLASH ---
-    function abrirModalIA() { 
-      if (!solicitarClaveAdminSiEsNecesario()) return;
-      document.getElementById("iaContenedorResultados").style.display = "none";
-      document.getElementById("iaEstado").style.display = "none";
-      document.getElementById("iaArchivoInfo").style.display = "none";
-      document.getElementById("iaListaEventos").innerHTML = "";
-      eventosDetectadosIA = [];
-      archivosRespaldoIA = [];
-      
-      const modalBox = document.getElementById("modalIABox");
-      modalBox.style.top = "0px";
-      modalBox.style.left = "0px";
-      
-      document.getElementById("modalIAOverlay").style.display = "flex"; 
-    }
-
-    function cerrarModalIA() { 
-      document.getElementById("modalIAOverlay").style.display = "none"; 
-    }
-
-    (function hacerModalArrastrable() {
-      const header = document.getElementById("dragHeaderIA");
-      const box = document.getElementById("modalIABox");
-      if (!header || !box) return;
-
-      let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-      header.onmousedown = dragMouseDown;
-
-      function dragMouseDown(e) {
-        e.preventDefault();
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        document.onmouseup = closeDragElement;
-        document.onmousemove = elementDrag;
-      }
-
-      function elementDrag(e) {
-        e.preventDefault();
-        pos1 = pos3 - e.clientX;
-        pos2 = pos4 - e.clientY;
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        box.style.position = "relative";
-        box.style.top = (box.offsetTop - pos2) + "px";
-        box.style.left = (box.offsetLeft - pos1) + "px";
-      }
-
-      function closeDragElement() {
-        document.onmouseup = null;
-        document.onmousemove = null;
-      }
-    })();
-
-    function optimizarYCodificarArchivo(file) {
-      return new Promise((resolve, reject) => {
-        if (!file.type.startsWith("image/")) {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result.substring(reader.result.indexOf(',') + 1));
-          reader.onerror = reject;
-          reader.readAsDataURL(file);
-          return;
-        }
-
-        const img = new Image();
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          img.src = e.target.result;
-          img.onload = () => {
-            const canvas = document.createElement("canvas");
-            let width = img.width;
-            let height = img.height;
-            const maxDimension = 1400;
-
-            if (width > maxDimension || height > maxDimension) {
-              if (width > height) {
-                height = Math.round((height * maxDimension) / width);
-                width = maxDimension;
-              } else {
-                width = Math.round((width * maxDimension) / height);
-                height = maxDimension;
-              }
-            }
-
-            canvas.width = width;
-            canvas.height = height;
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(img, 0, 0, width, height);
-
-            const dataUrl = canvas.toDataURL("image/jpeg", 0.82);
-            resolve(dataUrl.substring(dataUrl.indexOf(',') + 1));
-          };
-          img.onerror = reject;
-        };
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-    }
-
-    const btnCargar = document.getElementById("btnCargarIA");
-    if (btnCargar) {
-      btnCargar.onclick = () => {
-        const inp = document.getElementById("inputArchivoIA");
-        if (inp) { inp.value = ""; inp.click(); }
-      };
-    }
-
-    const btnPegar = document.getElementById("btnPegarIA");
-    if (btnPegar) {
-      btnPegar.onclick = async () => {
-        try {
-          if (!navigator.clipboard || !navigator.clipboard.read) {
-            alert("Presiona Ctrl + V directamente para pegar capturas.");
+        const items = await navigator.clipboard.read();
+        for (const item of items) {
+          const imgType = item.types.find(t => t.startsWith('image/'));
+          if (imgType) {
+            const blob = await item.getType(imgType);
+            cargarImagenEnHoja(blob);
             return;
           }
+        }
+        alert("Portapapeles de imagen vacío. Copia una imagen o instantánea primero.");
+      } catch (err) {
+        alert("Para pegar, haz clic sobre la ventana y presiona Ctrl + V.");
+      }
+    }
+    btnFoxit.onclick = pegarPortapapeles;
+
+    // ACCIÓN BOTÓN EXCELL: Lee el portapapeles y procesa
+    btnExcel.onclick = async () => {
+      try {
+        let htmlData = "";
+        let textData = "";
+
+        if (navigator.clipboard && navigator.clipboard.read) {
           const items = await navigator.clipboard.read();
           for (const item of items) {
-            const imgType = item.types.find(t => t.startsWith("image/"));
-            if (imgType) {
-              const blob = await item.getType(imgType);
-              ejecutarLlamadaGeminiIA([blob], [imgType], ["Captura_Pegada.jpg"]);
-              return;
+            if (item.types.includes('text/html')) {
+              const blob = await item.getType('text/html');
+              htmlData = await blob.text();
+            }
+            if (item.types.includes('text/plain')) {
+              const blob = await item.getType('text/plain');
+              textData = await blob.text();
             }
           }
-          alert("No se encontró imagen en el portapapeles. Copia con Windows + Shift + S y vuelve a intentar.");
-        } catch (err) {
-          alert("Presiona Ctrl + V sobre esta ventana para pegar la captura.");
+        } else if (navigator.clipboard && navigator.clipboard.readText) {
+          textData = await navigator.clipboard.readText();
         }
-      };
-    }
 
-    window.addEventListener("paste", (e) => {
-      const modalIA = document.getElementById("modalIAOverlay");
-      if (modalIA && modalIA.style.display === "flex") {
-        const items = (e.clipboardData || e.originalEvent.clipboardData).items;
-        for (let i = 0; i < items.length; i++) {
-          if (items[i].type.indexOf("image") !== -1) {
-            const blob = items[i].getAsFile();
-            ejecutarLlamadaGeminiIA([blob], ["image/jpeg"], ["Captura_Pegada.jpg"]);
-            break;
-          }
+        if (!htmlData && !textData) {
+          alert("El portapapeles está vacío. Selecciona las celdas en Excel, presiona Ctrl+C y luego haz clic en 'Excell'.");
+          return;
+        }
+
+        await procesarPegadoExcel(htmlData, textData);
+      } catch (err) {
+        alert("No se pudo acceder al portapapeles directamente. Presiona Ctrl + V sobre la pantalla para convertir las celdas de Excel.");
+      }
+    };
+
+    // EVENTO PASTE (Ctrl + V): Detecta celdas de Excel o Imágenes
+    window.addEventListener('paste', async (e) => {
+      const htmlData = e.clipboardData.getData('text/html');
+      const textData = e.clipboardData.getData('text/plain');
+
+      const esExcel = (htmlData && (htmlData.includes('urn:schemas-microsoft-com:office:excel') || htmlData.includes('<table'))) ||
+                      (textData && textData.includes('\t'));
+
+      if (esExcel) {
+        e.preventDefault();
+        await procesarPegadoExcel(htmlData, textData);
+        return;
+      }
+
+      const items = e.clipboardData.items;
+      for (const item of items) {
+        if (item.type.indexOf('image') !== -1) {
+          cargarImagenEnHoja(item.getAsFile());
+          return;
         }
       }
     });
 
-    async function procesarArchivoSeleccionado(input) {
-      if (input.files && input.files.length > 0) {
-        const blobs = [];
-        const tipos = [];
-        const nombres = [];
-        for (let i = 0; i < input.files.length; i++) {
-          blobs.push(input.files[i]);
-          tipos.push(input.files[i].type || "application/pdf");
-          nombres.push(input.files[i].name);
-        }
-        ejecutarLlamadaGeminiIA(blobs, tipos, nombres);
-      }
-    }
+    // COPIA FIEL: Transforma celdas de Excel a PDF Carta Alta Calidad
+    async function procesarPegadoExcel(html, texto) {
+      let matrizCeldas = [];
 
-    async function ejecutarLlamadaGeminiIA(blobs, mimeTypes, nombresArchivos) {
-      const elEstado = document.getElementById("iaEstado");
-      const elInfo = document.getElementById("iaArchivoInfo");
-      elEstado.style.display = "block";
-      elEstado.textContent = "⚡ Analizando con Gemini 3.8 Flash...";
-      document.getElementById("iaContenedorResultados").style.display = "none";
+      // 1. Extracción con estilos y estructura HTML si viene desde Excel
+      if (html && html.includes('<table')) {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const trs = doc.querySelectorAll('tr');
 
-      try {
-        archivosRespaldoIA = [];
-        const inlineParts = [];
+        trs.forEach(tr => {
+          const celdasFila = [];
+          const tds = tr.querySelectorAll('td, th');
+          tds.forEach(td => {
+            const bg = td.style.backgroundColor || td.getAttribute('bgcolor') || '';
+            const fg = td.style.color || '#111827';
+            const weight = td.style.fontWeight || (td.tagName.toLowerCase() === 'th' ? 'bold' : 'normal');
+            const align = td.style.textAlign || td.getAttribute('align') || 'left';
 
-        for (let i = 0; i < blobs.length; i++) {
-          const base64Data = await optimizarYCodificarArchivo(blobs[i]);
-          const esPdf = mimeTypes[i] && mimeTypes[i].includes("pdf");
-          const tipoReal = esPdf ? "application/pdf" : "image/jpeg";
-          archivosRespaldoIA.push({
-            nombre: nombresArchivos[i],
-            mimeType: tipoReal,
-            base64: base64Data,
-            url: ""
+            celdasFila.push({
+              texto: td.innerText.trim(),
+              bg: bg,
+              fg: fg,
+              bold: weight === 'bold' || parseInt(weight, 10) >= 700,
+              align: align
+            });
           });
-          inlineParts.push({ inlineData: { mimeType: tipoReal, data: base64Data } });
-        }
-
-        elInfo.textContent = `📎 Documento cargado: ${nombresArchivos.join(", ")}`;
-        elInfo.style.display = "block";
-
-        const promptInstruccion = 
-          "Eres el asistente directivo de la Escuela Comandante Carlos Condell. Analiza este documento o captura.\n" +
-          "Extrae todos los eventos, plazos, reuniones y evaluaciones (Simce, DIA, UTP, Consejo, etc.).\n" +
-          "Formatea la fecha OBLIGATORIAMENTE en formato YYYY-MM-DD usando siempre el año 2026 (por ejemplo: 2026-10-28 o 2026-11-04).\n" +
-          "Es obligatorio asignar una hora válida (en formato HH:MM, por ejemplo 09:00 o la indicada).\n" +
-          "Devuelve ÚNICAMENTE un arreglo JSON con este formato exacto, sin bloques markdown ``` ni texto adicional:\n" +
-          "[\n" +
-          "  {\n" +
-          "    \"asunto\": \"Nombre del evento o plazo\",\n" +
-          "    \"organizador\": \"Entidad que convoca\",\n" +
-          "    \"fecha\": \"2026-MM-DD\",\n" +
-          "    \"hora\": \"09:00\",\n" +
-          "    \"prioridad\": \"Alta\",\n" +
-          "    \"sintesis\": \"Resumen conciso\",\n" +
-          "    \"accion\": \"Acción a realizar\"\n" +
-          "  }\n" +
-          "]";
-
-        const partesContenido = [{ text: promptInstruccion }, ...inlineParts];
-
-        const res = await fetch(API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({
-            accion: "analizar_con_gemini",
-            partes: partesContenido,
-            apiKey: GEMINI_API_KEY
-          })
+          if (celdasFila.length > 0) matrizCeldas.push(celdasFila);
         });
-
-        const dataResp = await res.json();
-        if (dataResp.error) {
-          throw new Error(dataResp.error.message);
-        }
-
-        let textoJson = "";
-        if (dataResp.candidates && dataResp.candidates[0]?.content?.parts?.[0]?.text) {
-          textoJson = dataResp.candidates[0].content.parts[0].text;
-        } else {
-          throw new Error("No se obtuvo respuesta de Gemini.");
-        }
-
-        textoJson = textoJson.trim()
-          .replace(/^```json\s*/i, '')
-          .replace(/^```\s*/i, '')
-          .replace(/```$/i, '')
-          .trim();
-
-        const matchArray = textoJson.match(/\[[\s\S]*\]/);
-        if (matchArray) {
-          textoJson = matchArray[0];
-        }
-
-        const eventos = JSON.parse(textoJson);
-        eventosDetectadosIA = Array.isArray(eventos) ? eventos : [eventos];
-
-        eventosDetectadosIA.forEach(ev => {
-          if (!ev.hora || ev.hora.trim() === "") ev.hora = "09:00";
-          ev.fecha = parsearFecha(ev.fecha) || "2026-10-28";
-        });
-
-        renderizarEventosDetectados(eventosDetectadosIA);
-        elEstado.style.display = "none";
-
-      } catch (err) {
-        console.error(err);
-        elEstado.textContent = "❌ " + err.message;
       }
-    }
 
-    function renderizarEventosDetectados(lista) {
-      const contenedor = document.getElementById("iaContenedorResultados");
-      const listaDiv = document.getElementById("iaListaEventos");
-      listaDiv.innerHTML = "";
+      // 2. Extracción de respaldo por texto tabulado
+      if (matrizCeldas.length === 0 && texto) {
+        const lineas = texto.trim().split(/\r?\n/);
+        matrizCeldas = lineas.map((linea, rIdx) => {
+          return linea.split('\t').map(t => ({
+            texto: t.trim(),
+            bg: rIdx === 0 ? '#f3f4f6' : '',
+            fg: '#111827',
+            bold: rIdx === 0,
+            align: 'left'
+          }));
+        });
+      }
 
-      if (!lista || lista.length === 0) {
-        listaDiv.innerHTML = "<div style='font-size:10.5pt; color:#94A3B8; text-align:center; padding:10px; font-weight:800;'>No se detectaron eventos en el documento.</div>";
-        contenedor.style.display = "flex";
+      if (matrizCeldas.length === 0) {
+        alert("No se detectaron datos válidos de celdas para transformar.");
         return;
       }
 
-      lista.forEach((ev, idx) => {
-        const fKey = parsearFecha(ev.fecha) || formatDateKey(new Date());
-        const dup = verificarDuplicado(ev.asunto, fKey);
-        const item = document.createElement("div");
-        item.className = "ia-item-card";
-        
-        let avisoDupHtml = dup ? `<div style="color:#FF003C; font-size:9.5pt; font-weight:bold;">⚠️ Ya agendado: \"${dup.subject}\"</div>` : '';
+      // Lienzo virtual Carta 300 DPI
+      const cartaCanvas = document.createElement('canvas');
+      cartaCanvas.width = LETTER_WIDTH;
+      cartaCanvas.height = LETTER_HEIGHT;
+      const ctx = cartaCanvas.getContext('2d');
 
-        item.innerHTML = `
-          <div class="ia-item-header">
-            <input type="text" class="ia-edit-input" style="font-weight:900; width:80%;" value="${ev.asunto || ''}" onchange="actualizarDatoIA(${idx}, 'asunto', this.value)">
-            <button type="button" class="btn-action-side" style="width:auto; color:#FF003C !important; height:30px !important; padding:0 10px !important;" onclick="eliminarPropuestaIA(${idx})" title="Descartar evento">✕</button>
-          </div>
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
-            <div>
-              <label style="font-size:9pt; margin:0; font-weight:800;">Fecha *:</label>
-              <input type="date" class="ia-edit-input" value="${fKey}" onchange="actualizarDatoIA(${idx}, 'fecha', this.value)">
-            </div>
-            <div>
-              <label style="font-size:9pt; margin:0; font-weight:800;">Hora (Obligatoria) *:</label>
-              <input type="time" class="ia-edit-input" required value="${ev.hora || '09:00'}" onchange="actualizarDatoIA(${idx}, 'hora', this.value)" style="border-color:#3B82F6;">
-            </div>
-          </div>
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
-            <div>
-              <label style="font-size:9pt; margin:0; font-weight:800;">Organiza:</label>
-              <input type="text" class="ia-edit-input" value="${ev.organizador || 'General'}" onchange="actualizarDatoIA(${idx}, 'organizador', this.value)">
-            </div>
-            <div>
-              <label style="font-size:9pt; margin:0; font-weight:800;">Prioridad:</label>
-              <select class="ia-edit-input" onchange="actualizarDatoIA(${idx}, 'prioridad', this.value)">
-                <option value="Alta" ${ev.prioridad === 'Alta' ? 'selected' : ''}>Alta</option>
-                <option value="Media" ${ev.prioridad === 'Media' || !ev.prioridad ? 'selected' : ''}>Media</option>
-                <option value="Baja" ${ev.prioridad === 'Baja' ? 'selected' : ''}>Baja</option>
-              </select>
-            </div>
-          </div>
-          <div>
-            <label style="font-size:9pt; margin:0; font-weight:800;">Síntesis:</label>
-            <textarea class="ia-edit-input" rows="1" onchange="actualizarDatoIA(${idx}, 'sintesis', this.value)">${ev.sintesis || ''}</textarea>
-          </div>
-          ${avisoDupHtml}
-        `;
-        listaDiv.appendChild(item);
-      });
+      // Fondo Carta blanco
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, cartaCanvas.width, cartaCanvas.height);
 
-      document.getElementById("btnAgendarTodoIA").textContent = `AGENDAR LOS ${lista.length} EVENTOS Y SUBIR RESPALDO`;
-      contenedor.style.display = "flex";
-    }
+      const margenX = 140;
+      const margenY = 160;
+      const anchoUtil = cartaCanvas.width - (margenX * 2);
 
-    function actualizarDatoIA(idx, campo, valor) {
-      if (eventosDetectadosIA[idx]) {
-        eventosDetectadosIA[idx][campo] = valor;
-      }
-    }
+      const numCols = Math.max(...matrizCeldas.map(f => f.length));
+      const colWidth = anchoUtil / numCols;
+      const rowHeight = 75;
 
-    function eliminarPropuestaIA(idx) {
-      eventosDetectadosIA.splice(idx, 1);
-      renderizarEventosDetectados(eventosDetectadosIA);
-    }
+      ctx.lineWidth = 2;
+      ctx.textBaseline = 'middle';
 
-    async function guardarEventosDetectadosIA() {
-      if (!eventosDetectadosIA || eventosDetectadosIA.length === 0) return;
+      matrizCeldas.forEach((fila, rIndex) => {
+        const y = margenY + (rIndex * rowHeight);
 
-      for (let i = 0; i < eventosDetectadosIA.length; i++) {
-        if (!eventosDetectadosIA[i].hora || eventosDetectadosIA[i].hora.trim() === "") {
-          alert(`⏰ Por favor asigna una hora al evento: "${eventosDetectadosIA[i].asunto || 'Sin título'}"`);
-          return;
-        }
-      }
+        for (let c = 0; c < numCols; c++) {
+          const x = margenX + (c * colWidth);
+          const celda = fila[c] || { texto: '', bg: '', fg: '#111827', bold: false, align: 'left' };
 
-      const btn = document.getElementById("btnAgendarTodoIA");
-      btn.disabled = true; 
-      btn.textContent = "⏳ AGENDANDO Y GUARDANDO...";
-      const baseId = Date.now();
-
-      const respaldoInfo = archivosRespaldoIA.map(a => ({ nombre: a.nombre, url: a.url || "", base64: a.base64, mimeType: a.mimeType }));
-
-      let primeraFechaEvento = null;
-
-      eventosDetectadosIA.forEach((ev, idx) => {
-        let fKey = parsearFecha(ev.fecha) || formatDateKey(new Date());
-        if (!primeraFechaEvento) primeraFechaEvento = fKey;
-
-        const hora = ev.hora || "09:00";
-        const partesH = hora.split(":");
-        const mins = parseInt(partesH[0]) * 60 + parseInt(partesH[1] || 0);
-
-        tasks.push({
-          id: "local_ia_" + (baseId + idx),
-          groupId: "grp_ia_" + (baseId + idx),
-          date: fKey,
-          startDate: fKey,
-          endDate: fKey,
-          time: hora,
-          timeMinutos: mins,
-          tieneHora: true,
-          isAnnual: false,
-          subject: ev.asunto || "Compromiso Institucional",
-          sender: ev.organizador || "General",
-          detail: ev.sintesis || "",
-          accion: ev.accion || "Gestionar",
-          priority: ev.prioridad || "Media",
-          category: "Laboral",
-          status: "pending",
-          respaldos: [...respaldoInfo]
-        });
-      });
-
-      localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
-
-      if (primeraFechaEvento) {
-        const partes = primeraFechaEvento.split("-");
-        const fechaObj = new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2]));
-        currentMonday = getMonday(fechaObj);
-      }
-
-      renderCalendar();
-      cerrarModalIA();
-      alert(`✅ ¡Se agendaron ${eventosDetectadosIA.length} evento(s) exitosamente! La vista se movió a su fecha.`);
-
-      for (const ev of eventosDetectadosIA) {
-        const fKey = parsearFecha(ev.fecha) || formatDateKey(new Date());
-        try {
-          const res = await fetch(API_URL, {
-            method: "POST",
-            headers: { "Content-Type": "text/plain;charset=utf-8" },
-            body: JSON.stringify({
-              accion: "crear_evento", 
-              fechaDoc: fKey, 
-              hora: ev.hora || "09:00", 
-              asunto: ev.asunto, 
-              remitente: ev.organizador || "General", 
-              prioridad: ev.prioridad || "Media", 
-              sintesis: ev.sintesis || "", 
-              accionReq: ev.accion || "Gestionar", 
-              archivos: archivosRespaldoIA, 
-              anual: "No"
-            })
-          });
-          const resJson = await res.json();
-          if (resJson && resJson.urls && Array.isArray(resJson.urls)) {
-            tasks.forEach(t => {
-              if (t.respaldos && t.subject === ev.asunto) {
-                t.respaldos.forEach((r, i) => {
-                  if (resJson.urls[i]) r.url = resJson.urls[i];
-                });
-              }
-            });
-            localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
-            renderCalendar();
+          // Fondo de Celda fiel
+          if (celda.bg && celda.bg !== 'transparent') {
+            ctx.fillStyle = celda.bg;
+            ctx.fillRect(x, y, colWidth, rowHeight);
+          } else if (rIndex === 0) {
+            ctx.fillStyle = '#f3f4f6';
+            ctx.fillRect(x, y, colWidth, rowHeight);
           }
-        } catch (e) {
-          console.warn("Aviso al guardar en Google Sheets:", e);
+
+          // Borde fiel de celda Excel
+          ctx.strokeStyle = '#d1d5db';
+          ctx.strokeRect(x, y, colWidth, rowHeight);
+
+          // Formato del texto
+          ctx.fillStyle = celda.fg || '#111827';
+          ctx.font = `${celda.bold ? 'bold ' : ''}26px Arial`;
+
+          // Alineación
+          let posX = x + 16;
+          if (celda.align === 'center') {
+            ctx.textAlign = 'center';
+            posX = x + (colWidth / 2);
+          } else if (celda.align === 'right') {
+            ctx.textAlign = 'right';
+            posX = x + colWidth - 16;
+          } else {
+            ctx.textAlign = 'left';
+          }
+
+          // Ajuste de texto con elipsis si excede el ancho de la celda
+          let textoAjustado = celda.texto;
+          while (ctx.measureText(textoAjustado).width > colWidth - 32 && textoAjustado.length > 0) {
+            textoAjustado = textoAjustado.slice(0, -1);
+          }
+          if (textoAjustado !== celda.texto) textoAjustado += '…';
+
+          ctx.fillText(textoAjustado, posX, y + (rowHeight / 2));
         }
+      });
+
+      // Reflejar de inmediato en la pantalla del editor
+      pdfCanvas.width = cartaCanvas.width;
+      pdfCanvas.height = cartaCanvas.height;
+      drawCanvas.width = cartaCanvas.width;
+      drawCanvas.height = cartaCanvas.height;
+      pdfCtx.drawImage(cartaCanvas, 0, 0);
+      drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+      pageInfo.textContent = 'Excel / Carta';
+
+      // Transformar a PDF tamaño Carta estándar (612 x 792 pt)
+      const pngUrl = cartaCanvas.toDataURL('image/png');
+      const pdfDocSingle = await PDFLib.PDFDocument.create();
+      const pngImage = await pdfDocSingle.embedPng(pngUrl);
+
+      const page = pdfDocSingle.addPage([612, 792]);
+      page.drawImage(pngImage, { x: 0, y: 0, width: 612, height: 792 });
+
+      const pdfBytes = await pdfDocSingle.save();
+      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+      const nombreSugerido = `Excell_Carta_${Date.now()}.pdf`;
+
+      await guardarConSelectorDestino(blob, nombreSugerido, 'pdf', 'application/pdf');
+
+      // Agregar a la barra de PDFs creados
+      pdfsCreados.push({ nombre: nombreSugerido, bytes: pdfBytes });
+      actualizarBarraPdfs();
+    }
+
+    function cargarImagenEnHoja(blob) {
+      const img = new Image();
+      img.onload = () => {
+        pdfCanvas.width = 1700;
+        pdfCanvas.height = 2200;
+        drawCanvas.width = 1700;
+        drawCanvas.height = 2200;
+
+        pdfCtx.fillStyle = '#ffffff';
+        pdfCtx.fillRect(0, 0, pdfCanvas.width, pdfCanvas.height);
+
+        const maxW = pdfCanvas.width - 180;
+        const maxH = pdfCanvas.height - 200;
+        const esc = Math.min(maxW / img.width, maxH / img.height, 1.8);
+
+        const w = img.width * esc;
+        const h = img.height * esc;
+        const x = (pdfCanvas.width - w) / 2;
+        const y = (pdfCanvas.height - h) / 2;
+
+        pdfCtx.drawImage(img, x, y, w, h);
+        pageInfo.textContent = '1 / 1';
+      };
+      img.src = URL.createObjectURL(blob);
+    }
+
+    // Coordenadas
+    function getPos(e) {
+      const r = drawCanvas.getBoundingClientRect();
+      const cx = e.touches ? e.touches[0].clientX : e.clientX;
+      const cy = e.touches ? e.touches[0].clientY : e.clientY;
+      return { x: cx - r.left, y: cy - r.top };
+    }
+
+    function onStart(e) {
+      if (toolMode === 'none') return;
+      const pos = getPos(e);
+      startX = pos.x;
+      startY = pos.y;
+      lastX = pos.x;
+      lastY = pos.y;
+
+      if (toolMode === 'text') {
+        crearCuadroTexto(pos.x, pos.y);
+        setTool('none');
+        return;
       }
 
-      btn.disabled = false; 
-      btn.textContent = "AGENDAR PROPUESTA Y SUBIR RESPALDO";
+      isDrawing = true;
     }
 
-    function updateLiveClock() {
-      const now = new Date();
-      if(document.getElementById("fc-hour")) document.getElementById("fc-hour").textContent = String(now.getHours()).padStart(2, '0');
-      if(document.getElementById("fc-minute")) document.getElementById("fc-minute").textContent = String(now.getMinutes()).padStart(2, '0');
-      if(document.getElementById("fc-second")) document.getElementById("fc-second").textContent = String(now.getSeconds()).padStart(2, '0');
+    function onMove(e) {
+      if (!isDrawing) return;
+      const pos = getPos(e);
+
+      if (toolMode === 'eraser-circle') {
+        drawCtx.beginPath();
+        drawCtx.moveTo(lastX, lastY);
+        drawCtx.lineTo(pos.x, pos.y);
+        drawCtx.lineCap = 'round';
+        drawCtx.lineJoin = 'round';
+        drawCtx.strokeStyle = '#ffffff';
+        drawCtx.lineWidth = sizeRange.value;
+        drawCtx.stroke();
+        lastX = pos.x;
+        lastY = pos.y;
+      }
     }
-    setInterval(updateLiveClock, 1000);
-    updateLiveClock();
 
-    document.getElementById("btnToday").onclick = () => { currentMonday = getMonday(new Date()); renderCalendar(); };
-    document.getElementById("btnPrev").onclick = () => { currentMonday.setDate(currentMonday.getDate() - 7); renderCalendar(); };
-    document.getElementById("btnNext").onclick = () => { currentMonday.setDate(currentMonday.getDate() + 7); renderCalendar(); };
-    
-    const hoyInicial = new Date();
-    const lblSub = document.getElementById("full-date-subtitle");
-    if (lblSub) lblSub.textContent = formatFechaCompleta(hoyInicial);
+    function onEnd(e) {
+      if (!isDrawing) return;
+      isDrawing = false;
+      const pos = getPos(e);
 
-    renderCalendar();
-    sincronizarDesdeSheets();
+      if (toolMode === 'eraser-rect') {
+        const x = Math.min(startX, pos.x);
+        const y = Math.min(startY, pos.y);
+        const w = Math.abs(pos.x - startX);
+        const h = Math.abs(pos.y - startY);
+
+        drawCtx.fillStyle = '#ffffff';
+        drawCtx.fillRect(x, y, w, h);
+      }
+
+      if (toolMode === 'letter') {
+        const x = Math.min(startX, pos.x);
+        const y = Math.min(startY, pos.y);
+        const w = Math.abs(pos.x - startX);
+        const h = Math.abs(pos.y - startY);
+
+        if (w < 15 || h < 15) return;
+
+        const cropCanvas = document.createElement('canvas');
+        cropCanvas.width = w;
+        cropCanvas.height = h;
+        const cropCtx = cropCanvas.getContext('2d');
+
+        cropCtx.drawImage(pdfCanvas, x, y, w, h, 0, 0, w, h);
+        cropCtx.drawImage(drawCanvas, x, y, w, h, 0, 0, w, h);
+
+        guardarSalida(cropCanvas, `Captura_Letter_pag_${pageNum}`);
+        setTool('none');
+      }
+    }
+
+    drawCanvas.addEventListener('mousedown', onStart);
+    drawCanvas.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onEnd);
+    drawCanvas.addEventListener('touchstart', onStart, { passive: true });
+    drawCanvas.addEventListener('touchmove', onMove, { passive: true });
+    window.addEventListener('touchend', onEnd);
+
+    // Cuadro de Texto Interactivo
+    function crearCuadroTexto(x, y) {
+      const textarea = document.createElement('textarea');
+      textarea.className = 'text-box-input';
+      textarea.style.left = `${x}px`;
+      textarea.style.top = `${y}px`;
+      textarea.style.fontSize = `${Math.max(14, sizeRange.value)}px`;
+      textarea.placeholder = "Escribe aquí...";
+      canvasWrapper.appendChild(textarea);
+      textarea.focus();
+
+      textarea.onblur = () => {
+        const texto = textarea.value.trim();
+        if (texto) {
+          drawCtx.font = `${Math.max(14, sizeRange.value)}px Arial`;
+          drawCtx.fillStyle = '#000000';
+          const lineas = texto.split('\n');
+          const lineHeight = Math.max(14, sizeRange.value) * 1.25;
+          lineas.forEach((linea, index) => {
+            drawCtx.fillText(linea, x + 4, y + 4 + (index + 1) * lineHeight);
+          });
+        }
+        textarea.remove();
+      };
+    }
+
+    // Selector universal de destino
+    async function guardarConSelectorDestino(blob, nombreSugerido, extension, mimeTipo) {
+      if ('showSaveFilePicker' in window) {
+        try {
+          const handle = await window.showSaveFilePicker({
+            suggestedName: nombreSugerido,
+            types: [{
+              description: extension.toUpperCase() + ' File',
+              accept: { [mimeTipo]: ['.' + extension] }
+            }]
+          });
+          const writable = await handle.createWritable();
+          await writable.write(blob);
+          await writable.close();
+          return;
+        } catch (err) {
+          if (err.name === 'AbortError') return;
+        }
+      }
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = nombreSugerido;
+      link.click();
+    }
+
+    // Guardar Hoja Actual
+    btnGuardar.onclick = async () => {
+      if (pdfCanvas.width === 0) {
+        alert("No hay ningún documento abierto para guardar.");
+        return;
+      }
+
+      const tempCanvas = document.createElement('canvas');
+      tempCanvas.width = pdfCanvas.width;
+      tempCanvas.height = pdfCanvas.height;
+      const tempCtx = tempCanvas.getContext('2d');
+      tempCtx.drawImage(pdfCanvas, 0, 0);
+      tempCtx.drawImage(drawCanvas, 0, 0);
+
+      if (chkPdf.checked) {
+        const pngUrl = tempCanvas.toDataURL('image/png');
+        const pdfDocSingle = await PDFLib.PDFDocument.create();
+        const pngImage = await pdfDocSingle.embedPng(pngUrl);
+        const page = pdfDocSingle.addPage([pngImage.width, pngImage.height]);
+        page.drawImage(pngImage, { x: 0, y: 0, width: pngImage.width, height: pngImage.height });
+
+        const pdfBytes = await pdfDocSingle.save();
+        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        await guardarConSelectorDestino(blob, `Documento_pag_${pageNum}.pdf`, 'pdf', 'application/pdf');
+      } else if (chkJpg.checked) {
+        tempCanvas.toBlob(async (blob) => {
+          await guardarConSelectorDestino(blob, `Documento_pag_${pageNum}.jpg`, 'jpg', 'image/jpeg');
+        }, 'image/jpeg', 0.98);
+      }
+    };
+
+    // Guardar capturas y agregar a lista
+    async function guardarSalida(canvasFuente, nombre) {
+      if (chkJpg.checked) {
+        canvasFuente.toBlob(async (blob) => {
+          await guardarConSelectorDestino(blob, `${nombre}.jpg`, 'jpg', 'image/jpeg');
+        }, 'image/jpeg', 0.98);
+      }
+
+      if (chkPdf.checked) {
+        const pngUrl = canvasFuente.toDataURL('image/png');
+        const pdfDocSingle = await PDFLib.PDFDocument.create();
+        const pngImage = await pdfDocSingle.embedPng(pngUrl);
+        const page = pdfDocSingle.addPage([pngImage.width, pngImage.height]);
+        page.drawImage(pngImage, { x: 0, y: 0, width: pngImage.width, height: pngImage.height });
+
+        const pdfBytes = await pdfDocSingle.save();
+        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+
+        await guardarConSelectorDestino(blob, `${nombre}.pdf`, 'pdf', 'application/pdf');
+
+        const itemNombre = `${nombre}.pdf`;
+        pdfsCreados.push({ nombre: itemNombre, bytes: pdfBytes });
+        actualizarBarraPdfs();
+      }
+    }
+
+    function actualizarBarraPdfs() {
+      pdfTags.innerHTML = '';
+      if (pdfsCreados.length === 0) {
+        emptyPdfMsg.style.display = 'inline';
+        pdfTags.appendChild(emptyPdfMsg);
+        return;
+      }
+      emptyPdfMsg.style.display = 'none';
+
+      pdfsCreados.forEach((item, index) => {
+        const chip = document.createElement('div');
+        chip.className = 'pdf-chip';
+        chip.innerHTML = `📄 ${item.nombre} <span class="remove" title="Quitar">✕</span>`;
+        chip.querySelector('.remove').onclick = () => {
+          pdfsCreados.splice(index, 1);
+          actualizarBarraPdfs();
+        };
+        pdfTags.appendChild(chip);
+      });
+    }
+
+    // Captura en Tira
+    btnTira.onclick = () => {
+      if (pdfCanvas.width > 0) {
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = pdfCanvas.width;
+        tempCanvas.height = pdfCanvas.height;
+        const tempCtx = tempCanvas.getContext('2d');
+        tempCtx.drawImage(pdfCanvas, 0, 0);
+        tempCtx.drawImage(drawCanvas, 0, 0);
+
+        tramosTira.push(tempCanvas.toDataURL('image/png'));
+        badgeTira.style.display = 'inline-block';
+        badgeTira.textContent = tramosTira.length;
+        alert(`Tramo agregado a la tira. Total acumulado: ${tramosTira.length}.`);
+      }
+    };
+
+    // Unir PDFs creados
+    btnUnirCreados.onclick = async () => {
+      if (pdfsCreados.length < 2) {
+        alert("Necesitas al menos 2 PDFs creados en la lista para unirlos.");
+        return;
+      }
+
+      try {
+        const mergedPdf = await PDFLib.PDFDocument.create();
+        for (const item of pdfsCreados) {
+          const pdf = await PDFLib.PDFDocument.load(item.bytes);
+          const pages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+          pages.forEach(p => mergedPdf.addPage(p));
+        }
+
+        const pdfBytes = await mergedPdf.save();
+        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        await guardarConSelectorDestino(blob, `PDF_Unificado_${Date.now()}.pdf`, 'pdf', 'application/pdf');
+      } catch (err) {
+        alert("Error al unir PDFs: " + err.message);
+      }
+    };
+
+    // Salir / Limpiar
+    btnSalir.onclick = () => {
+      pdfCtx.clearRect(0, 0, pdfCanvas.width, pdfCanvas.height);
+      drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+      pdfDoc = null;
+      pageNum = 1;
+      totalPages = 0;
+      pageInfo.textContent = '0 / 0';
+      tramosTira = [];
+      badgeTira.style.display = 'none';
+      badgeTira.textContent = '0';
+      pdfsCreados = [];
+      actualizarBarraPdfs();
+      setTool('none');
+    };
   </script>
 </body>
 </html>
