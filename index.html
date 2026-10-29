@@ -180,19 +180,19 @@
     .task-card.prio-alta { 
       border-color: #FF003C !important; 
       border-left: 10px solid var(--prio-alta-elec) !important; 
-      background: var(--prio-alta-bg) !important;
+      background: var(--prio-alta-bg) !important; 
       box-shadow: 0 2px 10px var(--prio-alta-glow) !important;
     } 
     .task-card.prio-media { 
       border-color: #FFE600 !important; 
       border-left: 10px solid var(--prio-media-elec) !important; 
-      background: var(--prio-media-bg) !important;
+      background: var(--prio-media-bg) !important; 
       box-shadow: 0 2px 10px var(--prio-media-glow) !important;
     } 
     .task-card.prio-baja { 
       border-color: #00E676 !important; 
       border-left: 10px solid var(--prio-baja-elec) !important; 
-      background: var(--prio-baja-bg) !important;
+      background: var(--prio-baja-bg) !important; 
       box-shadow: 0 2px 10px var(--prio-baja-glow) !important;
     } 
     
@@ -682,7 +682,7 @@
     const GEMINI_API_KEY = "AQ.Ab8RN6LB-NIAelTRt0J4ebdrjfUDyA5BWDPD1N3taArdmJGeFA";
 
     const CLAVE_ADMIN = "25078";
-    let esModoAdmin = false; // Siempre inicia en modo lector
+    let esModoAdmin = false;
 
     const holidaysChile = { 
       "2026-01-01": "Año Nuevo", "2026-04-03": "Viernes Santo", "2026-05-01": "Día del Trabajador",
@@ -747,19 +747,15 @@
         badge.textContent = "🔓 Modo Edición";
         badge.className = "mode-badge-side admin";
         badge.title = "Haz clic para volver a modo Solo Lectura";
-        if (btnNuevo) btnNuevo.style.display = "inline-flex";
-        if (btnAIA) btnAIA.style.display = "inline-flex";
-        if (btnRespaldo) btnRespaldo.style.display = "inline-flex";
-        if (footerActions) footerActions.style.display = "flex";
       } else {
         badge.textContent = "🔒 Solo Lectura";
         badge.className = "mode-badge-side readonly";
         badge.title = "Haz clic para ingresar clave directiva y editar";
-        if (btnNuevo) btnNuevo.style.display = "inline-flex";
-        if (btnAIA) btnAIA.style.display = "inline-flex";
-        if (btnRespaldo) btnRespaldo.style.display = "inline-flex";
-        if (footerActions) footerActions.style.display = "flex";
       }
+      if (btnNuevo) btnNuevo.style.display = "inline-flex";
+      if (btnAIA) btnAIA.style.display = "inline-flex";
+      if (btnRespaldo) btnRespaldo.style.display = "inline-flex";
+      if (footerActions) footerActions.style.display = "flex";
     }
 
     function solicitarClaveAdminSiEsNecesario() {
@@ -891,8 +887,10 @@
             const filaNum = row.fila || (Array.isArray(row) ? row[0] : (idx + 1));
             const asunto = String(row.asunto || (Array.isArray(row) ? row[4] : "(Sin asunto)")).trim();
             const fDoc = row.fechaDoc || (Array.isArray(row) ? row[1] : null);
+            const fFinDoc = row.fechaTermino || (Array.isArray(row) ? row[9] : null);
             const fValida = parsearFecha(fDoc);
             if (!fValida) return;
+            const fFinValida = parsearFecha(fFinDoc) || fValida;
 
             const claveUnica = `${fValida}_${normalizarTexto(asunto)}`;
             
@@ -904,7 +902,6 @@
             });
 
             if (yaFueEliminado) return;
-
             if (vistos.has(claveUnica)) return;
             vistos.add(claveUnica);
 
@@ -938,23 +935,29 @@
               }
             }
 
-            remoteTasks.push({
-              id: filaNum ? `remote_${filaNum}` : `remote_idx_${idx + 1}`,
-              fila: filaNum,
-              date: fValida,
-              endDate: fValida,
-              isAnnual: false,
-              time: horaFinal,
-              timeMinutos: minutosFinales,
-              tieneHora: tieneHoraReal,
-              subject: asunto,
-              sender: row.remitente || (Array.isArray(row) ? row[5] : "General"),
-              detail: row.sintesis || (Array.isArray(row) ? row[6] : ""),
-              accion: row.accionReq || (Array.isArray(row) ? row[7] : ""),
-              priority: row.prioridad || (Array.isArray(row) ? row[2] : "Media"),
-              category: "Laboral",
-              status: isManaged ? "managed" : "pending",
-              respaldos: adjuntos
+            const grupoId = `remote_grp_${filaNum || idx}`;
+            const rangoFechas = obtenerFechasRango(fValida, fFinValida);
+            rangoFechas.forEach((diaRango, rIdx) => {
+              remoteTasks.push({
+                id: filaNum ? `remote_${filaNum}_${rIdx}` : `remote_idx_${idx + 1}_${rIdx}`,
+                groupId: grupoId,
+                fila: filaNum,
+                date: diaRango,
+                startDate: fValida,
+                endDate: fFinValida,
+                isAnnual: false,
+                time: horaFinal,
+                timeMinutos: minutosFinales,
+                tieneHora: tieneHoraReal,
+                subject: asunto,
+                sender: row.remitente || (Array.isArray(row) ? row[5] : "General"),
+                detail: row.sintesis || (Array.isArray(row) ? row[6] : ""),
+                accion: row.accionReq || (Array.isArray(row) ? row[7] : ""),
+                priority: row.prioridad || (Array.isArray(row) ? row[2] : "Media"),
+                category: "Laboral",
+                status: isManaged ? "managed" : "pending",
+                respaldos: adjuntos
+              });
             });
           });
 
@@ -972,7 +975,7 @@
       } finally {
         if (btn) btn.innerHTML = "<span class='btn-icon-lg'>🔄</span> Sincronizar";
         const sub = document.getElementById("full-date-subtitle");
-        if (sub) sub.textContent = formatFechaCompleta(new Date());
+        if (lblSub) lblSub.textContent = formatFechaCompleta(new Date());
       }
     }
 
@@ -1064,7 +1067,9 @@
       document.getElementById("dtTitle").textContent = t.subject;
       document.getElementById("dtSender").textContent = t.sender || "General";
       
-      const textoFecha = (t.endDate && t.endDate !== t.date) ? `${t.date} al ${t.endDate}` : t.date;
+      const fIni = t.startDate || t.date;
+      const fFin = t.endDate || t.date;
+      const textoFecha = (fFin && fFin !== fIni) ? `${fIni} al ${fFin}` : t.date;
       document.getElementById("dtDateTime").textContent = `${textoFecha} | ${t.time && t.time !== '00:00' ? t.time + ' hrs' : 'Horario por definir'}`;
       document.getElementById("dtDetail").textContent = t.detail || "Sin síntesis.";
       document.getElementById("dtAccion").textContent = t.accion || "Revisar y gestionar.";
@@ -1233,30 +1238,55 @@
       btnGuardar.textContent = "⏳ Guardando...";
 
       let adjuntosFinales = [...archivosManualesTemporales];
+      const diasDelRango = obtenerFechasRango(fInicio, fTermino);
 
       if (isEditing && editEventId) {
-        const item = tasks.find(t => t.id === editEventId);
-        if (item) {
-          item.subject = asunto;
-          item.date = fInicio;
-          item.endDate = fTermino;
-          item.time = hora;
-          item.tieneHora = true;
-          item.timeMinutos = min;
-          item.category = "Laboral";
-          item.priority = selectedPriority;
-          item.sender = document.getElementById("fOrganizador").value.trim() || "General";
-          item.detail = document.getElementById("fDetalle").value.trim();
-          item.accion = document.getElementById("fAccion").value.trim();
-          item.respaldos = adjuntosFinales;
-        }
+        const itemOriginal = tasks.find(t => t.id === editEventId);
+        const grupoExistente = itemOriginal?.groupId || null;
+        const filaAsociada = itemOriginal?.fila || "";
+        const remitenteOriginal = itemOriginal?.sender || "General";
+        const subjectOriginal = itemOriginal?.subject || "";
+
+        // Remover todas las instancias previas del mismo grupo o evento
+        tasks = tasks.filter(t => {
+          if (grupoExistente && t.groupId === grupoExistente) return false;
+          if (itemOriginal && t.subject === subjectOriginal && t.startDate === itemOriginal.startDate) return false;
+          return t.id !== editEventId;
+        });
+
+        // Regenerar evento en TODOS los días del rango nuevo
+        const nuevoGroupId = grupoExistente || ("grp_" + Date.now());
+        diasDelRango.forEach((dia, i) => {
+          tasks.push({
+            id: `edit_${Date.now()}_${i}`,
+            groupId: nuevoGroupId,
+            fila: filaAsociada,
+            date: dia,
+            startDate: fInicio,
+            endDate: fTermino,
+            time: hora,
+            tieneHora: true,
+            timeMinutos: min,
+            subject: asunto,
+            sender: document.getElementById("fOrganizador").value.trim() || remitenteOriginal,
+            detail: document.getElementById("fDetalle").value.trim(),
+            accion: document.getElementById("fAccion").value.trim(),
+            priority: selectedPriority,
+            category: "Laboral",
+            status: itemOriginal ? itemOriginal.status : "pending",
+            respaldos: adjuntosFinales
+          });
+        });
+
       } else {
-        const diasDelRango = obtenerFechasRango(fInicio, fTermino);
         const baseId = Date.now();
+        const nuevoGroupId = "grp_" + baseId;
         diasDelRango.forEach((dia, i) => {
           tasks.push({
             id: "local_" + (baseId + i),
+            groupId: nuevoGroupId,
             date: dia,
+            startDate: fInicio,
             endDate: fTermino,
             time: hora,
             tieneHora: true,
@@ -1301,14 +1331,15 @@
         const resJson = await res.json();
         
         if (resJson && resJson.urls && Array.isArray(resJson.urls)) {
-          const target = tasks.find(t => t.id === (isEditing ? editEventId : tasks[tasks.length - 1].id));
-          if (target && target.respaldos) {
-            target.respaldos.forEach((r, i) => {
-              if (resJson.urls[i]) r.url = resJson.urls[i];
-            });
-            localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
-            renderCalendar();
-          }
+          tasks.forEach(t => {
+            if (t.subject === asunto && t.respaldos) {
+              t.respaldos.forEach((r, i) => {
+                if (resJson.urls[i]) r.url = resJson.urls[i];
+              });
+            }
+          });
+          localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
+          renderCalendar();
         }
       } catch (err) {
         console.warn("Aviso guardado remoto:", err);
@@ -1330,7 +1361,7 @@
       document.getElementById("btnGuardarEvento").textContent = "ACTUALIZAR EVENTO";
 
       document.getElementById("fAsunto").value = t.subject || "";
-      document.getElementById("fFechaInicio").value = t.date || "";
+      document.getElementById("fFechaInicio").value = t.startDate || t.date || "";
       document.getElementById("fFechaFin").value = t.endDate || t.date || "";
       document.getElementById("fHora").value = (t.time && t.time !== "00:00") ? t.time : "";
       document.getElementById("fOrganizador").value = t.sender || "";
@@ -1352,13 +1383,16 @@
       const t = tasks.find(x => x.id === currentEventId);
       if (!t) return;
 
-      if (!confirm(`¿Eliminar definitivamente "${t.subject}"? No volverá a aparecer en la agenda.`)) {
+      if (!confirm(`¿Eliminar definitivamente "${t.subject}"? Se quitará de todos los días asociados.`)) {
         return;
       }
 
       const idEliminado = currentEventId;
       const filaRemota = t.fila || "";
       const claveUnica = `${t.date}_${normalizarTexto(t.subject)}`;
+      const grupoId = t.groupId || null;
+      const subjectEliminado = t.subject;
+      const startDateEliminado = t.startDate || t.date;
 
       eventosEliminados.push({ 
         clave: claveUnica, 
@@ -1368,8 +1402,12 @@
       });
       localStorage.setItem("agenda_carlos_condell_eliminados", JSON.stringify(eventosEliminados));
 
-      // Eliminación inmediata de la lista de tareas
-      tasks = tasks.filter(x => x.id !== idEliminado);
+      // Eliminar todas las tarjetas del rango
+      tasks = tasks.filter(x => {
+        if (grupoId && x.groupId === grupoId) return false;
+        if (x.subject === subjectEliminado && (x.startDate || x.date) === startDateEliminado) return false;
+        return x.id !== idEliminado;
+      });
       localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
       
       currentEventId = null;
@@ -1397,7 +1435,18 @@
       if (!currentEventId) return;
       const t = tasks.find(x => x.id === currentEventId);
       if (!t) return;
-      t.status = (t.status === "managed") ? "pending" : "managed";
+
+      const nuevoEstado = (t.status === "managed") ? "pending" : "managed";
+      const grupoId = t.groupId;
+      const sub = t.subject;
+
+      // Actualizar estado en todos los días del evento
+      tasks.forEach(item => {
+        if ((grupoId && item.groupId === grupoId) || (item.subject === sub && item.startDate === t.startDate)) {
+          item.status = nuevoEstado;
+        }
+      });
+
       localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
       openDetail(currentEventId);
       renderCalendar();
@@ -1852,7 +1901,9 @@
 
         tasks.push({
           id: "local_ia_" + (baseId + idx),
+          groupId: "grp_ia_" + (baseId + idx),
           date: fKey,
+          startDate: fKey,
           endDate: fKey,
           time: hora,
           timeMinutos: mins,
