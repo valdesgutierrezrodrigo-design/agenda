@@ -603,7 +603,7 @@
     </div>
   </div>
 
-  <!-- Modal Nuevo / Editar Evento (Permite editar cualquier evento y subir todos los archivos deseados) -->
+  <!-- Modal Nuevo / Editar Evento -->
   <div class="modal-overlay" id="modalAssistantOverlay">
     <div class="modal-assistant" id="modalNuevoEventoBox">
       <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -678,7 +678,7 @@
       </div>
 
       <div id="iaArchivoInfo" style="font-size:10pt; color:#1D4ED8; background:#EFF6FF; padding:8px 12px; border-radius:6px; display:none; border:2px solid #93C5FD;"></div>
-      <div id="iaEstado" style="font-size:11pt; color:#92400E; font-weight:bold; text-align:center; padding:10px; display:none; background:#FEF3C7; border-radius:6px; border:2px solid #FCD34D;">⚡ Analizando con Gemini 3.8 Flash...</div>
+      <div id="iaEstado" style="font-size:11pt; color:#92400E; font-weight:bold; text-align:center; padding:10px; display:none; background:#FEF3C7; border-radius:6px; border:2px solid #FCD34D;">⚡ Analizando con Gemini 2.0 Flash...</div>
       
       <div id="iaContenedorResultados" style="display:none; flex:1; display:flex; flex-direction:column; min-height:0;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
@@ -1140,7 +1140,7 @@
       selectPriority("Media");
     }
 
-    // Subida acumulativa sin sobrescribir los anteriores
+    // Optimizado: 1024px para menor consumo de tokens de imagen
     async function procesarArchivosManuales(input) {
       if (!input.files || input.files.length === 0) return;
       for (let i = 0; i < input.files.length; i++) {
@@ -1153,7 +1153,7 @@
           url: ""
         });
       }
-      input.value = ""; // Permite seleccionar más archivos de inmediato
+      input.value = "";
       renderizarListaArchivosManuales();
     }
 
@@ -1268,14 +1268,12 @@
         const remitenteOriginal = itemOriginal?.sender || "General";
         const subjectOriginal = itemOriginal?.subject || "";
 
-        // Remover todas las instancias previas de este evento/grupo
         tasks = tasks.filter(t => {
           if (grupoExistente && t.groupId === grupoExistente) return false;
           if (itemOriginal && t.subject === subjectOriginal && t.startDate === itemOriginal.startDate) return false;
           return t.id !== editEventId;
         });
 
-        // Crear las instancias actualizadas en todos los días del rango nuevo
         const nuevoGroupId = grupoExistente || ("grp_" + Date.now());
         diasDelRango.forEach((dia, i) => {
           tasks.push({
@@ -1370,7 +1368,6 @@
       }
     }
 
-    // Edición habilitada para cualquier evento existente
     function prepararEdicionActual() {
       if (!solicitarClaveAdminSiEsNecesario()) return;
       if (!currentEventId) return;
@@ -1390,7 +1387,6 @@
       document.getElementById("fDetalle").value = t.detail || "";
       document.getElementById("fAccion").value = t.accion || "";
 
-      // Conservar los respaldos existentes y permitir agregar más
       archivosManualesTemporales = t.respaldos ? [...t.respaldos] : [];
       renderizarListaArchivosManuales();
       selectPriority(t.priority || "Media");
@@ -1619,6 +1615,7 @@
       }
     })();
 
+    // Optimizado: maxDimension a 1024 reduce tokens de entrada de imágenes a la mitad
     function optimizarYCodificarArchivo(file) {
       return new Promise((resolve, reject) => {
         if (!file.type.startsWith("image/")) {
@@ -1637,7 +1634,7 @@
             const canvas = document.createElement("canvas");
             let width = img.width;
             let height = img.height;
-            const maxDimension = 1400;
+            const maxDimension = 1024; // Mantiene OCR claro y ahorra tokens de visión
 
             if (width > maxDimension || height > maxDimension) {
               if (width > height) {
@@ -1654,7 +1651,7 @@
             const ctx = canvas.getContext("2d");
             ctx.drawImage(img, 0, 0, width, height);
 
-            const dataUrl = canvas.toDataURL("image/jpeg", 0.82);
+            const dataUrl = canvas.toDataURL("image/jpeg", 0.75);
             resolve(dataUrl.substring(dataUrl.indexOf(',') + 1));
           };
           img.onerror = reject;
@@ -1728,7 +1725,7 @@
       const elEstado = document.getElementById("iaEstado");
       const elInfo = document.getElementById("iaArchivoInfo");
       elEstado.style.display = "block";
-      elEstado.textContent = "⚡ Analizando con Gemini 3.8 Flash...";
+      elEstado.textContent = "⚡ Analizando con Gemini 2.0 Flash...";
       document.getElementById("iaContenedorResultados").style.display = "none";
 
       try {
@@ -1751,23 +1748,12 @@
         elInfo.textContent = `📎 Documento cargado: ${nombresArchivos.join(", ")}`;
         elInfo.style.display = "block";
 
+        // Prompt conciso: reduce drásticamente tokens de entrada
         const promptInstruccion = 
-          "Eres el asistente directivo de la Escuela Comandante Carlos Condell. Analiza este documento o captura.\n" +
-          "Extrae todos los eventos, plazos, reuniones y evaluaciones (Simce, DIA, UTP, Consejo, etc.).\n" +
-          "Formatea la fecha OBLIGATORIAMENTE en formato YYYY-MM-DD usando siempre el año 2026 (por ejemplo: 2026-10-28 o 2026-11-04).\n" +
-          "Es obligatorio asignar una hora válida (en formato HH:MM, por ejemplo 09:00 o la indicada).\n" +
-          "Devuelve ÚNICAMENTE un arreglo JSON con este formato exacto, sin bloques markdown ``` ni texto adicional:\n" +
-          "[\n" +
-          "  {\n" +
-          "    \"asunto\": \"Nombre del evento o plazo\",\n" +
-          "    \"organizador\": \"Entidad que convoca\",\n" +
-          "    \"fecha\": \"2026-MM-DD\",\n" +
-          "    \"hora\": \"09:00\",\n" +
-          "    \"prioridad\": \"Alta\",\n" +
-          "    \"sintesis\": \"Resumen conciso\",\n" +
-          "    \"accion\": \"Acción a realizar\"\n" +
-          "  }\n" +
-          "]";
+          "Extrae eventos y reuniones escolares del documento en formato JSON estricto.\n" +
+          "Año base 2026. Fechas en formato YYYY-MM-DD. Hora obligatoria HH:MM.\n" +
+          "Esquema JSON:\n" +
+          "[{\"asunto\":\"Nombre evento\",\"organizador\":\"Entidad\",\"fecha\":\"2026-MM-DD\",\"hora\":\"09:00\",\"prioridad\":\"Alta/Media/Baja\",\"sintesis\":\"Resumen\",\"accion\":\"Acción requerida\"}]";
 
         const partesContenido = [{ text: promptInstruccion }, ...inlineParts];
 
@@ -1776,6 +1762,7 @@
           headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify({
             accion: "analizar_con_gemini",
+            modelo: "gemini-2.0-flash",
             partes: partesContenido,
             apiKey: GEMINI_API_KEY
           })
@@ -1953,7 +1940,9 @@
       cerrarModalIA();
       alert(`✅ ¡Se agendaron ${eventosDetectadosIA.length} evento(s) exitosamente! La vista se movió a su fecha.`);
 
-      for (const ev of eventosDetectadosIA) {
+      // Sube los respaldos solo en la primera llamada para evitar duplicidad de carga en Sheets
+      for (let i = 0; i < eventosDetectadosIA.length; i++) {
+        const ev = eventosDetectadosIA[i];
         const fKey = parsearFecha(ev.fecha) || formatDateKey(new Date());
         try {
           const res = await fetch(API_URL, {
@@ -1968,7 +1957,7 @@
               prioridad: ev.prioridad || "Media", 
               sintesis: ev.sintesis || "", 
               accionReq: ev.accion || "Gestionar", 
-              archivos: archivosRespaldoIA, 
+              archivos: (i === 0) ? archivosRespaldoIA : [], 
               anual: "No"
             })
           });
@@ -1976,8 +1965,8 @@
           if (resJson && resJson.urls && Array.isArray(resJson.urls)) {
             tasks.forEach(t => {
               if (t.respaldos && t.subject === ev.asunto) {
-                t.respaldos.forEach((r, i) => {
-                  if (resJson.urls[i]) r.url = resJson.urls[i];
+                t.respaldos.forEach((r, idxU) => {
+                  if (resJson.urls[idxU]) r.url = resJson.urls[idxU];
                 });
               }
             });
