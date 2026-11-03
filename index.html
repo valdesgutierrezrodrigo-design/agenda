@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Agenda Carlos Condell - San Bernardo</title>
-  <!-- Fuentes de Alta Legibilidad -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&family=Lexend:wght@500;600;700;800;900&display=swap" rel="stylesheet">
@@ -17,7 +16,6 @@
       --text-main: #000000;
       --text-muted: #1E293B;
 
-      /* Paleta Pastel Base Columnas */
       --day-lunes-bg: #F1F5F9;
       --day-lunes-border: #CBD5E1;
       --day-lunes-accent: #0F172A;
@@ -38,7 +36,6 @@
       --day-viernes-border: #FED7AA;
       --day-viernes-accent: #9A3412;
 
-      /* COLORES ELÉCTRICOS */
       --prio-alta-elec: #FF003C;
       --prio-alta-bg: #FFF1F2;
       --prio-alta-glow: rgba(255, 0, 60, 0.4);
@@ -76,32 +73,19 @@
       flex-shrink: 0; margin-bottom: 6px; width: 100%; min-height: 64px; box-sizing: border-box;
     }
     
-    .brand-block {
-      display: flex; flex-direction: column; gap: 3px;
-    }
-    .brand-title {
-      font-size: 19pt; font-weight: 900; color: #1E3A8A; white-space: nowrap; margin: 0; line-height: 1.1; letter-spacing: -0.3px;
-    }
-    .brand-meta {
-      font-size: 10pt; font-weight: 800; color: #334155; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 0.5px;
-    }
-    .badge-rbd {
-      background: #EFF6FF; color: #1D4ED8; padding: 2px 8px; border-radius: 4px; border: 1.5px solid #BFDBFE; font-weight: 900;
-    }
+    .brand-block { display: flex; flex-direction: column; gap: 3px; }
+    .brand-title { font-size: 19pt; font-weight: 900; color: #1E3A8A; white-space: nowrap; margin: 0; line-height: 1.1; letter-spacing: -0.3px; }
+    .brand-meta { font-size: 10pt; font-weight: 800; color: #334155; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .badge-rbd { background: #EFF6FF; color: #1D4ED8; padding: 2px 8px; border-radius: 4px; border: 1.5px solid #BFDBFE; font-weight: 900; }
 
     .time-module {
       display: flex; align-items: center; background: #0A0F1D; border-radius: var(--radius-md);
       padding: 6px 18px 6px 22px; gap: 20px; border: 2.5px solid #1E293B;
       box-shadow: 0 4px 16px rgba(10, 15, 29, 0.35);
     }
-    .date-display-text {
-      color: #F8FAFC; font-size: 13.5pt; font-weight: 800; text-transform: capitalize;
-      letter-spacing: 0.3px; white-space: nowrap;
-    }
+    .date-display-text { color: #F8FAFC; font-size: 13.5pt; font-weight: 800; text-transform: capitalize; letter-spacing: 0.3px; white-space: nowrap; }
 
-    .flip-clock-container { 
-      display: flex; align-items: center; gap: 8px;
-    }
+    .flip-clock-container { display: flex; align-items: center; gap: 8px; }
     .flip-card { 
       background: #111827; color: #FFFFFF; font-size: 25pt; font-weight: 900; 
       padding: 2px 12px; border-radius: 6px; min-width: 52px; text-align: center; line-height: 1.15; 
@@ -109,17 +93,13 @@
     }
     .flip-colon { color: #E2E8F0; font-size: 25pt; font-weight: 900; margin: 0 2px; line-height: 1; }
 
-    .main-workspace {
-      flex: 1; display: flex; gap: 8px; min-height: 0; width: 100%;
-    }
-
+    .main-workspace { flex: 1; display: flex; gap: 8px; min-height: 0; width: 100%; }
     main#plannerSection { flex: 1; display: flex; min-height: 0; min-width: 0; }
     .week-container { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; width: 100%; height: 100%; }
     
     .day-column { 
       border-radius: var(--radius-md); padding: 8px 8px; display: flex; flex-direction: column; gap: 6px; 
-      min-height: 0; overflow: hidden; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-      transition: all 0.2s ease;
+      min-height: 0; overflow: hidden; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04); transition: all 0.2s ease;
     }
     .day-lunes { background: var(--day-lunes-bg); border: 2px solid var(--day-lunes-border); }
     .day-martes { background: var(--day-martes-bg); border: 2px solid var(--day-martes-border); }
@@ -133,10 +113,7 @@
       box-shadow: var(--today-glow) !important; 
       background: #FFFFFF !important;
     }
-    .day-column.is-today .day-header {
-      background: #FEF9C3 !important;
-      border-color: #FACC15 !important;
-    }
+    .day-column.is-today .day-header { background: #FEF9C3 !important; border-color: #FACC15 !important; }
     
     .day-header { 
       text-align: center; padding: 6px 4px 7px 4px; border-radius: 8px;
@@ -170,59 +147,34 @@
     .task-card { 
       width: 100%; background: #FFFFFF; padding: 10px 12px; border-radius: var(--radius-sm);
       display: flex; flex-direction: column; gap: 5px; cursor: pointer;
-      border: 3px solid var(--border-subtle);
-      border-left: 9px solid var(--border-strong);
-      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-      transition: transform 0.1s ease, box-shadow 0.1s ease;
+      border: 3px solid var(--border-subtle); border-left: 9px solid var(--border-strong);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05); transition: transform 0.1s ease, box-shadow 0.1s ease;
     }
     .task-card:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.12); }
     
     .task-card.prio-alta { 
-      border-color: #FF003C !important; 
-      border-left: 10px solid var(--prio-alta-elec) !important; 
-      background: var(--prio-alta-bg) !important; 
-      box-shadow: 0 2px 10px var(--prio-alta-glow) !important;
+      border-color: #FF003C !important; border-left: 10px solid var(--prio-alta-elec) !important; 
+      background: var(--prio-alta-bg) !important; box-shadow: 0 2px 10px var(--prio-alta-glow) !important;
     } 
     .task-card.prio-media { 
-      border-color: #FFE600 !important; 
-      border-left: 10px solid var(--prio-media-elec) !important; 
-      background: var(--prio-media-bg) !important; 
-      box-shadow: 0 2px 10px var(--prio-media-glow) !important;
+      border-color: #FFE600 !important; border-left: 10px solid var(--prio-media-elec) !important; 
+      background: var(--prio-media-bg) !important; box-shadow: 0 2px 10px var(--prio-media-glow) !important;
     } 
     .task-card.prio-baja { 
-      border-color: #00E676 !important; 
-      border-left: 10px solid var(--prio-baja-elec) !important; 
-      background: var(--prio-baja-bg) !important; 
-      box-shadow: 0 2px 10px var(--prio-baja-glow) !important;
+      border-color: #00E676 !important; border-left: 10px solid var(--prio-baja-elec) !important; 
+      background: var(--prio-baja-bg) !important; box-shadow: 0 2px 10px var(--prio-baja-glow) !important;
     } 
     
-    .task-card.is-done { 
-      opacity: 0.88; 
-      background: #F8FAFC !important;
-    }
-    .task-card.is-done .card-title { 
-      text-decoration: line-through; 
-      color: #64748B !important; 
-    }
+    .task-card.is-done { opacity: 0.88; background: #F8FAFC !important; }
+    .task-card.is-done .card-title { text-decoration: line-through; color: #64748B !important; }
 
     .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
-    .card-title { 
-      font-size: 13.5pt; font-weight: 800; color: #000000; line-height: 1.3; flex: 1; min-width: 0; 
-      letter-spacing: 0.25px;
-    }
+    .card-title { font-size: 13.5pt; font-weight: 800; color: #000000; line-height: 1.3; flex: 1; min-width: 0; letter-spacing: 0.25px; }
     
     .card-badges { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
-    .card-time { 
-      font-size: 10.5pt; font-weight: 900; color: #1E3A8A; background: #DBEAFE; 
-      border: 1.5px solid #93C5FD; padding: 2px 8px; border-radius: 6px; white-space: nowrap; 
-    }
-    .card-time.time-nodefined { 
-      color: #475569; background: #F1F5F9; border-color: #CBD5E1; font-size: 9pt; font-weight: 800;
-    }
-    .card-files-badge { 
-      font-size: 9.5pt; font-weight: 900; color: #9A3412; background: #FFEDD5; 
-      border: 1.5px solid #FDBA74; padding: 2px 7px; border-radius: 6px; white-space: nowrap; 
-    }
+    .card-time { font-size: 10.5pt; font-weight: 900; color: #1E3A8A; background: #DBEAFE; border: 1.5px solid #93C5FD; padding: 2px 8px; border-radius: 6px; white-space: nowrap; }
+    .card-time.time-nodefined { color: #475569; background: #F1F5F9; border-color: #CBD5E1; font-size: 9pt; font-weight: 800; }
+    .card-files-badge { font-size: 9.5pt; font-weight: 900; color: #9A3412; background: #FFEDD5; border: 1.5px solid #FDBA74; padding: 2px 7px; border-radius: 6px; white-space: nowrap; }
     
     .card-sender { font-size: 9.5pt; color: #1E293B; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: 0.2px; }
     .empty-text { font-size: 10pt; color: #94A3B8; text-align: center; margin-top: 24px; font-weight: 800; }
@@ -233,13 +185,8 @@
       padding: 12px 10px; display: flex; flex-direction: column; gap: 8px;
       box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05); overflow-y: auto;
     }
-    .sidebar-separator {
-      border: 0; border-top: 1.5px dashed #CBD5E1; margin: 4px 0;
-    }
-    .sidebar-section-title {
-      font-size: 8pt; font-weight: 900; color: #475569; text-transform: uppercase;
-      letter-spacing: 0.6px; margin-bottom: 2px;
-    }
+    .sidebar-separator { border: 0; border-top: 1.5px dashed #CBD5E1; margin: 4px 0; }
+    .sidebar-section-title { font-size: 8pt; font-weight: 900; color: #475569; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 2px; }
 
     .btn-action-side {
       width: 100%; height: 40px !important; border-radius: var(--radius-sm);
@@ -647,7 +594,6 @@
       <div><label>Síntesis</label><textarea id="fDetalle" rows="2" placeholder="Resumen clave..."></textarea></div>
       <div><label>Acción Requerida</label><textarea id="fAccion" rows="2" placeholder="Ej: Notificar, Solicitar informe..."></textarea></div>
       
-      <!-- Subida acumulativa de archivos -->
       <div class="upload-box">
         <label style="margin:0; font-size:10.5pt;">📎 Subir documentos de respaldo (PDFs o Imágenes sin límite):</label>
         <input type="file" id="fArchivos" multiple accept="image/*,application/pdf" onchange="procesarArchivosManuales(this)" style="display:none;">
@@ -678,7 +624,7 @@
       </div>
 
       <div id="iaArchivoInfo" style="font-size:10pt; color:#1D4ED8; background:#EFF6FF; padding:8px 12px; border-radius:6px; display:none; border:2px solid #93C5FD;"></div>
-      <div id="iaEstado" style="font-size:11pt; color:#92400E; font-weight:bold; text-align:center; padding:10px; display:none; background:#FEF3C7; border-radius:6px; border:2px solid #FCD34D;">⚡ Analizando con Gemini 2.0 Flash...</div>
+      <div id="iaEstado" style="font-size:11pt; color:#92400E; font-weight:bold; text-align:center; padding:10px; display:none; background:#FEF3C7; border-radius:6px; border:2px solid #FCD34D;">⚡ Analizando con Gemini...</div>
       
       <div id="iaContenedorResultados" style="display:none; flex:1; display:flex; flex-direction:column; min-height:0;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
@@ -1140,7 +1086,6 @@
       selectPriority("Media");
     }
 
-    // Optimizado: 1024px para menor consumo de tokens de imagen
     async function procesarArchivosManuales(input) {
       if (!input.files || input.files.length === 0) return;
       for (let i = 0; i < input.files.length; i++) {
@@ -1561,7 +1506,7 @@
       dlAnchor.remove();
     }
 
-    // --- ASISTENTE AIA CON GEMINI FLASH ---
+    // --- ASISTENTE CON REDUCCIÓN DE TOKENS (GEMINI 2.5 FLASH) ---
     function abrirModalIA() { 
       if (!solicitarClaveAdminSiEsNecesario()) return;
       document.getElementById("iaContenedorResultados").style.display = "none";
@@ -1615,7 +1560,7 @@
       }
     })();
 
-    // Optimizado: maxDimension a 1024 reduce tokens de entrada de imágenes a la mitad
+    // AHORRO DE TOKENS: Compresión a 800px y calidad 0.65 (reducción de hasta un 60% en tokens de entrada)
     function optimizarYCodificarArchivo(file) {
       return new Promise((resolve, reject) => {
         if (!file.type.startsWith("image/")) {
@@ -1634,7 +1579,7 @@
             const canvas = document.createElement("canvas");
             let width = img.width;
             let height = img.height;
-            const maxDimension = 1024; // Mantiene OCR claro y ahorra tokens de visión
+            const maxDimension = 800;
 
             if (width > maxDimension || height > maxDimension) {
               if (width > height) {
@@ -1651,7 +1596,7 @@
             const ctx = canvas.getContext("2d");
             ctx.drawImage(img, 0, 0, width, height);
 
-            const dataUrl = canvas.toDataURL("image/jpeg", 0.75);
+            const dataUrl = canvas.toDataURL("image/jpeg", 0.65);
             resolve(dataUrl.substring(dataUrl.indexOf(',') + 1));
           };
           img.onerror = reject;
@@ -1725,7 +1670,7 @@
       const elEstado = document.getElementById("iaEstado");
       const elInfo = document.getElementById("iaArchivoInfo");
       elEstado.style.display = "block";
-      elEstado.textContent = "⚡ Analizando con Gemini 2.0 Flash...";
+      elEstado.textContent = "⚡ Analizando con Gemini...";
       document.getElementById("iaContenedorResultados").style.display = "none";
 
       try {
@@ -1748,21 +1693,21 @@
         elInfo.textContent = `📎 Documento cargado: ${nombresArchivos.join(", ")}`;
         elInfo.style.display = "block";
 
-        // Prompt conciso: reduce drásticamente tokens de entrada
+        // PROMPT ULTRA-COMPACTO: Reduce tokens de entrada y limita el formato
         const promptInstruccion = 
-          "Extrae eventos y reuniones escolares del documento en formato JSON estricto.\n" +
-          "Año base 2026. Fechas en formato YYYY-MM-DD. Hora obligatoria HH:MM.\n" +
-          "Esquema JSON:\n" +
-          "[{\"asunto\":\"Nombre evento\",\"organizador\":\"Entidad\",\"fecha\":\"2026-MM-DD\",\"hora\":\"09:00\",\"prioridad\":\"Alta/Media/Baja\",\"sintesis\":\"Resumen\",\"accion\":\"Acción requerida\"}]";
+          "Extrae compromisos escolares en formato JSON sin formato Markdown adicional.\n" +
+          "Año: 2026. Fecha: YYYY-MM-DD. Hora: HH:MM.\n" +
+          "[{\"asunto\":\"Título\",\"organizador\":\"Organiza\",\"fecha\":\"2026-MM-DD\",\"hora\":\"09:00\",\"prioridad\":\"Alta/Media/Baja\",\"sintesis\":\"Resumen breve\",\"accion\":\"Acción\"}]";
 
         const partesContenido = [{ text: promptInstruccion }, ...inlineParts];
 
+        // Se usa gemini-2.5-flash para resolver la indisponibilidad de la versión 2.0 y reducir costos
         const res = await fetch(API_URL, {
           method: "POST",
           headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify({
             accion: "analizar_con_gemini",
-            modelo: "gemini-2.0-flash",
+            modelo: "gemini-2.5-flash",
             partes: partesContenido,
             apiKey: GEMINI_API_KEY
           })
@@ -1940,7 +1885,6 @@
       cerrarModalIA();
       alert(`✅ ¡Se agendaron ${eventosDetectadosIA.length} evento(s) exitosamente! La vista se movió a su fecha.`);
 
-      // Sube los respaldos solo en la primera llamada para evitar duplicidad de carga en Sheets
       for (let i = 0; i < eventosDetectadosIA.length; i++) {
         const ev = eventosDetectadosIA[i];
         const fKey = parsearFecha(ev.fecha) || formatDateKey(new Date());
