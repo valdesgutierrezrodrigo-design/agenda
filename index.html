@@ -1507,7 +1507,7 @@
       dlAnchor.remove();
     }
 
-    // --- ASISTENTE CON REDUCCIÓN DE TOKENS (GEMINI 2.5 FLASH) ---
+    // --- ASISTENTE CON REDUCCIÓN DE TOKENS (GEMINI 3.8 FLASH) ---
     function abrirModalIA() { 
       if (!solicitarClaveAdminSiEsNecesario()) return;
       document.getElementById("iaContenedorResultados").style.display = "none";
@@ -1701,12 +1701,13 @@
 
         const partesContenido = [{ text: promptInstruccion }, ...inlineParts];
 
+        // Se usa gemini-3.8-flash solicitado por la API
         const res = await fetch(API_URL, {
           method: "POST",
           headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify({
             accion: "analizar_con_gemini",
-            modelo: "gemini-2.5-flash",
+            modelo: "gemini-3.8-flash",
             partes: partesContenido,
             apiKey: GEMINI_API_KEY
           })
