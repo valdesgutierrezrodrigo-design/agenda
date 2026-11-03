@@ -640,7 +640,6 @@
 
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbwjaCpLKeet-WXteRLicuov7oEaxuhRBHAvczJA_wS-9pFQa890_n7VAJm7fHHHwak/exec";
-    const GEMINI_API_KEY = "AQ.Ab8RN6LB-NIAelTRt0J4ebdrjfUDyA5BWDPD1N3taArdmJGeFA";
 
     const CLAVE_ADMIN = "25078";
     let esModoAdmin = false;
@@ -1507,7 +1506,7 @@
       dlAnchor.remove();
     }
 
-    // --- ASISTENTE CON REDUCCIÓN DE TOKENS (GEMINI 3.8 FLASH) ---
+    // --- ASISTENTE CON REDUCCIÓN DE TOKENS (GEMINI 3.8 FLASH VÍA SERVIDOR) ---
     function abrirModalIA() { 
       if (!solicitarClaveAdminSiEsNecesario()) return;
       document.getElementById("iaContenedorResultados").style.display = "none";
@@ -1701,15 +1700,14 @@
 
         const partesContenido = [{ text: promptInstruccion }, ...inlineParts];
 
-        // Se usa gemini-3.8-flash solicitado por la API
+        // La petición delega la llamada a Apps Script donde la clave está resguardada
         const res = await fetch(API_URL, {
           method: "POST",
           headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify({
             accion: "analizar_con_gemini",
             modelo: "gemini-3.8-flash",
-            partes: partesContenido,
-            apiKey: GEMINI_API_KEY
+            partes: partesContenido
           })
         });
 
