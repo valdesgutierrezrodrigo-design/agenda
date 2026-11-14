@@ -6,7 +6,6 @@
   <title>Agenda Carlos Condell - San Bernardo</title>
   <style>
     :root {
-      /* Paleta Ejecutiva Zinc & Blanco Puro */
       --bg-app: #FFFFFF;
       --surface-panel: #F4F4F5;
       --surface-header-day: #27272A;
@@ -17,7 +16,6 @@
       --text-main: #18181B;
       --text-muted: #52525B;
 
-      /* Prioridades en Color Eléctrico */
       --prio-alta-elec: #FF003C;
       --prio-alta-badge: #FFE4E6;
       --prio-alta-text: #BE123C;
@@ -32,7 +30,6 @@
       --prio-baja-badge: #D1FAE5;
       --prio-baja-text: #065F46;
 
-      /* Día actual y Feriados Chile */
       --today-elec-border: #EAB308;
       --today-glow: 0 0 0 2px rgba(234, 179, 8, 0.35);
       --feriado-red: #FF2E4C;
@@ -51,7 +48,6 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Barras de desplazamiento estilizadas (Lateral e Inferior) */
     ::-webkit-scrollbar {
       width: 8px;
       height: 8px;
@@ -81,7 +77,6 @@
       overflow: hidden; 
     }
     
-    /* ENCABEZADO SUPERIOR FINO Y ELEGANTE */
     header { 
       display: flex; align-items: center; justify-content: space-between;
       background: var(--surface-panel);
@@ -109,7 +104,6 @@
     }
     .flip-colon { color: #A1A1AA; font-size: 13pt; font-weight: 800; margin: 0 1px; line-height: 1; }
 
-    /* ÁREA DE TRABAJO PRINCIPAL SOBRE FONDO BLANCO */
     .main-workspace { 
       flex: 1; 
       display: flex; 
@@ -137,7 +131,6 @@
       height: 100%; 
     }
     
-    /* COLUMNAS DIARIAS EN GRIS PERLA NEUTRO */
     .day-column { 
       background: var(--surface-panel);
       border-radius: var(--radius-md); padding: 6px; display: flex; flex-direction: column; gap: 5px; 
@@ -152,7 +145,6 @@
       background: #FAFAFA !important;
     }
     
-    /* ENCABEZADO DEL DÍA EN GRAFITO OSCURO ELEGANTE */
     .day-header { 
       text-align: center; padding: 6px 8px; border-radius: 8px;
       background: var(--surface-header-day);
@@ -162,7 +154,6 @@
     .day-name { font-size: 10pt; font-weight: 700; letter-spacing: 0.2px; color: #FFFFFF; }
     .day-number { font-size: 8.5pt; font-weight: 600; color: #D4D4D8; }
     
-    /* Feriados Chile en Rojo */
     .day-header.is-holiday { background: #991B1B !important; }
     .text-red { color: #FECACA !important; }
     
@@ -177,7 +168,6 @@
       overflow-y: auto; overflow-x: hidden; padding-right: 2px;
     }
     
-    /* TARJETAS DE EVENTOS COMPACTAS, BLANCAS Y CON ACENTO ELÉCTRICO LATERAL */
     .task-card { 
       width: 100%; background: var(--surface-card); padding: 6px 8px; border-radius: var(--radius-sm);
       display: flex; flex-direction: column; gap: 3px; cursor: pointer;
@@ -190,20 +180,13 @@
       border-color: #A1A1AA;
     }
     
-    .task-card.prio-alta { 
-      border-left: 5px solid var(--prio-alta-elec) !important; 
-    } 
-    .task-card.prio-media { 
-      border-left: 5px solid var(--prio-media-elec) !important; 
-    } 
-    .task-card.prio-baja { 
-      border-left: 5px solid var(--prio-baja-elec) !important; 
-    } 
+    .task-card.prio-alta { border-left: 5px solid var(--prio-alta-elec) !important; } 
+    .task-card.prio-media { border-left: 5px solid var(--prio-media-elec) !important; } 
+    .task-card.prio-baja { border-left: 5px solid var(--prio-baja-elec) !important; } 
     
     .task-card.is-done { opacity: 0.55; background: #F4F4F5 !important; }
     .task-card.is-done .card-title { text-decoration: line-through; color: #71717A !important; }
 
-    /* Fila 1 ultra-compacta: Hora + Organizador + Check */
     .card-meta-row {
       display: flex; justify-content: space-between; align-items: center; gap: 4px; width: 100%;
     }
@@ -239,7 +222,6 @@
     .btn-quick-check:hover { border-color: #18181B; color: #18181B; transform: scale(1.05); }
     .btn-quick-check.done { background: #10B981; border-color: #059669; color: #FFFFFF; }
 
-    /* Fila 2: Título en Tipo oración (9.5pt) limpio */
     .card-title { 
       font-size: 9.5pt; font-weight: 600; color: #18181B; line-height: 1.25; 
       width: 100%; letter-spacing: -0.1px; 
@@ -248,7 +230,6 @@
 
     .empty-text { font-size: 8.5pt; color: #71717A; text-align: center; margin-top: 20px; font-weight: 500; }
 
-    /* BARRA LATERAL CON BOTONES DE BORDES FRESCOS Y REFINADOS */
     .sidebar-actions {
       width: 200px; flex-shrink: 0; background: var(--surface-panel);
       border: 1px solid var(--border-medium); border-radius: var(--radius-md);
@@ -275,9 +256,7 @@
       transform: translateY(-1px);
       box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08), 0 0 0 2px rgba(100, 116, 139, 0.12) !important;
     }
-    .btn-action-side:active:not(:disabled) {
-      transform: translateY(0);
-    }
+    .btn-action-side:active:not(:disabled) { transform: translateY(0); }
     .btn-action-side:disabled { opacity: 0.45; cursor: not-allowed; }
     .btn-icon-lg { font-size: 10.5pt; line-height: 1; }
     
@@ -348,7 +327,6 @@
     .search-item { padding: 7px 10px; border-bottom: 1px solid #E4E4E7; cursor: pointer; display: flex; flex-direction: column; gap: 1px; }
     .search-item:hover { background: #F4F4F5; }
 
-    /* MODALES EN ESCALA DE GRISES */
     .modal-overlay { position: fixed; inset: 0; background: rgba(24, 24, 27, 0.55); display: none; align-items: center; justify-content: center; padding: 14px; z-index: 1000; backdrop-filter: blur(2px); overflow: auto; }
     
     .modal-assistant { 
@@ -706,7 +684,9 @@
   </div>
 
   <script>
-    const API_URL = ["https://script", "google", "com/macros/s/AKfycbwjaCpLKeet-WXteRLicuov7oEaxuhRBHAvczJA_wS-9pFQa890_n7VAJm7fHHHwak/exec"].join(".");
+    // Construcción segura sin protocolo explícito para evitar enlaces rotos al copiar
+    const PROTO = "https" + "://";
+    const API_URL = PROTO + ["script", "google", "com"].join(".") + "/macros/s/AKfycbwjaCpLKeet-WXteRLicuov7oEaxuhRBHAvczJA_wS-9pFQa890_n7VAJm7fHHHwak/exec";
 
     const CLAVE_ADMIN = "25078";
     let esModoAdmin = false;
@@ -719,34 +699,38 @@
       "2026-11-01": "Todos los Santos", "2026-12-08": "Inmaculada Concepción", "2026-12-25": "Navidad"
     };
 
-    const SIGLAS_OFICIALES = [
-      "UTP", "UPT", "PIE", "DIA", "SIMCE", "PAES", "SLEP", "MINEDUC", "RBD", 
-      "ACHS", "JUNAEB", "SEP", "PME", "PEI", "DEMRE", "SIGE", "CRA", "ATP", 
-      "NT1", "NT2", "1°", "2°", "3°", "4°", "5°", "6°", "7°", "8°", "I", "II", "III", "IV"
-    ];
+    const MAPA_SIGLAS = {
+      "utp": "UTP", "upt": "UPT", "pie": "PIE", "dia": "DIA", "simce": "SIMCE",
+      "paes": "PAES", "slep": "SLEP", "mineduc": "Mineduc", "rbd": "RBD",
+      "achs": "ACHS", "junaeb": "Junaeb", "sep": "SEP", "pme": "PME",
+      "pei": "PEI", "demre": "DEMRE", "sige": "SIGE", "cra": "CRA", "atp": "ATP"
+    };
 
     function formatearTipoOracion(texto) {
       if (!texto) return "";
       let s = String(texto).trim();
       if (!s) return "";
 
-      const letras = s.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ]/g, "");
-      if (letras.length > 2) {
-        const mayus = letras.replace(/[^A-ZÁÉÍÓÚÑÜ]/g, "").length;
-        if (mayus / letras.length > 0.55) {
+      const soloLetras = s.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ]/g, "");
+      if (soloLetras.length > 2) {
+        const cantMayus = soloLetras.replace(/[^A-ZÁÉÍÓÚÑÜ]/g, "").length;
+        if (cantMayus / soloLetras.length > 0.5) {
           s = s.toLowerCase();
         }
       }
 
       s = s.charAt(0).toUpperCase() + s.slice(1);
-      s = s.replace(/([.!?]\s+)([a-záéíóúñü])/g, (m, p1, p2) => p1 + p2.toUpperCase());
 
-      SIGLAS_OFICIALES.forEach(sigla => {
-        const regex = new RegExp(`\\b${sigla}\\b`, "gi");
-        s = s.replace(regex, sigla);
-      });
-
-      return s;
+      return s.split(" ").map((palabra, index) => {
+        const limpia = palabra.replace(/[.,:;()!?]/g, "").toLowerCase();
+        if (MAPA_SIGLAS[limpia]) {
+          return palabra.replace(new RegExp(limpia, "i"), MAPA_SIGLAS[limpia]);
+        }
+        if (index === 0 && palabra.length > 0) {
+          return palabra.charAt(0).toUpperCase() + palabra.slice(1);
+        }
+        return palabra;
+      }).join(" ");
     }
 
     let tasks = [];
@@ -776,6 +760,7 @@
     function actualizarModoUI() {
       const badge = document.getElementById("modeBadge");
       const footerActions = document.getElementById("detailActionFooter");
+      if (!badge) return;
 
       if (esModoAdmin) {
         badge.textContent = "🔓 Modo edición";
@@ -884,6 +869,103 @@
       const texto = `${row.asunto || row[4] || ''} ${row.remitente || row[5] || ''} ${row.sintesis || row[6] || ''}`.toLowerCase();
       const palabrasPersonales = ["veterinario", "mascota", "ramon", "ramona", "jackson", "compra personal", "medico personal", "dentista", "casa", "familia"];
       return palabrasPersonales.some(p => texto.includes(p));
+    }
+
+    function obtenerFechasRango(fechaInicioStr, fechaFinStr) {
+      const lista = [];
+      if (!fechaInicioStr) return lista;
+      if (!fechaFinStr || fechaFinStr < fechaInicioStr) {
+        lista.push(fechaInicioStr);
+        return lista;
+      }
+      let curr = new Date(fechaInicioStr + "T00:00:00");
+      const fin = new Date(fechaFinStr + "T00:00:00");
+      while (curr <= fin) {
+        lista.push(formatDateKey(curr));
+        curr.setDate(curr.getDate() + 1);
+      }
+      return lista;
+    }
+
+    function renderCalendar() {
+      const grid = document.getElementById("daysGrid");
+      if (!grid) return;
+      grid.innerHTML = "";
+      const todayKey = formatDateKey(new Date());
+      const weekDates = [];
+      
+      for (let i = 0; i < 5; i++) {
+        const d = new Date(currentMonday);
+        d.setDate(currentMonday.getDate() + i);
+        weekDates.push(d);
+      }
+
+      const label = document.getElementById('dateLabel');
+      if (label) label.textContent = `${weekDates[0].getDate()} ${monthNames[weekDates[0].getMonth()]} - ${weekDates[4].getDate()} ${monthNames[weekDates[4].getMonth()]}`;
+
+      weekDates.forEach((d, idx) => {
+        const key = formatDateKey(d);
+        const hol = holidaysChile[key];
+        const isRed = Boolean(hol);
+        const isToday = (key === todayKey);
+
+        const col = document.createElement("div");
+        col.className = `day-column ${isToday ? 'is-today' : ''}`;
+        let badgeHtml = hol ? `<span class="badge-tag">${hol}</span>` : '';
+        if (isToday) badgeHtml += `<span class="badge-today">★ Hoy</span>`;
+
+        col.innerHTML = `
+          <div class="day-header ${isRed ? 'is-holiday' : ''}">
+            <div style="display:flex; align-items:baseline; gap:6px;">
+              <span class="day-name">${dayNames[idx]}</span>
+              <span class="day-number ${isRed ? 'text-red' : ''}">${d.getDate()} ${monthNames[d.getMonth()]}</span>
+            </div>
+            ${badgeHtml}
+          </div>
+          <div class="cards-container" id="list-${key}"></div>
+        `;
+
+        const list = col.querySelector(`#list-${key}`);
+        const dayTasks = tasks.filter(t => t.date === key && (t.category || "Laboral").toLowerCase() === "laboral");
+        dayTasks.sort((a, b) => (a.timeMinutos || 0) - (b.timeMinutos || 0));
+
+        if (dayTasks.length === 0) {
+          list.innerHTML = '<span class="empty-text">Sin compromisos</span>';
+        } else {
+          dayTasks.forEach(t => {
+            const card = document.createElement("div");
+            let prioClass = t.priority === "Alta" ? "prio-alta" : (t.priority === "Baja" ? "prio-baja" : "prio-media");
+            card.className = `task-card ${prioClass} ${t.status === "managed" ? 'is-done' : ''}`;
+            card.onclick = () => openDetail(t.id);
+            
+            let badgeHora = (t.time && t.time !== "00:00")
+              ? `<span class="card-time">${t.time}</span>`
+              : `<span class="card-time">Por definir</span>`;
+
+            const badgeClip = (t.respaldos && t.respaldos.length > 0)
+              ? `<span class="card-files-badge" title="${t.respaldos.length} adjunto(s)">📎${t.respaldos.length}</span>`
+              : '';
+
+            const tituloFormateado = formatearTipoOracion(t.subject);
+            const remitenteFormateado = formatearTipoOracion(t.sender || 'General');
+
+            card.innerHTML = `
+              <div class="card-meta-row">
+                <div class="card-meta-left">
+                  ${badgeHora}
+                  <span class="card-sender">${remitenteFormateado}</span>
+                  ${badgeClip}
+                </div>
+                <button type="button" class="btn-quick-check ${t.status === 'managed' ? 'done' : ''}" title="Marcar realizado / pendiente" onclick="event.stopPropagation(); toggleRealizadoDirecto('${t.id}')">✓</button>
+              </div>
+              <div class="card-title">${tituloFormateado}</div>
+            `;
+            list.appendChild(card);
+          });
+        }
+        grid.appendChild(col);
+      });
+      actualizarModoUI();
     }
 
     async function sincronizarDesdeSheets() {
@@ -1002,87 +1084,6 @@
       document.getElementById('prioAlta').className = "btn-prio" + (prio === "Alta" ? " selected-alta" : "");
       document.getElementById('prioMedia').className = "btn-prio" + (prio === "Media" ? " selected-media" : "");
       document.getElementById('prioBaja').className = "btn-prio" + (prio === "Baja" ? " selected-baja" : "");
-    }
-
-    function renderCalendar() {
-      const grid = document.getElementById("daysGrid");
-      if (!grid) return;
-      grid.innerHTML = "";
-      const todayKey = formatDateKey(new Date());
-      const weekDates = [];
-      
-      for (let i = 0; i < 5; i++) {
-        const d = new Date(currentMonday);
-        d.setDate(currentMonday.getDate() + i);
-        weekDates.push(d);
-      }
-
-      const label = document.getElementById('dateLabel');
-      if (label) label.textContent = `${weekDates[0].getDate()} ${monthNames[weekDates[0].getMonth()]} - ${weekDates[4].getDate()} ${monthNames[weekDates[4].getMonth()]}`;
-
-      weekDates.forEach((d, idx) => {
-        const key = formatDateKey(d);
-        const hol = holidaysChile[key];
-        const isRed = Boolean(hol);
-        const isToday = (key === todayKey);
-
-        const col = document.createElement("div");
-        col.className = `day-column ${isToday ? 'is-today' : ''}`;
-        let badgeHtml = hol ? `<span class="badge-tag">${hol}</span>` : '';
-        if (isToday) badgeHtml += `<span class="badge-today">★ Hoy</span>`;
-
-        col.innerHTML = `
-          <div class="day-header ${isRed ? 'is-holiday' : ''}">
-            <div style="display:flex; align-items:baseline; gap:6px;">
-              <span class="day-name">${dayNames[idx]}</span>
-              <span class="day-number ${isRed ? 'text-red' : ''}">${d.getDate()} ${monthNames[d.getMonth()]}</span>
-            </div>
-            ${badgeHtml}
-          </div>
-          <div class="cards-container" id="list-${key}"></div>
-        `;
-
-        const list = col.querySelector(`#list-${key}`);
-        const dayTasks = tasks.filter(t => t.date === key && (t.category || "Laboral").toLowerCase() === "laboral");
-        dayTasks.sort((a, b) => (a.timeMinutos || 0) - (b.timeMinutos || 0));
-
-        if (dayTasks.length === 0) {
-          list.innerHTML = '<span class="empty-text">Sin compromisos</span>';
-        } else {
-          dayTasks.forEach(t => {
-            const card = document.createElement("div");
-            let prioClass = t.priority === "Alta" ? "prio-alta" : (t.priority === "Baja" ? "prio-baja" : "prio-media");
-            card.className = `task-card ${prioClass} ${t.status === "managed" ? 'is-done' : ''}`;
-            card.onclick = () => openDetail(t.id);
-            
-            let badgeHora = (t.time && t.time !== "00:00")
-              ? `<span class="card-time">${t.time}</span>`
-              : `<span class="card-time">Por definir</span>`;
-
-            const badgeClip = (t.respaldos && t.respaldos.length > 0)
-              ? `<span class="card-files-badge" title="${t.respaldos.length} adjunto(s)">📎${t.respaldos.length}</span>`
-              : '';
-
-            const tituloFormateado = formatearTipoOracion(t.subject);
-            const remitenteFormateado = formatearTipoOracion(t.sender || 'General');
-
-            card.innerHTML = `
-              <div class="card-meta-row">
-                <div class="card-meta-left">
-                  ${badgeHora}
-                  <span class="card-sender">${remitenteFormateado}</span>
-                  ${badgeClip}
-                </div>
-                <button type="button" class="btn-quick-check ${t.status === 'managed' ? 'done' : ''}" title="Marcar realizado / pendiente" onclick="event.stopPropagation(); toggleRealizadoDirecto('${t.id}')">✓</button>
-              </div>
-              <div class="card-title">${tituloFormateado}</div>
-            `;
-            list.appendChild(card);
-          });
-        }
-        grid.appendChild(col);
-      });
-      actualizarModoUI();
     }
 
     function openDetail(id) {
@@ -1218,22 +1219,6 @@
       }
       const existe = tasks.some(t => t.date === fecha && normalizarTexto(t.subject) === asunto && t.id !== editEventId);
       aviso.style.display = existe ? "block" : "none";
-    }
-
-    function obtenerFechasRango(fechaInicioStr, fechaFinStr) {
-      const lista = [];
-      if (!fechaInicioStr) return lista;
-      if (!fechaFinStr || fechaFinStr < fechaInicioStr) {
-        lista.push(fechaInicioStr);
-        return lista;
-      }
-      let curr = new Date(fechaInicioStr + "T00:00:00");
-      const fin = new Date(fechaFinStr + "T00:00:00");
-      while (curr <= fin) {
-        lista.push(formatDateKey(curr));
-        curr.setDate(curr.getDate() + 1);
-      }
-      return lista;
     }
 
     async function guardarEventoManual() {
@@ -1605,7 +1590,6 @@
       dlAnchor.remove();
     }
 
-    // --- ASISTENTE CON EXTRACCIÓN LOCAL DE PDF Y MOTOR GROQ + GEMINI ---
     function abrirModalIA() { 
       if (!solicitarClaveAdminSiEsNecesario()) return;
       document.getElementById("iaContenedorResultados").style.display = "none";
@@ -1792,7 +1776,7 @@
     async function cargarPdfIA() {
       if (window.pdfjsLib) return window.pdfjsLib;
       if (!window.promesaPdfIA) window.promesaPdfIA = new Promise((resolve, reject) => {
-        const baseCdn = ["https://cdnjs", "cloudflare", "com/ajax/libs/pdf.js/3.11.174/"].join(".");
+        const baseCdn = PROTO + ["cdnjs", "cloudflare", "com"].join(".") + "/ajax/libs/pdf.js/3.11.174/";
         const t = document.createElement('script');
         t.src = baseCdn + "pdf.min.js";
         t.onload = () => {
