@@ -10,7 +10,7 @@
 
   <style>
     :root {
-      /* Paleta Ejecutiva Zinc & Blanco Puro (Limpia, neutra y elegante) */
+      /* Paleta Ejecutiva Zinc & Blanco Puro */
       --bg-app: #FFFFFF;
       --surface-panel: #F4F4F5;
       --surface-header-day: #27272A;
@@ -21,7 +21,7 @@
       --text-main: #18181B;
       --text-muted: #52525B;
 
-      /* Prioridades en Color Eléctrico (Acento limpio lateral) */
+      /* Prioridades en Color Eléctrico */
       --prio-alta-elec: #FF003C;
       --prio-alta-badge: #FFE4E6;
       --prio-alta-text: #BE123C;
@@ -41,9 +41,9 @@
       --today-glow: 0 0 0 2px rgba(234, 179, 8, 0.35);
       --feriado-red: #FF2E4C;
 
-      --radius-sm: 6px;
-      --radius-md: 10px;
-      --radius-lg: 14px;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
     }
 
     * { 
@@ -97,10 +97,10 @@
     .brand-block { display: flex; align-items: baseline; gap: 12px; }
     .brand-title { font-family: 'Lexend', sans-serif; font-size: 14.5pt; font-weight: 800; color: #18181B; white-space: nowrap; margin: 0; letter-spacing: -0.3px; }
     .brand-meta { font-size: 8.5pt; font-weight: 700; color: #52525B; display: flex; align-items: center; gap: 6px; letter-spacing: 0.2px; }
-    .badge-rbd { background: #27272A; color: #FFFFFF; padding: 2px 7px; border-radius: 4px; font-weight: 800; font-size: 8pt; }
+    .badge-rbd { background: #27272A; color: #FFFFFF; padding: 2px 7px; border-radius: 5px; font-weight: 800; font-size: 8pt; }
 
     .time-module {
-      display: flex; align-items: center; background: #18181B; border-radius: 8px;
+      display: flex; align-items: center; background: #18181B; border-radius: 10px;
       padding: 4px 12px 4px 16px; gap: 14px; border: 1px solid #3F3F46;
     }
     .date-display-text { color: #E4E4E7; font-size: 9.5pt; font-weight: 600; letter-spacing: 0.2px; white-space: nowrap; }
@@ -108,7 +108,7 @@
     .flip-clock-container { display: flex; align-items: center; gap: 4px; }
     .flip-card { 
       background: #27272A; color: #FFFFFF; font-family: 'Lexend', sans-serif; font-size: 13pt; font-weight: 800; 
-      padding: 2px 7px; border-radius: 5px; min-width: 34px; text-align: center; line-height: 1.1; 
+      padding: 2px 7px; border-radius: 6px; min-width: 34px; text-align: center; line-height: 1.1; 
       border: 1px solid #52525B;
     }
     .flip-colon { color: #A1A1AA; font-size: 13pt; font-weight: 800; margin: 0 1px; line-height: 1; }
@@ -156,9 +156,9 @@
       background: #FAFAFA !important;
     }
     
-    /* ENCABEZADO DEL DÍA EN GRAFITO OSCURO ELEGANTE (Tipo oración) */
+    /* ENCABEZADO DEL DÍA EN GRAFITO OSCURO ELEGANTE */
     .day-header { 
-      text-align: center; padding: 6px 8px; border-radius: 7px;
+      text-align: center; padding: 6px 8px; border-radius: 8px;
       background: var(--surface-header-day);
       flex-shrink: 0; display: flex; align-items: center; justify-content: space-between;
     }
@@ -170,10 +170,10 @@
     .day-header.is-holiday { background: #991B1B !important; }
     .text-red { color: #FECACA !important; }
     
-    .badge-tag { font-size: 7.5pt; padding: 1px 6px; border-radius: 4px; background: #FEE2E2; color: #991B1B; font-weight: 700; }
+    .badge-tag { font-size: 7.5pt; padding: 1px 6px; border-radius: 5px; background: #FEE2E2; color: #991B1B; font-weight: 700; }
     .badge-today { 
       background: #FFE600 !important; color: #000000 !important; 
-      font-weight: 800 !important; font-size: 7.5pt; padding: 1px 6px; border-radius: 4px;
+      font-weight: 800 !important; font-size: 7.5pt; padding: 1px 6px; border-radius: 5px;
     }
     
     .cards-container { 
@@ -185,12 +185,12 @@
     .task-card { 
       width: 100%; background: var(--surface-card); padding: 6px 8px; border-radius: var(--radius-sm);
       display: flex; flex-direction: column; gap: 3px; cursor: pointer;
-      border: 1px solid var(--border-medium); border-left: 5px solid #71717A;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.04); transition: all 0.12s ease;
+      border: 1px solid #D4D4D8; border-left: 5px solid #71717A;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04); transition: all 0.15s ease;
     }
     .task-card:hover { 
       transform: translateY(-1px); 
-      box-shadow: 0 3px 8px rgba(0,0,0,0.09); 
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08); 
       border-color: #A1A1AA;
     }
     
@@ -207,7 +207,7 @@
     .task-card.is-done { opacity: 0.55; background: #F4F4F5 !important; }
     .task-card.is-done .card-title { text-decoration: line-through; color: #71717A !important; }
 
-    /* Fila 1 ultra-compacta: Hora + Organizador + Check en una sola línea */
+    /* Fila 1 ultra-compacta: Hora + Organizador + Check */
     .card-meta-row {
       display: flex; justify-content: space-between; align-items: center; gap: 4px; width: 100%;
     }
@@ -217,7 +217,7 @@
     
     .card-time { 
       font-size: 7.5pt; font-weight: 700; color: #27272A; background: #F4F4F5; 
-      border: 1px solid #D4D4D8; padding: 1px 5px; border-radius: 4px; white-space: nowrap; flex-shrink: 0;
+      border: 1px solid #D4D4D8; padding: 1px 5px; border-radius: 5px; white-space: nowrap; flex-shrink: 0;
     }
     .prio-alta .card-time { background: var(--prio-alta-badge); color: var(--prio-alta-text); border-color: #FECDD3; }
     .prio-media .card-time { background: var(--prio-media-badge); color: var(--prio-media-text); border-color: #FEF08A; }
@@ -230,16 +230,17 @@
 
     .card-files-badge { 
       font-size: 7.5pt; font-weight: 700; color: #3F3F46; background: #E4E4E7; 
-      padding: 0px 4px; border-radius: 3px; white-space: nowrap; flex-shrink: 0;
+      padding: 0px 4px; border-radius: 4px; white-space: nowrap; flex-shrink: 0;
     }
     
     .btn-quick-check {
-      width: 17px; height: 17px; border-radius: 4px; border: 1px solid #A1A1AA;
+      width: 18px; height: 18px; border-radius: 5px; border: 1.5px solid #CBD5E1;
       background: #FFFFFF; color: #71717A; font-weight: 800; font-size: 8pt;
       display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
-      transition: all 0.12s ease; flex-shrink: 0;
+      transition: all 0.15s ease; flex-shrink: 0;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
     }
-    .btn-quick-check:hover { border-color: #18181B; color: #18181B; }
+    .btn-quick-check:hover { border-color: #18181B; color: #18181B; transform: scale(1.05); }
     .btn-quick-check.done { background: #10B981; border-color: #059669; color: #FFFFFF; }
 
     /* Fila 2: Título en Tipo oración (9.5pt) limpio */
@@ -251,56 +252,110 @@
 
     .empty-text { font-size: 8.5pt; color: #71717A; text-align: center; margin-top: 20px; font-weight: 500; }
 
-    /* BARRA LATERAL DERECHA FINA EN GRIS ZINC (Tipo oración) */
+    /* BARRA LATERAL CON BOTONES DE BORDES FRESCOS Y REFINADOS */
     .sidebar-actions {
-      width: 195px; flex-shrink: 0; background: var(--surface-panel);
+      width: 200px; flex-shrink: 0; background: var(--surface-panel);
       border: 1px solid var(--border-medium); border-radius: var(--radius-md);
-      padding: 8px; display: flex; flex-direction: column; gap: 5px;
+      padding: 10px; display: flex; flex-direction: column; gap: 7px;
       overflow-y: auto; overflow-x: hidden;
     }
-    .sidebar-separator { border: 0; border-top: 1px solid #E4E4E7; margin: 2px 0; }
-    .sidebar-section-title { font-size: 7.5pt; font-weight: 700; color: #52525B; letter-spacing: 0.2px; margin-bottom: 1px; }
+    .sidebar-separator { border: 0; border-top: 1px solid #E4E4E7; margin: 3px 0; }
+    .sidebar-section-title { font-size: 7.5pt; font-weight: 700; color: #52525B; letter-spacing: 0.2px; margin-bottom: 1px; padding-left: 2px; }
 
+    /* Botones con bordes táctiles modernos, bisel interior blanco y sombra suave */
     .btn-action-side {
-      width: 100%; min-height: 32px !important; border-radius: var(--radius-sm);
-      font-size: 8.5pt !important; font-weight: 600 !important; cursor: pointer;
-      display: inline-flex; align-items: center; justify-content: flex-start; gap: 7px;
-      padding: 3px 9px !important; transition: all 0.12s ease; white-space: nowrap;
-      border: 1px solid var(--border-medium) !important; background: #FFFFFF !important; color: #18181B !important;
+      width: 100%; min-height: 36px !important; border-radius: 10px;
+      font-size: 8.8pt !important; font-weight: 600 !important; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: flex-start; gap: 8px;
+      padding: 4px 11px !important; transition: all 0.16s cubic-bezier(0.2, 0.8, 0.2, 1); white-space: nowrap;
+      border: 1.5px solid #CBD5E1 !important;
+      background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%) !important;
+      color: #18181B !important;
+      box-shadow: 0 2px 4px rgba(15, 23, 42, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
       text-decoration: none;
     }
-    .btn-action-side:hover:not(:disabled) { background: #E4E4E7 !important; border-color: #A1A1AA !important; }
+    .btn-action-side:hover:not(:disabled) { 
+      background: #FFFFFF !important; 
+      border-color: #64748B !important; 
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08), 0 0 0 2px rgba(100, 116, 139, 0.12) !important;
+    }
+    .btn-action-side:active:not(:disabled) {
+      transform: translateY(0);
+    }
     .btn-action-side:disabled { opacity: 0.45; cursor: not-allowed; }
-    .btn-icon-lg { font-size: 10pt; line-height: 1; }
+    .btn-icon-lg { font-size: 10.5pt; line-height: 1; }
     
+    /* Botón Principal (+ Nuevo evento) con borde grafito brillante */
     .btn-side-nuevo { 
-      background: #27272A !important; 
-      border-color: #18181B !important; color: #FFFFFF !important; font-weight: 700 !important; 
+      background: linear-gradient(180deg, #27272A 0%, #18181B 100%) !important; 
+      border: 1.5px solid #3F3F46 !important; 
+      color: #FFFFFF !important; 
+      font-weight: 700 !important; 
+      box-shadow: 0 3px 8px rgba(24, 24, 27, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
     }
-    .btn-side-nuevo:hover:not(:disabled) { background: #3F3F46 !important; }
+    .btn-side-nuevo:hover:not(:disabled) { 
+      background: linear-gradient(180deg, #3F3F46 0%, #27272A 100%) !important; 
+      border-color: #18181B !important;
+      box-shadow: 0 5px 12px rgba(24, 24, 27, 0.25), 0 0 0 2px rgba(39, 39, 42, 0.2) !important;
+    }
 
+    /* Botón Asistente AIA con borde fresco azulado sutil */
+    .btn-side-ia {
+      border-color: #93C5FD !important;
+      background: linear-gradient(180deg, #FFFFFF 0%, #EFF6FF 100%) !important;
+    }
+    .btn-side-ia:hover:not(:disabled) {
+      border-color: #3B82F6 !important;
+      box-shadow: 0 4px 10px rgba(59, 130, 246, 0.14), 0 0 0 2px rgba(59, 130, 246, 0.15) !important;
+    }
+
+    /* Candado de Seguridad con borde redondeado fresco */
     .mode-badge-side {
-      width: 100%; min-height: 32px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      border-radius: var(--radius-sm); font-size: 8.5pt; font-weight: 700; border: 1px solid var(--border-medium);
-      cursor: pointer; user-select: none;
+      width: 100%; min-height: 36px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      border-radius: 10px; font-size: 8.8pt; font-weight: 700; 
+      border: 1.5px solid #CBD5E1;
+      box-shadow: 0 2px 4px rgba(15, 23, 42, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      cursor: pointer; user-select: none; transition: all 0.16s ease;
     }
-    .mode-badge-side.admin { background: #D1FAE5; color: #065F46; border-color: #34D399; }
-    .mode-badge-side.readonly { background: #FFFFFF; color: #3F3F46; border-color: var(--border-medium); }
+    .mode-badge-side:hover {
+      transform: translateY(-1px);
+      border-color: #64748B;
+    }
+    .mode-badge-side.admin { background: linear-gradient(180deg, #ECFDF5 0%, #D1FAE5 100%); color: #065F46; border-color: #34D399; }
+    .mode-badge-side.readonly { background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%); color: #3F3F46; border-color: #CBD5E1; }
 
+    /* Caja de Navegación Semanal */
     .sidebar-nav-dates {
-      display: flex; flex-direction: column; gap: 4px; background: #FFFFFF;
-      border: 1px solid var(--border-medium); padding: 5px; border-radius: var(--radius-sm);
+      display: flex; flex-direction: column; gap: 6px; background: #FFFFFF;
+      border: 1.5px solid #CBD5E1; padding: 7px; border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(15, 23, 42, 0.03);
     }
     .date-label-side { font-size: 8.5pt; font-weight: 800; color: #18181B; text-align: center; }
     .nav-arrow-group { display: flex; gap: 4px; justify-content: space-between; }
-    .nav-arrow-group button { flex: 1; min-height: 26px !important; font-size: 8pt !important; padding: 0 !important; justify-content: center !important; background: #F4F4F5 !important; }
+    .nav-arrow-group button { 
+      flex: 1; min-height: 28px !important; font-size: 8pt !important; padding: 0 !important; 
+      justify-content: center !important; border-radius: 7px !important;
+      background: linear-gradient(180deg, #FAFAFA 0%, #F4F4F5 100%) !important;
+      border: 1.5px solid #D4D4D8 !important;
+    }
+    .nav-arrow-group button:hover {
+      border-color: #52525B !important;
+      background: #FFFFFF !important;
+    }
 
+    /* Buscador con borde fresco */
     .search-wrapper-side { position: relative; width: 100%; }
-    .search-input-side { width: 100%; height: 32px; padding: 0 8px 0 26px; font-size: 8.5pt; font-weight: 600; color: #18181B; border: 1px solid var(--border-medium); border-radius: var(--radius-sm); outline: none; background: #FFFFFF; }
-    .search-input-side:focus { border-color: #27272A; }
-    .search-icon-side { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-size: 8.5pt; color: var(--text-muted); pointer-events: none; }
-    .search-results-side { position: absolute; bottom: calc(100% + 4px); left: 0; right: 0; background: #FFFFFF; border: 1px solid #71717A; border-radius: var(--radius-sm); max-height: 220px; overflow-y: auto; box-shadow: 0 -6px 18px rgba(0,0,0,0.12); z-index: 50; display: none; }
-    .search-item { padding: 6px 9px; border-bottom: 1px solid #E4E4E7; cursor: pointer; display: flex; flex-direction: column; gap: 1px; }
+    .search-input-side { 
+      width: 100%; height: 35px; padding: 0 10px 0 28px; font-size: 8.5pt; font-weight: 600; 
+      color: #18181B; border: 1.5px solid #CBD5E1; border-radius: 10px; outline: none; 
+      background: #FFFFFF; transition: all 0.15s ease;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.03);
+    }
+    .search-input-side:focus { border-color: #3F3F46; box-shadow: 0 0 0 3px rgba(63, 63, 70, 0.12); }
+    .search-icon-side { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); font-size: 8.5pt; color: var(--text-muted); pointer-events: none; }
+    .search-results-side { position: absolute; bottom: calc(100% + 6px); left: 0; right: 0; background: #FFFFFF; border: 1.5px solid #71717A; border-radius: 10px; max-height: 220px; overflow-y: auto; box-shadow: 0 -8px 20px rgba(0,0,0,0.12); z-index: 50; display: none; }
+    .search-item { padding: 7px 10px; border-bottom: 1px solid #E4E4E7; cursor: pointer; display: flex; flex-direction: column; gap: 1px; }
     .search-item:hover { background: #F4F4F5; }
 
     /* MODALES EN ESCALA DE GRISES */
@@ -314,7 +369,7 @@
       display: flex; flex-direction: column; gap: 12px; 
       position: relative; z-index: 1001; 
       box-shadow: 0 16px 40px rgba(0,0,0,0.22); 
-      border: 1px solid #71717A;
+      border: 1.5px solid #71717A;
       resize: both; 
       overflow-y: auto;
       overflow-x: auto;
@@ -322,26 +377,27 @@
 
     .modal-assistant label { font-size: 9.5pt; color: #27272A; display: block; margin-bottom: 4px; font-weight: 700; }
     .modal-assistant input, .modal-assistant textarea, .modal-assistant select { 
-      width: 100%; background: #FAFAFA; color: #18181B; border: 1px solid #A1A1AA; 
-      border-radius: var(--radius-sm); padding: 8px 11px; font-size: 10.5pt; font-weight: 600; outline: none; line-height: 1.35;
+      width: 100%; background: #FAFAFA; color: #18181B; border: 1.5px solid #CBD5E1; 
+      border-radius: 9px; padding: 8px 11px; font-size: 10.5pt; font-weight: 600; outline: none; line-height: 1.35;
+      transition: all 0.15s ease;
     }
-    .modal-assistant input:focus, .modal-assistant textarea:focus, .modal-assistant select:focus { border-color: #18181B; background: #FFFFFF; }
+    .modal-assistant input:focus, .modal-assistant textarea:focus, .modal-assistant select:focus { border-color: #27272A; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(39, 39, 42, 0.1); }
     
     .modal-draggable-header { cursor: move; user-select: none; display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle); flex-shrink: 0; }
 
     .btn-prio { 
-      background: #FFFFFF !important; color: #27272A !important; border: 1px solid #A1A1AA !important;
-      border-radius: var(--radius-sm); padding: 0 12px !important; height: 36px !important; cursor: pointer;
+      background: #FFFFFF !important; color: #27272A !important; border: 1.5px solid #CBD5E1 !important;
+      border-radius: 9px; padding: 0 12px !important; height: 38px !important; cursor: pointer;
       font-size: 9.5pt !important; font-weight: 700 !important; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      flex: 1;
+      flex: 1; transition: all 0.15s ease;
     }
-    .btn-prio.selected-alta { border-color: #FF003C !important; background: #FFE4E6 !important; color: #BE123C !important; border-width: 2px !important; }
-    .btn-prio.selected-media { border-color: #EAB308 !important; background: #FEF9C3 !important; color: #854D0E !important; border-width: 2px !important; }
-    .btn-prio.selected-baja { border-color: #10B981 !important; background: #D1FAE5 !important; color: #065F46 !important; border-width: 2px !important; }
+    .btn-prio.selected-alta { border-color: #FF003C !important; background: #FFE4E6 !important; color: #BE123C !important; border-width: 2px !important; box-shadow: 0 2px 6px rgba(255, 0, 60, 0.18); }
+    .btn-prio.selected-media { border-color: #EAB308 !important; background: #FEF9C3 !important; color: #854D0E !important; border-width: 2px !important; box-shadow: 0 2px 6px rgba(234, 179, 8, 0.2); }
+    .btn-prio.selected-baja { border-color: #10B981 !important; background: #D1FAE5 !important; color: #065F46 !important; border-width: 2px !important; box-shadow: 0 2px 6px rgba(16, 185, 129, 0.18); }
 
     .checkbox-container { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
     .checkbox-container input { width: 16px; height: 16px; cursor: pointer; }
-    .aviso-duplicado { background: #FFE4E6; border: 1px solid var(--prio-alta-elec); color: #BE123C; padding: 7px 11px; border-radius: var(--radius-sm); font-size: 9pt; font-weight: 700; display: none; margin-top: 4px; }
+    .aviso-duplicado { background: #FFE4E6; border: 1.5px solid var(--prio-alta-elec); color: #BE123C; padding: 7px 11px; border-radius: 8px; font-size: 9pt; font-weight: 700; display: none; margin-top: 4px; }
 
     .ia-results-list { 
       display: flex; flex-direction: column; gap: 10px; 
@@ -349,14 +405,14 @@
       overflow-y: scroll; 
       overflow-x: auto; 
       margin: 4px 0; padding: 10px;
-      border: 1px solid #D4D4D8;
-      border-radius: var(--radius-sm);
+      border: 1.5px solid #D4D4D8;
+      border-radius: 10px;
       background: #F4F4F5;
     }
 
     .ia-item-card { 
-      background: #FFFFFF; border: 1px solid #A1A1AA; border-left: 5px solid #27272A; 
-      padding: 12px 14px; border-radius: var(--radius-sm); display: flex; flex-direction: column; gap: 7px; 
+      background: #FFFFFF; border: 1.5px solid #CBD5E1; border-left: 5px solid #27272A; 
+      padding: 12px 14px; border-radius: 10px; display: flex; flex-direction: column; gap: 7px; 
       min-width: 540px;
     }
     .ia-edit-input { font-size: 10.5pt !important; font-weight: 600 !important; color: #18181B !important; background: #FFFFFF !important; padding: 7px 10px !important; }
@@ -365,26 +421,26 @@
       background: #FFFFFF; max-width: 600px; width: 100%; max-height: 88vh; 
       border-radius: var(--radius-md); padding: 20px; display: flex; flex-direction: column; 
       gap: 12px; overflow-y: auto; overflow-x: auto; position: relative; z-index: 1001; 
-      box-shadow: 0 16px 40px rgba(0,0,0,0.25); border: 1px solid #71717A;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.25); border: 1.5px solid #71717A;
       resize: both;
     }
     .modal-field { display: flex; flex-direction: column; gap: 4px; }
     .modal-label { font-size: 9pt; font-weight: 700; color: #52525B; letter-spacing: 0.2px; }
-    .modal-box { background: #F4F4F5; border: 1px solid #D4D4D8; padding: 9px 12px; border-radius: var(--radius-sm); font-size: 10.5pt; font-weight: 600; line-height: 1.45; white-space: pre-wrap; word-break: break-word; color: #18181B; }
+    .modal-box { background: #F4F4F5; border: 1.5px solid #D4D4D8; padding: 9px 12px; border-radius: 9px; font-size: 10.5pt; font-weight: 600; line-height: 1.45; white-space: pre-wrap; word-break: break-word; color: #18181B; }
     .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
-    .bitacora-modal { max-width: 680px; width: 100%; max-height: 86vh; background: #FFFFFF; border-radius: var(--radius-md); padding: 20px; display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 1001; border: 1px solid #71717A; resize: both; overflow: auto; }
+    .bitacora-modal { max-width: 680px; width: 100%; max-height: 86vh; background: #FFFFFF; border-radius: var(--radius-md); padding: 20px; display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 1001; border: 1.5px solid #71717A; resize: both; overflow: auto; }
     .bitacora-list { flex: 1; overflow-y: auto; overflow-x: auto; display: flex; flex-direction: column; gap: 6px; }
-    .bitacora-item { display: flex; justify-content: space-between; align-items: center; padding: 9px 12px; border-radius: var(--radius-sm); background: #F4F4F5; border: 1px solid #D4D4D8; cursor: pointer; min-width: 440px; }
-    .bitacora-item:hover { background: #E4E4E7; }
+    .bitacora-item { display: flex; justify-content: space-between; align-items: center; padding: 9px 12px; border-radius: 9px; background: #F4F4F5; border: 1.5px solid #D4D4D8; cursor: pointer; min-width: 440px; transition: all 0.12s ease; }
+    .bitacora-item:hover { background: #E4E4E7; border-color: #71717A; }
     
-    .badge-file { display: inline-flex; align-items: center; gap: 5px; background: #F4F4F5; border: 1px solid #A1A1AA; color: #18181B; padding: 4px 9px; border-radius: 5px; font-size: 9pt; font-weight: 700; text-decoration: none; }
-    .badge-file:hover { background: #E4E4E7; }
+    .badge-file { display: inline-flex; align-items: center; gap: 5px; background: #F4F4F5; border: 1.5px solid #CBD5E1; color: #18181B; padding: 4px 10px; border-radius: 8px; font-size: 9pt; font-weight: 700; text-decoration: none; }
+    .badge-file:hover { background: #E4E4E7; border-color: #71717A; }
 
     .upload-box {
       border: 1.5px dashed #A1A1AA;
       background: #F4F4F5;
-      border-radius: var(--radius-sm);
+      border-radius: 10px;
       padding: 10px;
       display: flex;
       flex-direction: column;
@@ -421,11 +477,8 @@
     </main>
 
     <aside class="sidebar-actions">
-      <span class="sidebar-section-title">Seguridad y enlace</span>
+      <span class="sidebar-section-title">Seguridad</span>
       <div id="modeBadge" class="mode-badge-side readonly" onclick="alternarModoEdicion()" title="Haz clic para alternar modo">🔒 Solo lectura</div>
-      <a href="https://valdesgutierrezrodrigo-design.github.io/agenda/" target="_blank" class="btn-action-side">
-        <span class="btn-icon-lg">🔗</span> Agenda TDAH
-      </a>
 
       <hr class="sidebar-separator">
 
@@ -445,7 +498,7 @@
       <button class="btn-action-side btn-side-nuevo" id="btnNuevoManual" onclick="abrirModalNuevo()">
         <span class="btn-icon-lg">＋</span> Nuevo evento
       </button>
-      <button class="btn-action-side" id="btnIANav" onclick="abrirModalIA()">
+      <button class="btn-action-side btn-side-ia" id="btnIANav" onclick="abrirModalIA()">
         <span class="btn-icon-lg">★</span> Asistente AIA
       </button>
       <button class="btn-action-side" id="btnSync" onclick="sincronizarDesdeSheets()">
@@ -455,9 +508,6 @@
       <hr class="sidebar-separator">
 
       <span class="sidebar-section-title">Módulos y herramientas</span>
-      <button class="btn-action-side" id="btnDatosColegio" onclick="abrirModalDatos()">
-        <span class="btn-icon-lg">🏫</span> Datos
-      </button>
       <button class="btn-action-side" id="btnPanelTecnico" onclick="abrirModalPanelTecnico()">
         <span class="btn-icon-lg">📊</span> Panel técnico
       </button>
@@ -479,44 +529,6 @@
     </aside>
   </div>
 
-  <!-- MODAL: DATOS INSTITUCIONALES -->
-  <div class="modal-overlay" id="modalDatosOverlay">
-    <div class="modal-assistant" style="height:auto; min-height:400px; width:560px;">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-weight:800; font-size:13pt; color:#18181B;">🏫 Ficha de datos institucionales</span>
-        <button class="btn-action-side" style="width:auto; min-height:30px !important;" onclick="cerrarModalDatos()">✕</button>
-      </div>
-
-      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:4px;">
-        <div style="padding:10px 12px; background:#F4F4F5; border:1px solid #D4D4D8; border-radius:8px;">
-          <span style="font-size:8pt; font-weight:700; color:#52525B;">Establecimiento</span>
-          <div style="font-size:10.5pt; font-weight:800; color:#18181B; margin-top:3px;">Escuela Particular Comandante Carlos Condell</div>
-        </div>
-        <div style="padding:10px 12px; background:#F4F4F5; border:1px solid #D4D4D8; border-radius:8px;">
-          <span style="font-size:8pt; font-weight:700; color:#52525B;">RBD oficial</span>
-          <div style="font-size:12pt; font-weight:800; color:#18181B; margin-top:3px;">25078</div>
-        </div>
-        <div style="padding:10px 12px; background:#F4F4F5; border:1px solid #D4D4D8; border-radius:8px;">
-          <span style="font-size:8pt; font-weight:700; color:#52525B;">Comuna</span>
-          <div style="font-size:10.5pt; font-weight:800; color:#18181B; margin-top:3px;">San Bernardo</div>
-        </div>
-        <div style="padding:10px 12px; background:#F4F4F5; border:1px solid #D4D4D8; border-radius:8px;">
-          <span style="font-size:8pt; font-weight:700; color:#52525B;">Región</span>
-          <div style="font-size:10.5pt; font-weight:800; color:#18181B; margin-top:3px;">Metropolitana de Santiago</div>
-        </div>
-      </div>
-
-      <div style="margin-top:6px;">
-        <label style="font-size:10pt; font-weight:800; color:#18181B; display:block; margin-bottom:5px;">📝 Block de notas directivas / contactos clave:</label>
-        <textarea id="blockNotasColegio" rows="4" placeholder="Escribe aquí teléfonos de emergencia, directrices o notas clave del colegio..." oninput="guardarNotasColegio()"></textarea>
-      </div>
-
-      <div style="display:flex; justify-content:flex-end;">
-        <button type="button" class="btn-action-side btn-side-nuevo" style="width:auto; justify-content:center;" onclick="cerrarModalDatos()">Cerrar</button>
-      </div>
-    </div>
-  </div>
-
   <!-- Modal Panel Técnico -->
   <div class="modal-overlay" id="modalPanelTecnicoOverlay">
     <div class="modal-assistant" style="height:auto; min-height:320px; width:520px;">
@@ -529,18 +541,18 @@
       </p>
 
       <div style="display:flex; flex-direction:column; gap:8px; margin:6px 0;">
-        <div style="padding:10px 14px; background:#F4F4F5; border:1px solid #D4D4D8; border-radius:8px; font-weight:700; font-size:10pt; color:#18181B;">
+        <div style="padding:10px 14px; background:#F4F4F5; border:1.5px solid #CBD5E1; border-radius:10px; font-weight:700; font-size:10pt; color:#18181B;">
           📅 Horarios de clases y jefaturas
         </div>
-        <div style="padding:10px 14px; background:#F4F4F5; border:1px solid #D4D4D8; border-radius:8px; font-weight:700; font-size:10pt; color:#18181B;">
+        <div style="padding:10px 14px; background:#F4F4F5; border:1.5px solid #CBD5E1; border-radius:10px; font-weight:700; font-size:10pt; color:#18181B;">
           👥 Registro de asistencia diaria
         </div>
-        <div style="padding:10px 14px; background:#F4F4F5; border:1px solid #D4D4D8; border-radius:8px; font-weight:700; font-size:10pt; color:#18181B;">
+        <div style="padding:10px 14px; background:#F4F4F5; border:1.5px solid #CBD5E1; border-radius:10px; font-weight:700; font-size:10pt; color:#18181B;">
           📖 Leccionarios y cobertura curricular
         </div>
       </div>
 
-      <div style="font-size:9.5pt; color:#27272A; background:#F4F4F5; border:1px solid #A1A1AA; padding:8px 12px; border-radius:8px; font-weight:600;">
+      <div style="font-size:9.5pt; color:#27272A; background:#F4F4F5; border:1.5px solid #A1A1AA; padding:8px 12px; border-radius:10px; font-weight:600;">
         ℹ️ Listo para conectar con Google Sheets o la base de datos institucional en la siguiente fase.
       </div>
     </div>
@@ -689,8 +701,8 @@
 
       <button type="button" id="btnAnalizarSeguroIA" class="btn-action-side btn-side-nuevo" style="justify-content:center; min-height:38px !important; font-size:10pt !important; flex-shrink:0;" disabled onclick="analizarPendientesIA()">⚡ 2. Analizar documento ahora</button>
       
-      <div id="iaArchivoInfo" style="font-size:9pt; color:#18181B; background:#F4F4F5; padding:6px 10px; border-radius:6px; display:none; border:1px solid #A1A1AA; font-weight:700; flex-shrink:0;"></div>
-      <div id="iaEstado" style="font-size:9pt; color:#854D0E; font-weight:700; text-align:center; padding:6px 10px; display:none; background:#FEF9C3; border-radius:6px; border:1px solid #EAB308; flex-shrink:0;"></div>
+      <div id="iaArchivoInfo" style="font-size:9pt; color:#18181B; background:#F4F4F5; padding:6px 10px; border-radius:8px; display:none; border:1px solid #A1A1AA; font-weight:700; flex-shrink:0;"></div>
+      <div id="iaEstado" style="font-size:9pt; color:#854D0E; font-weight:700; text-align:center; padding:6px 10px; display:none; background:#FEF9C3; border-radius:8px; border:1px solid #EAB308; flex-shrink:0;"></div>
       
       <div id="iaContenedorResultados" style="display:none; flex:1; flex-direction:column; min-height:240px;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:2px; flex-shrink:0;">
@@ -729,7 +741,6 @@
       let s = String(texto).trim();
       if (!s) return "";
 
-      // Si el texto tiene más del 55% de sus letras en mayúscula, pasarlo a minúscula base
       const letras = s.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ]/g, "");
       if (letras.length > 2) {
         const mayus = letras.replace(/[^A-ZÁÉÍÓÚÑÜ]/g, "").length;
@@ -738,11 +749,9 @@
         }
       }
 
-      // Primera letra de la oración y después de punto en mayúscula
       s = s.charAt(0).toUpperCase() + s.slice(1);
       s = s.replace(/([.!?]\s+)([a-záéíóúñü])/g, (m, p1, p2) => p1 + p2.toUpperCase());
 
-      // Preservar siglas educativas e institucionales en mayúscula
       SIGLAS_OFICIALES.forEach(sigla => {
         const regex = new RegExp(`\\b${sigla}\\b`, "gi");
         s = s.replace(regex, sigla);
@@ -773,29 +782,7 @@
       if (eliminadosGuardados) {
         eventosEliminados = JSON.parse(eliminadosGuardados);
       }
-      const notasGuardadas = localStorage.getItem("agenda_carlos_condell_notas_colegio");
-      if (notasGuardadas) {
-        setTimeout(() => {
-          const area = document.getElementById("blockNotasColegio");
-          if (area) area.value = notasGuardadas;
-        }, 500);
-      }
     } catch (e) {}
-
-    function guardarNotasColegio() {
-      const txt = document.getElementById("blockNotasColegio").value;
-      localStorage.setItem("agenda_carlos_condell_notas_colegio", txt);
-    }
-
-    function abrirModalDatos() {
-      const notas = localStorage.getItem("agenda_carlos_condell_notas_colegio") || "";
-      const area = document.getElementById("blockNotasColegio");
-      if (area) area.value = notas;
-      document.getElementById("modalDatosOverlay").style.display = "flex";
-    }
-    function cerrarModalDatos() {
-      document.getElementById("modalDatosOverlay").style.display = "none";
-    }
 
     function actualizarModoUI() {
       const badge = document.getElementById("modeBadge");
@@ -1609,7 +1596,7 @@
         <div class="bitacora-item" onclick="cerrarModalBitacora(); openDetail('${t.id}')">
           <div>
             <div style="font-weight:700; font-size:10pt; color:#18181B;">${formatearTipoOracion(t.subject)}</div>
-            <div style="font-size:8.5pt; color:var(--text-muted); font-weight:600;">${t.date} | ${t.time ? t.time + ' hrs' : 'Por definir'} • ${formatearTipoOracion(t.sender || 'General')}</div>
+            <div style="font-size:8.5pt; color:var(--text-muted); font-weight:600;">${t.date} | ${t.time ? t.time + ' hrs' : 'Por definir'} • ${formatearTipoOracion(t.sender || 'General'}</div>
           </div>
           <span style="font-size:11pt;">${t.status === 'managed' ? '✅' : '⏳'}</span>
         </div>
@@ -2040,7 +2027,7 @@
           p.style.color = '#3F3F46';
           p.style.background = '#F4F4F5';
           p.style.padding = '6px 10px';
-          p.style.borderRadius = '6px';
+          p.style.borderRadius = '8px';
           p.style.border = '1px solid #A1A1AA';
           p.textContent = '⚠️ Nota IA: ' + ev.pendientes;
           card.appendChild(p);
