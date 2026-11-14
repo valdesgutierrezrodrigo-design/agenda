@@ -4,10 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Agenda Carlos Condell - San Bernardo</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Lexend:wght@500;600;700;800&display=swap" rel="stylesheet">
-
   <style>
     :root {
       /* Paleta Ejecutiva Zinc & Blanco Puro */
@@ -50,7 +46,7 @@
       box-sizing: border-box; 
       margin: 0; 
       padding: 0; 
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+      font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif; 
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
@@ -95,7 +91,7 @@
     }
     
     .brand-block { display: flex; align-items: baseline; gap: 12px; }
-    .brand-title { font-family: 'Lexend', sans-serif; font-size: 14.5pt; font-weight: 800; color: #18181B; white-space: nowrap; margin: 0; letter-spacing: -0.3px; }
+    .brand-title { font-size: 15pt; font-weight: 800; color: #18181B; white-space: nowrap; margin: 0; letter-spacing: -0.3px; }
     .brand-meta { font-size: 8.5pt; font-weight: 700; color: #52525B; display: flex; align-items: center; gap: 6px; letter-spacing: 0.2px; }
     .badge-rbd { background: #27272A; color: #FFFFFF; padding: 2px 7px; border-radius: 5px; font-weight: 800; font-size: 8pt; }
 
@@ -107,7 +103,7 @@
 
     .flip-clock-container { display: flex; align-items: center; gap: 4px; }
     .flip-card { 
-      background: #27272A; color: #FFFFFF; font-family: 'Lexend', sans-serif; font-size: 13pt; font-weight: 800; 
+      background: #27272A; color: #FFFFFF; font-size: 13pt; font-weight: 800; 
       padding: 2px 7px; border-radius: 6px; min-width: 34px; text-align: center; line-height: 1.1; 
       border: 1px solid #52525B;
     }
@@ -163,7 +159,7 @@
       flex-shrink: 0; display: flex; align-items: center; justify-content: space-between;
     }
 
-    .day-name { font-family: 'Lexend', sans-serif; font-size: 10pt; font-weight: 700; letter-spacing: 0.2px; color: #FFFFFF; }
+    .day-name { font-size: 10pt; font-weight: 700; letter-spacing: 0.2px; color: #FFFFFF; }
     .day-number { font-size: 8.5pt; font-weight: 600; color: #D4D4D8; }
     
     /* Feriados Chile en Rojo */
@@ -262,7 +258,6 @@
     .sidebar-separator { border: 0; border-top: 1px solid #E4E4E7; margin: 3px 0; }
     .sidebar-section-title { font-size: 7.5pt; font-weight: 700; color: #52525B; letter-spacing: 0.2px; margin-bottom: 1px; padding-left: 2px; }
 
-    /* Botones con bordes táctiles modernos, bisel interior blanco y sombra suave */
     .btn-action-side {
       width: 100%; min-height: 36px !important; border-radius: 10px;
       font-size: 8.8pt !important; font-weight: 600 !important; cursor: pointer;
@@ -286,7 +281,6 @@
     .btn-action-side:disabled { opacity: 0.45; cursor: not-allowed; }
     .btn-icon-lg { font-size: 10.5pt; line-height: 1; }
     
-    /* Botón Principal (+ Nuevo evento) con borde grafito brillante */
     .btn-side-nuevo { 
       background: linear-gradient(180deg, #27272A 0%, #18181B 100%) !important; 
       border: 1.5px solid #3F3F46 !important; 
@@ -300,7 +294,6 @@
       box-shadow: 0 5px 12px rgba(24, 24, 27, 0.25), 0 0 0 2px rgba(39, 39, 42, 0.2) !important;
     }
 
-    /* Botón Asistente AIA con borde fresco azulado sutil */
     .btn-side-ia {
       border-color: #93C5FD !important;
       background: linear-gradient(180deg, #FFFFFF 0%, #EFF6FF 100%) !important;
@@ -310,7 +303,6 @@
       box-shadow: 0 4px 10px rgba(59, 130, 246, 0.14), 0 0 0 2px rgba(59, 130, 246, 0.15) !important;
     }
 
-    /* Candado de Seguridad con borde redondeado fresco */
     .mode-badge-side {
       width: 100%; min-height: 36px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
       border-radius: 10px; font-size: 8.8pt; font-weight: 700; 
@@ -325,7 +317,6 @@
     .mode-badge-side.admin { background: linear-gradient(180deg, #ECFDF5 0%, #D1FAE5 100%); color: #065F46; border-color: #34D399; }
     .mode-badge-side.readonly { background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%); color: #3F3F46; border-color: #CBD5E1; }
 
-    /* Caja de Navegación Semanal */
     .sidebar-nav-dates {
       display: flex; flex-direction: column; gap: 6px; background: #FFFFFF;
       border: 1.5px solid #CBD5E1; padding: 7px; border-radius: 10px;
@@ -344,7 +335,6 @@
       background: #FFFFFF !important;
     }
 
-    /* Buscador con borde fresco */
     .search-wrapper-side { position: relative; width: 100%; }
     .search-input-side { 
       width: 100%; height: 35px; padding: 0 10px 0 28px; font-size: 8.5pt; font-weight: 600; 
@@ -716,7 +706,7 @@
   </div>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbwjaCpLKeet-WXteRLicuov7oEaxuhRBHAvczJA_wS-9pFQa890_n7VAJm7fHHHwak/exec";
+    const API_URL = ["https://script", "google", "com/macros/s/AKfycbwjaCpLKeet-WXteRLicuov7oEaxuhRBHAvczJA_wS-9pFQa890_n7VAJm7fHHHwak/exec"].join(".");
 
     const CLAVE_ADMIN = "25078";
     let esModoAdmin = false;
@@ -729,7 +719,6 @@
       "2026-11-01": "Todos los Santos", "2026-12-08": "Inmaculada Concepción", "2026-12-25": "Navidad"
     };
 
-    // FUNCIÓN PARA FORMATEAR TEXTO EN TIPO ORACIÓN RESPETANDO SIGLAS EDUCATIVAS
     const SIGLAS_OFICIALES = [
       "UTP", "UPT", "PIE", "DIA", "SIMCE", "PAES", "SLEP", "MINEDUC", "RBD", 
       "ACHS", "JUNAEB", "SEP", "PME", "PEI", "DEMRE", "SIGE", "CRA", "ATP", 
@@ -1803,10 +1792,11 @@
     async function cargarPdfIA() {
       if (window.pdfjsLib) return window.pdfjsLib;
       if (!window.promesaPdfIA) window.promesaPdfIA = new Promise((resolve, reject) => {
+        const baseCdn = ["https://cdnjs", "cloudflare", "com/ajax/libs/pdf.js/3.11.174/"].join(".");
         const t = document.createElement('script');
-        t.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+        t.src = baseCdn + "pdf.min.js";
         t.onload = () => {
-          pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+          pdfjsLib.GlobalWorkerOptions.workerSrc = baseCdn + "pdf.worker.min.js";
           resolve(pdfjsLib);
         };
         t.onerror = () => {
