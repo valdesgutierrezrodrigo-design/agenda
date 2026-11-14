@@ -48,24 +48,11 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #F4F4F5;
-      border-radius: 6px;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #A1A1AA;
-      border-radius: 6px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #52525B;
-    }
-    ::-webkit-scrollbar-corner {
-      background: #F4F4F5;
-    }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #F4F4F5; border-radius: 6px; }
+    ::-webkit-scrollbar-thumb { background: #A1A1AA; border-radius: 6px; }
+    ::-webkit-scrollbar-thumb:hover { background: #52525B; }
+    ::-webkit-scrollbar-corner { background: #F4F4F5; }
 
     body { 
       background-color: var(--bg-app); 
@@ -684,7 +671,6 @@
   </div>
 
   <script>
-    // Construcción segura sin protocolo explícito para evitar enlaces rotos al copiar
     const PROTO = "https" + "://";
     const API_URL = PROTO + ["script", "google", "com"].join(".") + "/macros/s/AKfycbwjaCpLKeet-WXteRLicuov7oEaxuhRBHAvczJA_wS-9pFQa890_n7VAJm7fHHHwak/exec";
 
@@ -724,7 +710,7 @@
       return s.split(" ").map((palabra, index) => {
         const limpia = palabra.replace(/[.,:;()!?]/g, "").toLowerCase();
         if (MAPA_SIGLAS[limpia]) {
-          return palabra.replace(new RegExp(limpia, "i"), MAPA_SIGLAS[limpia]);
+          return MAPA_SIGLAS[limpia];
         }
         if (index === 0 && palabra.length > 0) {
           return palabra.charAt(0).toUpperCase() + palabra.slice(1);
@@ -968,6 +954,22 @@
       actualizarModoUI();
     }
 
+    function updateLiveClock() {
+      const now = new Date();
+      if(document.getElementById("fc-hour")) document.getElementById("fc-hour").textContent = String(now.getHours()).padStart(2, '0');
+      if(document.getElementById("fc-minute")) document.getElementById("fc-minute").textContent = String(now.getMinutes()).padStart(2, '0');
+      if(document.getElementById("fc-second")) document.getElementById("fc-second").textContent = String(now.getSeconds()).padStart(2, '0');
+    }
+
+    // Inicializar reloj y calendario de inmediato
+    setInterval(updateLiveClock, 1000);
+    updateLiveClock();
+    if (lblSub) lblSub.textContent = formatFechaCompleta(new Date());
+    document.getElementById("btnToday").onclick = () => { currentMonday = getMonday(new Date()); renderCalendar(); };
+    document.getElementById("btnPrev").onclick = () => { currentMonday.setDate(currentMonday.getDate() - 7); renderCalendar(); };
+    document.getElementById("btnNext").onclick = () => { currentMonday.setDate(currentMonday.getDate() + 7); renderCalendar(); };
+    renderCalendar();
+
     async function sincronizarDesdeSheets() {
       const btn = document.getElementById("btnSync");
       if (btn) btn.innerHTML = "<span class='btn-icon-lg'>⏳</span> Sincronizando...";
@@ -1079,6 +1081,8 @@
       }
     }
 
+    sincronizarDesdeSheets();
+
     function selectPriority(prio) {
       selectedPriority = prio;
       document.getElementById('prioAlta').className = "btn-prio" + (prio === "Alta" ? " selected-alta" : "");
@@ -1113,15 +1117,18 @@
           const enlace = document.createElement("a");
           let hrefReal = f.url;
           if (!hrefReal && f.base64) {
-            hrefReal = `data:${f.mimeType || 'application/octet-stream'};base64,${f.base64}`;
+            hrefReal = "data:" + (f.mimeType || "application/octet-stream") + ";base64," + f.base64;
           }
           if (hrefReal && hrefReal.trim() !== "" && hrefReal !== "#") {
             enlace.href = hrefReal;
             enlace.target = "_blank";
             enlace.rel = "noopener noreferrer";
           } else {
-            enlace.href = "javascript:void(0);";
-            enlace.onclick = () => alert("El archivo está sincronizándose o no tiene enlace disponible.");
+            enlace.href = "#";
+            enlace.onclick = (ev) => {
+              ev.preventDefault();
+              alert("El archivo está sincronizándose o no tiene enlace disponible.");
+            };
           }
           enlace.className = "badge-file";
           enlace.textContent = `📎 ${f.nombre || 'Ver documento'}`;
@@ -2138,24 +2145,6 @@
       btn.disabled = false; 
       btn.textContent = "Agendar propuesta y subir respaldo";
     }
-
-    function updateLiveClock() {
-      const now = new Date();
-      if(document.getElementById("fc-hour")) document.getElementById("fc-hour").textContent = String(now.getHours()).padStart(2, '0');
-      if(document.getElementById("fc-minute")) document.getElementById("fc-minute").textContent = String(now.getMinutes()).padStart(2, '0');
-      if(document.getElementById("fc-second")) document.getElementById("fc-second").textContent = String(now.getSeconds()).padStart(2, '0');
-    }
-    setInterval(updateLiveClock, 1000);
-    updateLiveClock();
-
-    document.getElementById("btnToday").onclick = () => { currentMonday = getMonday(new Date()); renderCalendar(); };
-    document.getElementById("btnPrev").onclick = () => { currentMonday.setDate(currentMonday.getDate() - 7); renderCalendar(); };
-    document.getElementById("btnNext").onclick = () => { currentMonday.setDate(currentMonday.getDate() + 7); renderCalendar(); };
-    
-    if (lblSub) lblSub.textContent = formatFechaCompleta(new Date());
-
-    renderCalendar();
-    sincronizarDesdeSheets();
   </script>
 </body>
 </html>
