@@ -96,14 +96,14 @@
     
     .brand-block { display: flex; align-items: baseline; gap: 12px; }
     .brand-title { font-family: 'Lexend', sans-serif; font-size: 14.5pt; font-weight: 800; color: #18181B; white-space: nowrap; margin: 0; letter-spacing: -0.3px; }
-    .brand-meta { font-size: 8pt; font-weight: 700; color: #52525B; display: flex; align-items: center; gap: 6px; text-transform: uppercase; letter-spacing: 0.7px; }
+    .brand-meta { font-size: 8.5pt; font-weight: 700; color: #52525B; display: flex; align-items: center; gap: 6px; letter-spacing: 0.2px; }
     .badge-rbd { background: #27272A; color: #FFFFFF; padding: 2px 7px; border-radius: 4px; font-weight: 800; font-size: 8pt; }
 
     .time-module {
       display: flex; align-items: center; background: #18181B; border-radius: 8px;
       padding: 4px 12px 4px 16px; gap: 14px; border: 1px solid #3F3F46;
     }
-    .date-display-text { color: #E4E4E7; font-size: 9.5pt; font-weight: 600; text-transform: capitalize; letter-spacing: 0.2px; white-space: nowrap; }
+    .date-display-text { color: #E4E4E7; font-size: 9.5pt; font-weight: 600; letter-spacing: 0.2px; white-space: nowrap; }
 
     .flip-clock-container { display: flex; align-items: center; gap: 4px; }
     .flip-card { 
@@ -156,24 +156,24 @@
       background: #FAFAFA !important;
     }
     
-    /* ENCABEZADO DEL DÍA EN GRAFITO OSCURO ELEGANTE */
+    /* ENCABEZADO DEL DÍA EN GRAFITO OSCURO ELEGANTE (Tipo oración) */
     .day-header { 
       text-align: center; padding: 6px 8px; border-radius: 7px;
       background: var(--surface-header-day);
       flex-shrink: 0; display: flex; align-items: center; justify-content: space-between;
     }
 
-    .day-name { font-family: 'Lexend', sans-serif; font-size: 9.5pt; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; color: #FFFFFF; }
+    .day-name { font-family: 'Lexend', sans-serif; font-size: 10pt; font-weight: 700; letter-spacing: 0.2px; color: #FFFFFF; }
     .day-number { font-size: 8.5pt; font-weight: 600; color: #D4D4D8; }
     
     /* Feriados Chile en Rojo */
     .day-header.is-holiday { background: #991B1B !important; }
     .text-red { color: #FECACA !important; }
     
-    .badge-tag { font-size: 7pt; padding: 1px 5px; border-radius: 4px; background: #FEE2E2; color: #991B1B; font-weight: 800; text-transform: uppercase; }
+    .badge-tag { font-size: 7.5pt; padding: 1px 6px; border-radius: 4px; background: #FEE2E2; color: #991B1B; font-weight: 700; }
     .badge-today { 
       background: #FFE600 !important; color: #000000 !important; 
-      font-weight: 900 !important; font-size: 7pt; padding: 1px 5px; border-radius: 4px;
+      font-weight: 800 !important; font-size: 7.5pt; padding: 1px 6px; border-radius: 4px;
     }
     
     .cards-container { 
@@ -242,7 +242,7 @@
     .btn-quick-check:hover { border-color: #18181B; color: #18181B; }
     .btn-quick-check.done { background: #10B981; border-color: #059669; color: #FFFFFF; }
 
-    /* Fila 2: Título proporcionado (12.5px / 9.5pt) limpio y sin mayúsculas forzadas */
+    /* Fila 2: Título en Tipo oración (9.5pt) limpio */
     .card-title { 
       font-size: 9.5pt; font-weight: 600; color: #18181B; line-height: 1.25; 
       width: 100%; letter-spacing: -0.1px; 
@@ -251,7 +251,7 @@
 
     .empty-text { font-size: 8.5pt; color: #71717A; text-align: center; margin-top: 20px; font-weight: 500; }
 
-    /* BARRA LATERAL DERECHA FINA EN GRIS ZINC */
+    /* BARRA LATERAL DERECHA FINA EN GRIS ZINC (Tipo oración) */
     .sidebar-actions {
       width: 195px; flex-shrink: 0; background: var(--surface-panel);
       border: 1px solid var(--border-medium); border-radius: var(--radius-md);
@@ -259,7 +259,7 @@
       overflow-y: auto; overflow-x: hidden;
     }
     .sidebar-separator { border: 0; border-top: 1px solid #E4E4E7; margin: 2px 0; }
-    .sidebar-section-title { font-size: 7pt; font-weight: 800; color: #71717A; text-transform: uppercase; letter-spacing: 0.7px; margin-bottom: 1px; }
+    .sidebar-section-title { font-size: 7.5pt; font-weight: 700; color: #52525B; letter-spacing: 0.2px; margin-bottom: 1px; }
 
     .btn-action-side {
       width: 100%; min-height: 32px !important; border-radius: var(--radius-sm);
@@ -369,7 +369,7 @@
       resize: both;
     }
     .modal-field { display: flex; flex-direction: column; gap: 4px; }
-    .modal-label { font-size: 8.5pt; font-weight: 800; color: #52525B; text-transform: uppercase; letter-spacing: 0.6px; }
+    .modal-label { font-size: 9pt; font-weight: 700; color: #52525B; letter-spacing: 0.2px; }
     .modal-box { background: #F4F4F5; border: 1px solid #D4D4D8; padding: 9px 12px; border-radius: var(--radius-sm); font-size: 10.5pt; font-weight: 600; line-height: 1.45; white-space: pre-wrap; word-break: break-word; color: #18181B; }
     .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
@@ -421,15 +421,15 @@
     </main>
 
     <aside class="sidebar-actions">
-      <span class="sidebar-section-title">Seguridad & Enlace</span>
-      <div id="modeBadge" class="mode-badge-side readonly" onclick="alternarModoEdicion()" title="Haz clic para alternar modo">🔒 Solo Lectura</div>
+      <span class="sidebar-section-title">Seguridad y enlace</span>
+      <div id="modeBadge" class="mode-badge-side readonly" onclick="alternarModoEdicion()" title="Haz clic para alternar modo">🔒 Solo lectura</div>
       <a href="https://valdesgutierrezrodrigo-design.github.io/agenda/" target="_blank" class="btn-action-side">
         <span class="btn-icon-lg">🔗</span> Agenda TDAH
       </a>
 
       <hr class="sidebar-separator">
 
-      <span class="sidebar-section-title">Navegación Semanal</span>
+      <span class="sidebar-section-title">Navegación semanal</span>
       <div class="sidebar-nav-dates">
         <div class="date-label-side" id="dateLabel">Semana</div>
         <div class="nav-arrow-group">
@@ -441,9 +441,9 @@
 
       <hr class="sidebar-separator">
 
-      <span class="sidebar-section-title">Gestión de Eventos</span>
+      <span class="sidebar-section-title">Gestión de eventos</span>
       <button class="btn-action-side btn-side-nuevo" id="btnNuevoManual" onclick="abrirModalNuevo()">
-        <span class="btn-icon-lg">＋</span> Nuevo Evento
+        <span class="btn-icon-lg">＋</span> Nuevo evento
       </button>
       <button class="btn-action-side" id="btnIANav" onclick="abrirModalIA()">
         <span class="btn-icon-lg">★</span> Asistente AIA
@@ -454,22 +454,22 @@
 
       <hr class="sidebar-separator">
 
-      <span class="sidebar-section-title">Módulos & Herramientas</span>
+      <span class="sidebar-section-title">Módulos y herramientas</span>
       <button class="btn-action-side" id="btnDatosColegio" onclick="abrirModalDatos()">
         <span class="btn-icon-lg">🏫</span> Datos
       </button>
       <button class="btn-action-side" id="btnPanelTecnico" onclick="abrirModalPanelTecnico()">
-        <span class="btn-icon-lg">📊</span> Panel Técnico
+        <span class="btn-icon-lg">📊</span> Panel técnico
       </button>
       <button class="btn-action-side" onclick="abrirModalBitacora()">
-        <span class="btn-icon-lg">📋</span> Bitácora General
+        <span class="btn-icon-lg">📋</span> Bitácora general
       </button>
       <button class="btn-action-side" id="btnRespaldoNav" onclick="abrirModalRespaldo()">
-        <span class="btn-icon-lg">💾</span> Guardar Respaldo
+        <span class="btn-icon-lg">💾</span> Guardar respaldo
       </button>
 
       <div style="margin-top:auto; padding-top:4px;">
-        <span class="sidebar-section-title">Buscar Compromiso</span>
+        <span class="sidebar-section-title">Buscar compromiso</span>
         <div class="search-wrapper-side">
           <span class="search-icon-side">🔍</span>
           <input type="text" id="globalSearchInput" class="search-input-side" placeholder="Buscar..." oninput="ejecutarBusqueda()" onfocus="ejecutarBusqueda()">
@@ -483,31 +483,31 @@
   <div class="modal-overlay" id="modalDatosOverlay">
     <div class="modal-assistant" style="height:auto; min-height:400px; width:560px;">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-weight:800; font-size:13pt; color:#18181B;">🏫 Ficha de Datos Institucionales</span>
+        <span style="font-weight:800; font-size:13pt; color:#18181B;">🏫 Ficha de datos institucionales</span>
         <button class="btn-action-side" style="width:auto; min-height:30px !important;" onclick="cerrarModalDatos()">✕</button>
       </div>
 
       <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:4px;">
         <div style="padding:10px 12px; background:#F4F4F5; border:1px solid #D4D4D8; border-radius:8px;">
-          <span style="font-size:8pt; font-weight:700; color:#52525B; text-transform:uppercase;">Establecimiento</span>
+          <span style="font-size:8pt; font-weight:700; color:#52525B;">Establecimiento</span>
           <div style="font-size:10.5pt; font-weight:800; color:#18181B; margin-top:3px;">Escuela Particular Comandante Carlos Condell</div>
         </div>
         <div style="padding:10px 12px; background:#F4F4F5; border:1px solid #D4D4D8; border-radius:8px;">
-          <span style="font-size:8pt; font-weight:700; color:#52525B; text-transform:uppercase;">RBD Oficial</span>
+          <span style="font-size:8pt; font-weight:700; color:#52525B;">RBD oficial</span>
           <div style="font-size:12pt; font-weight:800; color:#18181B; margin-top:3px;">25078</div>
         </div>
         <div style="padding:10px 12px; background:#F4F4F5; border:1px solid #D4D4D8; border-radius:8px;">
-          <span style="font-size:8pt; font-weight:700; color:#52525B; text-transform:uppercase;">Comuna</span>
+          <span style="font-size:8pt; font-weight:700; color:#52525B;">Comuna</span>
           <div style="font-size:10.5pt; font-weight:800; color:#18181B; margin-top:3px;">San Bernardo</div>
         </div>
         <div style="padding:10px 12px; background:#F4F4F5; border:1px solid #D4D4D8; border-radius:8px;">
-          <span style="font-size:8pt; font-weight:700; color:#52525B; text-transform:uppercase;">Región</span>
+          <span style="font-size:8pt; font-weight:700; color:#52525B;">Región</span>
           <div style="font-size:10.5pt; font-weight:800; color:#18181B; margin-top:3px;">Metropolitana de Santiago</div>
         </div>
       </div>
 
       <div style="margin-top:6px;">
-        <label style="font-size:10pt; font-weight:800; color:#18181B; display:block; margin-bottom:5px;">📝 Block de Notas Directivas / Contactos Clave:</label>
+        <label style="font-size:10pt; font-weight:800; color:#18181B; display:block; margin-bottom:5px;">📝 Block de notas directivas / contactos clave:</label>
         <textarea id="blockNotasColegio" rows="4" placeholder="Escribe aquí teléfonos de emergencia, directrices o notas clave del colegio..." oninput="guardarNotasColegio()"></textarea>
       </div>
 
@@ -521,7 +521,7 @@
   <div class="modal-overlay" id="modalPanelTecnicoOverlay">
     <div class="modal-assistant" style="height:auto; min-height:320px; width:520px;">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-weight:800; font-size:13pt; color:#18181B;">📊 Panel Técnico Pedagógico</span>
+        <span style="font-weight:800; font-size:13pt; color:#18181B;">📊 Panel técnico pedagógico</span>
         <button class="btn-action-side" style="width:auto; min-height:30px !important;" onclick="cerrarModalPanelTecnico()">✕</button>
       </div>
       <p style="font-size:10pt; font-weight:500; color:var(--text-muted); line-height:1.4;">
@@ -530,13 +530,13 @@
 
       <div style="display:flex; flex-direction:column; gap:8px; margin:6px 0;">
         <div style="padding:10px 14px; background:#F4F4F5; border:1px solid #D4D4D8; border-radius:8px; font-weight:700; font-size:10pt; color:#18181B;">
-          📅 Horarios de Clases & Jefaturas
+          📅 Horarios de clases y jefaturas
         </div>
         <div style="padding:10px 14px; background:#F4F4F5; border:1px solid #D4D4D8; border-radius:8px; font-weight:700; font-size:10pt; color:#18181B;">
-          👥 Registro de Asistencia Diaria
+          👥 Registro de asistencia diaria
         </div>
         <div style="padding:10px 14px; background:#F4F4F5; border:1px solid #D4D4D8; border-radius:8px; font-weight:700; font-size:10pt; color:#18181B;">
-          📖 Leccionarios y Cobertura Curricular
+          📖 Leccionarios y cobertura curricular
         </div>
       </div>
 
@@ -550,11 +550,11 @@
   <div class="modal-overlay" id="modalRespaldoOverlay">
     <div class="modal-assistant" style="height:auto; min-height:190px; width:460px;">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-weight:800; font-size:13pt; color:#18181B;">💾 Respaldo Institucional</span>
+        <span style="font-weight:800; font-size:13pt; color:#18181B;">💾 Respaldo institucional</span>
         <button class="btn-action-side" style="width:auto; min-height:30px !important;" onclick="cerrarModalRespaldo()">✕</button>
       </div>
       <p style="font-size:10pt; font-weight:500; color:var(--text-muted);">Descarga una copia completa de la agenda laboral en formato seguro JSON.</p>
-      <button type="button" class="btn-action-side btn-side-nuevo" style="width:100%; justify-content:center; margin-top:6px; min-height:38px !important; font-size:10pt !important;" onclick="descargarRespaldoJSON()">⬇️ Descargar Copia (.json)</button>
+      <button type="button" class="btn-action-side btn-side-nuevo" style="width:100%; justify-content:center; margin-top:6px; min-height:38px !important; font-size:10pt !important;" onclick="descargarRespaldoJSON()">⬇️ Descargar copia (.json)</button>
     </div>
   </div>
 
@@ -563,15 +563,15 @@
     <div class="bitacora-modal">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <div>
-          <h3 style="font-size:13pt; font-weight:800; color:#18181B;">📋 Bitácora Institucional Carlos Condell</h3>
+          <h3 style="font-size:13pt; font-weight:800; color:#18181B;">📋 Bitácora institucional Carlos Condell</h3>
           <span id="bitacoraTotal" style="font-size:9pt; font-weight:700; color:var(--text-muted);">0 eventos</span>
         </div>
         <button class="btn-action-side" style="width:auto; min-height:30px !important;" onclick="cerrarModalBitacora()">✕</button>
       </div>
 
       <div style="display:flex; gap:8px;">
-        <button type="button" class="btn-action-side" style="flex:1; justify-content:center;" onclick="renderizarBitacora()">Todos los Compromisos</button>
-        <button type="button" class="btn-action-side" style="flex:1; justify-content:center; border-color:#FF003C !important; color:#BE123C !important;" onclick="filtrarSoloDuplicados()">⚠️ Solo Duplicados</button>
+        <button type="button" class="btn-action-side" style="flex:1; justify-content:center;" onclick="renderizarBitacora()">Todos los compromisos</button>
+        <button type="button" class="btn-action-side" style="flex:1; justify-content:center; border-color:#FF003C !important; color:#BE123C !important;" onclick="filtrarSoloDuplicados()">⚠️ Solo duplicados</button>
       </div>
 
       <input type="text" id="bitacoraSearch" class="search-input-side" style="width:100%; height:36px; font-size:10pt;" placeholder="Filtrar por asunto..." oninput="renderizarBitacora()">
@@ -592,21 +592,21 @@
       </div>
 
       <div class="grid-2col">
-        <div class="modal-field"><span class="modal-label">Organización / Convocante</span><div id="dtSender" class="modal-box">-</div></div>
-        <div class="modal-field"><span class="modal-label">Fecha y Hora</span><div id="dtDateTime" class="modal-box">-</div></div>
+        <div class="modal-field"><span class="modal-label">Organización / convocante</span><div id="dtSender" class="modal-box">-</div></div>
+        <div class="modal-field"><span class="modal-label">Fecha y hora</span><div id="dtDateTime" class="modal-box">-</div></div>
       </div>
 
       <div class="modal-field"><span class="modal-label">Síntesis</span><div id="dtDetail" class="modal-box">-</div></div>
-      <div class="modal-field"><span class="modal-label">Acción Requerida</span><div id="dtAccion" class="modal-box" style="border-left:4px solid #EAB308;">-</div></div>
+      <div class="modal-field"><span class="modal-label">Acción requerida</span><div id="dtAccion" class="modal-box" style="border-left:4px solid #EAB308;">-</div></div>
 
       <div class="modal-field" id="dtRespaldosContainer">
-        <span class="modal-label">Documentos y Evidencias Adjuntas</span>
+        <span class="modal-label">Documentos y evidencias adjuntas</span>
         <div id="dtRespaldosList" style="display:flex; gap:8px; flex-wrap:wrap; margin-top:4px;"></div>
       </div>
 
       <div id="detailActionFooter" style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; padding-top:10px; border-top:1px solid var(--border-subtle); gap:8px; flex-wrap:wrap;">
         <button class="btn-action-side" style="width:auto; color:#BE123C !important; border-color:#FF003C !important;" onclick="eliminarEventoActual()">🗑️ Eliminar</button>
-        <button class="btn-action-side" style="width:auto;" onclick="prepararEdicionActual()">✏️ Editar Evento</button>
+        <button class="btn-action-side" style="width:auto;" onclick="prepararEdicionActual()">✏️ Editar evento</button>
         <button class="btn-action-side btn-side-nuevo" style="width:auto;" id="btnToggleRealizado" onclick="toggleRealizadoActual()">✓ Realizado</button>
       </div>
     </div>
@@ -616,7 +616,7 @@
   <div class="modal-overlay" id="modalAssistantOverlay">
     <div class="modal-assistant" id="modalNuevoEventoBox">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span id="modalTitleStr" style="font-weight:800; font-size:13pt; color:#18181B;">Nuevo Evento Laboral</span>
+        <span id="modalTitleStr" style="font-weight:800; font-size:13pt; color:#18181B;">Nuevo evento laboral</span>
         <div style="display:flex; gap:8px;">
           <button type="button" class="btn-action-side" style="width:auto; min-height:30px !important;" onclick="limpiarFormularioManual()">Limpiar</button>
           <button class="btn-action-side" style="width:auto; min-height:30px !important;" onclick="closeModal()">✕</button>
@@ -624,18 +624,18 @@
       </div>
 
       <div>
-        <label>Asunto / Compromiso *</label>
-        <input type="text" id="fAsunto" placeholder="Ej: Simce, Reunión UTP, Consejo de Profesores..." oninput="verificarDuplicadoEnFormulario()">
+        <label>Asunto / compromiso *</label>
+        <input type="text" id="fAsunto" placeholder="Ej: Aplicación DIA final, Reunión UTP, Consejo de profesores..." oninput="verificarDuplicadoEnFormulario()">
         <div id="avisoDuplicadoManual" class="aviso-duplicado">⚠️ Ya existe un evento similar agendado para esta fecha.</div>
       </div>
       <div>
-        <label>Hora del Evento (Obligatoria) *</label>
+        <label>Hora del evento (obligatoria) *</label>
         <input type="time" id="fHora" required>
       </div>
       
       <div class="grid-2col">
-        <div><label>Fecha Inicio *</label><input type="date" id="fFechaInicio" onchange="autoCompletarFechaFin(); verificarDuplicadoEnFormulario();"></div>
-        <div id="fFechaFinContainer"><label>Fecha Término</label><input type="date" id="fFechaFin"></div>
+        <div><label>Fecha de inicio *</label><input type="date" id="fFechaInicio" onchange="autoCompletarFechaFin(); verificarDuplicadoEnFormulario();"></div>
+        <div id="fFechaFinContainer"><label>Fecha de término</label><input type="date" id="fFechaFin"></div>
       </div>
 
       <div class="checkbox-container">
@@ -643,29 +643,29 @@
         <label for="fRepetirAnual" style="margin:0; font-size:10pt;">🔁 Repetir anualmente</label>
       </div>
 
-      <div><label>Organizador / Convoca</label><input type="text" id="fOrganizador" placeholder="Ej: Dirección, Mineduc, UTP, SLEP"></div>
+      <div><label>Organizador / convoca</label><input type="text" id="fOrganizador" placeholder="Ej: Dirección, Mineduc, UTP, SLEP"></div>
       <div>
-        <label>Prioridad (Color Eléctrico)</label>
+        <label>Prioridad (color eléctrico)</label>
         <div style="display:flex; gap:8px;">
-          <button type="button" class="btn-prio" id="prioAlta" onclick="selectPriority('Alta')">Alta (Rojo)</button>
-          <button type="button" class="btn-prio selected-media" id="prioMedia" onclick="selectPriority('Media')">Media (Amarillo)</button>
-          <button type="button" class="btn-prio" id="prioBaja" onclick="selectPriority('Baja')">Baja (Verde)</button>
+          <button type="button" class="btn-prio" id="prioAlta" onclick="selectPriority('Alta')">Alta (rojo)</button>
+          <button type="button" class="btn-prio selected-media" id="prioMedia" onclick="selectPriority('Media')">Media (amarillo)</button>
+          <button type="button" class="btn-prio" id="prioBaja" onclick="selectPriority('Baja')">Baja (verde)</button>
         </div>
       </div>
 
       <div><label>Síntesis</label><textarea id="fDetalle" rows="2" placeholder="Resumen clave..."></textarea></div>
-      <div><label>Acción Requerida</label><textarea id="fAccion" rows="2" placeholder="Ej: Notificar, Solicitar informe..."></textarea></div>
+      <div><label>Acción requerida</label><textarea id="fAccion" rows="2" placeholder="Ej: Notificar, solicitar informe..."></textarea></div>
       
       <div class="upload-box">
-        <label style="margin:0; font-size:9.5pt;">📎 Subir documentos de respaldo (PDFs o Imágenes):</label>
+        <label style="margin:0; font-size:9.5pt;">📎 Subir documentos de respaldo (PDF o imágenes):</label>
         <input type="file" id="fArchivos" multiple accept="image/*,application/pdf" onchange="procesarArchivosManuales(this)" style="display:none;">
         <button type="button" class="btn-action-side" style="width:auto;" onclick="document.getElementById('fArchivos').click()">
-          ➕ Agregar Archivos...
+          ➕ Agregar archivos...
         </button>
         <div id="listaArchivosManuales" style="display:flex; flex-wrap:wrap; gap:6px; margin-top:4px;"></div>
       </div>
 
-      <button type="button" id="btnGuardarEvento" class="btn-action-side btn-side-nuevo" style="margin-top:6px; justify-content:center; min-height:40px !important; font-size:10.5pt !important;" onclick="guardarEventoManual()">GUARDAR EVENTO</button>
+      <button type="button" id="btnGuardarEvento" class="btn-action-side btn-side-nuevo" style="margin-top:6px; justify-content:center; min-height:40px !important; font-size:10.5pt !important;" onclick="guardarEventoManual()">Guardar evento</button>
     </div>
   </div>
 
@@ -673,32 +673,32 @@
   <div class="modal-overlay" id="modalIAOverlay">
     <div class="modal-assistant" id="modalIABox" style="width:780px; min-width:480px; height:85vh;">
       <div class="modal-draggable-header" id="dragHeaderIA">
-        <span style="font-weight:800; font-size:13pt; color:#18181B;">★ Asistente Inteligente AIA (Groq + Gemini)</span>
+        <span style="font-weight:800; font-size:13pt; color:#18181B;">★ Asistente inteligente AIA (Groq + Gemini)</span>
         <button type="button" class="btn-action-side" style="width:auto; min-height:30px !important;" onclick="cerrarModalIA()">✕</button>
       </div>
       <p style="font-size:9.5pt; font-weight:500; color:var(--text-muted); line-height:1.35;">
-        Sube un PDF o pega una captura (Ctrl+V). El navegador extrae el texto localmente para no gastar tokens y analiza con <b>Groq (gratis/ultrarrápido)</b> o <b>Gemini</b> de respaldo.
+        Sube un PDF o pega una captura (Ctrl+V). El navegador extrae el texto localmente para no gastar tokens y analiza con <b>Groq (gratis y ultrarrápido)</b> o <b>Gemini</b> de respaldo.
       </p>
       
       <input type="file" id="inputArchivoIA" accept="image/*,application/pdf" multiple style="display:none;" onchange="procesarArchivoSeleccionado(this)">
       
       <div style="display:flex; gap:10px; margin:2px 0; flex-shrink:0;">
-        <button type="button" id="btnCargarIA" class="btn-action-side" style="flex:1; justify-content:center; min-height:36px !important; font-size:9.5pt !important;">📁 1. Cargar Documento(s)</button>
-        <button type="button" id="btnPegarIA" class="btn-action-side" style="flex:1; justify-content:center; min-height:36px !important; font-size:9.5pt !important;">📋 1. Pegar Captura (Ctrl+V)</button>
+        <button type="button" id="btnCargarIA" class="btn-action-side" style="flex:1; justify-content:center; min-height:36px !important; font-size:9.5pt !important;">📁 1. Cargar documento(s)</button>
+        <button type="button" id="btnPegarIA" class="btn-action-side" style="flex:1; justify-content:center; min-height:36px !important; font-size:9.5pt !important;">📋 1. Pegar captura (Ctrl+V)</button>
       </div>
 
-      <button type="button" id="btnAnalizarSeguroIA" class="btn-action-side btn-side-nuevo" style="justify-content:center; min-height:38px !important; font-size:10pt !important; flex-shrink:0;" disabled onclick="analizarPendientesIA()">⚡ 2. ANALIZAR DOCUMENTO AHORA</button>
+      <button type="button" id="btnAnalizarSeguroIA" class="btn-action-side btn-side-nuevo" style="justify-content:center; min-height:38px !important; font-size:10pt !important; flex-shrink:0;" disabled onclick="analizarPendientesIA()">⚡ 2. Analizar documento ahora</button>
       
       <div id="iaArchivoInfo" style="font-size:9pt; color:#18181B; background:#F4F4F5; padding:6px 10px; border-radius:6px; display:none; border:1px solid #A1A1AA; font-weight:700; flex-shrink:0;"></div>
       <div id="iaEstado" style="font-size:9pt; color:#854D0E; font-weight:700; text-align:center; padding:6px 10px; display:none; background:#FEF9C3; border-radius:6px; border:1px solid #EAB308; flex-shrink:0;"></div>
       
       <div id="iaContenedorResultados" style="display:none; flex:1; flex-direction:column; min-height:240px;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:2px; flex-shrink:0;">
-          <span style="font-size:10.5pt; font-weight:800; color:#18181B;">Propuesta de Eventos Detectados:</span>
+          <span style="font-size:10.5pt; font-weight:800; color:#18181B;">Propuesta de eventos detectados:</span>
           <span style="font-size:8.5pt; font-weight:600; color:var(--text-muted);">Usa las barras lateral e inferior para revisar</span>
         </div>
         <div class="ia-results-list" id="iaListaEventos"></div>
-        <button type="button" id="btnAgendarTodoIA" class="btn-action-side btn-side-nuevo" style="width:100%; margin-top:6px; justify-content:center; min-height:40px !important; font-size:10.5pt !important; flex-shrink:0;" onclick="guardarEventosDetectadosIA()">AGENDAR PROPUESTA Y SUBIR RESPALDO</button>
+        <button type="button" id="btnAgendarTodoIA" class="btn-action-side btn-side-nuevo" style="width:100%; margin-top:6px; justify-content:center; min-height:40px !important; font-size:10.5pt !important; flex-shrink:0;" onclick="guardarEventosDetectadosIA()">Agendar propuesta y subir respaldo</button>
       </div>
     </div>
   </div>
@@ -713,9 +713,43 @@
       "2026-01-01": "Año Nuevo", "2026-04-03": "Viernes Santo", "2026-05-01": "Día del Trabajador",
       "2026-05-21": "Glorias Navales", "2026-06-21": "Pueblos Indígenas", "2026-06-29": "San Pedro y San Pablo",
       "2026-07-16": "Virgen del Carmen", "2026-08-15": "Asunción", "2026-09-18": "Independencia",
-      "2026-09-19": "Glorias Ejército", "2026-10-12": "Encuentro Mundos", "2026-10-31": "Iglesias Evangélicas",
-      "2026-11-01": "Todos los Santos", "2026-12-08": "Inmaculada", "2026-12-25": "Navidad"
+      "2026-09-19": "Glorias del Ejército", "2026-10-12": "Encuentro de Dos Mundos", "2026-10-31": "Iglesias Evangélicas",
+      "2026-11-01": "Todos los Santos", "2026-12-08": "Inmaculada Concepción", "2026-12-25": "Navidad"
     };
+
+    // FUNCIÓN PARA FORMATEAR TEXTO EN TIPO ORACIÓN RESPETANDO SIGLAS EDUCATIVAS
+    const SIGLAS_OFICIALES = [
+      "UTP", "UPT", "PIE", "DIA", "SIMCE", "PAES", "SLEP", "MINEDUC", "RBD", 
+      "ACHS", "JUNAEB", "SEP", "PME", "PEI", "DEMRE", "SIGE", "CRA", "ATP", 
+      "NT1", "NT2", "1°", "2°", "3°", "4°", "5°", "6°", "7°", "8°", "I", "II", "III", "IV"
+    ];
+
+    function formatearTipoOracion(texto) {
+      if (!texto) return "";
+      let s = String(texto).trim();
+      if (!s) return "";
+
+      // Si el texto tiene más del 55% de sus letras en mayúscula, pasarlo a minúscula base
+      const letras = s.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ]/g, "");
+      if (letras.length > 2) {
+        const mayus = letras.replace(/[^A-ZÁÉÍÓÚÑÜ]/g, "").length;
+        if (mayus / letras.length > 0.55) {
+          s = s.toLowerCase();
+        }
+      }
+
+      // Primera letra de la oración y después de punto en mayúscula
+      s = s.charAt(0).toUpperCase() + s.slice(1);
+      s = s.replace(/([.!?]\s+)([a-záéíóúñü])/g, (m, p1, p2) => p1 + p2.toUpperCase());
+
+      // Preservar siglas educativas e institucionales en mayúscula
+      SIGLAS_OFICIALES.forEach(sigla => {
+        const regex = new RegExp(`\\b${sigla}\\b`, "gi");
+        s = s.replace(regex, sigla);
+      });
+
+      return s;
+    }
 
     let tasks = [];
     let eventosEliminados = [];
@@ -768,11 +802,11 @@
       const footerActions = document.getElementById("detailActionFooter");
 
       if (esModoAdmin) {
-        badge.textContent = "🔓 Modo Edición";
+        badge.textContent = "🔓 Modo edición";
         badge.className = "mode-badge-side admin";
-        badge.title = "Haz clic para volver a modo Solo Lectura";
+        badge.title = "Haz clic para volver a modo Solo lectura";
       } else {
-        badge.textContent = "🔒 Solo Lectura";
+        badge.textContent = "🔒 Solo lectura";
         badge.className = "mode-badge-side readonly";
         badge.title = "Haz clic para ingresar clave directiva y editar";
       }
@@ -787,7 +821,7 @@
         actualizarModoUI();
         return true;
       } else if (pass !== null) {
-        alert("Clave incorrecta. Permaneces en modo Solo Lectura.");
+        alert("Clave incorrecta. Permaneces en modo Solo lectura.");
       }
       return false;
     }
@@ -868,7 +902,7 @@
 
     let currentMonday = getMonday(new Date());
     const dayNames = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"];
-    const monthNames = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+    const monthNames = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
 
     function esEventoPersonal(row) {
       const texto = `${row.asunto || row[4] || ''} ${row.remitente || row[5] || ''} ${row.sintesis || row[6] || ''}`.toLowerCase();
@@ -892,7 +926,8 @@
             if (esEventoPersonal(row)) return;
 
             const filaNum = row.fila || (Array.isArray(row) ? row[0] : (idx + 2));
-            const asunto = String(row.asunto || (Array.isArray(row) ? row[4] : "(Sin asunto)")).trim();
+            const asuntoRaw = String(row.asunto || (Array.isArray(row) ? row[4] : "(Sin asunto)")).trim();
+            const asunto = formatearTipoOracion(asuntoRaw);
             const fDoc = row.fechaDoc || (Array.isArray(row) ? row[1] : null);
             const fFinDoc = row.fechaTermino || null;
             const fValida = parsearFecha(fDoc);
@@ -916,7 +951,7 @@
             let infoHora = extraerHora(horaParam);
             if (!infoHora.tieneHora) infoHora = extraerHora(fDoc);
             if (!infoHora.tieneHora) {
-              const infoExtra = `${asunto} ${row.sintesis || (Array.isArray(row) ? row[6] : '')}`;
+              const infoExtra = `${asuntoRaw} ${row.sintesis || (Array.isArray(row) ? row[6] : '')}`;
               infoHora = extraerHora(infoExtra);
             }
 
@@ -938,6 +973,10 @@
               }
             }
 
+            const remitenteRaw = row.remitente || (Array.isArray(row) ? row[5] : "General");
+            const sintesisRaw = row.sintesis || (Array.isArray(row) ? row[6] : "");
+            const accionRaw = row.accionReq || (Array.isArray(row) ? row[7] : "");
+
             const grupoId = `remote_grp_${filaNum}`;
             const rangoFechas = obtenerFechasRango(fValida, fFinValida);
             rangoFechas.forEach((diaRango, rIdx) => {
@@ -953,9 +992,9 @@
                 timeMinutos: minutosFinales,
                 tieneHora: tieneHoraReal,
                 subject: asunto,
-                sender: row.remitente || (Array.isArray(row) ? row[5] : "General"),
-                detail: row.sintesis || (Array.isArray(row) ? row[6] : ""),
-                accion: row.accionReq || (Array.isArray(row) ? row[7] : ""),
+                sender: formatearTipoOracion(remitenteRaw),
+                detail: formatearTipoOracion(sintesisRaw),
+                accion: formatearTipoOracion(accionRaw),
                 priority: row.prioridad || (Array.isArray(row) ? row[2] : "Media"),
                 category: "Laboral",
                 status: isManaged ? "managed" : "pending",
@@ -1014,7 +1053,7 @@
         const col = document.createElement("div");
         col.className = `day-column ${isToday ? 'is-today' : ''}`;
         let badgeHtml = hol ? `<span class="badge-tag">${hol}</span>` : '';
-        if (isToday) badgeHtml += `<span class="badge-today">★ HOY</span>`;
+        if (isToday) badgeHtml += `<span class="badge-today">★ Hoy</span>`;
 
         col.innerHTML = `
           <div class="day-header ${isRed ? 'is-holiday' : ''}">
@@ -1042,22 +1081,25 @@
             
             let badgeHora = (t.time && t.time !== "00:00")
               ? `<span class="card-time">${t.time}</span>`
-              : `<span class="card-time">S/H</span>`;
+              : `<span class="card-time">Por definir</span>`;
 
             const badgeClip = (t.respaldos && t.respaldos.length > 0)
               ? `<span class="card-files-badge" title="${t.respaldos.length} adjunto(s)">📎${t.respaldos.length}</span>`
               : '';
 
+            const tituloFormateado = formatearTipoOracion(t.subject);
+            const remitenteFormateado = formatearTipoOracion(t.sender || 'General');
+
             card.innerHTML = `
               <div class="card-meta-row">
                 <div class="card-meta-left">
                   ${badgeHora}
-                  <span class="card-sender">${t.sender || 'General'}</span>
+                  <span class="card-sender">${remitenteFormateado}</span>
                   ${badgeClip}
                 </div>
-                <button type="button" class="btn-quick-check ${t.status === 'managed' ? 'done' : ''}" title="Marcar Realizado / Pendiente" onclick="event.stopPropagation(); toggleRealizadoDirecto('${t.id}')">✓</button>
+                <button type="button" class="btn-quick-check ${t.status === 'managed' ? 'done' : ''}" title="Marcar realizado / pendiente" onclick="event.stopPropagation(); toggleRealizadoDirecto('${t.id}')">✓</button>
               </div>
-              <div class="card-title">${t.subject}</div>
+              <div class="card-title">${tituloFormateado}</div>
             `;
             list.appendChild(card);
           });
@@ -1072,18 +1114,18 @@
       const t = tasks.find(x => x.id === id);
       if (!t) return;
 
-      document.getElementById("dtTitle").textContent = t.subject;
-      document.getElementById("dtSender").textContent = t.sender || "General";
+      document.getElementById("dtTitle").textContent = formatearTipoOracion(t.subject);
+      document.getElementById("dtSender").textContent = formatearTipoOracion(t.sender || "General");
       
       const fIni = t.startDate || t.date;
       const fFin = t.endDate || t.date;
       const textoFecha = (fFin && fFin !== fIni) ? `${fIni} al ${fFin}` : t.date;
       document.getElementById("dtDateTime").textContent = `${textoFecha} | ${t.time && t.time !== '00:00' ? t.time + ' hrs' : 'Horario por definir'}`;
-      document.getElementById("dtDetail").textContent = t.detail || "Sin síntesis.";
-      document.getElementById("dtAccion").textContent = t.accion || "Revisar y gestionar.";
+      document.getElementById("dtDetail").textContent = formatearTipoOracion(t.detail) || "Sin síntesis.";
+      document.getElementById("dtAccion").textContent = formatearTipoOracion(t.accion) || "Revisar y gestionar.";
 
       document.getElementById("dtPrioBadge").textContent = `Prioridad: ${t.priority || 'Media'}`;
-      document.getElementById("dtStateBadge").textContent = (t.status === "managed") ? "ESTADO: REALIZADO" : "ESTADO: PENDIENTE";
+      document.getElementById("dtStateBadge").textContent = (t.status === "managed") ? "Estado: Realizado" : "Estado: Pendiente";
       document.getElementById("btnToggleRealizado").innerHTML = (t.status === "managed") ? "↩ Reabrir" : "✓ Realizado";
 
       const rContainer = document.getElementById("dtRespaldosContainer");
@@ -1105,7 +1147,7 @@
             enlace.onclick = () => alert("El archivo está sincronizándose o no tiene enlace disponible.");
           }
           enlace.className = "badge-file";
-          enlace.textContent = `📎 ${f.nombre || 'Ver Documento'}`;
+          enlace.textContent = `📎 ${f.nombre || 'Ver documento'}`;
           rList.appendChild(enlace);
         });
         rContainer.style.display = "flex";
@@ -1173,8 +1215,8 @@
       if (!solicitarClaveAdminSiEsNecesario()) return;
       isEditing = false;
       editEventId = null;
-      document.getElementById("modalTitleStr").textContent = "Nuevo Evento Laboral";
-      document.getElementById("btnGuardarEvento").textContent = "GUARDAR EVENTO";
+      document.getElementById("modalTitleStr").textContent = "Nuevo evento laboral";
+      document.getElementById("btnGuardarEvento").textContent = "Guardar evento";
       limpiarFormularioManual();
       const hoyKey = formatDateKey(new Date());
       document.getElementById("fFechaInicio").value = hoyKey;
@@ -1219,18 +1261,18 @@
     }
 
     async function guardarEventoManual() {
-      const asunto = document.getElementById("fAsunto").value.trim();
+      const asunto = formatearTipoOracion(document.getElementById("fAsunto").value.trim());
       const fInicio = document.getElementById("fFechaInicio").value;
       let fTermino = document.getElementById("fFechaFin").value;
       const hora = document.getElementById("fHora").value;
 
       if (!asunto) {
-        alert("Por favor ingresa el Asunto del evento.");
+        alert("Por favor ingresa el asunto del evento.");
         document.getElementById("fAsunto").focus();
         return;
       }
       if (!fInicio) {
-        alert("Por favor selecciona la Fecha de inicio.");
+        alert("Por favor selecciona la fecha de inicio.");
         document.getElementById("fFechaInicio").focus();
         return;
       }
@@ -1238,10 +1280,14 @@
         fTermino = fInicio;
       }
       if (!hora) {
-        alert("⏰ LA HORA ES OBLIGATORIA: Por favor indica a qué hora se realiza el evento.");
+        alert("⏰ La hora es obligatoria: por favor indica a qué hora se realiza el evento.");
         document.getElementById("fHora").focus();
         return;
       }
+
+      const organizador = formatearTipoOracion(document.getElementById("fOrganizador").value.trim() || "General");
+      const sintesis = formatearTipoOracion(document.getElementById("fDetalle").value.trim());
+      const accionReq = formatearTipoOracion(document.getElementById("fAccion").value.trim());
 
       const partes = hora.split(":");
       const min = parseInt(partes[0]) * 60 + parseInt(partes[1]);
@@ -1259,7 +1305,6 @@
         const itemOriginal = tasks.find(t => t.id === editEventId);
         const grupoExistente = itemOriginal?.groupId || null;
         filaParaEnviar = itemOriginal?.fila || "";
-        const remitenteOriginal = itemOriginal?.sender || "General";
         const subjectOriginal = itemOriginal?.subject || "";
 
         tasks = tasks.filter(t => {
@@ -1281,9 +1326,9 @@
             tieneHora: true,
             timeMinutos: min,
             subject: asunto,
-            sender: document.getElementById("fOrganizador").value.trim() || remitenteOriginal,
-            detail: document.getElementById("fDetalle").value.trim(),
-            accion: document.getElementById("fAccion").value.trim(),
+            sender: organizador,
+            detail: sintesis,
+            accion: accionReq,
             priority: selectedPriority,
             category: "Laboral",
             status: itemOriginal ? itemOriginal.status : "pending",
@@ -1304,9 +1349,9 @@
             tieneHora: true,
             timeMinutos: min,
             subject: asunto,
-            sender: document.getElementById("fOrganizador").value.trim() || "General",
-            detail: document.getElementById("fDetalle").value.trim(),
-            accion: document.getElementById("fAccion").value.trim(),
+            sender: organizador,
+            detail: sintesis,
+            accion: accionReq,
             priority: selectedPriority,
             category: "Laboral",
             status: "pending",
@@ -1327,10 +1372,10 @@
           fechaTermino: fTermino,
           hora: hora,
           asunto: asunto,
-          remitente: document.getElementById("fOrganizador").value.trim() || "General",
+          remitente: organizador,
           prioridad: selectedPriority,
-          sintesis: document.getElementById("fDetalle").value.trim(),
-          accionReq: document.getElementById("fAccion").value.trim(),
+          sintesis: sintesis,
+          accionReq: accionReq,
           archivos: adjuntosFinales,
           anual: document.getElementById("fRepetirAnual").checked ? "Si" : "No"
         };
@@ -1360,7 +1405,7 @@
         console.warn("Aviso guardado remoto:", err);
       } finally {
         btnGuardar.disabled = false;
-        btnGuardar.textContent = isEditing ? "ACTUALIZAR EVENTO" : "GUARDAR EVENTO";
+        btnGuardar.textContent = isEditing ? "Actualizar evento" : "Guardar evento";
       }
     }
 
@@ -1372,16 +1417,16 @@
 
       isEditing = true;
       editEventId = t.id;
-      document.getElementById("modalTitleStr").textContent = "Editar Evento";
-      document.getElementById("btnGuardarEvento").textContent = "ACTUALIZAR EVENTO";
+      document.getElementById("modalTitleStr").textContent = "Editar evento";
+      document.getElementById("btnGuardarEvento").textContent = "Actualizar evento";
 
-      document.getElementById("fAsunto").value = t.subject || "";
+      document.getElementById("fAsunto").value = formatearTipoOracion(t.subject || "");
       document.getElementById("fFechaInicio").value = t.startDate || t.date || "";
       document.getElementById("fFechaFin").value = t.endDate || t.date || "";
       document.getElementById("fHora").value = (t.time && t.time !== "00:00") ? t.time : "";
-      document.getElementById("fOrganizador").value = t.sender || "";
-      document.getElementById("fDetalle").value = t.detail || "";
-      document.getElementById("fAccion").value = t.accion || "";
+      document.getElementById("fOrganizador").value = formatearTipoOracion(t.sender || "");
+      document.getElementById("fDetalle").value = formatearTipoOracion(t.detail || "");
+      document.getElementById("fAccion").value = formatearTipoOracion(t.accion || "");
 
       archivosManualesTemporales = t.respaldos ? [...t.respaldos] : [];
       renderizarListaArchivosManuales();
@@ -1506,8 +1551,8 @@
       } else {
         box.innerHTML = matches.map(m => `
           <div class="search-item" onclick="openDetail('${m.id}'); document.getElementById('searchResults').style.display='none';">
-            <span style="font-weight:700; font-size:9.5pt; color:#18181B;">${m.subject}</span>
-            <span style="font-size:8pt; color:var(--text-muted); font-weight:600;">${m.date} | ${m.time ? m.time + ' hrs' : 'S/H'} • ${m.sender || 'General'}</span>
+            <span style="font-weight:700; font-size:9.5pt; color:#18181B;">${formatearTipoOracion(m.subject)}</span>
+            <span style="font-size:8pt; color:var(--text-muted); font-weight:600;">${m.date} | ${m.time ? m.time + ' hrs' : 'Por definir'} • ${formatearTipoOracion(m.sender || 'General')}</span>
           </div>
         `).join("");
       }
@@ -1563,8 +1608,8 @@
       container.innerHTML = list.map(t => `
         <div class="bitacora-item" onclick="cerrarModalBitacora(); openDetail('${t.id}')">
           <div>
-            <div style="font-weight:700; font-size:10pt; color:#18181B;">${t.subject}</div>
-            <div style="font-size:8.5pt; color:var(--text-muted); font-weight:600;">${t.date} | ${t.time ? t.time + ' hrs' : 'S/H'} • ${t.sender || 'General'}</div>
+            <div style="font-weight:700; font-size:10pt; color:#18181B;">${formatearTipoOracion(t.subject)}</div>
+            <div style="font-size:8.5pt; color:var(--text-muted); font-weight:600;">${t.date} | ${t.time ? t.time + ' hrs' : 'Por definir'} • ${formatearTipoOracion(t.sender || 'General')}</div>
           </div>
           <span style="font-size:11pt;">${t.status === 'managed' ? '✅' : '⏳'}</span>
         </div>
@@ -1706,7 +1751,7 @@
             const imgType = item.types.find(t => t.startsWith("image/"));
             if (imgType) {
               const blob = await item.getType(imgType);
-              prepararArchivosIA([blob], [imgType], ["Captura_Pegada.jpg"]);
+              prepararArchivosIA([blob], [imgType], ["Captura_pegada.jpg"]);
               return;
             }
           }
@@ -1724,7 +1769,7 @@
         for (let i = 0; i < items.length; i++) {
           if (items[i].type.indexOf("image") !== -1) {
             const blob = items[i].getAsFile();
-            prepararArchivosIA([blob], ["image/jpeg"], ["Captura_Pegada.jpg"]);
+            prepararArchivosIA([blob], ["image/jpeg"], ["Captura_pegada.jpg"]);
             break;
           }
         }
@@ -1764,7 +1809,7 @@
       
       const estado = document.getElementById('iaEstado');
       estado.style.display = 'block';
-      estado.textContent = '✅ Archivo preparado (0 tokens consumidos). Haz clic en "2. ANALIZAR DOCUMENTO AHORA".';
+      estado.textContent = '✅ Archivo preparado (0 tokens consumidos). Haz clic en "2. Analizar documento ahora".';
       document.getElementById('btnAnalizarSeguroIA').disabled = false;
     }
 
@@ -1866,7 +1911,14 @@
         }
 
         archivosRespaldoIA = respaldos;
-        eventosDetectadosIA = JSON.parse(JSON.stringify(respuesta.eventos));
+        eventosDetectadosIA = JSON.parse(JSON.stringify(respuesta.eventos)).map(ev => ({
+          ...ev,
+          asunto: formatearTipoOracion(ev.asunto || ""),
+          organizador: formatearTipoOracion(ev.organizador || ""),
+          sintesis: formatearTipoOracion(ev.sintesis || ""),
+          accion: formatearTipoOracion(ev.accion || ""),
+          pendientes: formatearTipoOracion(ev.pendientes || "")
+        }));
         renderizarEventosDetectados(eventosDetectadosIA);
 
         const u = respuesta.uso || {};
@@ -1928,10 +1980,10 @@
         card.appendChild(header);
 
         for (const [key, label, type] of [
-          ['asunto', 'Asunto / Compromiso *', 'text'],
-          ['fecha', 'Fecha (YYYY-MM-DD) *', 'date'],
+          ['asunto', 'Asunto / compromiso *', 'text'],
+          ['fecha', 'Fecha (AAAA-MM-DD) *', 'date'],
           ['hora', 'Hora (HH:MM) *', 'time'],
-          ['organizador', 'Organiza / Remitente', 'text']
+          ['organizador', 'Organiza / remitente', 'text']
         ]) {
           const l = document.createElement('label');
           l.textContent = label;
@@ -1945,7 +1997,7 @@
         }
 
         const lPrio = document.createElement('label');
-        lPrio.textContent = 'Prioridad (Color Eléctrico)';
+        lPrio.textContent = 'Prioridad (color eléctrico)';
         card.appendChild(lPrio);
 
         const prioGroup = document.createElement('div');
@@ -1967,8 +2019,8 @@
         card.appendChild(prioGroup);
 
         for (const [key, label] of [
-          ['sintesis', 'Síntesis Ejecutiva'],
-          ['accion', 'Tarea propuesta / Acción requerida']
+          ['sintesis', 'Síntesis ejecutiva'],
+          ['accion', 'Tarea propuesta / acción requerida']
         ]) {
           const l = document.createElement('label');
           l.textContent = label;
@@ -1998,7 +2050,7 @@
       });
 
       const btn = document.getElementById('btnAgendarTodoIA');
-      btn.textContent = 'GUARDAR ' + lista.length + ' PROPUESTA(S) EN AGENDA';
+      btn.textContent = 'Guardar ' + lista.length + ' propuesta(s) en agenda';
       btn.disabled = !lista.length;
       contenedor.style.display = 'flex';
     }
@@ -2026,7 +2078,7 @@
 
       const btn = document.getElementById("btnAgendarTodoIA");
       btn.disabled = true; 
-      btn.textContent = "⏳ AGENDANDO Y GUARDANDO...";
+      btn.textContent = "⏳ Agendando y guardando...";
       const baseId = Date.now();
 
       const respaldoInfo = archivosRespaldoIA.map(a => ({ nombre: a.nombre, url: a.url || "", base64: a.base64, mimeType: a.mimeType }));
@@ -2040,6 +2092,16 @@
         const partesH = hora.split(":");
         const mins = parseInt(partesH[0]) * 60 + parseInt(partesH[1] || 0);
 
+        const asuntoLimpio = formatearTipoOracion(ev.asunto || "Compromiso institucional");
+        const orgLimpio = formatearTipoOracion(ev.organizador || "General");
+        const sintesisLimpia = formatearTipoOracion(ev.sintesis || "");
+        const accionLimpia = formatearTipoOracion(ev.accion || "Gestionar");
+
+        ev.asunto = asuntoLimpio;
+        ev.organizador = orgLimpio;
+        ev.sintesis = sintesisLimpia;
+        ev.accion = accionLimpia;
+
         tasks.push({
           id: "local_ia_" + (baseId + idx),
           groupId: "grp_ia_" + (baseId + idx),
@@ -2050,10 +2112,10 @@
           timeMinutos: mins,
           tieneHora: true,
           isAnnual: false,
-          subject: ev.asunto || "Compromiso Institucional",
-          sender: ev.organizador || "General",
-          detail: ev.sintesis || "",
-          accion: ev.accion || "Gestionar",
+          subject: asuntoLimpio,
+          sender: orgLimpio,
+          detail: sintesisLimpia,
+          accion: accionLimpia,
           priority: ev.prioridad || "Media",
           category: "Laboral",
           status: "pending",
@@ -2113,7 +2175,7 @@
       }
 
       btn.disabled = false; 
-      btn.textContent = "AGENDAR PROPUESTA Y SUBIR RESPALDO";
+      btn.textContent = "Agendar propuesta y subir respaldo";
     }
 
     function updateLiveClock() {
