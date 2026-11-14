@@ -410,7 +410,7 @@
       gap: 6px;
     }
 
-    /* ESTILOS DE LA BANDEJA UNIFICADA DE 4 CUENTAS (ANTI-ESTRÉS TDAH) */
+    /* ESTILOS DE LA BANDEJA UNIFICADA DE 4 CUENTAS */
     .mail-tabs { display: flex; gap: 6px; flex-wrap: wrap; flex-shrink: 0; }
     .mail-tab-btn {
       padding: 6px 12px; border-radius: 8px; font-size: 8.5pt; font-weight: 700;
@@ -743,7 +743,7 @@
     </div>
   </div>
 
-  <!-- SCRIPT 1: NÚCLEO DEL CALENDARIO, RELOJ Y SINCRONIZACIÓN -->
+  <!-- SCRIPT PRINCIPAL UNIFICADO (SIN SÍMBOLOS < EN EL JAVASCRIPT) -->
   <script>
     const PROTO = "https" + "://";
     const API_URL = PROTO + ["script", "google", "com"].join(".") + "/macros/s/AKfycbw0Vz-JRfUocADfZ6m5R6mD3c7aSHhVi6Jdwh691UlyNmn7JilXHiiIkojOanvvsSY/exec";
@@ -781,6 +781,10 @@
         if (index === 0 && palabra.length > 0) return palabra.charAt(0).toUpperCase() + palabra.slice(1);
         return palabra;
       }).join(" ");
+    }
+
+    function normalizarTexto(txt) {
+      return (txt || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
     }
 
     let tasks = [];
@@ -850,6 +854,28 @@
         badge.className = "mode-badge-side readonly";
       }
       if (footerActions) footerActions.style.display = "flex";
+    }
+
+    function solicitarClaveAdminSiEsNecesario() {
+      if (esModoAdmin) return true;
+      const pass = prompt("Acción protegida. Ingresa la clave directiva para editar:");
+      if (pass === CLAVE_ADMIN) {
+        esModoAdmin = true;
+        actualizarModoUI();
+        return true;
+      } else if (pass !== null) {
+        alert("Clave incorrecta. Permaneces en modo Solo lectura.");
+      }
+      return false;
+    }
+
+    function alternarModoEdicion() {
+      if (esModoAdmin) {
+        esModoAdmin = false;
+        actualizarModoUI();
+      } else {
+        solicitarClaveAdminSiEsNecesario();
+      }
     }
 
     function renderCalendar() {
@@ -947,14 +973,328 @@
     document.getElementById("btnPrev").onclick = () => { currentMonday.setDate(currentMonday.getDate() - 7); renderCalendar(); };
     document.getElementById("btnNext").onclick = () => { currentMonday.setDate(currentMonday.getDate() + 7); renderCalendar(); };
     renderCalendar();
-  </script>
 
-  <!-- SCRIPT 2: GESTIÓN DE EVENTOS, BANDEJA 4 CORREOS Y ASISTENTE AIA -->
-  <script>
-    function normalizarTexto(txt) {
-      return (txt || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+    // =====================================================
+    // BANDEJA UNIFICADA DE 4 CORREOS + AUTO-AGENDAMIENTO IA
+    // =====================================================
+    function abrirModalCorreos() {
+      document.getElementById("modalCorreosOverlay").style.display = "flex";
+      if (correosBandeja.length === 0) {
+        cargarCorreosUnificados();
+      }
     }
 
+    function cerrarModalCorreos() {
+      document.getElementById("modalCorreosOverlay").style.display = "none";
+    }
+
+    function limpiarRemitenteCorreo(deStr) {
+      if (!deStr) return "Correo";
+      const s = String(deStr);
+      const pos = s.indexOf(String.fromCharCode(60));
+      const base = pos > 0 ? s.substring(0, pos) : s;
+      return formatearTipoOracion(base.replace(/"/g, "").trim());
+    }
+
+    async function cargarCorreosUnificados() {
+      const status = document.getElementById("mailStatusText");
+      const listContainer = document.getElementById("mailListContainer");
+      status.textContent = "⏳ Leyendo correos entrantes de tus cuentas...";
+      listContainer.innerHTML = '<span class="empty-text">⏳ Conectando con tu bandeja unificada...</span>';
+
+      try {
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ accion: "listar_correos", max: 30 })
+        });
+        const data = await res.json();
+        if (data.status === "error") throw new Error(data.message);
+
+        correosBandeja = data.correos || [];
+        if (Array.isArray(data.cuentasDisponibles) && data.cuentasDisponibles.length > 0) {
+          misCuentasSalida = data.cuentasDisponibles;
+        }
+        status.textContent = `✅ ${correosBandeja.length} correos recientes cargados`;
+        renderizarListaCorreos();
+      } catch (err) {
+        status.textContent = "⚠️ Revisa la conexión con Apps Script";
+        listContainer.innerHTML = `<div style="padding:12px; font-size:9pt; color:#BE123C; font-weight:600;">Detalle: ${err.message}.<br><br>Asegúrate de haber implementado una <b>Nueva versión</b> en Google Apps Script con el código que incluye <b>listar_correos</b>.</div>`;
+      }
+    }
+
+    function filtrarPorCuentaCorreo(cuenta, btnEl) {
+      filtroCuentaActual = cuenta;
+      document.querySelectorAll("#mailTabsContainer .mail-tab-btn").forEach(b => b.classList.remove("active"));
+      if (btnEl) btnEl.classList.add("active");
+      renderizarListaCorreos();
+    }
+
+    function renderizarListaCorreos() {
+      const listContainer = document.getElementById("mailListContainer");
+      let filtrados = correosBandeja;
+
+      if (filtroCuentaActual !== "TODAS") {
+        filtrados = correosBandeja.filter(c => {
+          const dest = (c.cuentaDestino || "").toLowerCase();
+          const para = (c.para || "").toLowerCase();
+          if (filtroCuentaActual === "Hotmail") return dest.includes("hotmail") || para.includes("hotmail");
+          if (filtroCuentaActual === "Outlook") return dest.includes("outlook") || para.includes("outlook") || para.includes("live.");
+          if (filtroCuentaActual === "Gmail 2") return dest !== "gmail 1" && !dest.includes("hotmail") && !dest.includes("outlook");
+          return dest === "gmail 1";
+        });
+      }
+
+      if (filtrados.length === 0) {
+        listContainer.innerHTML = '<span class="empty-text">No hay correos en esta pestaña.</span>';
+        return;
+      }
+
+      listContainer.innerHTML = filtrados.map((c) => {
+        const isSel = correoSeleccionadoActual && correoSeleccionadoActual.messageId === c.messageId;
+        return `
+          <div class="mail-card-item ${c.noLeido ? 'unread' : ''} ${isSel ? 'selected' : ''}" onclick="seleccionarCorreoParaLeer('${c.messageId}')">
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:4px;">
+              <span class="mail-account-pill">${c.cuentaDestino || 'Gmail'}</span>
+              <span style="font-size:7.5pt; color:#52525B; font-weight:600;">${c.fecha}</span>
+            </div>
+            <div style="font-size:9.5pt; font-weight:700; color:#18181B; line-height:1.25;">${formatearTipoOracion(c.asunto)}</div>
+            <div style="font-size:8pt; color:#52525B; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">De: ${limpiarRemitenteCorreo(c.de)}</div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    async function seleccionarCorreoParaLeer(messageId) {
+      const c = correosBandeja.find(x => x.messageId === messageId);
+      if (!c) return;
+      correoSeleccionadoActual = c;
+      renderizarListaCorreos();
+
+      const detail = document.getElementById("mailDetailContainer");
+      const opcionesCuentas = misCuentasSalida.map(cta => `<option value="${cta}">${cta}</option>`).join("");
+      const remitenteLimpio = limpiarRemitenteCorreo(c.de);
+
+      detail.innerHTML = `
+        <div style="border-bottom:1px solid #E4E4E7; padding-bottom:8px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="mail-account-pill">Recibido en: ${c.cuentaDestino}</span>
+            <button type="button" class="btn-action-side" style="width:auto; min-height:28px !important; font-size:8pt !important;" onclick="archivarCorreoActual('${c.threadId}')">✓ Marcar leído y archivar</button>
+          </div>
+          <h3 style="font-size:12.5pt; font-weight:800; color:#18181B; margin-top:6px;">${formatearTipoOracion(c.asunto)}</h3>
+          <div style="font-size:8.5pt; color:#52525B; font-weight:600; margin-top:2px;">De: <b>${remitenteLimpio}</b> • ${c.fecha}</div>
+        </div>
+
+        <div class="mail-ia-box" id="mailPropuestaBox">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <strong style="font-size:10pt; color:#854D0E;">⚡ Posible agendamiento detectado por IA (Groq):</strong>
+            <span id="mailIaLoading" style="font-size:8.5pt; font-weight:700; color:#854D0E;">Analizando correo...</span>
+          </div>
+          <div id="mailIaFormFields" style="display:none; flex-direction:column; gap:6px;">
+            <div class="grid-2col">
+              <div><label style="font-size:8pt;">Compromiso / asunto</label><input type="text" id="mIaAsunto" style="padding:5px 8px; font-size:9.5pt;"></div>
+              <div><label style="font-size:8pt;">Organiza / remitente</label><input type="text" id="mIaOrg" style="padding:5px 8px; font-size:9.5pt;"></div>
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px;">
+              <div><label style="font-size:8pt;">Fecha</label><input type="date" id="mIaFecha" style="padding:5px 8px; font-size:9.5pt;"></div>
+              <div><label style="font-size:8pt;">Hora</label><input type="time" id="mIaHora" style="padding:5px 8px; font-size:9.5pt;"></div>
+              <div>
+                <label style="font-size:8pt;">Prioridad</label>
+                <select id="mIaPrio" style="padding:5px 8px; font-size:9.5pt;">
+                  <option value="Alta">Alta (rojo)</option>
+                  <option value="Media" selected>Media (amarillo)</option>
+                  <option value="Baja">Baja (verde)</option>
+                </select>
+              </div>
+            </div>
+            <div><label style="font-size:8pt;">Acción requerida / síntesis</label><input type="text" id="mIaAccion" style="padding:5px 8px; font-size:9.5pt;"></div>
+            <button type="button" class="btn-action-side btn-side-nuevo" style="justify-content:center; min-height:34px !important;" onclick="agendarDirectoDesdeCorreo()">➕ Agendar este correo en 1 clic</button>
+          </div>
+        </div>
+
+        <div style="background:#F4F4F5; border:1px solid #D4D4D8; border-radius:10px; padding:10px; display:flex; flex-direction:column; gap:6px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+            <label style="margin:0; font-size:8.5pt;">↩ Responder usando la cuenta:</label>
+            <select id="mailReplyFrom" style="width:auto; flex:1; padding:4px 8px; font-size:9pt;">
+              ${opcionesCuentas}
+            </select>
+          </div>
+          <textarea id="mailReplyBody" rows="2" placeholder="Escribe una respuesta breve aquí..." style="font-size:9.5pt; padding:6px 10px;"></textarea>
+          <button type="button" id="btnEnviarRespuestaMail" class="btn-action-side" style="justify-content:center; min-height:32px !important;" onclick="enviarRespuestaCorreoActual()">📤 Enviar respuesta ahora</button>
+        </div>
+
+        <div style="flex:1;">
+          <span style="font-size:8pt; font-weight:700; color:#71717A;">Texto original del correo:</span>
+          <div class="modal-box" style="margin-top:4px; font-size:9pt; max-height:180px; overflow-y:auto;" id="mailRawBodyBox"></div>
+        </div>
+      `;
+
+      const rawBox = document.getElementById("mailRawBodyBox");
+      if (rawBox) rawBox.textContent = c.cuerpo || "(Sin texto)";
+
+      extraerCompromisoDeCorreoConGroq(c);
+    }
+
+    async function extraerCompromisoDeCorreoConGroq(correo) {
+      const loading = document.getElementById("mailIaLoading");
+      const fields = document.getElementById("mailIaFormFields");
+      const remitenteLimpio = limpiarRemitenteCorreo(correo.de);
+      try {
+        const textoAnalizar = `Asunto del correo: ${correo.asunto}\nDe: ${remitenteLimpio}\nFecha recepción: ${correo.fecha}\nContenido:\n${correo.cuerpo}`;
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({
+            accion: "analizar_con_gemini",
+            acceso: "25078",
+            partes: [{ text: textoAnalizar }]
+          })
+        });
+        const data = await res.json();
+        const ev = (data.eventos && data.eventos[0]) ? data.eventos[0] : {
+          asunto: formatearTipoOracion(correo.asunto),
+          organizador: remitenteLimpio,
+          fecha: formatDateKey(new Date()),
+          hora: "09:00",
+          prioridad: "Media",
+          accion: formatearTipoOracion(correo.resumen)
+        };
+
+        if (loading) loading.textContent = "✅ Listo para agendar";
+        if (fields) {
+          fields.style.display = "flex";
+          document.getElementById("mIaAsunto").value = formatearTipoOracion(ev.asunto || correo.asunto);
+          document.getElementById("mIaOrg").value = formatearTipoOracion(ev.organizador || remitenteLimpio);
+          document.getElementById("mIaFecha").value = ev.fecha || formatDateKey(new Date());
+          document.getElementById("mIaHora").value = ev.hora || "09:00";
+          document.getElementById("mIaPrio").value = ev.prioridad || "Media";
+          document.getElementById("mIaAccion").value = formatearTipoOracion(ev.accion || ev.sintesis || correo.resumen);
+        }
+      } catch (e) {
+        if (loading) loading.textContent = "Completa manualmente:";
+        if (fields) {
+          fields.style.display = "flex";
+          document.getElementById("mIaAsunto").value = formatearTipoOracion(correo.asunto);
+          document.getElementById("mIaOrg").value = remitenteLimpio;
+          document.getElementById("mIaFecha").value = formatDateKey(new Date());
+          document.getElementById("mIaHora").value = "09:00";
+          document.getElementById("mIaAccion").value = formatearTipoOracion(correo.resumen);
+        }
+      }
+    }
+
+    async function agendarDirectoDesdeCorreo() {
+      const asunto = formatearTipoOracion(document.getElementById("mIaAsunto").value.trim());
+      const org = formatearTipoOracion(document.getElementById("mIaOrg").value.trim() || "Correo");
+      const fecha = document.getElementById("mIaFecha").value || formatDateKey(new Date());
+      const hora = document.getElementById("mIaHora").value || "09:00";
+      const prio = document.getElementById("mIaPrio").value || "Media";
+      const accion = formatearTipoOracion(document.getElementById("mIaAccion").value.trim());
+
+      const partes = hora.split(":");
+      const mins = parseInt(partes[0]) * 60 + parseInt(partes[1] || 0);
+      const grpId = "grp_mail_" + Date.now();
+
+      tasks.push({
+        id: "local_mail_" + Date.now(),
+        groupId: grpId,
+        date: fecha,
+        startDate: fecha,
+        endDate: fecha,
+        time: hora,
+        timeMinutos: mins,
+        tieneHora: true,
+        subject: asunto,
+        sender: org,
+        detail: correoSeleccionadoActual ? formatearTipoOracion(correoSeleccionadoActual.resumen) : accion,
+        accion: accion,
+        priority: prio,
+        category: "Laboral",
+        status: "pending",
+        respaldos: []
+      });
+
+      localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
+      const fParts = fecha.split("-");
+      currentMonday = getMonday(new Date(parseInt(fParts[0]), parseInt(fParts[1]) - 1, parseInt(fParts[2])));
+      renderCalendar();
+
+      alert(`✅ Compromiso "${asunto}" agendado para el ${fecha} a las ${hora}.`);
+
+      try {
+        await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({
+            accion: "crear_evento",
+            fechaDoc: fecha,
+            fechaTermino: fecha,
+            hora: hora,
+            asunto: asunto,
+            remitente: org,
+            prioridad: prio,
+            sintesis: correoSeleccionadoActual ? formatearTipoOracion(correoSeleccionadoActual.resumen) : accion,
+            accionReq: accion
+          })
+        });
+      } catch (e) {}
+    }
+
+    async function enviarRespuestaCorreoActual() {
+      if (!correoSeleccionadoActual) return;
+      const cuerpo = document.getElementById("mailReplyBody").value.trim();
+      const desde = document.getElementById("mailReplyFrom").value;
+      if (!cuerpo) {
+        alert("Escribe un mensaje antes de enviar.");
+        return;
+      }
+
+      const btn = document.getElementById("btnEnviarRespuestaMail");
+      btn.disabled = true;
+      btn.textContent = "⏳ Enviando respuesta...";
+
+      try {
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({
+            accion: "enviar_correo",
+            threadId: correoSeleccionadoActual.threadId,
+            para: correoSeleccionadoActual.de,
+            asunto: "Re: " + correoSeleccionadoActual.asunto,
+            cuerpo: cuerpo,
+            desde: desde
+          })
+        });
+        const data = await res.json();
+        if (data.status === "error") throw new Error(data.message);
+        document.getElementById("mailReplyBody").value = "";
+        alert("✅ Respuesta enviada correctamente.");
+      } catch (e) {
+        alert("No se pudo enviar: " + e.message);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "📤 Enviar respuesta ahora";
+      }
+    }
+
+    async function archivarCorreoActual(threadId) {
+      correosBandeja = correosBandeja.filter(x => x.threadId !== threadId);
+      correoSeleccionadoActual = null;
+      renderizarListaCorreos();
+      document.getElementById("mailDetailContainer").innerHTML = '<span class="empty-text" style="margin-top:60px;">✅ Correo archivado. Uno menos en tu cabeza.</span>';
+      try {
+        await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ accion: "marcar_correo_leido", threadId: threadId, archivar: true })
+        });
+      } catch (e) {}
+    }
+
+    // =====================================================
+    // SINCRONIZACIÓN Y GESTIÓN DE AGENDA
+    // =====================================================
     function parsearFecha(str) {
       if (!str) return null;
       if (str instanceof Date) return formatDateKey(str);
@@ -1133,337 +1473,6 @@
 
     sincronizarDesdeSheets();
 
-    function solicitarClaveAdminSiEsNecesario() {
-      if (esModoAdmin) return true;
-      const pass = prompt("Acción protegida. Ingresa la clave directiva para editar:");
-      if (pass === CLAVE_ADMIN) {
-        esModoAdmin = true;
-        actualizarModoUI();
-        return true;
-      } else if (pass !== null) {
-        alert("Clave incorrecta. Permaneces en modo Solo lectura.");
-      }
-      return false;
-    }
-
-    function alternarModoEdicion() {
-      if (esModoAdmin) {
-        esModoAdmin = false;
-        actualizarModoUI();
-      } else {
-        solicitarClaveAdminSiEsNecesario();
-      }
-    }
-
-    // =====================================================
-    // FUNCIONES DE LA BANDEJA UNIFICADA DE 4 CORREOS + IA
-    // =====================================================
-    function abrirModalCorreos() {
-      if (!solicitarClaveAdminSiEsNecesario()) return;
-      document.getElementById("modalCorreosOverlay").style.display = "flex";
-      if (correosBandeja.length === 0) {
-        cargarCorreosUnificados();
-      }
-    }
-
-    function cerrarModalCorreos() {
-      document.getElementById("modalCorreosOverlay").style.display = "none";
-    }
-
-    async function cargarCorreosUnificados() {
-      const status = document.getElementById("mailStatusText");
-      const listContainer = document.getElementById("mailListContainer");
-      status.textContent = "⏳ Leyendo correos entrantes de tus cuentas...";
-      listContainer.innerHTML = '<span class="empty-text">⏳ Conectando con tu bandeja unificada...</span>';
-
-      try {
-        const res = await fetch(API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({ accion: "listar_correos", max: 30 })
-        });
-        const data = await res.json();
-        if (data.status === "error") throw new Error(data.message);
-
-        correosBandeja = data.correos || [];
-        if (Array.isArray(data.cuentasDisponibles) && data.cuentasDisponibles.length > 0) {
-          misCuentasSalida = data.cuentasDisponibles;
-        }
-        status.textContent = `✅ ${correosBandeja.length} correos recientes cargados`;
-        renderizarListaCorreos();
-      } catch (err) {
-        status.textContent = "⚠️ Falta autorizar Gmail en Apps Script";
-        listContainer.innerHTML = `<div style="padding:12px; font-size:9pt; color:#BE123C; font-weight:600;">No se pudo leer Gmail aún: ${err.message}.<br><br>En Apps Script, selecciona arriba la función <b>listarCorreosUnificadosServer</b> y presiona <b>▶ Ejecutar</b> para aceptar el permiso de Gmail.</div>`;
-      }
-    }
-
-    function filtrarPorCuentaCorreo(cuenta, btnEl) {
-      filtroCuentaActual = cuenta;
-      document.querySelectorAll("#mailTabsContainer .mail-tab-btn").forEach(b => b.classList.remove("active"));
-      if (btnEl) btnEl.classList.add("active");
-      renderizarListaCorreos();
-    }
-
-    function renderizarListaCorreos() {
-      const listContainer = document.getElementById("mailListContainer");
-      let filtrados = correosBandeja;
-
-      if (filtroCuentaActual !== "TODAS") {
-        filtrados = correosBandeja.filter(c => {
-          const dest = (c.cuentaDestino || "").toLowerCase();
-          const para = (c.para || "").toLowerCase();
-          if (filtroCuentaActual === "Hotmail") return dest.includes("hotmail") || para.includes("hotmail");
-          if (filtroCuentaActual === "Outlook") return dest.includes("outlook") || para.includes("outlook") || para.includes("live.");
-          if (filtroCuentaActual === "Gmail 2") return dest !== "gmail 1" && !dest.includes("hotmail") && !dest.includes("outlook");
-          return dest === "gmail 1";
-        });
-      }
-
-      if (filtrados.length === 0) {
-        listContainer.innerHTML = '<span class="empty-text">No hay correos en esta pestaña.</span>';
-        return;
-      }
-
-      listContainer.innerHTML = filtrados.map((c, idx) => {
-        const isSel = correoSeleccionadoActual && correoSeleccionadoActual.messageId === c.messageId;
-        return `
-          <div class="mail-card-item ${c.noLeido ? 'unread' : ''} ${isSel ? 'selected' : ''}" onclick="seleccionarCorreoParaLeer('${c.messageId}')">
-            <div style="display:flex; justify-content:space-between; align-items:center; gap:4px;">
-              <span class="mail-account-pill">${c.cuentaDestino || 'Gmail'}</span>
-              <span style="font-size:7.5pt; color:#52525B; font-weight:600;">${c.fecha}</span>
-            </div>
-            <div style="font-size:9.5pt; font-weight:700; color:#18181B; line-height:1.25;">${formatearTipoOracion(c.asunto)}</div>
-            <div style="font-size:8pt; color:#52525B; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">De: ${c.de}</div>
-          </div>
-        `;
-      }).join("");
-    }
-
-    async function seleccionarCorreoParaLeer(messageId) {
-      const c = correosBandeja.find(x => x.messageId === messageId);
-      if (!c) return;
-      correoSeleccionadoActual = c;
-      renderizarListaCorreos();
-
-      const detail = document.getElementById("mailDetailContainer");
-      const opcionesCuentas = misCuentasSalida.map(cta => `<option value="${cta}">${cta}</option>`).join("");
-
-      detail.innerHTML = `
-        <div style="border-bottom:1px solid #E4E4E7; padding-bottom:8px;">
-          <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span class="mail-account-pill">Recibido en: ${c.cuentaDestino} (${c.para})</span>
-            <button type="button" class="btn-action-side" style="width:auto; min-height:28px !important; font-size:8pt !important;" onclick="archivarCorreoActual('${c.threadId}')">✓ Marcar leído y archivar</button>
-          </div>
-          <h3 style="font-size:12.5pt; font-weight:800; color:#18181B; margin-top:6px;">${formatearTipoOracion(c.asunto)}</h3>
-          <div style="font-size:8.5pt; color:#52525B; font-weight:600; margin-top:2px;">De: <b>${c.de}</b> • ${c.fecha}</div>
-        </div>
-
-        <div class="mail-ia-box" id="mailPropuestaBox">
-          <div style="display:flex; justify-content:space-between; align-items:center;">
-            <strong style="font-size:10pt; color:#854D0E;">⚡ Posible agendamiento detectado por IA (Groq):</strong>
-            <span id="mailIaLoading" style="font-size:8.5pt; font-weight:700; color:#854D0E;">Analizando correo...</span>
-          </div>
-          <div id="mailIaFormFields" style="display:none; flex-direction:column; gap:6px;">
-            <div class="grid-2col">
-              <div><label style="font-size:8pt;">Compromiso / asunto</label><input type="text" id="mIaAsunto" style="padding:5px 8px; font-size:9.5pt;"></div>
-              <div><label style="font-size:8pt;">Organiza / remitente</label><input type="text" id="mIaOrg" style="padding:5px 8px; font-size:9.5pt;"></div>
-            </div>
-            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px;">
-              <div><label style="font-size:8pt;">Fecha</label><input type="date" id="mIaFecha" style="padding:5px 8px; font-size:9.5pt;"></div>
-              <div><label style="font-size:8pt;">Hora</label><input type="time" id="mIaHora" style="padding:5px 8px; font-size:9.5pt;"></div>
-              <div>
-                <label style="font-size:8pt;">Prioridad</label>
-                <select id="mIaPrio" style="padding:5px 8px; font-size:9.5pt;">
-                  <option value="Alta">Alta (rojo)</option>
-                  <option value="Media" selected>Media (amarillo)</option>
-                  <option value="Baja">Baja (verde)</option>
-                </select>
-              </div>
-            </div>
-            <div><label style="font-size:8pt;">Acción requerida / síntesis</label><input type="text" id="mIaAccion" style="padding:5px 8px; font-size:9.5pt;"></div>
-            <button type="button" class="btn-action-side btn-side-nuevo" style="justify-content:center; min-height:34px !important;" onclick="agendarDirectoDesdeCorreo()">➕ Agendar este correo en 1 clic</button>
-          </div>
-        </div>
-
-        <div style="background:#F4F4F5; border:1px solid #D4D4D8; border-radius:10px; padding:10px; display:flex; flex-direction:column; gap:6px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
-            <label style="margin:0; font-size:8.5pt;">↩ Responder usando la cuenta:</label>
-            <select id="mailReplyFrom" style="width:auto; flex:1; padding:4px 8px; font-size:9pt;">
-              ${opcionesCuentas}
-            </select>
-          </div>
-          <textarea id="mailReplyBody" rows="2" placeholder="Escribe una respuesta breve aquí..." style="font-size:9.5pt; padding:6px 10px;"></textarea>
-          <button type="button" id="btnEnviarRespuestaMail" class="btn-action-side" style="justify-content:center; min-height:32px !important;" onclick="enviarRespuestaCorreoActual()">📤 Enviar respuesta ahora</button>
-        </div>
-
-        <div style="flex:1;">
-          <span style="font-size:8pt; font-weight:700; color:#71717A;">Texto original del correo:</span>
-          <div class="modal-box" style="margin-top:4px; font-size:9pt; max-height:180px; overflow-y:auto;">${c.cuerpo || "(Sin texto)"}</div>
-        </div>
-      `;
-
-      extraerCompromisoDeCorreoConGroq(c);
-    }
-
-    async function extraerCompromisoDeCorreoConGroq(correo) {
-      const loading = document.getElementById("mailIaLoading");
-      const fields = document.getElementById("mailIaFormFields");
-      try {
-        const textoAnalizar = `Asunto del correo: ${correo.asunto}\nDe: ${correo.de}\nFecha recepción: ${correo.fecha}\nContenido:\n${correo.cuerpo}`;
-        const res = await fetch(API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({
-            accion: "analizar_con_gemini",
-            acceso: "25078",
-            partes: [{ text: textoAnalizar }]
-          })
-        });
-        const data = await res.json();
-        const ev = (data.eventos && data.eventos[0]) ? data.eventos[0] : {
-          asunto: formatearTipoOracion(correo.asunto),
-          organizador: formatearTipoOracion(correo.de.split("<")[0].trim()),
-          fecha: formatDateKey(new Date()),
-          hora: "09:00",
-          prioridad: "Media",
-          accion: formatearTipoOracion(correo.resumen)
-        };
-
-        if (loading) loading.textContent = "✅ Listo para agendar";
-        if (fields) {
-          fields.style.display = "flex";
-          document.getElementById("mIaAsunto").value = formatearTipoOracion(ev.asunto || correo.asunto);
-          document.getElementById("mIaOrg").value = formatearTipoOracion(ev.organizador || correo.de.split("<")[0].trim());
-          document.getElementById("mIaFecha").value = ev.fecha || formatDateKey(new Date());
-          document.getElementById("mIaHora").value = ev.hora || "09:00";
-          document.getElementById("mIaPrio").value = ev.prioridad || "Media";
-          document.getElementById("mIaAccion").value = formatearTipoOracion(ev.accion || ev.sintesis || correo.resumen);
-        }
-      } catch (e) {
-        if (loading) loading.textContent = "Completa manualmente:";
-        if (fields) {
-          fields.style.display = "flex";
-          document.getElementById("mIaAsunto").value = formatearTipoOracion(correo.asunto);
-          document.getElementById("mIaOrg").value = formatearTipoOracion(correo.de.split("<")[0].trim());
-          document.getElementById("mIaFecha").value = formatDateKey(new Date());
-          document.getElementById("mIaHora").value = "09:00";
-          document.getElementById("mIaAccion").value = formatearTipoOracion(correo.resumen);
-        }
-      }
-    }
-
-    async function agendarDirectoDesdeCorreo() {
-      const asunto = formatearTipoOracion(document.getElementById("mIaAsunto").value.trim());
-      const org = formatearTipoOracion(document.getElementById("mIaOrg").value.trim() || "Correo");
-      const fecha = document.getElementById("mIaFecha").value || formatDateKey(new Date());
-      const hora = document.getElementById("mIaHora").value || "09:00";
-      const prio = document.getElementById("mIaPrio").value || "Media";
-      const accion = formatearTipoOracion(document.getElementById("mIaAccion").value.trim());
-
-      const partes = hora.split(":");
-      const mins = parseInt(partes[0]) * 60 + parseInt(partes[1] || 0);
-      const grpId = "grp_mail_" + Date.now();
-
-      tasks.push({
-        id: "local_mail_" + Date.now(),
-        groupId: grpId,
-        date: fecha,
-        startDate: fecha,
-        endDate: fecha,
-        time: hora,
-        timeMinutos: mins,
-        tieneHora: true,
-        subject: asunto,
-        sender: org,
-        detail: correoSeleccionadoActual ? formatearTipoOracion(correoSeleccionadoActual.resumen) : accion,
-        accion: accion,
-        priority: prio,
-        category: "Laboral",
-        status: "pending",
-        respaldos: []
-      });
-
-      localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
-      const fParts = fecha.split("-");
-      currentMonday = getMonday(new Date(parseInt(fParts[0]), parseInt(fParts[1]) - 1, parseInt(fParts[2])));
-      renderCalendar();
-
-      alert(`✅ Compromiso "${asunto}" agendado para el ${fecha} a las ${hora}.`);
-
-      try {
-        await fetch(API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({
-            accion: "crear_evento",
-            fechaDoc: fecha,
-            fechaTermino: fecha,
-            hora: hora,
-            asunto: asunto,
-            remitente: org,
-            prioridad: prio,
-            sintesis: correoSeleccionadoActual ? formatearTipoOracion(correoSeleccionadoActual.resumen) : accion,
-            accionReq: accion
-          })
-        });
-      } catch (e) {}
-    }
-
-    async function enviarRespuestaCorreoActual() {
-      if (!correoSeleccionadoActual) return;
-      const cuerpo = document.getElementById("mailReplyBody").value.trim();
-      const desde = document.getElementById("mailReplyFrom").value;
-      if (!cuerpo) {
-        alert("Escribe un mensaje antes de enviar.");
-        return;
-      }
-
-      const btn = document.getElementById("btnEnviarRespuestaMail");
-      btn.disabled = true;
-      btn.textContent = "⏳ Enviando respuesta...";
-
-      try {
-        const res = await fetch(API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({
-            accion: "enviar_correo",
-            threadId: correoSeleccionadoActual.threadId,
-            para: correoSeleccionadoActual.de,
-            asunto: "Re: " + correoSeleccionadoActual.asunto,
-            cuerpo: cuerpo,
-            desde: desde
-          })
-        });
-        const data = await res.json();
-        if (data.status === "error") throw new Error(data.message);
-        document.getElementById("mailReplyBody").value = "";
-        alert("✅ Respuesta enviada correctamente.");
-      } catch (e) {
-        alert("No se pudo enviar: " + e.message);
-      } finally {
-        btn.disabled = false;
-        btn.textContent = "📤 Enviar respuesta ahora";
-      }
-    }
-
-    async function archivarCorreoActual(threadId) {
-      correosBandeja = correosBandeja.filter(x => x.threadId !== threadId);
-      correoSeleccionadoActual = null;
-      renderizarListaCorreos();
-      document.getElementById("mailDetailContainer").innerHTML = '<span class="empty-text" style="margin-top:60px;">✅ Correo archivado. Uno menos en tu cabeza.</span>';
-      try {
-        await fetch(API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({ accion: "marcar_correo_leido", threadId: threadId, archivar: true })
-        });
-      } catch (e) {}
-    }
-
-    // =====================================================
-    // RESTO DE FUNCIONES DE LA AGENDA
-    // =====================================================
     function selectPriority(prio) {
       selectedPriority = prio;
       document.getElementById('prioAlta').className = "btn-prio" + (prio === "Alta" ? " selected-alta" : "");
@@ -1999,39 +2008,6 @@
     function cerrarModalIA() { 
       document.getElementById("modalIAOverlay").style.display = "none"; 
     }
-
-    (function hacerModalArrastrable() {
-      const header = document.getElementById("dragHeaderIA");
-      const box = document.getElementById("modalIABox");
-      if (!header || !box) return;
-
-      let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-      header.onmousedown = dragMouseDown;
-
-      function dragMouseDown(e) {
-        e.preventDefault();
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        document.onmouseup = closeDragElement;
-        document.onmousemove = elementDrag;
-      }
-
-      function elementDrag(e) {
-        e.preventDefault();
-        pos1 = pos3 - e.clientX;
-        pos2 = pos4 - e.clientY;
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        box.style.position = "relative";
-        box.style.top = (box.offsetTop - pos2) + "px";
-        box.style.left = (box.offsetLeft - pos1) + "px";
-      }
-
-      function closeDragElement() {
-        document.onmouseup = null;
-        document.onmousemove = null;
-      }
-    })();
 
     function optimizarYCodificarArchivo(file) {
       return new Promise((resolve, reject) => {
