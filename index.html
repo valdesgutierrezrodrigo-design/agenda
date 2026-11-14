@@ -166,17 +166,24 @@
       background: var(--prio-baja-bg) !important; box-shadow: 0 2px 10px var(--prio-baja-glow) !important;
     } 
     
-    .task-card.is-done { opacity: 0.88; background: #F8FAFC !important; }
+    .task-card.is-done { opacity: 0.78; background: #F8FAFC !important; }
     .task-card.is-done .card-title { text-decoration: line-through; color: #64748B !important; }
 
     .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
-    .card-title { font-size: 13.5pt; font-weight: 800; color: #000000; line-height: 1.3; flex: 1; min-width: 0; letter-spacing: 0.25px; }
+    .card-title { font-size: 13pt; font-weight: 800; color: #000000; line-height: 1.3; flex: 1; min-width: 0; letter-spacing: 0.25px; }
     
     .card-badges { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
-    .card-time { font-size: 10.5pt; font-weight: 900; color: #1E3A8A; background: #DBEAFE; border: 1.5px solid #93C5FD; padding: 2px 8px; border-radius: 6px; white-space: nowrap; }
+    .card-time { font-size: 10pt; font-weight: 900; color: #1E3A8A; background: #DBEAFE; border: 1.5px solid #93C5FD; padding: 2px 7px; border-radius: 6px; white-space: nowrap; }
     .card-time.time-nodefined { color: #475569; background: #F1F5F9; border-color: #CBD5E1; font-size: 9pt; font-weight: 800; }
     .card-files-badge { font-size: 9.5pt; font-weight: 900; color: #9A3412; background: #FFEDD5; border: 1.5px solid #FDBA74; padding: 2px 7px; border-radius: 6px; white-space: nowrap; }
     
+    .btn-quick-check {
+      width: 24px; height: 24px; border-radius: 6px; border: 2px solid #64748B;
+      background: #FFFFFF; color: #0F172A; font-weight: 900; font-size: 10pt;
+      display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+    }
+    .btn-quick-check.done { background: #00E676; border-color: #15803D; color: #000000; }
+
     .card-sender { font-size: 9.5pt; color: #1E293B; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: 0.2px; }
     .empty-text { font-size: 10pt; color: #94A3B8; text-align: center; margin-top: 24px; font-weight: 800; }
 
@@ -197,26 +204,27 @@
       border: 2px solid var(--border-strong) !important; background: #FFFFFF !important; color: #0F172A !important;
       text-decoration: none;
     }
-    .btn-action-side:hover { background: #F1F5F9 !important; border-color: #475569 !important; }
+    .btn-action-side:hover:not(:disabled) { background: #F1F5F9 !important; border-color: #475569 !important; }
+    .btn-action-side:disabled { opacity: 0.5; cursor: not-allowed; }
     .btn-icon-lg { font-size: 13pt; line-height: 1; }
     
     .btn-side-nuevo { 
       background: #FEF08A !important; border-color: #EAB308 !important; color: #713F12 !important; font-weight: 900 !important; 
       box-shadow: 0 3px 8px rgba(234, 179, 8, 0.35) !important;
     }
-    .btn-side-nuevo:hover { background: #FDE047 !important; transform: translateY(-1px); }
+    .btn-side-nuevo:hover:not(:disabled) { background: #FDE047 !important; transform: translateY(-1px); }
 
     .btn-side-ia { background: #EFF6FF !important; border-color: #60A5FA !important; color: #1D4ED8 !important; }
-    .btn-side-ia:hover { background: #DBEAFE !important; }
+    .btn-side-ia:hover:not(:disabled) { background: #DBEAFE !important; }
 
     .btn-side-sync { background: #F0FDF4 !important; border-color: #86EFAC !important; color: #166534 !important; }
-    .btn-side-sync:hover { background: #DCFCE7 !important; }
+    .btn-side-sync:hover:not(:disabled) { background: #DCFCE7 !important; }
 
     .btn-side-datos { background: #EEF2FF !important; border-color: #818CF8 !important; color: #3730A3 !important; font-weight: 900 !important; }
-    .btn-side-datos:hover { background: #E0E7FF !important; }
+    .btn-side-datos:hover:not(:disabled) { background: #E0E7FF !important; }
 
     .btn-side-tecnico { background: #F8FAFC !important; border-color: #64748B !important; color: #0F172A !important; font-weight: 900 !important; }
-    .btn-side-tecnico:hover { background: #E2E8F0 !important; border-color: #334155 !important; }
+    .btn-side-tecnico:hover:not(:disabled) { background: #E2E8F0 !important; border-color: #334155 !important; }
 
     .mode-badge-side {
       width: 100%; height: 40px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
@@ -274,10 +282,11 @@
       background: #FFFFFF !important; color: #0F172A !important; border: 2.5px solid var(--border-strong) !important;
       border-radius: var(--radius-sm); padding: 0 14px !important; height: 42px !important; cursor: pointer;
       font-size: 10.5pt; font-weight: 900 !important; display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+      flex: 1;
     }
-    .btn-prio.selected-alta { border-color: #FF003C !important; background: var(--prio-alta-bg) !important; color: #FF003C !important; }
-    .btn-prio.selected-media { border-color: #FFE600 !important; background: var(--prio-media-bg) !important; color: #713F12 !important; }
-    .btn-prio.selected-baja { border-color: #00E676 !important; background: var(--prio-baja-bg) !important; color: #15803D !important; }
+    .btn-prio.selected-alta { border-color: #FF003C !important; background: var(--prio-alta-bg) !important; color: #FF003C !important; box-shadow: 0 0 10px var(--prio-alta-glow); }
+    .btn-prio.selected-media { border-color: #FFE600 !important; background: var(--prio-media-bg) !important; color: #713F12 !important; box-shadow: 0 0 10px var(--prio-media-glow); }
+    .btn-prio.selected-baja { border-color: #00E676 !important; background: var(--prio-baja-bg) !important; color: #15803D !important; box-shadow: 0 0 10px var(--prio-baja-glow); }
 
     .checkbox-container { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
     .checkbox-container input { width: 18px; height: 18px; cursor: pointer; }
@@ -297,7 +306,6 @@
       padding: 12px 14px; border-radius: var(--radius-sm); display: flex; flex-direction: column; gap: 8px; 
       box-shadow: 0 2px 6px rgba(0,0,0,0.06);
     }
-    .ia-item-header { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
     .ia-edit-input { font-size: 11pt !important; padding: 8px 10px !important; }
 
     .modal-detail-card { 
@@ -596,7 +604,7 @@
       <div><label>Acción Requerida</label><textarea id="fAccion" rows="2" placeholder="Ej: Notificar, Solicitar informe..."></textarea></div>
       
       <div class="upload-box">
-        <label style="margin:0; font-size:10.5pt;">📎 Subir documentos de respaldo (PDFs o Imágenes sin límite):</label>
+        <label style="margin:0; font-size:10.5pt;">📎 Subir documentos de respaldo (PDFs o Imágenes):</label>
         <input type="file" id="fArchivos" multiple accept="image/*,application/pdf" onchange="procesarArchivosManuales(this)" style="display:none;">
         <button type="button" class="btn-action-side" style="width:auto;" onclick="document.getElementById('fArchivos').click()">
           ➕ Agregar Archivos...
@@ -608,32 +616,36 @@
     </div>
   </div>
 
-  <!-- Modal IA -->
+  <!-- Modal IA (Motor Híbrido Groq + Gemini) -->
   <div class="modal-overlay" id="modalIAOverlay">
     <div class="modal-assistant" id="modalIABox" style="width:720px; min-width:520px; height:85vh;">
       <div class="modal-draggable-header" id="dragHeaderIA">
-        <span style="font-weight:900; font-size:15pt; color:#1E3A8A;">★ Asistente Inteligente AIA (Arrastrar aquí ✢)</span>
+        <span style="font-weight:900; font-size:15pt; color:#1E3A8A;">★ Asistente Inteligente AIA (Groq + Gemini)</span>
         <button type="button" class="btn-action-side" style="width:auto; height:34px !important;" onclick="cerrarModalIA()">✕</button>
       </div>
-      <p style="font-size:11pt; color:var(--text-muted);">Sube o pega un documento institucional (PDF o captura). El análisis extrae fecha, hora y detalles automáticamente.</p>
+      <p style="font-size:10.5pt; color:var(--text-muted);">
+        Sube un PDF o pega una captura (Ctrl+V). El navegador extrae el texto localmente para no gastar tokens y analiza con <b>Groq (gratis/ultrarrápido)</b> o <b>Gemini</b> de respaldo.
+      </p>
       
       <input type="file" id="inputArchivoIA" accept="image/*,application/pdf" multiple style="display:none;" onchange="procesarArchivoSeleccionado(this)">
       
-      <div style="display:flex; gap:10px; margin:8px 0;">
-        <button type="button" id="btnCargarIA" class="btn-action-side btn-side-ia" style="flex:1; justify-content:center; height:46px !important; font-size:11.5pt !important;">📁 Cargar Documento(s)</button>
-        <button type="button" id="btnPegarIA" class="btn-action-side btn-side-ia" style="flex:1; justify-content:center; height:46px !important; font-size:11.5pt !important;">📋 Pegar Captura (Ctrl+V)</button>
+      <div style="display:flex; gap:10px; margin:4px 0;">
+        <button type="button" id="btnCargarIA" class="btn-action-side btn-side-ia" style="flex:1; justify-content:center; height:44px !important; font-size:11pt !important;">📁 1. Cargar Documento(s)</button>
+        <button type="button" id="btnPegarIA" class="btn-action-side btn-side-ia" style="flex:1; justify-content:center; height:44px !important; font-size:11pt !important;">📋 1. Pegar Captura (Ctrl+V)</button>
       </div>
 
-      <div id="iaArchivoInfo" style="font-size:10pt; color:#1D4ED8; background:#EFF6FF; padding:8px 12px; border-radius:6px; display:none; border:2px solid #93C5FD;"></div>
-      <div id="iaEstado" style="font-size:11pt; color:#92400E; font-weight:bold; text-align:center; padding:10px; display:none; background:#FEF3C7; border-radius:6px; border:2px solid #FCD34D;">⚡ Analizando con Gemini...</div>
+      <button type="button" id="btnAnalizarSeguroIA" class="btn-action-side btn-side-nuevo" style="justify-content:center; height:44px !important; font-size:11pt !important;" disabled onclick="analizarPendientesIA()">⚡ 2. ANALIZAR DOCUMENTO AHORA</button>
       
-      <div id="iaContenedorResultados" style="display:none; flex:1; display:flex; flex-direction:column; min-height:0;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+      <div id="iaArchivoInfo" style="font-size:10pt; color:#1D4ED8; background:#EFF6FF; padding:8px 12px; border-radius:6px; display:none; border:2px solid #93C5FD; font-weight:800;"></div>
+      <div id="iaEstado" style="font-size:10.5pt; color:#92400E; font-weight:800; text-align:center; padding:10px; display:none; background:#FEF3C7; border-radius:6px; border:2px solid #FCD34D;"></div>
+      
+      <div id="iaContenedorResultados" style="display:none; flex:1; flex-direction:column; min-height:0;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
           <span style="font-size:11.5pt; font-weight:900; color:#1E3A8A;">Propuesta de Eventos Detectados:</span>
-          <span style="font-size:9.5pt; font-weight:700; color:var(--text-muted);">Cada evento debe tener hora asignada</span>
+          <span style="font-size:9.5pt; font-weight:700; color:var(--text-muted);">Revisa o ajusta prioridad y hora antes de guardar</span>
         </div>
         <div class="ia-results-list" id="iaListaEventos"></div>
-        <button type="button" id="btnAgendarTodoIA" class="btn-action-side btn-side-nuevo" style="width:100%; margin-top:10px; justify-content:center; height:46px !important; font-size:11.5pt !important;" onclick="guardarEventosDetectadosIA()">AGENDAR PROPUESTA Y SUBIR RESPALDO</button>
+        <button type="button" id="btnAgendarTodoIA" class="btn-action-side btn-side-nuevo" style="width:100%; margin-top:8px; justify-content:center; height:46px !important; font-size:11.5pt !important;" onclick="guardarEventosDetectadosIA()">AGENDAR PROPUESTA Y SUBIR RESPALDO</button>
       </div>
     </div>
   </div>
@@ -700,9 +712,6 @@
 
     function actualizarModoUI() {
       const badge = document.getElementById("modeBadge");
-      const btnNuevo = document.getElementById("btnNuevoManual");
-      const btnAIA = document.getElementById("btnIANav");
-      const btnRespaldo = document.getElementById("btnRespaldoNav");
       const footerActions = document.getElementById("detailActionFooter");
 
       if (esModoAdmin) {
@@ -714,9 +723,6 @@
         badge.className = "mode-badge-side readonly";
         badge.title = "Haz clic para ingresar clave directiva y editar";
       }
-      if (btnNuevo) btnNuevo.style.display = "inline-flex";
-      if (btnAIA) btnAIA.style.display = "inline-flex";
-      if (btnRespaldo) btnRespaldo.style.display = "inline-flex";
       if (footerActions) footerActions.style.display = "flex";
     }
 
@@ -726,7 +732,6 @@
       if (pass === CLAVE_ADMIN) {
         esModoAdmin = true;
         actualizarModoUI();
-        alert("Modo edición habilitado exitosamente.");
         return true;
       } else if (pass !== null) {
         alert("Clave incorrecta. Permaneces en modo Solo Lectura.");
@@ -738,7 +743,6 @@
       if (esModoAdmin) {
         esModoAdmin = false;
         actualizarModoUI();
-        alert("Modo Solo Lectura activado.");
       } else {
         solicitarClaveAdminSiEsNecesario();
       }
@@ -802,17 +806,6 @@
       return (txt || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
     }
 
-    function verificarDuplicado(asunto, fecha, ignorarId = null) {
-      if (!asunto || !fecha) return null;
-      const asuntoNorm = normalizarTexto(asunto);
-      return tasks.find(t => {
-        if (ignorarId && t.id === ignorarId) return false;
-        if (t.date !== fecha) return false;
-        const subNorm = normalizarTexto(t.subject);
-        return subNorm === asuntoNorm || subNorm.includes(asuntoNorm) || asuntoNorm.includes(subNorm);
-      });
-    }
-
     function getMonday(d) {
       const date = new Date(d);
       const day = date.getDay();
@@ -839,17 +832,17 @@
         const data = await res.json();
         const rawRows = Array.isArray(data) ? data : (data.datos || []);
         
-        if (Array.isArray(rawRows) && rawRows.length > 0) {
+        if (Array.isArray(rawRows)) {
           const remoteTasks = [];
           const vistos = new Set();
 
           rawRows.forEach((row, idx) => {
             if (esEventoPersonal(row)) return;
 
-            const filaNum = row.fila || (Array.isArray(row) ? row[0] : (idx + 1));
+            const filaNum = row.fila || (Array.isArray(row) ? row[0] : (idx + 2));
             const asunto = String(row.asunto || (Array.isArray(row) ? row[4] : "(Sin asunto)")).trim();
             const fDoc = row.fechaDoc || (Array.isArray(row) ? row[1] : null);
-            const fFinDoc = row.fechaTermino || (Array.isArray(row) ? row[9] : null);
+            const fFinDoc = row.fechaTermino || null;
             const fValida = parsearFecha(fDoc);
             if (!fValida) return;
             const fFinValida = parsearFecha(fFinDoc) || fValida;
@@ -867,7 +860,7 @@
             if (vistos.has(claveUnica)) return;
             vistos.add(claveUnica);
 
-            let horaParam = row.hora || (Array.isArray(row) ? row[10] : null);
+            let horaParam = row.hora || null;
             let infoHora = extraerHora(horaParam);
             if (!infoHora.tieneHora) infoHora = extraerHora(fDoc);
             if (!infoHora.tieneHora) {
@@ -889,19 +882,15 @@
                 adjuntos = typeof rawRespaldos === "string" ? JSON.parse(rawRespaldos) : rawRespaldos;
                 if (!Array.isArray(adjuntos)) adjuntos = [adjuntos];
               } catch (e) {
-                if (typeof rawRespaldos === "string" && rawRespaldos.includes(",")) {
-                  adjuntos = rawRespaldos.split(",").map((u, i) => ({ url: u.trim(), nombre: `Documento ${i+1}` }));
-                } else {
-                  adjuntos = [{ url: String(rawRespaldos).trim(), nombre: "Documento" }];
-                }
+                adjuntos = [{ url: String(rawRespaldos).trim(), nombre: "Documento" }];
               }
             }
 
-            const grupoId = `remote_grp_${filaNum || idx}`;
+            const grupoId = `remote_grp_${filaNum}`;
             const rangoFechas = obtenerFechasRango(fValida, fFinValida);
             rangoFechas.forEach((diaRango, rIdx) => {
               remoteTasks.push({
-                id: filaNum ? `remote_${filaNum}_${rIdx}` : `remote_idx_${idx + 1}_${rIdx}`,
+                id: `remote_${filaNum}_${rIdx}`,
                 groupId: grupoId,
                 fila: filaNum,
                 date: diaRango,
@@ -924,7 +913,8 @@
           });
 
           const tareasLocalesNoSincronizadas = tasks.filter(t => 
-            String(t.id).startsWith("local_") && 
+            !t.fila && String(t.id).startsWith("local_") && 
+            !vistos.has(`${t.startDate || t.date}_${normalizarTexto(t.subject)}`) &&
             !eventosEliminados.some(e => e.clave === `${t.date}_${normalizarTexto(t.subject)}`)
           );
 
@@ -1008,7 +998,11 @@
             card.innerHTML = `
               <div class="card-top">
                 <span class="card-title">${t.subject}</span>
-                <div class="card-badges">${badgeClip} ${badgeHora}</div>
+                <div class="card-badges">
+                  ${badgeClip}
+                  ${badgeHora}
+                  <button type="button" class="btn-quick-check ${t.status === 'managed' ? 'done' : ''}" title="Marcar Realizado / Pendiente" onclick="event.stopPropagation(); toggleRealizadoDirecto('${t.id}')">✓</button>
+                </div>
               </div>
               <div class="card-sender">👤 ${t.sender || 'General'}</div>
             `;
@@ -1205,11 +1199,13 @@
 
       let adjuntosFinales = [...archivosManualesTemporales];
       const diasDelRango = obtenerFechasRango(fInicio, fTermino);
+      let filaParaEnviar = "";
+      let nuevoGroupId = "grp_" + Date.now();
 
       if (isEditing && editEventId) {
         const itemOriginal = tasks.find(t => t.id === editEventId);
         const grupoExistente = itemOriginal?.groupId || null;
-        const filaAsociada = itemOriginal?.fila || "";
+        filaParaEnviar = itemOriginal?.fila || "";
         const remitenteOriginal = itemOriginal?.sender || "General";
         const subjectOriginal = itemOriginal?.subject || "";
 
@@ -1219,12 +1215,12 @@
           return t.id !== editEventId;
         });
 
-        const nuevoGroupId = grupoExistente || ("grp_" + Date.now());
+        nuevoGroupId = grupoExistente || nuevoGroupId;
         diasDelRango.forEach((dia, i) => {
           tasks.push({
             id: `edit_${Date.now()}_${i}`,
             groupId: nuevoGroupId,
-            fila: filaAsociada,
+            fila: filaParaEnviar,
             date: dia,
             startDate: fInicio,
             endDate: fTermino,
@@ -1244,7 +1240,6 @@
 
       } else {
         const baseId = Date.now();
-        const nuevoGroupId = "grp_" + baseId;
         diasDelRango.forEach((dia, i) => {
           tasks.push({
             id: "local_" + (baseId + i),
@@ -1274,7 +1269,7 @@
       try {
         const payload = {
           accion: isEditing ? "editar_evento" : "crear_evento",
-          fila: isEditing ? (tasks.find(t => t.id === editEventId)?.fila || "") : "",
+          fila: filaParaEnviar,
           fechaDoc: fInicio,
           fechaTermino: fTermino,
           hora: hora,
@@ -1294,17 +1289,20 @@
         });
         const resJson = await res.json();
         
-        if (resJson && resJson.urls && Array.isArray(resJson.urls)) {
-          tasks.forEach(t => {
-            if (t.subject === asunto && t.respaldos) {
+        tasks.forEach(t => {
+          if (t.groupId === nuevoGroupId) {
+            if (resJson && resJson.fila_insertada) {
+              t.fila = resJson.fila_insertada;
+            }
+            if (resJson && resJson.urls && Array.isArray(resJson.urls) && t.respaldos) {
               t.respaldos.forEach((r, i) => {
                 if (resJson.urls[i]) r.url = resJson.urls[i];
               });
             }
-          });
-          localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
-          renderCalendar();
-        }
+          }
+        });
+        localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
+        renderCalendar();
       } catch (err) {
         console.warn("Aviso guardado remoto:", err);
       } finally {
@@ -1353,7 +1351,7 @@
 
       const idEliminado = currentEventId;
       const filaRemota = t.fila || "";
-      const claveUnica = `${t.date}_${normalizarTexto(t.subject)}`;
+      const claveUnica = `${t.startDate || t.date}_${normalizarTexto(t.subject)}`;
       const grupoId = t.groupId || null;
       const subjectEliminado = t.subject;
       const startDateEliminado = t.startDate || t.date;
@@ -1361,7 +1359,7 @@
       eventosEliminados.push({ 
         clave: claveUnica, 
         fila: filaRemota, 
-        fecha: t.date, 
+        fecha: startDateEliminado, 
         asunto: t.subject 
       });
       localStorage.setItem("agenda_carlos_condell_eliminados", JSON.stringify(eventosEliminados));
@@ -1384,8 +1382,8 @@
           body: JSON.stringify({
             accion: "eliminar_evento",
             fila: filaRemota,
-            fechaDoc: t.date,
-            asunto: t.subject
+            fechaDoc: startDateEliminado,
+            asunto: subjectEliminado
           })
         });
       } catch (err) {
@@ -1393,25 +1391,52 @@
       }
     }
 
-    function toggleRealizadoActual() {
+    async function toggleRealizadoDirecto(id) {
+      if (!solicitarClaveAdminSiEsNecesario()) return;
+      currentEventId = id;
+      await toggleRealizadoActual(false);
+    }
+
+    async function toggleRealizadoActual(reabrirModal = true) {
       if (!solicitarClaveAdminSiEsNecesario()) return;
       if (!currentEventId) return;
       const t = tasks.find(x => x.id === currentEventId);
       if (!t) return;
 
       const nuevoEstado = (t.status === "managed") ? "pending" : "managed";
+      const textoSheet = (nuevoEstado === "managed") ? "Realizado" : "Pendiente";
       const grupoId = t.groupId;
       const sub = t.subject;
+      const startD = t.startDate || t.date;
+      const filaRemota = t.fila || "";
 
       tasks.forEach(item => {
-        if ((grupoId && item.groupId === grupoId) || (item.subject === sub && item.startDate === t.startDate)) {
+        if ((grupoId && item.groupId === grupoId) || (item.subject === sub && (item.startDate || item.date) === startD)) {
           item.status = nuevoEstado;
         }
       });
 
       localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
-      openDetail(currentEventId);
+      if (reabrirModal && document.getElementById("modalDetailOverlay").style.display === "flex") {
+        openDetail(currentEventId);
+      }
       renderCalendar();
+
+      try {
+        await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({
+            accion: "actualizar_estado",
+            fila: filaRemota,
+            fechaDoc: startD,
+            asunto: sub,
+            nuevo_estado: textoSheet
+          })
+        });
+      } catch (err) {
+        console.warn("Aviso al sincronizar estado con Sheets:", err);
+      }
     }
 
     function ejecutarBusqueda() {
@@ -1506,13 +1531,15 @@
       dlAnchor.remove();
     }
 
-    // --- ASISTENTE CON REDUCCIÓN DE TOKENS (GEMINI 3.8 FLASH VÍA SERVIDOR) ---
+    // --- ASISTENTE CON EXTRACCIÓN LOCAL DE PDF Y MOTOR GROQ + GEMINI ---
     function abrirModalIA() { 
       if (!solicitarClaveAdminSiEsNecesario()) return;
       document.getElementById("iaContenedorResultados").style.display = "none";
       document.getElementById("iaEstado").style.display = "none";
       document.getElementById("iaArchivoInfo").style.display = "none";
       document.getElementById("iaListaEventos").innerHTML = "";
+      document.getElementById("btnAnalizarSeguroIA").disabled = true;
+      iaPendientes = null;
       eventosDetectadosIA = [];
       archivosRespaldoIA = [];
       
@@ -1560,7 +1587,6 @@
       }
     })();
 
-    // AHORRO DE TOKENS: Compresión a 800px y calidad 0.65
     function optimizarYCodificarArchivo(file) {
       return new Promise((resolve, reject) => {
         if (!file.type.startsWith("image/")) {
@@ -1579,7 +1605,7 @@
             const canvas = document.createElement("canvas");
             let width = img.width;
             let height = img.height;
-            const maxDimension = 800;
+            const maxDimension = 1280;
 
             if (width > maxDimension || height > maxDimension) {
               if (width > height) {
@@ -1596,7 +1622,7 @@
             const ctx = canvas.getContext("2d");
             ctx.drawImage(img, 0, 0, width, height);
 
-            const dataUrl = canvas.toDataURL("image/jpeg", 0.65);
+            const dataUrl = canvas.toDataURL("image/jpeg", 0.78);
             resolve(dataUrl.substring(dataUrl.indexOf(',') + 1));
           };
           img.onerror = reject;
@@ -1619,7 +1645,7 @@
       btnPegar.onclick = async () => {
         try {
           if (!navigator.clipboard || !navigator.clipboard.read) {
-            alert("Presiona Ctrl + V directamente para pegar capturas.");
+            alert("Presiona Ctrl + V directamente sobre esta ventana para pegar la captura.");
             return;
           }
           const items = await navigator.clipboard.read();
@@ -1627,13 +1653,13 @@
             const imgType = item.types.find(t => t.startsWith("image/"));
             if (imgType) {
               const blob = await item.getType(imgType);
-              ejecutarLlamadaGeminiIA([blob], [imgType], ["Captura_Pegada.jpg"]);
+              prepararArchivosIA([blob], [imgType], ["Captura_Pegada.jpg"]);
               return;
             }
           }
-          alert("No se encontró imagen en el portapapeles. Copia con Windows + Shift + S y vuelve a intentar.");
+          alert("No se encontró imagen en el portapapeles. Usa Windows + Shift + S y vuelve a intentar.");
         } catch (err) {
-          alert("Presiona Ctrl + V sobre esta ventana para pegar la captura.");
+          alert("Presiona Ctrl + V directamente sobre esta ventana para pegar la captura.");
         }
       };
     }
@@ -1645,7 +1671,7 @@
         for (let i = 0; i < items.length; i++) {
           if (items[i].type.indexOf("image") !== -1) {
             const blob = items[i].getAsFile();
-            ejecutarLlamadaGeminiIA([blob], ["image/jpeg"], ["Captura_Pegada.jpg"]);
+            prepararArchivosIA([blob], ["image/jpeg"], ["Captura_Pegada.jpg"]);
             break;
           }
         }
@@ -1662,154 +1688,264 @@
           tipos.push(input.files[i].type || "application/pdf");
           nombres.push(input.files[i].name);
         }
-        ejecutarLlamadaGeminiIA(blobs, tipos, nombres);
+        prepararArchivosIA(blobs, tipos, nombres);
       }
     }
 
-    async function ejecutarLlamadaGeminiIA(blobs, mimeTypes, nombresArchivos) {
-      const elEstado = document.getElementById("iaEstado");
-      const elInfo = document.getElementById("iaArchivoInfo");
-      elEstado.style.display = "block";
-      elEstado.textContent = "⚡ Analizando con Gemini...";
-      document.getElementById("iaContenedorResultados").style.display = "none";
+    let iaPendientes = null, iaOcupada = false;
+    const iaCacheSesion = new Map();
+
+    async function prepararArchivosIA(blobs, mimeTypes, nombresArchivos) {
+      if (iaOcupada) { alert('Espera a que termine el análisis actual.'); return; }
+      if (!blobs.length || blobs.length > 3) { alert('Carga entre 1 y 3 archivos.'); return; }
+      if (blobs.reduce((n, b) => n + b.size, 0) > 8 * 1024 * 1024) { alert('Máximo 8 MB en total.'); return; }
+      
+      iaPendientes = { blobs, mimeTypes, nombresArchivos };
+      eventosDetectadosIA = [];
+      archivosRespaldoIA = [];
+      document.getElementById('iaContenedorResultados').style.display = 'none';
+      
+      const info = document.getElementById('iaArchivoInfo');
+      info.style.display = 'block';
+      info.textContent = '📎 Documento listo: ' + nombresArchivos.join(', ');
+      
+      const estado = document.getElementById('iaEstado');
+      estado.style.display = 'block';
+      estado.textContent = '✅ Archivo preparado (0 tokens consumidos). Haz clic en "2. ANALIZAR DOCUMENTO AHORA".';
+      document.getElementById('btnAnalizarSeguroIA').disabled = false;
+    }
+
+    async function cargarPdfIA() {
+      if (window.pdfjsLib) return window.pdfjsLib;
+      if (!window.promesaPdfIA) window.promesaPdfIA = new Promise((resolve, reject) => {
+        const t = document.createElement('script');
+        t.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+        t.onload = () => {
+          pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+          resolve(pdfjsLib);
+        };
+        t.onerror = () => {
+          window.promesaPdfIA = null;
+          reject(new Error('No se pudo cargar el lector PDF. Comprueba tu conexión.'));
+        };
+        document.head.appendChild(t);
+      });
+      return window.promesaPdfIA;
+    }
+
+    async function analizarPendientesIA() {
+      if (iaOcupada || !iaPendientes) return;
+      let acceso = sessionStorage.getItem('agenda_acceso_ia') || "25078";
+      sessionStorage.setItem('agenda_acceso_ia', acceso);
+      
+      iaOcupada = true;
+      const btn = document.getElementById('btnAnalizarSeguroIA');
+      const estado = document.getElementById('iaEstado');
+      btn.disabled = true;
+      estado.style.display = 'block';
+      estado.textContent = '⚡ Extrayendo texto liviano y analizando con IA (Groq / Gemini)...';
 
       try {
-        archivosRespaldoIA = [];
-        const inlineParts = [];
+        const { blobs, nombresArchivos } = iaPendientes;
+        const partes = [], respaldos = [];
+        let textoTotal = 0;
 
         for (let i = 0; i < blobs.length; i++) {
-          const base64Data = await optimizarYCodificarArchivo(blobs[i]);
-          const esPdf = mimeTypes[i] && mimeTypes[i].includes("pdf");
-          const tipoReal = esPdf ? "application/pdf" : "image/jpeg";
-          archivosRespaldoIA.push({
-            nombre: nombresArchivos[i],
-            mimeType: tipoReal,
-            base64: base64Data,
-            url: ""
+          const b = blobs[i];
+          const pdf = (b.type === 'application/pdf' || /\.pdf$/i.test(nombresArchivos[i]));
+          if (!pdf && !b.type.startsWith('image/')) throw new Error('Solo se admiten PDF e imágenes.');
+          
+          let base64 = await optimizarYCodificarArchivo(b);
+          respaldos.push({ nombre: nombresArchivos[i], mimeType: pdf ? 'application/pdf' : 'image/jpeg', base64, url: '' });
+
+          if (pdf) {
+            const lib = await cargarPdfIA();
+            const doc = await lib.getDocument({ data: new Uint8Array(await b.arrayBuffer()) }).promise;
+            try {
+              if (doc.numPages > 10) throw new Error('Máximo 10 páginas por PDF.');
+              for (let p = 1; p <= doc.numPages; p++) {
+                const page = await doc.getPage(p);
+                const content = await page.getTextContent();
+                const text = content.items.map(x => x.str + (x.hasEOL ? '\n' : ' ')).join('').trim();
+                
+                if (text.replace(/\s/g, '').length >= 40) {
+                  textoTotal += text.length;
+                  if (textoTotal > 35000) throw new Error('Demasiado texto. Divide el PDF.');
+                  partes.push({ text: 'Documento ' + (i + 1) + ' (' + nombresArchivos[i] + '), página ' + p + ':\n' + text });
+                } else {
+                  const vp = page.getViewport({ scale: 1 });
+                  const scale = Math.min(1.5, 1200 / Math.max(vp.width, vp.height));
+                  const viewport = page.getViewport({ scale });
+                  const canvas = document.createElement('canvas');
+                  canvas.width = Math.ceil(viewport.width);
+                  canvas.height = Math.ceil(viewport.height);
+                  await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+                  partes.push({ inlineData: { mimeType: 'image/jpeg', data: canvas.toDataURL('image/jpeg', 0.75).split(',')[1] } });
+                }
+              }
+            } finally {
+              await doc.destroy();
+            }
+          } else {
+            partes.push({ inlineData: { mimeType: 'image/jpeg', data: base64 } });
+          }
+        }
+
+        const bytes = new TextEncoder().encode(JSON.stringify(partes));
+        const hash = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))).map(x => x.toString(16).padStart(2, '0')).join('');
+        let respuesta = iaCacheSesion.get(hash);
+
+        if (!respuesta) {
+          const res = await fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ accion: 'analizar_con_gemini', acceso, partes })
           });
-          inlineParts.push({ inlineData: { mimeType: tipoReal, data: base64Data } });
+          if (!res.ok) throw new Error('El servidor respondió HTTP ' + res.status);
+          respuesta = await res.json();
+          if (respuesta.error) {
+            if (respuesta.error.code === 401) sessionStorage.removeItem('agenda_acceso_ia');
+            throw new Error(respuesta.error.message);
+          }
+          if (respuesta.status === 'error') throw new Error(respuesta.message || 'Error del servidor');
+          if (!Array.isArray(respuesta.eventos)) throw new Error('Respuesta sin formato esperado.');
+          iaCacheSesion.set(hash, respuesta);
         }
 
-        elInfo.textContent = `📎 Documento cargado: ${nombresArchivos.join(", ")}`;
-        elInfo.style.display = "block";
-
-        const promptInstruccion = 
-          "Extrae compromisos escolares en formato JSON sin formato Markdown adicional.\n" +
-          "Año: 2026. Fecha: YYYY-MM-DD. Hora: HH:MM.\n" +
-          "[{\"asunto\":\"Título\",\"organizador\":\"Organiza\",\"fecha\":\"2026-MM-DD\",\"hora\":\"09:00\",\"prioridad\":\"Alta/Media/Baja\",\"sintesis\":\"Resumen breve\",\"accion\":\"Acción\"}]";
-
-        const partesContenido = [{ text: promptInstruccion }, ...inlineParts];
-
-        // La petición delega la llamada a Apps Script donde la clave está resguardada
-        const res = await fetch(API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({
-            accion: "analizar_con_gemini",
-            modelo: "gemini-3.8-flash",
-            partes: partesContenido
-          })
-        });
-
-        const dataResp = await res.json();
-        if (dataResp.error) {
-          throw new Error(dataResp.error.message);
-        }
-
-        let textoJson = "";
-        if (dataResp.candidates && dataResp.candidates[0]?.content?.parts?.[0]?.text) {
-          textoJson = dataResp.candidates[0].content.parts[0].text;
-        } else {
-          throw new Error("No se obtuvo respuesta de Gemini.");
-        }
-
-        textoJson = textoJson.trim()
-          .replace(/^```json\s*/i, '')
-          .replace(/^```\s*/i, '')
-          .replace(/```$/i, '')
-          .trim();
-
-        const matchArray = textoJson.match(/\[[\s\S]*\]/);
-        if (matchArray) {
-          textoJson = matchArray[0];
-        }
-
-        const eventos = JSON.parse(textoJson);
-        eventosDetectadosIA = Array.isArray(eventos) ? eventos : [eventos];
-
-        eventosDetectadosIA.forEach(ev => {
-          if (!ev.hora || ev.hora.trim() === "") ev.hora = "09:00";
-          ev.fecha = parsearFecha(ev.fecha) || "2026-10-28";
-        });
-
+        archivosRespaldoIA = respaldos;
+        eventosDetectadosIA = JSON.parse(JSON.stringify(respuesta.eventos));
         renderizarEventosDetectados(eventosDetectadosIA);
-        elEstado.style.display = "none";
 
-      } catch (err) {
-        console.error(err);
-        elEstado.textContent = "❌ " + err.message;
+        const u = respuesta.uso || {};
+        const motorUsado = respuesta.modelo || 'IA';
+        estado.textContent = `✅ Listo con ${motorUsado} | Tokens entrada: ${u.promptTokenCount ?? 'mínimo'} | Salida: ${u.candidatesTokenCount ?? 'mínimo'}`;
+      } catch (e) {
+        estado.textContent = '❌ No se completó el análisis: ' + e.message;
+      } finally {
+        iaOcupada = false;
+        btn.disabled = false;
       }
     }
 
     function renderizarEventosDetectados(lista) {
-      const contenedor = document.getElementById("iaContenedorResultados");
-      const listaDiv = document.getElementById("iaListaEventos");
-      listaDiv.innerHTML = "";
+      const contenedor = document.getElementById('iaContenedorResultados');
+      const div = document.getElementById('iaListaEventos');
+      div.replaceChildren();
 
-      if (!lista || lista.length === 0) {
-        listaDiv.innerHTML = "<div style='font-size:10.5pt; color:#94A3B8; text-align:center; padding:10px; font-weight:800;'>No se detectaron eventos en el documento.</div>";
-        contenedor.style.display = "flex";
-        return;
+      if (!lista.length) {
+        const p = document.createElement('p');
+        p.style.fontWeight = '800';
+        p.textContent = 'No se detectaron tareas o compromisos accionables.';
+        div.appendChild(p);
       }
 
       lista.forEach((ev, idx) => {
-        const fKey = parsearFecha(ev.fecha) || formatDateKey(new Date());
-        const dup = verificarDuplicado(ev.asunto, fKey);
-        const item = document.createElement("div");
-        item.className = "ia-item-card";
-        
-        let avisoDupHtml = dup ? `<div style="color:#FF003C; font-size:9.5pt; font-weight:bold;">⚠️ Ya agendado: \"${dup.subject}\"</div>` : '';
+        if (!ev.hora || !/^([01]\d|2[0-3]):[0-5]\d$/.test(ev.hora)) {
+          ev.hora = "09:00";
+        }
+        if (!['Alta', 'Media', 'Baja'].includes(ev.prioridad)) {
+          ev.prioridad = "Media";
+        }
 
-        item.innerHTML = `
-          <div class="ia-item-header">
-            <input type="text" class="ia-edit-input" style="font-weight:900; width:80%;" value="${ev.asunto || ''}" onchange="actualizarDatoIA(${idx}, 'asunto', this.value)">
-            <button type="button" class="btn-action-side" style="width:auto; color:#FF003C !important; height:30px !important; padding:0 10px !important;" onclick="eliminarPropuestaIA(${idx})" title="Descartar evento">✕</button>
-          </div>
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
-            <div>
-              <label style="font-size:9pt; margin:0; font-weight:800;">Fecha *:</label>
-              <input type="date" class="ia-edit-input" value="${fKey}" onchange="actualizarDatoIA(${idx}, 'fecha', this.value)">
-            </div>
-            <div>
-              <label style="font-size:9pt; margin:0; font-weight:800;">Hora (Obligatoria) *:</label>
-              <input type="time" class="ia-edit-input" required value="${ev.hora || '09:00'}" onchange="actualizarDatoIA(${idx}, 'hora', this.value)" style="border-color:#3B82F6;">
-            </div>
-          </div>
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
-            <div>
-              <label style="font-size:9pt; margin:0; font-weight:800;">Organiza:</label>
-              <input type="text" class="ia-edit-input" value="${ev.organizador || 'General'}" onchange="actualizarDatoIA(${idx}, 'organizador', this.value)">
-            </div>
-            <div>
-              <label style="font-size:9pt; margin:0; font-weight:800;">Prioridad:</label>
-              <select class="ia-edit-input" onchange="actualizarDatoIA(${idx}, 'prioridad', this.value)">
-                <option value="Alta" ${ev.prioridad === 'Alta' ? 'selected' : ''}>Alta</option>
-                <option value="Media" ${ev.prioridad === 'Media' || !ev.prioridad ? 'selected' : ''}>Media</option>
-                <option value="Baja" ${ev.prioridad === 'Baja' ? 'selected' : ''}>Baja</option>
-              </select>
-            </div>
-          </div>
-          <div>
-            <label style="font-size:9pt; margin:0; font-weight:800;">Síntesis:</label>
-            <textarea class="ia-edit-input" rows="1" onchange="actualizarDatoIA(${idx}, 'sintesis', this.value)">${ev.sintesis || ''}</textarea>
-          </div>
-          ${avisoDupHtml}
-        `;
-        listaDiv.appendChild(item);
+        const card = document.createElement('div');
+        card.className = 'ia-item-card';
+
+        const header = document.createElement('div');
+        header.style.display = 'flex';
+        header.style.justifyContent = 'space-between';
+        header.style.alignItems = 'center';
+
+        const titulo = document.createElement('strong');
+        titulo.style.fontSize = '11.5pt';
+        titulo.style.color = '#1E3A8A';
+        titulo.textContent = '📌 Propuesta ' + (idx + 1);
+        header.appendChild(titulo);
+
+        const remove = document.createElement('button');
+        remove.type = 'button';
+        remove.className = 'btn-action-side';
+        remove.style.width = 'auto';
+        remove.style.height = '30px !important';
+        remove.style.color = '#FF003C !important';
+        remove.style.borderColor = '#FF003C !important';
+        remove.textContent = '✕ Descartar';
+        remove.onclick = () => eliminarPropuestaIA(idx);
+        header.appendChild(remove);
+        card.appendChild(header);
+
+        for (const [key, label, type] of [
+          ['asunto', 'Asunto / Compromiso *', 'text'],
+          ['fecha', 'Fecha (YYYY-MM-DD) *', 'date'],
+          ['hora', 'Hora (HH:MM) *', 'time'],
+          ['organizador', 'Organiza / Remitente', 'text']
+        ]) {
+          const l = document.createElement('label');
+          l.textContent = label;
+          card.appendChild(l);
+          const input = document.createElement('input');
+          input.type = type;
+          input.className = 'ia-edit-input';
+          input.value = ev[key] || '';
+          input.addEventListener('input', () => actualizarDatoIA(idx, key, input.value));
+          card.appendChild(input);
+        }
+
+        const lPrio = document.createElement('label');
+        lPrio.textContent = 'Prioridad (Color Eléctrico)';
+        card.appendChild(lPrio);
+
+        const prioGroup = document.createElement('div');
+        prioGroup.style.display = 'flex';
+        prioGroup.style.gap = '8px';
+
+        ['Alta', 'Media', 'Baja'].forEach(pNivel => {
+          const bP = document.createElement('button');
+          bP.type = 'button';
+          const claseSel = (ev.prioridad === pNivel) ? ` selected-${pNivel.toLowerCase()}` : '';
+          bP.className = 'btn-prio' + claseSel;
+          bP.textContent = pNivel;
+          bP.onclick = () => {
+            actualizarDatoIA(idx, 'prioridad', pNivel);
+            renderizarEventosDetectados(eventosDetectadosIA);
+          };
+          prioGroup.appendChild(bP);
+        });
+        card.appendChild(prioGroup);
+
+        for (const [key, label] of [
+          ['sintesis', 'Síntesis Ejecutiva'],
+          ['accion', 'Tarea propuesta / Acción requerida']
+        ]) {
+          const l = document.createElement('label');
+          l.textContent = label;
+          card.appendChild(l);
+          const area = document.createElement('textarea');
+          area.rows = 2;
+          area.className = 'ia-edit-input';
+          area.value = ev[key] || '';
+          area.addEventListener('input', () => actualizarDatoIA(idx, key, area.value));
+          card.appendChild(area);
+        }
+
+        if (ev.pendientes) {
+          const p = document.createElement('div');
+          p.style.fontSize = '9.5pt';
+          p.style.fontWeight = '800';
+          p.style.color = '#9A3412';
+          p.style.background = '#FFEDD5';
+          p.style.padding = '6px 10px';
+          p.style.borderRadius = '6px';
+          p.textContent = '⚠️ Nota IA: ' + ev.pendientes;
+          card.appendChild(p);
+        }
+
+        div.appendChild(card);
       });
 
-      document.getElementById("btnAgendarTodoIA").textContent = `AGENDAR LOS ${lista.length} EVENTOS Y SUBIR RESPALDO`;
-      contenedor.style.display = "flex";
+      const btn = document.getElementById('btnAgendarTodoIA');
+      btn.textContent = 'GUARDAR ' + lista.length + ' PROPUESTA(S) EN AGENDA';
+      btn.disabled = !lista.length;
+      contenedor.style.display = 'flex';
     }
 
     function actualizarDatoIA(idx, campo, valor) {
@@ -1826,9 +1962,9 @@
     async function guardarEventosDetectadosIA() {
       if (!eventosDetectadosIA || eventosDetectadosIA.length === 0) return;
 
-      for (let i = 0; i < eventosDetectadosIA.length; i++) {
-        if (!eventosDetectadosIA[i].hora || eventosDetectadosIA[i].hora.trim() === "") {
-          alert(`⏰ Por favor asigna una hora al evento: "${eventosDetectadosIA[i].asunto || 'Sin título'}"`);
+      for (const ev of eventosDetectadosIA) {
+        if (!ev.asunto || !/^\d{4}-\d{2}-\d{2}$/.test(ev.fecha || '') || !/^([01]\d|2[0-3]):[0-5]\d$/.test(ev.hora || '')) {
+          alert('Completa asunto, fecha y hora válida en todas las propuestas antes de guardar.');
           return;
         }
       }
@@ -1839,7 +1975,6 @@
       const baseId = Date.now();
 
       const respaldoInfo = archivosRespaldoIA.map(a => ({ nombre: a.nombre, url: a.url || "", base64: a.base64, mimeType: a.mimeType }));
-
       let primeraFechaEvento = null;
 
       eventosDetectadosIA.forEach((ev, idx) => {
@@ -1881,18 +2016,19 @@
 
       renderCalendar();
       cerrarModalIA();
-      alert(`✅ ¡Se agendaron ${eventosDetectadosIA.length} evento(s) exitosamente! La vista se movió a su fecha.`);
 
       for (let i = 0; i < eventosDetectadosIA.length; i++) {
         const ev = eventosDetectadosIA[i];
         const fKey = parsearFecha(ev.fecha) || formatDateKey(new Date());
+        const grpBuscado = "grp_ia_" + (baseId + i);
         try {
           const res = await fetch(API_URL, {
             method: "POST",
             headers: { "Content-Type": "text/plain;charset=utf-8" },
             body: JSON.stringify({
               accion: "crear_evento", 
-              fechaDoc: fKey, 
+              fechaDoc: fKey,
+              fechaTermino: fKey,
               hora: ev.hora || "09:00", 
               asunto: ev.asunto, 
               remitente: ev.organizador || "General", 
@@ -1904,17 +2040,18 @@
             })
           });
           const resJson = await res.json();
-          if (resJson && resJson.urls && Array.isArray(resJson.urls)) {
-            tasks.forEach(t => {
-              if (t.respaldos && t.subject === ev.asunto) {
+          tasks.forEach(t => {
+            if (t.groupId === grpBuscado) {
+              if (resJson && resJson.fila_insertada) t.fila = resJson.fila_insertada;
+              if (resJson && resJson.urls && Array.isArray(resJson.urls) && t.respaldos) {
                 t.respaldos.forEach((r, idxU) => {
                   if (resJson.urls[idxU]) r.url = resJson.urls[idxU];
                 });
               }
-            });
-            localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
-            renderCalendar();
-          }
+            }
+          });
+          localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
+          renderCalendar();
         } catch (e) {
           console.warn("Aviso al guardar en Google Sheets:", e);
         }
