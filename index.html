@@ -6,51 +6,58 @@
   <title>Agenda Carlos Condell - San Bernardo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=Lexend:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&family=Lexend:wght@500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg-app: #F1F5F9;
-      --surface: #FFFFFF;
-      --border-subtle: #CBD5E1;
-      --border-strong: #64748B;
-      --text-main: #000000;
-      --text-muted: #0F172A;
+      /* Paleta Oscura Elegante & Moderna con Tonos Cálidos y Acentos Eléctricos */
+      --bg-app: #0B0F19;
+      --surface: #111827;
+      --surface-elevated: #1E293B;
+      --surface-card: #161F33;
+      --border-subtle: #283548;
+      --border-strong: #475569;
+      --text-main: #F8FAFC;
+      --text-muted: #CBD5E1;
 
-      --day-lunes-bg: #F1F5F9;
-      --day-lunes-border: #94A3B8;
-      --day-lunes-accent: #0F172A;
+      /* Columnas por día: Tonos tierra/otoño sutiles y simétricos */
+      --day-lunes-bg: #131B2E;
+      --day-lunes-header: #1E293B;
+      --day-lunes-accent: #93C5FD;
 
-      --day-martes-bg: #FEFCE8;
-      --day-martes-border: #FACC15;
-      --day-martes-accent: #713F12;
+      --day-martes-bg: #191924;
+      --day-martes-header: #292524;
+      --day-martes-accent: #FDE047;
 
-      --day-miercoles-bg: #E0F2FE;
-      --day-miercoles-border: #38BDF8;
-      --day-miercoles-accent: #0369A1;
+      --day-miercoles-bg: #111E2E;
+      --day-miercoles-header: #162C46;
+      --day-miercoles-accent: #38BDF8;
 
-      --day-jueves-bg: #FEF3C7;
-      --day-jueves-border: #FBBF24;
-      --day-jueves-accent: #78350F;
+      --day-jueves-bg: #1C1917;
+      --day-jueves-header: #2E2622;
+      --day-jueves-accent: #FBBF24;
 
-      --day-viernes-bg: #FFEDD5;
-      --day-viernes-border: #FB923C;
-      --day-viernes-accent: #9A3412;
+      --day-viernes-bg: #1F171A;
+      --day-viernes-header: #332124;
+      --day-viernes-accent: #FB923C;
 
+      /* Prioridades Eléctricas */
       --prio-alta-elec: #FF003C;
-      --prio-alta-bg: #FFF1F2;
-      --prio-alta-glow: rgba(255, 0, 60, 0.45);
+      --prio-alta-bg: rgba(255, 0, 60, 0.14);
+      --prio-alta-glow: rgba(255, 0, 60, 0.35);
 
       --prio-media-elec: #FFE600;
-      --prio-media-bg: #FFFDE7;
-      --prio-media-glow: rgba(255, 230, 0, 0.5);
+      --prio-media-bg: rgba(255, 230, 0, 0.12);
+      --prio-media-glow: rgba(255, 230, 0, 0.32);
 
       --prio-baja-elec: #00E676;
-      --prio-baja-bg: #F0FDF4;
-      --prio-baja-glow: rgba(0, 230, 118, 0.45);
+      --prio-baja-bg: rgba(0, 230, 118, 0.12);
+      --prio-baja-glow: rgba(0, 230, 118, 0.32);
 
+      /* Día actual y Feriados Chile */
       --today-elec-border: #FFE600;
-      --today-glow: 0 0 20px rgba(255, 230, 0, 0.75);
+      --today-glow: 0 0 22px rgba(255, 230, 0, 0.45);
+      --feriado-red: #FF2E4C;
 
       --radius-sm: 10px;
       --radius-md: 14px;
@@ -66,25 +73,25 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
-    /* BARRAS DE DESPLAZAMIENTO GRUESAS Y VISIBLES (LATERAL E INFERIOR) */
+    /* Barras de desplazamiento modernas (Lateral e Inferior) */
     ::-webkit-scrollbar {
-      width: 14px;
-      height: 14px;
+      width: 10px;
+      height: 10px;
     }
     ::-webkit-scrollbar-track {
-      background: #E2E8F0;
-      border-radius: 8px;
+      background: #0F172A;
+      border-radius: 6px;
     }
     ::-webkit-scrollbar-thumb {
       background: #475569;
-      border-radius: 8px;
-      border: 2px solid #E2E8F0;
+      border-radius: 6px;
+      border: 2px solid #0F172A;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #1E3A8A;
+      background: #38BDF8;
     }
     ::-webkit-scrollbar-corner {
-      background: #CBD5E1;
+      background: #0F172A;
     }
 
     body { 
@@ -94,46 +101,48 @@
       color: var(--text-main); 
       display: flex; 
       flex-direction: column; 
-      overflow: auto; /* Permite scroll si la pantalla es pequeña */
+      overflow: hidden; 
     }
     
+    /* ENCABEZADO SUPERIOR ELEGANTE */
     header { 
       display: flex; align-items: center; justify-content: space-between;
-      background: var(--surface); padding: 10px 24px; border-radius: var(--radius-md);
-      border: 2.5px solid var(--border-subtle); box-shadow: 0 3px 12px rgba(15, 23, 42, 0.08);
-      flex-shrink: 0; margin-bottom: 8px; width: 100%; min-height: 74px;
+      background: linear-gradient(135deg, #111827 0%, #1E293B 100%);
+      padding: 8px 20px; border-radius: var(--radius-md);
+      border: 1.5px solid var(--border-subtle);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+      flex-shrink: 0; margin-bottom: 8px; width: 100%; min-height: 64px;
     }
     
-    .brand-block { display: flex; flex-direction: column; gap: 4px; }
-    .brand-title { font-size: 22pt; font-weight: 900; color: #1E3A8A; white-space: nowrap; margin: 0; line-height: 1.1; }
-    .brand-meta { font-size: 11.5pt; font-weight: 800; color: #0F172A; display: flex; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 0.6px; }
-    .badge-rbd { background: #EFF6FF; color: #1D4ED8; padding: 2px 10px; border-radius: 6px; border: 2px solid #93C5FD; font-weight: 900; }
+    .brand-block { display: flex; flex-direction: column; gap: 3px; }
+    .brand-title { font-size: 18pt; font-weight: 900; color: #F8FAFC; white-space: nowrap; margin: 0; line-height: 1.1; letter-spacing: -0.3px; }
+    .brand-meta { font-size: 9.5pt; font-weight: 800; color: #94A3B8; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 0.8px; }
+    .badge-rbd { background: rgba(56, 189, 248, 0.15); color: #38BDF8; padding: 2px 8px; border-radius: 6px; border: 1.5px solid rgba(56, 189, 248, 0.4); font-weight: 900; }
 
     .time-module {
-      display: flex; align-items: center; background: #0A0F1D; border-radius: var(--radius-md);
-      padding: 8px 20px 8px 24px; gap: 22px; border: 2.5px solid #1E293B;
-      box-shadow: 0 4px 16px rgba(10, 15, 29, 0.35);
+      display: flex; align-items: center; background: #070A12; border-radius: var(--radius-md);
+      padding: 6px 16px 6px 20px; gap: 18px; border: 1.5px solid #334155;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.6);
     }
-    .date-display-text { color: #FFFFFF; font-size: 15pt; font-weight: 800; text-transform: capitalize; letter-spacing: 0.3px; white-space: nowrap; }
+    .date-display-text { color: #E2E8F0; font-size: 12.5pt; font-weight: 800; text-transform: capitalize; letter-spacing: 0.3px; white-space: nowrap; }
 
-    .flip-clock-container { display: flex; align-items: center; gap: 8px; }
+    .flip-clock-container { display: flex; align-items: center; gap: 6px; }
     .flip-card { 
-      background: #111827; color: #FFFFFF; font-size: 27pt; font-weight: 900; 
-      padding: 2px 14px; border-radius: 8px; min-width: 58px; text-align: center; line-height: 1.15; 
-      letter-spacing: 1px; border: 2px solid #475569;
+      background: #111827; color: #FFFFFF; font-size: 21pt; font-weight: 900; 
+      padding: 2px 11px; border-radius: 8px; min-width: 48px; text-align: center; line-height: 1.15; 
+      letter-spacing: 1px; border: 1.5px solid #334155;
     }
-    .flip-colon { color: #FFE600; font-size: 27pt; font-weight: 900; margin: 0 2px; line-height: 1; }
+    .flip-colon { color: #FFE600; font-size: 21pt; font-weight: 900; margin: 0 1px; line-height: 1; }
 
+    /* ÁREA DE TRABAJO PRINCIPAL */
     .main-workspace { 
       flex: 1; 
       display: flex; 
       gap: 10px; 
       min-height: 0; 
       width: 100%; 
-      overflow: hidden;
     }
 
-    /* CONTENEDOR PRINCIPAL CON BARRA INFERIOR Y LATERAL */
     main#plannerSection { 
       flex: 1; 
       display: flex; 
@@ -141,258 +150,286 @@
       min-width: 0; 
       overflow-x: auto; 
       overflow-y: auto;
-      padding-bottom: 6px;
-      padding-right: 4px;
     }
 
-    /* Columnas más anchas (mínimo 310px cada día) para que las letras grandes se lean perfecto */
+    /* 5 COLUMNAS VISIBLES AL 100% EN PANTALLA CON SCROLL SI SE REDUCE LA VENTANA */
     .week-container { 
       display: grid; 
-      grid-template-columns: repeat(5, minmax(310px, 1fr)); 
-      gap: 10px; 
+      grid-template-columns: repeat(5, minmax(195px, 1fr)); 
+      gap: 8px; 
       width: 100%; 
-      min-width: 1580px; 
-      min-height: 620px;
+      min-width: 980px; 
       height: 100%; 
     }
     
     .day-column { 
-      border-radius: var(--radius-md); padding: 10px; display: flex; flex-direction: column; gap: 8px; 
-      min-height: 0; overflow: hidden; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      border-radius: var(--radius-md); padding: 8px; display: flex; flex-direction: column; gap: 8px; 
+      min-height: 0; overflow: hidden; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+      border: 1.5px solid var(--border-subtle);
+      transition: all 0.2s ease;
     }
-    .day-lunes { background: var(--day-lunes-bg); border: 2.5px solid var(--day-lunes-border); }
-    .day-martes { background: var(--day-martes-bg); border: 2.5px solid var(--day-martes-border); }
-    .day-miercoles { background: var(--day-miercoles-bg); border: 2.5px solid var(--day-miercoles-border); }
-    .day-jueves { background: var(--day-jueves-bg); border: 2.5px solid var(--day-jueves-border); }
-    .day-viernes { background: var(--day-viernes-bg); border: 2.5px solid var(--day-viernes-border); }
+    .day-lunes { background: var(--day-lunes-bg); }
+    .day-martes { background: var(--day-martes-bg); }
+    .day-miercoles { background: var(--day-miercoles-bg); }
+    .day-jueves { background: var(--day-jueves-bg); }
+    .day-viernes { background: var(--day-viernes-bg); }
 
     .day-column.is-today { 
-      border-width: 4px !important; 
-      border-color: var(--today-elec-border) !important; 
+      border: 2.5px solid var(--today-elec-border) !important; 
       box-shadow: var(--today-glow) !important; 
-      background: #FFFFFF !important;
     }
-    .day-column.is-today .day-header { background: #FEF9C3 !important; border-color: #EAB308 !important; }
     
     .day-header { 
       text-align: center; padding: 8px 6px; border-radius: 10px;
-      background: rgba(255, 255, 255, 0.94); border: 2px solid rgba(0,0,0,0.12);
-      flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 3px;
+      border: 1px solid rgba(255,255,255,0.08);
+      flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 2px;
     }
-    .day-name { font-size: 15.5pt; font-weight: 900; text-transform: uppercase; line-height: 1.15; letter-spacing: 0.6px; }
+    .day-lunes .day-header { background: var(--day-lunes-header); }
+    .day-martes .day-header { background: var(--day-martes-header); }
+    .day-miercoles .day-header { background: var(--day-miercoles-header); }
+    .day-jueves .day-header { background: var(--day-jueves-header); }
+    .day-viernes .day-header { background: var(--day-viernes-header); }
+
+    .day-name { font-size: 13pt; font-weight: 900; text-transform: uppercase; line-height: 1.15; letter-spacing: 0.8px; }
     .day-lunes .day-name { color: var(--day-lunes-accent); }
     .day-martes .day-name { color: var(--day-martes-accent); }
     .day-miercoles .day-name { color: var(--day-miercoles-accent); }
     .day-jueves .day-name { color: var(--day-jueves-accent); }
     .day-viernes .day-name { color: var(--day-viernes-accent); }
 
-    .day-number { font-size: 13pt; font-weight: 900; color: #000000; margin-top: 2px; }
-    .text-red { color: #DC2626 !important; }
+    .day-number { font-size: 11pt; font-weight: 800; color: #E2E8F0; margin-top: 1px; }
     
-    .badge-tag { font-size: 10pt; padding: 3px 10px; border-radius: 6px; display: inline-block; margin-top: 3px; background: #FFFFFF; color: #000000; font-weight: 900; text-transform: uppercase; border: 2px solid var(--border-strong); }
+    /* Feriados Chile en Rojo Eléctrico */
+    .text-red { color: var(--feriado-red) !important; text-shadow: 0 0 10px rgba(255, 46, 76, 0.35); }
+    
+    .badge-tag { font-size: 8.5pt; padding: 2px 8px; border-radius: 6px; display: inline-block; margin-top: 3px; background: rgba(255, 46, 76, 0.18); color: #FF4D6D; font-weight: 900; text-transform: uppercase; border: 1.5px solid #FF2E4C; }
     .badge-today { 
-      background: #FFE600 !important; color: #000000 !important; border: 2px solid #CA8A04 !important; 
-      font-weight: 900 !important; box-shadow: 0 2px 6px rgba(202, 138, 4, 0.45) !important;
+      background: #FFE600 !important; color: #000000 !important; border: 1.5px solid #FACC15 !important; 
+      font-weight: 900 !important; box-shadow: 0 2px 8px rgba(255, 230, 0, 0.4) !important;
     }
     
     .cards-container { 
-      display: flex; flex-direction: column; gap: 10px; flex: 1; min-height: 0; 
-      overflow-y: auto; overflow-x: auto; padding-right: 4px; padding-bottom: 4px;
+      display: flex; flex-direction: column; gap: 8px; flex: 1; min-height: 0; 
+      overflow-y: auto; overflow-x: hidden; padding-right: 3px;
     }
     
+    /* TARJETAS DE EVENTOS SIN PALABRAS CORTADAS */
     .task-card { 
-      width: 100%; background: #FFFFFF; padding: 12px 14px; border-radius: var(--radius-sm);
-      display: flex; flex-direction: column; gap: 8px; cursor: pointer;
-      border: 3px solid var(--border-subtle); border-left: 11px solid var(--border-strong);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08); transition: transform 0.1s ease, box-shadow 0.1s ease;
+      width: 100%; background: var(--surface-card); padding: 10px 11px; border-radius: var(--radius-sm);
+      display: flex; flex-direction: column; gap: 7px; cursor: pointer;
+      border: 1.5px solid var(--border-subtle); border-left: 7px solid var(--border-strong);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.22); transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
-    .task-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.16); }
+    .task-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.4); }
     
     .task-card.prio-alta { 
-      border-color: #FF003C !important; border-left: 12px solid var(--prio-alta-elec) !important; 
-      background: var(--prio-alta-bg) !important; box-shadow: 0 3px 12px var(--prio-alta-glow) !important;
+      border-color: rgba(255, 0, 60, 0.65) !important; border-left: 8px solid var(--prio-alta-elec) !important; 
+      background: linear-gradient(145deg, rgba(255, 0, 60, 0.16) 0%, #161F33 100%) !important;
+      box-shadow: 0 3px 12px var(--prio-alta-glow) !important;
     } 
     .task-card.prio-media { 
-      border-color: #EAB308 !important; border-left: 12px solid var(--prio-media-elec) !important; 
-      background: var(--prio-media-bg) !important; box-shadow: 0 3px 12px var(--prio-media-glow) !important;
+      border-color: rgba(255, 230, 0, 0.65) !important; border-left: 8px solid var(--prio-media-elec) !important; 
+      background: linear-gradient(145deg, rgba(255, 230, 0, 0.13) 0%, #161F33 100%) !important;
+      box-shadow: 0 3px 12px var(--prio-media-glow) !important;
     } 
     .task-card.prio-baja { 
-      border-color: #00C853 !important; border-left: 12px solid var(--prio-baja-elec) !important; 
-      background: var(--prio-baja-bg) !important; box-shadow: 0 3px 12px var(--prio-baja-glow) !important;
+      border-color: rgba(0, 230, 118, 0.65) !important; border-left: 8px solid var(--prio-baja-elec) !important; 
+      background: linear-gradient(145deg, rgba(0, 230, 118, 0.13) 0%, #161F33 100%) !important;
+      box-shadow: 0 3px 12px var(--prio-baja-glow) !important;
     } 
     
-    .task-card.is-done { opacity: 0.78; background: #F1F5F9 !important; }
-    .task-card.is-done .card-title { text-decoration: line-through; color: #475569 !important; }
+    .task-card.is-done { opacity: 0.55; filter: grayscale(35%); }
+    .task-card.is-done .card-title { text-decoration: line-through; color: #94A3B8 !important; }
 
-    .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
-    .card-title { font-size: 15pt; font-weight: 900; color: #000000; line-height: 1.35; flex: 1; min-width: 0; letter-spacing: 0.2px; word-break: break-word; }
+    /* Fila 1 de la tarjeta: Hora a la izquierda y Check a la derecha */
+    .card-meta-row {
+      display: flex; justify-content: space-between; align-items: center; gap: 6px; width: 100%;
+    }
+    .card-badges-left { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
     
-    .card-badges { display: flex; align-items: center; gap: 6px; flex-shrink: 0; flex-wrap: wrap; }
-    .card-time { font-size: 11.5pt; font-weight: 900; color: #1E3A8A; background: #DBEAFE; border: 2px solid #60A5FA; padding: 3px 9px; border-radius: 6px; white-space: nowrap; }
-    .card-time.time-nodefined { color: #0F172A; background: #E2E8F0; border-color: #94A3B8; font-size: 10.5pt; font-weight: 800; }
-    .card-files-badge { font-size: 11pt; font-weight: 900; color: #9A3412; background: #FFEDD5; border: 2px solid #FB923C; padding: 3px 8px; border-radius: 6px; white-space: nowrap; }
+    .card-time { font-size: 9.5pt; font-weight: 800; color: #E0F2FE; background: rgba(2, 132, 199, 0.35); border: 1px solid #38BDF8; padding: 2px 7px; border-radius: 6px; white-space: nowrap; }
+    .card-time.time-nodefined { color: #CBD5E1; background: rgba(71, 85, 105, 0.4); border-color: #64748B; font-size: 9pt; }
+    .card-files-badge { font-size: 9pt; font-weight: 800; color: #FED7AA; background: rgba(194, 65, 12, 0.35); border: 1px solid #FB923C; padding: 2px 6px; border-radius: 6px; white-space: nowrap; }
     
     .btn-quick-check {
-      width: 28px; height: 28px; border-radius: 6px; border: 2px solid #334155;
-      background: #FFFFFF; color: #000000; font-weight: 900; font-size: 12pt;
+      width: 24px; height: 24px; border-radius: 6px; border: 1.5px solid #64748B;
+      background: rgba(15, 23, 42, 0.7); color: #94A3B8; font-weight: 900; font-size: 10pt;
       display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+      transition: all 0.15s ease; flex-shrink: 0;
     }
-    .btn-quick-check.done { background: #00E676; border-color: #15803D; color: #000000; }
+    .btn-quick-check:hover { border-color: #00E676; color: #FFFFFF; }
+    .btn-quick-check.done { background: #00E676; border-color: #00E676; color: #000000; box-shadow: 0 0 8px rgba(0,230,118,0.5); }
 
-    .card-sender { font-size: 11.5pt; color: #0F172A; font-weight: 800; white-space: normal; line-height: 1.25; }
-    .empty-text { font-size: 12pt; color: #475569; text-align: center; margin-top: 28px; font-weight: 800; }
+    /* Fila 2 de la tarjeta: Título ocupando el 100% del ancho sin cortar sílabas */
+    .card-title { 
+      font-size: 12pt; font-weight: 800; color: #FFFFFF; line-height: 1.32; 
+      width: 100%; letter-spacing: 0.15px; 
+      overflow-wrap: break-word; word-break: normal; hyphens: none;
+    }
 
+    /* Fila 3 de la tarjeta: Organizador */
+    .card-sender { font-size: 9.5pt; color: #CBD5E1; font-weight: 700; line-height: 1.2; display: flex; align-items: center; gap: 4px; }
+    .empty-text { font-size: 10pt; color: #64748B; text-align: center; margin-top: 28px; font-weight: 700; }
+
+    /* BARRA LATERAL DERECHA DE ACCIONES */
     .sidebar-actions {
-      width: 250px; flex-shrink: 0; background: var(--surface);
-      border: 2.5px solid var(--border-subtle); border-radius: var(--radius-md);
-      padding: 12px; display: flex; flex-direction: column; gap: 9px;
-      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08); overflow-y: auto; overflow-x: hidden;
+      width: 215px; flex-shrink: 0; background: var(--surface);
+      border: 1.5px solid var(--border-subtle); border-radius: var(--radius-md);
+      padding: 10px; display: flex; flex-direction: column; gap: 7px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3); overflow-y: auto; overflow-x: hidden;
     }
-    .sidebar-separator { border: 0; border-top: 2px dashed #94A3B8; margin: 4px 0; }
-    .sidebar-section-title { font-size: 9.5pt; font-weight: 900; color: #1E293B; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 2px; }
+    .sidebar-separator { border: 0; border-top: 1px dashed #334155; margin: 3px 0; }
+    .sidebar-section-title { font-size: 8pt; font-weight: 900; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 1px; }
 
     .btn-action-side {
-      width: 100%; min-height: 44px !important; border-radius: var(--radius-sm);
-      font-size: 11.5pt !important; font-weight: 900 !important; cursor: pointer;
+      width: 100%; min-height: 38px !important; border-radius: var(--radius-sm);
+      font-size: 10pt !important; font-weight: 800 !important; cursor: pointer;
       display: inline-flex; align-items: center; justify-content: flex-start; gap: 8px;
-      padding: 6px 12px !important; transition: all 0.15s ease; white-space: nowrap;
-      border: 2.5px solid var(--border-strong) !important; background: #FFFFFF !important; color: #000000 !important;
+      padding: 4px 10px !important; transition: all 0.15s ease; white-space: nowrap;
+      border: 1.5px solid var(--border-subtle) !important; background: var(--surface-elevated) !important; color: #F8FAFC !important;
       text-decoration: none;
     }
-    .btn-action-side:hover:not(:disabled) { background: #E2E8F0 !important; border-color: #0F172A !important; }
-    .btn-action-side:disabled { opacity: 0.5; cursor: not-allowed; }
-    .btn-icon-lg { font-size: 14pt; line-height: 1; }
+    .btn-action-side:hover:not(:disabled) { background: #334155 !important; border-color: #64748B !important; transform: translateY(-1px); }
+    .btn-action-side:disabled { opacity: 0.45; cursor: not-allowed; }
+    .btn-icon-lg { font-size: 12pt; line-height: 1; }
     
     .btn-side-nuevo { 
-      background: #FEF08A !important; border-color: #CA8A04 !important; color: #000000 !important; font-weight: 900 !important; 
-      box-shadow: 0 3px 8px rgba(234, 179, 8, 0.35) !important;
+      background: linear-gradient(135deg, #FFE600 0%, #FACC15 100%) !important; 
+      border-color: #EAB308 !important; color: #000000 !important; font-weight: 900 !important; 
+      box-shadow: 0 3px 12px rgba(255, 230, 0, 0.28) !important;
     }
-    .btn-side-nuevo:hover:not(:disabled) { background: #FDE047 !important; transform: translateY(-1px); }
+    .btn-side-nuevo:hover:not(:disabled) { filter: brightness(1.06); }
 
-    .btn-side-ia { background: #DBEAFE !important; border-color: #2563EB !important; color: #1E3A8A !important; }
-    .btn-side-ia:hover:not(:disabled) { background: #BFDBFE !important; }
+    .btn-side-ia { 
+      background: rgba(37, 99, 235, 0.22) !important; border-color: #3B82F6 !important; color: #93C5FD !important; 
+    }
+    .btn-side-ia:hover:not(:disabled) { background: rgba(37, 99, 235, 0.35) !important; }
 
-    .btn-side-sync { background: #DCFCE7 !important; border-color: #16A34A !important; color: #064E3B !important; }
-    .btn-side-sync:hover:not(:disabled) { background: #BBF7D0 !important; }
+    .btn-side-sync { 
+      background: rgba(0, 230, 118, 0.14) !important; border-color: #00E676 !important; color: #6EE7B7 !important; 
+    }
+    .btn-side-sync:hover:not(:disabled) { background: rgba(0, 230, 118, 0.25) !important; }
 
-    .btn-side-datos { background: #E0E7FF !important; border-color: #4F46E5 !important; color: #1E1B4B !important; font-weight: 900 !important; }
-    .btn-side-datos:hover:not(:disabled) { background: #C7D2FE !important; }
+    .btn-side-datos { 
+      background: rgba(99, 102, 241, 0.18) !important; border-color: #818CF8 !important; color: #C7D2FE !important; 
+    }
 
-    .btn-side-tecnico { background: #F1F5F9 !important; border-color: #475569 !important; color: #000000 !important; font-weight: 900 !important; }
-    .btn-side-tecnico:hover:not(:disabled) { background: #E2E8F0 !important; border-color: #0F172A !important; }
+    .btn-side-tecnico { 
+      background: var(--surface-elevated) !important; border-color: #475569 !important; color: #E2E8F0 !important; 
+    }
 
     .mode-badge-side {
-      width: 100%; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      border-radius: var(--radius-sm); font-size: 11.5pt; font-weight: 900; border: 2.5px solid var(--border-strong);
+      width: 100%; min-height: 38px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      border-radius: var(--radius-sm); font-size: 10pt; font-weight: 900; border: 1.5px solid var(--border-strong);
       cursor: pointer; user-select: none;
     }
-    .mode-badge-side.admin { background: #DCFCE7; color: #064E3B; border-color: #16A34A; }
-    .mode-badge-side.readonly { background: #FEF3C7; color: #78350F; border-color: #D97706; }
+    .mode-badge-side.admin { background: rgba(0, 230, 118, 0.16); color: #00E676; border-color: #00E676; }
+    .mode-badge-side.readonly { background: rgba(251, 191, 36, 0.15); color: #FDE047; border-color: #F59E0B; }
 
     .sidebar-nav-dates {
-      display: flex; flex-direction: column; gap: 6px; background: #F8FAFC;
-      border: 2px solid var(--border-strong); padding: 8px; border-radius: var(--radius-sm);
+      display: flex; flex-direction: column; gap: 6px; background: #0B0F19;
+      border: 1.5px solid var(--border-subtle); padding: 7px; border-radius: var(--radius-sm);
     }
-    .date-label-side { font-size: 12pt; font-weight: 900; color: #1E3A8A; text-align: center; }
-    .nav-arrow-group { display: flex; gap: 5px; justify-content: space-between; }
-    .nav-arrow-group button { flex: 1; min-height: 38px !important; font-size: 11pt !important; padding: 0 !important; justify-content: center !important; }
+    .date-label-side { font-size: 10.5pt; font-weight: 900; color: #38BDF8; text-align: center; }
+    .nav-arrow-group { display: flex; gap: 4px; justify-content: space-between; }
+    .nav-arrow-group button { flex: 1; min-height: 32px !important; font-size: 9.5pt !important; padding: 0 !important; justify-content: center !important; }
 
     .search-wrapper-side { position: relative; width: 100%; }
-    .search-input-side { width: 100%; height: 42px; padding: 0 10px 0 34px; font-size: 11.5pt; font-weight: 800; color: #000000; border: 2.5px solid var(--border-strong); border-radius: var(--radius-sm); outline: none; background: #FFFFFF; }
-    .search-input-side:focus { border-color: #1E3A8A; }
-    .search-icon-side { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); font-size: 11.5pt; color: var(--text-muted); pointer-events: none; }
-    .search-results-side { position: absolute; bottom: calc(100% + 4px); left: 0; right: 0; background: var(--surface); border: 2.5px solid var(--border-strong); border-radius: var(--radius-sm); max-height: 260px; overflow-y: auto; box-shadow: 0 -8px 24px rgba(0,0,0,0.18); z-index: 50; display: none; }
-    .search-item { padding: 10px 12px; border-bottom: 1.5px solid var(--border-subtle); cursor: pointer; display: flex; flex-direction: column; gap: 3px; }
-    .search-item:hover { background: #F1F5F9; }
+    .search-input-side { width: 100%; height: 38px; padding: 0 10px 0 32px; font-size: 10pt; font-weight: 700; color: #FFFFFF; border: 1.5px solid var(--border-strong); border-radius: var(--radius-sm); outline: none; background: #0B0F19; }
+    .search-input-side:focus { border-color: #38BDF8; }
+    .search-icon-side { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); font-size: 10pt; color: var(--text-muted); pointer-events: none; }
+    .search-results-side { position: absolute; bottom: calc(100% + 4px); left: 0; right: 0; background: #1E293B; border: 1.5px solid #475569; border-radius: var(--radius-sm); max-height: 250px; overflow-y: auto; box-shadow: 0 -8px 24px rgba(0,0,0,0.5); z-index: 50; display: none; }
+    .search-item { padding: 8px 10px; border-bottom: 1px solid #334155; cursor: pointer; display: flex; flex-direction: column; gap: 2px; }
+    .search-item:hover { background: #334155; }
 
-    /* MODALES CON BARRA LATERAL Y BARRA INFERIOR */
-    .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.65); display: none; align-items: center; justify-content: center; padding: 14px; z-index: 1000; backdrop-filter: blur(4px); overflow: auto; }
+    /* VENTANAS MODALES AMPLIAS Y LEGIBLES */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(3, 7, 18, 0.78); display: none; align-items: center; justify-content: center; padding: 14px; z-index: 1000; backdrop-filter: blur(5px); overflow: auto; }
     
     .modal-assistant { 
       background: var(--surface); color: var(--text-main); 
-      width: 820px; min-width: 520px; max-width: 96vw; 
-      height: 88vh; min-height: 520px;
-      border-radius: var(--radius-md); padding: 24px; 
+      width: 820px; min-width: 500px; max-width: 96vw; 
+      height: 88vh; min-height: 500px;
+      border-radius: var(--radius-md); padding: 22px; 
       display: flex; flex-direction: column; gap: 14px; 
       position: relative; z-index: 1001; 
-      box-shadow: 0 16px 40px rgba(0,0,0,0.3); 
-      border: 3px solid #1E293B;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.65); 
+      border: 2px solid #334155;
       resize: both; 
       overflow-y: auto;
       overflow-x: auto;
     }
 
-    .modal-assistant label { font-size: 13pt; color: #000000; display: block; margin-bottom: 6px; font-weight: 900; }
+    .modal-assistant label { font-size: 11.5pt; color: #E2E8F0; display: block; margin-bottom: 5px; font-weight: 800; }
     .modal-assistant input, .modal-assistant textarea, .modal-assistant select { 
-      width: 100%; background: #FFFFFF; color: #000000; border: 2.5px solid #475569; 
-      border-radius: var(--radius-sm); padding: 12px 14px; font-size: 13.5pt; font-weight: 800; outline: none; line-height: 1.4;
+      width: 100%; background: #0B0F19; color: #FFFFFF; border: 2px solid #475569; 
+      border-radius: var(--radius-sm); padding: 10px 14px; font-size: 12.5pt; font-weight: 700; outline: none; line-height: 1.4;
     }
-    .modal-assistant input:focus, .modal-assistant textarea:focus, .modal-assistant select:focus { border-color: #1D4ED8; background: #F8FAFC; box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.2); }
+    .modal-assistant input:focus, .modal-assistant textarea:focus, .modal-assistant select:focus { border-color: #38BDF8; box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2); }
     
-    .modal-draggable-header { cursor: move; user-select: none; display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px; border-bottom: 2.5px solid var(--border-subtle); flex-shrink: 0; }
+    .modal-draggable-header { cursor: move; user-select: none; display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px; border-bottom: 1.5px solid var(--border-subtle); flex-shrink: 0; }
 
     .btn-prio { 
-      background: #FFFFFF !important; color: #000000 !important; border: 2.5px solid var(--border-strong) !important;
-      border-radius: var(--radius-sm); padding: 0 16px !important; height: 48px !important; cursor: pointer;
-      font-size: 12.5pt !important; font-weight: 900 !important; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      background: #0B0F19 !important; color: #E2E8F0 !important; border: 2px solid var(--border-strong) !important;
+      border-radius: var(--radius-sm); padding: 0 14px !important; height: 44px !important; cursor: pointer;
+      font-size: 11.5pt !important; font-weight: 900 !important; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
       flex: 1;
     }
-    .btn-prio.selected-alta { border-color: #FF003C !important; background: var(--prio-alta-bg) !important; color: #B91C1C !important; box-shadow: 0 0 12px var(--prio-alta-glow); border-width: 3px !important; }
-    .btn-prio.selected-media { border-color: #CA8A04 !important; background: var(--prio-media-bg) !important; color: #000000 !important; box-shadow: 0 0 12px var(--prio-media-glow); border-width: 3px !important; }
-    .btn-prio.selected-baja { border-color: #15803D !important; background: var(--prio-baja-bg) !important; color: #064E3B !important; box-shadow: 0 0 12px var(--prio-baja-glow); border-width: 3px !important; }
+    .btn-prio.selected-alta { border-color: #FF003C !important; background: rgba(255, 0, 60, 0.22) !important; color: #FF4D6D !important; box-shadow: 0 0 12px var(--prio-alta-glow); }
+    .btn-prio.selected-media { border-color: #FFE600 !important; background: rgba(255, 230, 0, 0.2) !important; color: #FFE600 !important; box-shadow: 0 0 12px var(--prio-media-glow); }
+    .btn-prio.selected-baja { border-color: #00E676 !important; background: rgba(0, 230, 118, 0.2) !important; color: #00E676 !important; box-shadow: 0 0 12px var(--prio-baja-glow); }
 
     .checkbox-container { display: flex; align-items: center; gap: 10px; margin-top: 4px; }
-    .checkbox-container input { width: 22px; height: 22px; cursor: pointer; }
-    .aviso-duplicado { background: var(--prio-alta-bg); border: 2.5px solid var(--prio-alta-elec); color: #B91C1C; padding: 10px 14px; border-radius: var(--radius-sm); font-size: 12pt; font-weight: 900; display: none; margin-top: 6px; }
+    .checkbox-container input { width: 20px; height: 20px; cursor: pointer; }
+    .aviso-duplicado { background: rgba(255, 0, 60, 0.18); border: 2px solid var(--prio-alta-elec); color: #FF4D6D; padding: 10px 14px; border-radius: var(--radius-sm); font-size: 11pt; font-weight: 800; display: none; margin-top: 6px; }
 
-    /* LISTA DE PROPUESTAS IA CON SCROLL VERTICAL Y HORIZONTAL */
+    /* LISTA DE PROPUESTAS IA CON BARRA LATERAL E INFERIOR */
     .ia-results-list { 
-      display: flex; flex-direction: column; gap: 16px; 
-      flex: 1; min-height: 280px; 
+      display: flex; flex-direction: column; gap: 14px; 
+      flex: 1; min-height: 260px; 
       overflow-y: scroll; 
       overflow-x: auto; 
-      margin: 8px 0; padding: 8px 12px 12px 4px;
-      border: 2px solid #CBD5E1;
+      margin: 6px 0; padding: 10px;
+      border: 1.5px solid #334155;
       border-radius: var(--radius-sm);
-      background: #F8FAFC;
+      background: #0B0F19;
     }
 
     .ia-item-card { 
-      background: #FFFFFF; border: 2.5px solid #64748B; border-left: 10px solid #D97706; 
-      padding: 16px 18px; border-radius: var(--radius-sm); display: flex; flex-direction: column; gap: 10px; 
-      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-      min-width: 640px; /* Garantiza barra inferior si la ventana es más angosta */
+      background: var(--surface-elevated); border: 1.5px solid #475569; border-left: 8px solid #F59E0B; 
+      padding: 14px 16px; border-radius: var(--radius-sm); display: flex; flex-direction: column; gap: 10px; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      min-width: 600px;
     }
-    .ia-edit-input { font-size: 13.5pt !important; font-weight: 800 !important; color: #000000 !important; padding: 10px 14px !important; }
+    .ia-edit-input { font-size: 12.5pt !important; font-weight: 700 !important; color: #FFFFFF !important; background: #0B0F19 !important; padding: 10px 12px !important; }
 
     .modal-detail-card { 
-      background: var(--surface); max-width: 720px; width: 100%; max-height: 92vh; 
-      border-radius: var(--radius-md); padding: 24px; display: flex; flex-direction: column; 
-      gap: 16px; overflow-y: auto; overflow-x: auto; position: relative; z-index: 1001; 
-      box-shadow: 0 16px 40px rgba(0,0,0,0.28); border: 3px solid #1E293B;
+      background: var(--surface); max-width: 680px; width: 100%; max-height: 90vh; 
+      border-radius: var(--radius-md); padding: 22px; display: flex; flex-direction: column; 
+      gap: 14px; overflow-y: auto; overflow-x: auto; position: relative; z-index: 1001; 
+      box-shadow: 0 20px 50px rgba(0,0,0,0.65); border: 2px solid #334155;
       resize: both;
     }
-    .modal-field { display: flex; flex-direction: column; gap: 6px; }
-    .modal-label { font-size: 11.5pt; font-weight: 900; color: #1E3A8A; text-transform: uppercase; letter-spacing: 0.5px; }
-    .modal-box { background: #F8FAFC; border: 2.5px solid #94A3B8; padding: 14px 18px; border-radius: var(--radius-sm); font-size: 14pt; font-weight: 800; line-height: 1.5; white-space: pre-wrap; word-break: break-word; color: #000000; }
-    .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .modal-field { display: flex; flex-direction: column; gap: 5px; }
+    .modal-label { font-size: 10pt; font-weight: 900; color: #38BDF8; text-transform: uppercase; letter-spacing: 0.6px; }
+    .modal-box { background: #0B0F19; border: 1.5px solid #334155; padding: 12px 16px; border-radius: var(--radius-sm); font-size: 12.5pt; font-weight: 700; line-height: 1.5; white-space: pre-wrap; word-break: break-word; color: #F8FAFC; }
+    .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-    .bitacora-modal { max-width: 760px; width: 100%; max-height: 90vh; background: var(--surface); border-radius: var(--radius-md); padding: 24px; display: flex; flex-direction: column; gap: 14px; position: relative; z-index: 1001; border: 3px solid #1E293B; resize: both; overflow: auto; }
-    .bitacora-list { flex: 1; overflow-y: auto; overflow-x: auto; display: flex; flex-direction: column; gap: 10px; }
-    .bitacora-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; border-radius: var(--radius-sm); background: #FFFFFF; border: 2.5px solid var(--border-subtle); cursor: pointer; min-width: 520px; }
-    .bitacora-item:hover { background: #F1F5F9; border-color: #1E3A8A; }
+    .bitacora-modal { max-width: 740px; width: 100%; max-height: 88vh; background: var(--surface); border-radius: var(--radius-md); padding: 22px; display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 1001; border: 2px solid #334155; resize: both; overflow: auto; }
+    .bitacora-list { flex: 1; overflow-y: auto; overflow-x: auto; display: flex; flex-direction: column; gap: 8px; }
+    .bitacora-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-radius: var(--radius-sm); background: var(--surface-elevated); border: 1.5px solid var(--border-subtle); cursor: pointer; min-width: 480px; }
+    .bitacora-item:hover { background: #334155; border-color: #38BDF8; }
     
-    .badge-file { display: inline-flex; align-items: center; gap: 8px; background: #EFF6FF; border: 2.5px solid #3B82F6; color: #1E3A8A; padding: 8px 14px; border-radius: 8px; font-size: 12pt; font-weight: 900; text-decoration: none; }
-    .badge-file:hover { background: #DBEAFE; }
+    .badge-file { display: inline-flex; align-items: center; gap: 6px; background: rgba(59, 130, 246, 0.2); border: 1.5px solid #60A5FA; color: #93C5FD; padding: 6px 12px; border-radius: 8px; font-size: 11pt; font-weight: 800; text-decoration: none; }
+    .badge-file:hover { background: rgba(59, 130, 246, 0.35); }
 
     .upload-box {
-      border: 2.5px dashed var(--border-strong);
-      background: #F8FAFC;
+      border: 2px dashed var(--border-strong);
+      background: #0B0F19;
       border-radius: var(--radius-sm);
-      padding: 14px;
+      padding: 12px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
   </style>
 </head>
@@ -427,7 +464,7 @@
     <aside class="sidebar-actions">
       <span class="sidebar-section-title">Seguridad & Enlace</span>
       <div id="modeBadge" class="mode-badge-side readonly" onclick="alternarModoEdicion()" title="Haz clic para alternar modo">🔒 Solo Lectura</div>
-      <a href="https://valdesgutierrezrodrigo-design.github.io/agenda/" target="_blank" class="btn-action-side" style="color:#1E3A8A !important; border-color:#3B82F6 !important; background:#EFF6FF !important;">
+      <a href="https://valdesgutierrezrodrigo-design.github.io/agenda/" target="_blank" class="btn-action-side" style="color:#93C5FD !important; border-color:#3B82F6 !important;">
         <span class="btn-icon-lg">🔗</span> Agenda TDAH
       </a>
 
@@ -472,7 +509,7 @@
         <span class="btn-icon-lg">💾</span> Guardar Respaldo
       </button>
 
-      <div style="margin-top:auto; padding-top:6px;">
+      <div style="margin-top:auto; padding-top:4px;">
         <span class="sidebar-section-title">Buscar Compromiso</span>
         <div class="search-wrapper-side">
           <span class="search-icon-side">🔍</span>
@@ -485,34 +522,34 @@
 
   <!-- MODAL: DATOS INSTITUCIONALES -->
   <div class="modal-overlay" id="modalDatosOverlay">
-    <div class="modal-assistant" style="height:auto; min-height:460px; width:620px;">
+    <div class="modal-assistant" style="height:auto; min-height:440px; width:600px;">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-weight:900; font-size:17pt; color:#1E3A8A;">🏫 Ficha de Datos Institucionales</span>
-        <button class="btn-action-side" style="width:auto; min-height:38px !important;" onclick="cerrarModalDatos()">✕</button>
+        <span style="font-weight:900; font-size:16pt; color:#38BDF8;">🏫 Ficha de Datos Institucionales</span>
+        <button class="btn-action-side" style="width:auto; min-height:36px !important;" onclick="cerrarModalDatos()">✕</button>
       </div>
 
       <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top:6px;">
-        <div style="padding:12px 14px; background:#F8FAFC; border:2px solid var(--border-subtle); border-radius:8px;">
-          <span style="font-size:10pt; font-weight:900; color:#334155; text-transform:uppercase;">Establecimiento</span>
-          <div style="font-size:13pt; font-weight:900; color:#000000; margin-top:4px;">Escuela Particular Comandante Carlos Condell</div>
+        <div style="padding:12px 14px; background:#0B0F19; border:1.5px solid var(--border-subtle); border-radius:8px;">
+          <span style="font-size:9pt; font-weight:800; color:#94A3B8; text-transform:uppercase;">Establecimiento</span>
+          <div style="font-size:12pt; font-weight:900; color:#FFFFFF; margin-top:4px;">Escuela Particular Comandante Carlos Condell</div>
         </div>
-        <div style="padding:12px 14px; background:#F8FAFC; border:2px solid var(--border-subtle); border-radius:8px;">
-          <span style="font-size:10pt; font-weight:900; color:#334155; text-transform:uppercase;">RBD Oficial</span>
-          <div style="font-size:15pt; font-weight:900; color:#1D4ED8; margin-top:4px;">25078</div>
+        <div style="padding:12px 14px; background:#0B0F19; border:1.5px solid var(--border-subtle); border-radius:8px;">
+          <span style="font-size:9pt; font-weight:800; color:#94A3B8; text-transform:uppercase;">RBD Oficial</span>
+          <div style="font-size:14pt; font-weight:900; color:#38BDF8; margin-top:4px;">25078</div>
         </div>
-        <div style="padding:12px 14px; background:#F8FAFC; border:2px solid var(--border-subtle); border-radius:8px;">
-          <span style="font-size:10pt; font-weight:900; color:#334155; text-transform:uppercase;">Comuna</span>
-          <div style="font-size:13pt; font-weight:900; color:#000000; margin-top:4px;">San Bernardo</div>
+        <div style="padding:12px 14px; background:#0B0F19; border:1.5px solid var(--border-subtle); border-radius:8px;">
+          <span style="font-size:9pt; font-weight:800; color:#94A3B8; text-transform:uppercase;">Comuna</span>
+          <div style="font-size:12pt; font-weight:900; color:#FFFFFF; margin-top:4px;">San Bernardo</div>
         </div>
-        <div style="padding:12px 14px; background:#F8FAFC; border:2px solid var(--border-subtle); border-radius:8px;">
-          <span style="font-size:10pt; font-weight:900; color:#334155; text-transform:uppercase;">Región</span>
-          <div style="font-size:13pt; font-weight:900; color:#000000; margin-top:4px;">Metropolitana de Santiago</div>
+        <div style="padding:12px 14px; background:#0B0F19; border:1.5px solid var(--border-subtle); border-radius:8px;">
+          <span style="font-size:9pt; font-weight:800; color:#94A3B8; text-transform:uppercase;">Región</span>
+          <div style="font-size:12pt; font-weight:900; color:#FFFFFF; margin-top:4px;">Metropolitana de Santiago</div>
         </div>
       </div>
 
       <div style="margin-top:8px;">
-        <label style="font-size:13pt; font-weight:900; color:#1E3A8A; display:block; margin-bottom:6px;">📝 Block de Notas Directivas / Contactos Clave:</label>
-        <textarea id="blockNotasColegio" rows="4" placeholder="Escribe aquí teléfonos de emergencia, directrices o notas clave del colegio..." style="width:100%; border:2.5px solid var(--border-strong); border-radius:8px; padding:12px; font-size:13pt; font-weight:800; color:#000000;" oninput="guardarNotasColegio()"></textarea>
+        <label style="font-size:12pt; font-weight:900; color:#38BDF8; display:block; margin-bottom:6px;">📝 Block de Notas Directivas / Contactos Clave:</label>
+        <textarea id="blockNotasColegio" rows="4" placeholder="Escribe aquí teléfonos de emergencia, directrices o notas clave del colegio..." oninput="guardarNotasColegio()"></textarea>
       </div>
 
       <div style="display:flex; justify-content:flex-end;">
@@ -523,28 +560,28 @@
 
   <!-- Modal Panel Técnico -->
   <div class="modal-overlay" id="modalPanelTecnicoOverlay">
-    <div class="modal-assistant" style="height:auto; min-height:380px; width:580px;">
+    <div class="modal-assistant" style="height:auto; min-height:360px; width:560px;">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-weight:900; font-size:17pt; color:#1E3A8A;">📊 Panel Técnico Pedagógico</span>
-        <button class="btn-action-side" style="width:auto; min-height:38px !important;" onclick="cerrarModalPanelTecnico()">✕</button>
+        <span style="font-weight:900; font-size:16pt; color:#38BDF8;">📊 Panel Técnico Pedagógico</span>
+        <button class="btn-action-side" style="width:auto; min-height:36px !important;" onclick="cerrarModalPanelTecnico()">✕</button>
       </div>
-      <p style="font-size:13pt; font-weight:700; color:var(--text-muted); line-height:1.4;">
+      <p style="font-size:12pt; font-weight:600; color:var(--text-muted); line-height:1.4;">
         Módulo modular para enlazar las bases de datos escolares de la Escuela Carlos Condell:
       </p>
 
       <div style="display:flex; flex-direction:column; gap:10px; margin:8px 0;">
-        <div style="padding:12px 16px; background:#F8FAFC; border:2px solid var(--border-strong); border-radius:8px; font-weight:900; font-size:13pt; color:#000000;">
+        <div style="padding:12px 16px; background:#0B0F19; border:1.5px solid var(--border-subtle); border-radius:8px; font-weight:800; font-size:12pt; color:#F8FAFC;">
           📅 Horarios de Clases & Jefaturas
         </div>
-        <div style="padding:12px 16px; background:#F8FAFC; border:2px solid var(--border-strong); border-radius:8px; font-weight:900; font-size:13pt; color:#000000;">
+        <div style="padding:12px 16px; background:#0B0F19; border:1.5px solid var(--border-subtle); border-radius:8px; font-weight:800; font-size:12pt; color:#F8FAFC;">
           👥 Registro de Asistencia Diaria
         </div>
-        <div style="padding:12px 16px; background:#F8FAFC; border:2px solid var(--border-strong); border-radius:8px; font-weight:900; font-size:13pt; color:#000000;">
+        <div style="padding:12px 16px; background:#0B0F19; border:1.5px solid var(--border-subtle); border-radius:8px; font-weight:800; font-size:12pt; color:#F8FAFC;">
           📖 Leccionarios y Cobertura Curricular
         </div>
       </div>
 
-      <div style="font-size:12pt; color:#0369A1; background:#E0F2FE; border:2px solid #38BDF8; padding:10px 14px; border-radius:8px; font-weight:900;">
+      <div style="font-size:11pt; color:#38BDF8; background:rgba(56, 189, 248, 0.12); border:1.5px solid #38BDF8; padding:10px 14px; border-radius:8px; font-weight:800;">
         ℹ️ Listo para conectar con Google Sheets o la base de datos institucional en la siguiente fase.
       </div>
     </div>
@@ -552,13 +589,13 @@
 
   <!-- Modal Respaldo -->
   <div class="modal-overlay" id="modalRespaldoOverlay">
-    <div class="modal-assistant" style="height:auto; min-height:240px; width:520px;">
+    <div class="modal-assistant" style="height:auto; min-height:220px; width:500px;">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-weight:900; font-size:17pt; color:#1E3A8A;">💾 Respaldo Institucional</span>
-        <button class="btn-action-side" style="width:auto; min-height:38px !important;" onclick="cerrarModalRespaldo()">✕</button>
+        <span style="font-weight:900; font-size:16pt; color:#38BDF8;">💾 Respaldo Institucional</span>
+        <button class="btn-action-side" style="width:auto; min-height:36px !important;" onclick="cerrarModalRespaldo()">✕</button>
       </div>
-      <p style="font-size:13pt; font-weight:700; color:var(--text-muted);">Descarga una copia completa de la agenda laboral en formato seguro JSON.</p>
-      <button type="button" class="btn-action-side btn-side-ia" style="width:100%; justify-content:center; margin-top:8px; min-height:50px !important; font-size:13pt !important;" onclick="descargarRespaldoJSON()">⬇️ Descargar Copia (.json)</button>
+      <p style="font-size:12pt; font-weight:600; color:var(--text-muted);">Descarga una copia completa de la agenda laboral en formato seguro JSON.</p>
+      <button type="button" class="btn-action-side btn-side-ia" style="width:100%; justify-content:center; margin-top:8px; min-height:48px !important; font-size:12pt !important;" onclick="descargarRespaldoJSON()">⬇️ Descargar Copia (.json)</button>
     </div>
   </div>
 
@@ -567,18 +604,18 @@
     <div class="bitacora-modal">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <div>
-          <h3 style="font-size:17pt; font-weight:900; color:#1E3A8A;">📋 Bitácora Institucional Carlos Condell</h3>
-          <span id="bitacoraTotal" style="font-size:12pt; font-weight:900; color:var(--text-muted);">0 eventos</span>
+          <h3 style="font-size:16pt; font-weight:900; color:#38BDF8;">📋 Bitácora Institucional Carlos Condell</h3>
+          <span id="bitacoraTotal" style="font-size:11pt; font-weight:800; color:var(--text-muted);">0 eventos</span>
         </div>
-        <button class="btn-action-side" style="width:auto; min-height:38px !important;" onclick="cerrarModalBitacora()">✕</button>
+        <button class="btn-action-side" style="width:auto; min-height:36px !important;" onclick="cerrarModalBitacora()">✕</button>
       </div>
 
       <div style="display:flex; gap:10px;">
         <button type="button" class="btn-action-side" style="flex:1; justify-content:center;" onclick="renderizarBitacora()">Todos los Compromisos</button>
-        <button type="button" class="btn-action-side" style="flex:1; justify-content:center; border-color:#FF003C !important; color:#B91C1C !important; background:var(--prio-alta-bg) !important;" onclick="filtrarSoloDuplicados()">⚠️ Solo Duplicados</button>
+        <button type="button" class="btn-action-side" style="flex:1; justify-content:center; border-color:#FF003C !important; color:#FF4D6D !important;" onclick="filtrarSoloDuplicados()">⚠️ Solo Duplicados</button>
       </div>
 
-      <input type="text" id="bitacoraSearch" class="search-input-side" style="width:100%; height:46px; font-size:13pt;" placeholder="Filtrar por asunto..." oninput="renderizarBitacora()">
+      <input type="text" id="bitacoraSearch" class="search-input-side" style="width:100%; height:44px; font-size:12pt;" placeholder="Filtrar por asunto..." oninput="renderizarBitacora()">
       <div class="bitacora-list" id="bitacoraListContainer"></div>
     </div>
   </div>
@@ -588,11 +625,11 @@
     <div class="modal-detail-card">
       <div style="display:flex; justify-content:space-between; align-items:flex-start;">
         <div>
-          <span id="dtPrioBadge" class="badge-tag" style="font-size:11.5pt;">-</span>
-          <span id="dtStateBadge" class="badge-tag" style="margin-left:6px; background:#E2E8F0; font-size:11.5pt;">-</span>
-          <h3 id="dtTitle" style="font-size:18pt; font-weight:900; margin-top:8px; color:#000000; line-height:1.3;">-</h3>
+          <span id="dtPrioBadge" class="badge-tag" style="font-size:10.5pt;">-</span>
+          <span id="dtStateBadge" class="badge-tag" style="margin-left:6px; background:#1E293B; color:#E2E8F0; border-color:#475569; font-size:10.5pt;">-</span>
+          <h3 id="dtTitle" style="font-size:16pt; font-weight:900; margin-top:8px; color:#FFFFFF; line-height:1.3;">-</h3>
         </div>
-        <button class="btn-action-side" style="width:auto; min-height:38px !important;" onclick="closeDetailModal()">✕</button>
+        <button class="btn-action-side" style="width:auto; min-height:36px !important;" onclick="closeDetailModal()">✕</button>
       </div>
 
       <div class="grid-2col">
@@ -601,16 +638,16 @@
       </div>
 
       <div class="modal-field"><span class="modal-label">Síntesis</span><div id="dtDetail" class="modal-box">-</div></div>
-      <div class="modal-field"><span class="modal-label">Acción Requerida</span><div id="dtAccion" class="modal-box" style="border-left:8px solid #EAB308; background:#FFFDE7;">-</div></div>
+      <div class="modal-field"><span class="modal-label">Acción Requerida</span><div id="dtAccion" class="modal-box" style="border-left:6px solid #FFE600;">-</div></div>
 
       <div class="modal-field" id="dtRespaldosContainer">
         <span class="modal-label">Documentos y Evidencias Adjuntas</span>
         <div id="dtRespaldosList" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:6px;"></div>
       </div>
 
-      <div id="detailActionFooter" style="display:flex; justify-content:space-between; align-items:center; margin-top:12px; padding-top:12px; border-top:2.5px solid var(--border-subtle); gap:10px; flex-wrap:wrap;">
-        <button class="btn-action-side" style="width:auto; color:#B91C1C !important; border-color:#FF003C !important; background:#FEF2F2 !important;" onclick="eliminarEventoActual()">🗑️ Eliminar</button>
-        <button class="btn-action-side" style="width:auto; border-color:#1E3A8A !important; color:#1E3A8A !important; font-weight:900;" onclick="prepararEdicionActual()">✏️ Editar Evento</button>
+      <div id="detailActionFooter" style="display:flex; justify-content:space-between; align-items:center; margin-top:12px; padding-top:12px; border-top:1.5px solid var(--border-subtle); gap:10px; flex-wrap:wrap;">
+        <button class="btn-action-side" style="width:auto; color:#FF4D6D !important; border-color:#FF003C !important;" onclick="eliminarEventoActual()">🗑️ Eliminar</button>
+        <button class="btn-action-side" style="width:auto; border-color:#38BDF8 !important; color:#38BDF8 !important;" onclick="prepararEdicionActual()">✏️ Editar Evento</button>
         <button class="btn-action-side btn-side-sync" style="width:auto;" id="btnToggleRealizado" onclick="toggleRealizadoActual()">✓ Realizado</button>
       </div>
     </div>
@@ -620,10 +657,10 @@
   <div class="modal-overlay" id="modalAssistantOverlay">
     <div class="modal-assistant" id="modalNuevoEventoBox">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span id="modalTitleStr" style="font-weight:900; font-size:18pt; color:#1E3A8A;">Nuevo Evento Laboral</span>
+        <span id="modalTitleStr" style="font-weight:900; font-size:16pt; color:#38BDF8;">Nuevo Evento Laboral</span>
         <div style="display:flex; gap:8px;">
-          <button type="button" class="btn-action-side" style="width:auto; min-height:38px !important;" onclick="limpiarFormularioManual()">Limpiar</button>
-          <button class="btn-action-side" style="width:auto; min-height:38px !important;" onclick="closeModal()">✕</button>
+          <button type="button" class="btn-action-side" style="width:auto; min-height:36px !important;" onclick="limpiarFormularioManual()">Limpiar</button>
+          <button class="btn-action-side" style="width:auto; min-height:36px !important;" onclick="closeModal()">✕</button>
         </div>
       </div>
 
@@ -634,7 +671,7 @@
       </div>
       <div>
         <label>Hora del Evento (Obligatoria) *</label>
-        <input type="time" id="fHora" required style="border-color:#2563EB;">
+        <input type="time" id="fHora" required style="border-color:#38BDF8;">
       </div>
       
       <div class="grid-2col">
@@ -644,7 +681,7 @@
 
       <div class="checkbox-container">
         <input type="checkbox" id="fRepetirAnual">
-        <label for="fRepetirAnual" style="margin:0; font-size:13pt;">🔁 Repetir anualmente</label>
+        <label for="fRepetirAnual" style="margin:0; font-size:12pt;">🔁 Repetir anualmente</label>
       </div>
 
       <div><label>Organizador / Convoca</label><input type="text" id="fOrganizador" placeholder="Ej: Dirección, Mineduc, UTP, SLEP"></div>
@@ -661,7 +698,7 @@
       <div><label>Acción Requerida</label><textarea id="fAccion" rows="3" placeholder="Ej: Notificar, Solicitar informe..."></textarea></div>
       
       <div class="upload-box">
-        <label style="margin:0; font-size:12.5pt;">📎 Subir documentos de respaldo (PDFs o Imágenes):</label>
+        <label style="margin:0; font-size:11.5pt;">📎 Subir documentos de respaldo (PDFs o Imágenes):</label>
         <input type="file" id="fArchivos" multiple accept="image/*,application/pdf" onchange="procesarArchivosManuales(this)" style="display:none;">
         <button type="button" class="btn-action-side" style="width:auto;" onclick="document.getElementById('fArchivos').click()">
           ➕ Agregar Archivos...
@@ -669,40 +706,40 @@
         <div id="listaArchivosManuales" style="display:flex; flex-wrap:wrap; gap:8px; margin-top:4px;"></div>
       </div>
 
-      <button type="button" id="btnGuardarEvento" class="btn-action-side btn-side-nuevo" style="margin-top:10px; justify-content:center; min-height:52px !important; font-size:13.5pt !important;" onclick="guardarEventoManual()">GUARDAR EVENTO</button>
+      <button type="button" id="btnGuardarEvento" class="btn-action-side btn-side-nuevo" style="margin-top:10px; justify-content:center; min-height:48px !important; font-size:12.5pt !important;" onclick="guardarEventoManual()">GUARDAR EVENTO</button>
     </div>
   </div>
 
-  <!-- Modal IA (Motor Híbrido Groq + Gemini con letras grandes y barras de desplazamiento) -->
+  <!-- Modal IA (Motor Híbrido Groq + Gemini) -->
   <div class="modal-overlay" id="modalIAOverlay">
-    <div class="modal-assistant" id="modalIABox" style="width:880px; min-width:560px; height:90vh;">
+    <div class="modal-assistant" id="modalIABox" style="width:860px; min-width:540px; height:88vh;">
       <div class="modal-draggable-header" id="dragHeaderIA">
-        <span style="font-weight:900; font-size:18pt; color:#1E3A8A;">★ Asistente Inteligente AIA (Groq + Gemini)</span>
-        <button type="button" class="btn-action-side" style="width:auto; min-height:38px !important;" onclick="cerrarModalIA()">✕</button>
+        <span style="font-weight:900; font-size:16pt; color:#38BDF8;">★ Asistente Inteligente AIA (Groq + Gemini)</span>
+        <button type="button" class="btn-action-side" style="width:auto; min-height:36px !important;" onclick="cerrarModalIA()">✕</button>
       </div>
-      <p style="font-size:12.5pt; font-weight:700; color:#0F172A; line-height:1.4;">
+      <p style="font-size:11.5pt; font-weight:600; color:var(--text-muted); line-height:1.4;">
         Sube un PDF o pega una captura (Ctrl+V). El navegador extrae el texto localmente para no gastar tokens y analiza con <b>Groq (gratis/ultrarrápido)</b> o <b>Gemini</b> de respaldo.
       </p>
       
       <input type="file" id="inputArchivoIA" accept="image/*,application/pdf" multiple style="display:none;" onchange="procesarArchivoSeleccionado(this)">
       
       <div style="display:flex; gap:12px; margin:4px 0; flex-shrink:0;">
-        <button type="button" id="btnCargarIA" class="btn-action-side btn-side-ia" style="flex:1; justify-content:center; min-height:48px !important; font-size:12.5pt !important;">📁 1. Cargar Documento(s)</button>
-        <button type="button" id="btnPegarIA" class="btn-action-side btn-side-ia" style="flex:1; justify-content:center; min-height:48px !important; font-size:12.5pt !important;">📋 1. Pegar Captura (Ctrl+V)</button>
+        <button type="button" id="btnCargarIA" class="btn-action-side btn-side-ia" style="flex:1; justify-content:center; min-height:44px !important; font-size:11.5pt !important;">📁 1. Cargar Documento(s)</button>
+        <button type="button" id="btnPegarIA" class="btn-action-side btn-side-ia" style="flex:1; justify-content:center; min-height:44px !important; font-size:11.5pt !important;">📋 1. Pegar Captura (Ctrl+V)</button>
       </div>
 
-      <button type="button" id="btnAnalizarSeguroIA" class="btn-action-side btn-side-nuevo" style="justify-content:center; min-height:48px !important; font-size:13pt !important; flex-shrink:0;" disabled onclick="analizarPendientesIA()">⚡ 2. ANALIZAR DOCUMENTO AHORA</button>
+      <button type="button" id="btnAnalizarSeguroIA" class="btn-action-side btn-side-nuevo" style="justify-content:center; min-height:44px !important; font-size:12pt !important; flex-shrink:0;" disabled onclick="analizarPendientesIA()">⚡ 2. ANALIZAR DOCUMENTO AHORA</button>
       
-      <div id="iaArchivoInfo" style="font-size:12pt; color:#1E3A8A; background:#EFF6FF; padding:10px 14px; border-radius:8px; display:none; border:2px solid #3B82F6; font-weight:900; flex-shrink:0;"></div>
-      <div id="iaEstado" style="font-size:12pt; color:#78350F; font-weight:900; text-align:center; padding:10px 14px; display:none; background:#FEF3C7; border-radius:8px; border:2px solid #F59E0B; flex-shrink:0;"></div>
+      <div id="iaArchivoInfo" style="font-size:11pt; color:#93C5FD; background:rgba(59, 130, 246, 0.15); padding:8px 12px; border-radius:8px; display:none; border:1.5px solid #3B82F6; font-weight:800; flex-shrink:0;"></div>
+      <div id="iaEstado" style="font-size:11pt; color:#FDE047; font-weight:800; text-align:center; padding:8px 12px; display:none; background:rgba(234, 179, 8, 0.15); border-radius:8px; border:1.5px solid #EAB308; flex-shrink:0;"></div>
       
-      <div id="iaContenedorResultados" style="display:none; flex:1; flex-direction:column; min-height:320px;">
+      <div id="iaContenedorResultados" style="display:none; flex:1; flex-direction:column; min-height:300px;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px; flex-shrink:0;">
-          <span style="font-size:14pt; font-weight:900; color:#1E3A8A;">Propuesta de Eventos Detectados:</span>
-          <span style="font-size:11.5pt; font-weight:800; color:#0F172A;">Usa las barras lateral e inferior para revisar</span>
+          <span style="font-size:13pt; font-weight:900; color:#38BDF8;">Propuesta de Eventos Detectados:</span>
+          <span style="font-size:10.5pt; font-weight:700; color:var(--text-muted);">Usa las barras lateral e inferior para revisar</span>
         </div>
         <div class="ia-results-list" id="iaListaEventos"></div>
-        <button type="button" id="btnAgendarTodoIA" class="btn-action-side btn-side-nuevo" style="width:100%; margin-top:8px; justify-content:center; min-height:52px !important; font-size:13.5pt !important; flex-shrink:0;" onclick="guardarEventosDetectadosIA()">AGENDAR PROPUESTA Y SUBIR RESPALDO</button>
+        <button type="button" id="btnAgendarTodoIA" class="btn-action-side btn-side-nuevo" style="width:100%; margin-top:8px; justify-content:center; min-height:48px !important; font-size:12.5pt !important; flex-shrink:0;" onclick="guardarEventosDetectadosIA()">AGENDAR PROPUESTA Y SUBIR RESPALDO</button>
       </div>
     </div>
   </div>
@@ -1035,7 +1072,7 @@
         dayTasks.sort((a, b) => (a.timeMinutos || 0) - (b.timeMinutos || 0));
 
         if (dayTasks.length === 0) {
-          list.innerHTML = '<span class="empty-text">Sin tareas agendadas</span>';
+          list.innerHTML = '<span class="empty-text">Sin compromisos</span>';
         } else {
           dayTasks.forEach(t => {
             const card = document.createElement("div");
@@ -1053,14 +1090,14 @@
             const badgeClip = (t.respaldos && t.respaldos.length > 0) ? `<span class="card-files-badge" title="${t.respaldos.length} documento(s) adjunto(s)">📎 ${t.respaldos.length}</span>` : '';
 
             card.innerHTML = `
-              <div class="card-top">
-                <span class="card-title">${t.subject}</span>
-                <div class="card-badges">
-                  ${badgeClip}
+              <div class="card-meta-row">
+                <div class="card-badges-left">
                   ${badgeHora}
-                  <button type="button" class="btn-quick-check ${t.status === 'managed' ? 'done' : ''}" title="Marcar Realizado / Pendiente" onclick="event.stopPropagation(); toggleRealizadoDirecto('${t.id}')">✓</button>
+                  ${badgeClip}
                 </div>
+                <button type="button" class="btn-quick-check ${t.status === 'managed' ? 'done' : ''}" title="Marcar Realizado / Pendiente" onclick="event.stopPropagation(); toggleRealizadoDirecto('${t.id}')">✓</button>
               </div>
+              <div class="card-title">${t.subject}</div>
               <div class="card-sender">👤 ${t.sender || 'General'}</div>
             `;
             list.appendChild(card);
@@ -1157,13 +1194,13 @@
       const container = document.getElementById("listaArchivosManuales");
       container.innerHTML = "";
       if (archivosManualesTemporales.length === 0) {
-        container.innerHTML = "<span style='font-size:11.5pt; color:var(--text-muted); font-weight:800;'>Ningún archivo adjunto aún.</span>";
+        container.innerHTML = "<span style='font-size:10.5pt; color:var(--text-muted); font-weight:700;'>Ningún archivo adjunto aún.</span>";
         return;
       }
       archivosManualesTemporales.forEach((arch, idx) => {
         const tag = document.createElement("span");
         tag.className = "badge-file";
-        tag.innerHTML = `📄 ${arch.nombre} <b style="cursor:pointer; margin-left:6px; color:#FF003C;" title="Quitar archivo" onclick="quitarArchivoManual(${idx})">✕</b>`;
+        tag.innerHTML = `📄 ${arch.nombre} <b style="cursor:pointer; margin-left:6px; color:#FF4D6D;" title="Quitar archivo" onclick="quitarArchivoManual(${idx})">✕</b>`;
         container.appendChild(tag);
       });
     }
@@ -1506,12 +1543,12 @@
       }
       const matches = tasks.filter(t => (t.category || "Laboral").toLowerCase() === "laboral" && (normalizarTexto(t.subject).includes(q) || normalizarTexto(t.detail).includes(q) || normalizarTexto(t.sender).includes(q)));
       if (matches.length === 0) {
-        box.innerHTML = '<div style="padding:12px; font-size:11.5pt; color:#475569; font-weight:800;">Sin coincidencias</div>';
+        box.innerHTML = '<div style="padding:12px; font-size:10.5pt; color:#94A3B8; font-weight:700;">Sin coincidencias</div>';
       } else {
         box.innerHTML = matches.map(m => `
           <div class="search-item" onclick="openDetail('${m.id}'); document.getElementById('searchResults').style.display='none';">
-            <span style="font-weight:900; font-size:12pt; color:#000000;">${m.subject}</span>
-            <span style="font-size:10.5pt; color:var(--text-muted); font-weight:800;">${m.date} | ${m.time ? m.time + ' hrs' : 'Por definir'} • ${m.sender || 'General'}</span>
+            <span style="font-weight:900; font-size:11pt; color:#FFFFFF;">${m.subject}</span>
+            <span style="font-size:9.5pt; color:var(--text-muted); font-weight:700;">${m.date} | ${m.time ? m.time + ' hrs' : 'Por definir'} • ${m.sender || 'General'}</span>
           </div>
         `).join("");
       }
@@ -1560,17 +1597,17 @@
       document.getElementById("bitacoraTotal").textContent = `${list.length} evento(s)`;
 
       if (list.length === 0) {
-        container.innerHTML = '<span style="font-size:12pt; color:#475569; text-align:center; padding:14px; font-weight:800;">Sin registros institucionales.</span>';
+        container.innerHTML = '<span style="font-size:11pt; color:#94A3B8; text-align:center; padding:14px; font-weight:700;">Sin registros institucionales.</span>';
         return;
       }
 
       container.innerHTML = list.map(t => `
         <div class="bitacora-item" onclick="cerrarModalBitacora(); openDetail('${t.id}')">
           <div>
-            <div style="font-weight:900; font-size:13pt; color:#000000;">${t.subject}</div>
-            <div style="font-size:11pt; color:var(--text-muted); font-weight:800;">${t.date} | ${t.time ? t.time + ' hrs' : 'Por definir'} • ${t.sender || 'General'}</div>
+            <div style="font-weight:900; font-size:12pt; color:#FFFFFF;">${t.subject}</div>
+            <div style="font-size:10pt; color:var(--text-muted); font-weight:700;">${t.date} | ${t.time ? t.time + ' hrs' : 'Por definir'} • ${t.sender || 'General'}</div>
           </div>
-          <span style="font-size:14pt;">${t.status === 'managed' ? '✅' : '⏳'}</span>
+          <span style="font-size:13pt;">${t.status === 'managed' ? '✅' : '⏳'}</span>
         </div>
       `).join("");
     }
@@ -1891,8 +1928,8 @@
 
       if (!lista.length) {
         const p = document.createElement('p');
-        p.style.fontWeight = '900';
-        p.style.fontSize = '13pt';
+        p.style.fontWeight = '800';
+        p.style.fontSize = '12pt';
         p.textContent = 'No se detectaron tareas o compromisos accionables.';
         div.appendChild(p);
       }
@@ -1914,8 +1951,8 @@
         header.style.alignItems = 'center';
 
         const titulo = document.createElement('strong');
-        titulo.style.fontSize = '14pt';
-        titulo.style.color = '#1E3A8A';
+        titulo.style.fontSize = '13pt';
+        titulo.style.color = '#38BDF8';
         titulo.textContent = '📌 Propuesta ' + (idx + 1);
         header.appendChild(titulo);
 
@@ -1923,8 +1960,8 @@
         remove.type = 'button';
         remove.className = 'btn-action-side';
         remove.style.width = 'auto';
-        remove.style.minHeight = '36px !important';
-        remove.style.color = '#B91C1C !important';
+        remove.style.minHeight = '34px !important';
+        remove.style.color = '#FF4D6D !important';
         remove.style.borderColor = '#FF003C !important';
         remove.textContent = '✕ Descartar';
         remove.onclick = () => eliminarPropuestaIA(idx);
@@ -1987,13 +2024,13 @@
 
         if (ev.pendientes) {
           const p = document.createElement('div');
-          p.style.fontSize = '12pt';
-          p.style.fontWeight = '900';
-          p.style.color = '#9A3412';
-          p.style.background = '#FFEDD5';
-          p.style.padding = '10px 14px';
+          p.style.fontSize = '11pt';
+          p.style.fontWeight = '800';
+          p.style.color = '#FED7AA';
+          p.style.background = 'rgba(194, 65, 12, 0.25)';
+          p.style.padding = '8px 12px';
           p.style.borderRadius = '8px';
-          p.style.border = '2px solid #FB923C';
+          p.style.border = '1.5px solid #FB923C';
           p.textContent = '⚠️ Nota IA: ' + ev.pendientes;
           card.appendChild(p);
         }
