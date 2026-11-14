@@ -45,7 +45,6 @@
       padding: 0; 
       font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif; 
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
     }
 
     ::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -415,7 +414,7 @@
     </div>
 
     <div class="time-module">
-      <span class="date-display-text" id="full-date-subtitle">Hoy</span>
+      <span class="date-display-text" id="full-date-subtitle">Sábado, 14 de noviembre de 2026</span>
       <div class="flip-clock-container">
         <div class="flip-card" id="fc-hour">00</div>
         <div class="flip-colon">:</div>
@@ -428,7 +427,14 @@
 
   <div class="main-workspace">
     <main id="plannerSection">
-      <div class="week-container" id="daysGrid"></div>
+      <!-- 5 COLUMNAS PRE-DIBUJADAS EN HTML PARA QUE NUNCA QUEDE EN BLANCO -->
+      <div class="week-container" id="daysGrid">
+        <div class="day-column"><div class="day-header"><span class="day-name">Lunes</span></div><div class="cards-container"><span class="empty-text">Cargando...</span></div></div>
+        <div class="day-column"><div class="day-header"><span class="day-name">Martes</span></div><div class="cards-container"><span class="empty-text">Cargando...</span></div></div>
+        <div class="day-column"><div class="day-header"><span class="day-name">Miércoles</span></div><div class="cards-container"><span class="empty-text">Cargando...</span></div></div>
+        <div class="day-column"><div class="day-header"><span class="day-name">Jueves</span></div><div class="cards-container"><span class="empty-text">Cargando...</span></div></div>
+        <div class="day-column"><div class="day-header"><span class="day-name">Viernes</span></div><div class="cards-container"><span class="empty-text">Cargando...</span></div></div>
+      </div>
     </main>
 
     <aside class="sidebar-actions">
@@ -636,7 +642,7 @@
     </div>
   </div>
 
-  <!-- Modal IA (Motor Híbrido Groq + Gemini) -->
+  <!-- Modal IA -->
   <div class="modal-overlay" id="modalIAOverlay">
     <div class="modal-assistant" id="modalIABox" style="width:780px; min-width:480px; height:85vh;">
       <div class="modal-draggable-header" id="dragHeaderIA">
@@ -670,10 +676,10 @@
     </div>
   </div>
 
+  <!-- SCRIPT 1: NÚCLEO DEL CALENDARIO, RELOJ Y SINCRONIZACIÓN -->
   <script>
     const PROTO = "https" + "://";
     const API_URL = PROTO + ["script", "google", "com"].join(".") + "/macros/s/AKfycbwjaCpLKeet-WXteRLicuov7oEaxuhRBHAvczJA_wS-9pFQa890_n7VAJm7fHHHwak/exec";
-
     const CLAVE_ADMIN = "25078";
     let esModoAdmin = false;
 
@@ -696,25 +702,16 @@
       if (!texto) return "";
       let s = String(texto).trim();
       if (!s) return "";
-
       const soloLetras = s.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ]/g, "");
       if (soloLetras.length > 2) {
         const cantMayus = soloLetras.replace(/[^A-ZÁÉÍÓÚÑÜ]/g, "").length;
-        if (cantMayus / soloLetras.length > 0.5) {
-          s = s.toLowerCase();
-        }
+        if (cantMayus / soloLetras.length > 0.5) s = s.toLowerCase();
       }
-
       s = s.charAt(0).toUpperCase() + s.slice(1);
-
       return s.split(" ").map((palabra, index) => {
         const limpia = palabra.replace(/[.,:;()!?]/g, "").toLowerCase();
-        if (MAPA_SIGLAS[limpia]) {
-          return MAPA_SIGLAS[limpia];
-        }
-        if (index === 0 && palabra.length > 0) {
-          return palabra.charAt(0).toUpperCase() + palabra.slice(1);
-        }
+        if (MAPA_SIGLAS[limpia]) return MAPA_SIGLAS[limpia];
+        if (index === 0 && palabra.length > 0) return palabra.charAt(0).toUpperCase() + palabra.slice(1);
         return palabra;
       }).join(" ");
     }
@@ -738,49 +735,8 @@
         if (Array.isArray(parsed) && parsed.length > 0) tasks = parsed;
       }
       const eliminadosGuardados = localStorage.getItem("agenda_carlos_condell_eliminados");
-      if (eliminadosGuardados) {
-        eventosEliminados = JSON.parse(eliminadosGuardados);
-      }
+      if (eliminadosGuardados) eventosEliminados = JSON.parse(eliminadosGuardados);
     } catch (e) {}
-
-    function actualizarModoUI() {
-      const badge = document.getElementById("modeBadge");
-      const footerActions = document.getElementById("detailActionFooter");
-      if (!badge) return;
-
-      if (esModoAdmin) {
-        badge.textContent = "🔓 Modo edición";
-        badge.className = "mode-badge-side admin";
-        badge.title = "Haz clic para volver a modo Solo lectura";
-      } else {
-        badge.textContent = "🔒 Solo lectura";
-        badge.className = "mode-badge-side readonly";
-        badge.title = "Haz clic para ingresar clave directiva y editar";
-      }
-      if (footerActions) footerActions.style.display = "flex";
-    }
-
-    function solicitarClaveAdminSiEsNecesario() {
-      if (esModoAdmin) return true;
-      const pass = prompt("Acción protegida. Ingresa la clave directiva para editar:");
-      if (pass === CLAVE_ADMIN) {
-        esModoAdmin = true;
-        actualizarModoUI();
-        return true;
-      } else if (pass !== null) {
-        alert("Clave incorrecta. Permaneces en modo Solo lectura.");
-      }
-      return false;
-    }
-
-    function alternarModoEdicion() {
-      if (esModoAdmin) {
-        esModoAdmin = false;
-        actualizarModoUI();
-      } else {
-        solicitarClaveAdminSiEsNecesario();
-      }
-    }
 
     function formatDateKey(d) {
       return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, '0') + "-" + String(d.getDate()).padStart(2, '0');
@@ -790,54 +746,6 @@
       const diasSemana = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
       const meses = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
       return `${diasSemana[d.getDay()]}, ${d.getDate()} de ${meses[d.getMonth()]} de ${d.getFullYear()}`;
-    }
-
-    function parsearFecha(str) {
-      if (!str) return null;
-      if (str instanceof Date) return formatDateKey(str);
-      str = String(str).trim();
-
-      var mIso = str.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/);
-      if (mIso) return mIso[1] + "-" + mIso[2].padStart(2, '0') + "-" + mIso[3].padStart(2, '0');
-
-      var mSlash = str.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/);
-      if (mSlash) {
-        var anio = (parseInt(mSlash[3]) < 2026) ? "2026" : mSlash[3];
-        return anio + "-" + mSlash[2].padStart(2, '0') + "-" + mSlash[1].padStart(2, '0');
-      }
-
-      var meses = { ene:'01', feb:'02', mar:'03', abr:'04', may:'05', jun:'06', jul:'07', ago:'08', sep:'09', oct:'10', nov:'11', dic:'12', enero:'01', febrero:'02', marzo:'03', abril:'04', mayo:'05', junio:'06', julio:'07', agosto:'08', septiembre:'09', octubre:'10', noviembre:'11', diciembre:'12' };
-      var mTexto = str.match(/(\d{1,2})\s+de\s+([a-zA-Z]+)(?:\s+de)?\s+(\d{4})/i);
-      if (mTexto) {
-        var dia = mTexto[1].padStart(2, '0');
-        var mesNum = meses[mTexto[2].toLowerCase()] || meses[mTexto[2].toLowerCase().substring(0, 3)];
-        var anioT = (parseInt(mTexto[3]) < 2026) ? "2026" : mTexto[3];
-        if (mesNum) return anioT + "-" + mesNum + "-" + dia;
-      }
-      return null;
-    }
-
-    function extraerHora(textoCompleto) {
-      if (!textoCompleto) return { horaStr: "", minutos: 9999, tieneHora: false };
-      if (textoCompleto instanceof Date) {
-        var h = textoCompleto.getHours();
-        var m = textoCompleto.getMinutes();
-        if (h === 0 && m === 0) return { horaStr: "", minutos: 9999, tieneHora: false };
-        return { horaStr: String(h).padStart(2, '0') + ":" + String(m).padStart(2, '0'), minutos: h * 60 + m, tieneHora: true };
-      }
-      var str = String(textoCompleto);
-      var match = str.match(/\b([01]?\d|2[0-3]):([0-5]\d)\b/);
-      if (match) {
-        var hh = parseInt(match[1]);
-        var mm = parseInt(match[2]);
-        if (hh === 0 && mm === 0) return { horaStr: "", minutos: 9999, tieneHora: false };
-        return { horaStr: String(hh).padStart(2, '0') + ":" + String(mm).padStart(2, '0'), minutos: hh * 60 + mm, tieneHora: true };
-      }
-      return { horaStr: "", minutos: 9999, tieneHora: false };
-    }
-
-    function normalizarTexto(txt) {
-      return (txt || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
     }
 
     function getMonday(d) {
@@ -851,26 +759,18 @@
     const dayNames = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"];
     const monthNames = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
 
-    function esEventoPersonal(row) {
-      const texto = `${row.asunto || row[4] || ''} ${row.remitente || row[5] || ''} ${row.sintesis || row[6] || ''}`.toLowerCase();
-      const palabrasPersonales = ["veterinario", "mascota", "ramon", "ramona", "jackson", "compra personal", "medico personal", "dentista", "casa", "familia"];
-      return palabrasPersonales.some(p => texto.includes(p));
-    }
-
-    function obtenerFechasRango(fechaInicioStr, fechaFinStr) {
-      const lista = [];
-      if (!fechaInicioStr) return lista;
-      if (!fechaFinStr || fechaFinStr < fechaInicioStr) {
-        lista.push(fechaInicioStr);
-        return lista;
+    function actualizarModoUI() {
+      const badge = document.getElementById("modeBadge");
+      const footerActions = document.getElementById("detailActionFooter");
+      if (!badge) return;
+      if (esModoAdmin) {
+        badge.textContent = "🔓 Modo edición";
+        badge.className = "mode-badge-side admin";
+      } else {
+        badge.textContent = "🔒 Solo lectura";
+        badge.className = "mode-badge-side readonly";
       }
-      let curr = new Date(fechaInicioStr + "T00:00:00");
-      const fin = new Date(fechaFinStr + "T00:00:00");
-      while (curr <= fin) {
-        lista.push(formatDateKey(curr));
-        curr.setDate(curr.getDate() + 1);
-      }
-      return lista;
+      if (footerActions) footerActions.style.display = "flex";
     }
 
     function renderCalendar() {
@@ -961,7 +861,6 @@
       if(document.getElementById("fc-second")) document.getElementById("fc-second").textContent = String(now.getSeconds()).padStart(2, '0');
     }
 
-    // Inicializar reloj y calendario de inmediato
     setInterval(updateLiveClock, 1000);
     updateLiveClock();
     if (lblSub) lblSub.textContent = formatFechaCompleta(new Date());
@@ -969,6 +868,79 @@
     document.getElementById("btnPrev").onclick = () => { currentMonday.setDate(currentMonday.getDate() - 7); renderCalendar(); };
     document.getElementById("btnNext").onclick = () => { currentMonday.setDate(currentMonday.getDate() + 7); renderCalendar(); };
     renderCalendar();
+  </script>
+
+  <!-- SCRIPT 2: GESTIÓN DE EVENTOS, SINCRONIZACIÓN Y ASISTENTE AIA -->
+  <script>
+    function normalizarTexto(txt) {
+      return (txt || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+    }
+
+    function parsearFecha(str) {
+      if (!str) return null;
+      if (str instanceof Date) return formatDateKey(str);
+      str = String(str).trim();
+
+      var mIso = str.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/);
+      if (mIso) return mIso[1] + "-" + mIso[2].padStart(2, '0') + "-" + mIso[3].padStart(2, '0');
+
+      var mSlash = str.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/);
+      if (mSlash) {
+        var anio = (parseInt(mSlash[3]) < 2026) ? "2026" : mSlash[3];
+        return anio + "-" + mSlash[2].padStart(2, '0') + "-" + mSlash[1].padStart(2, '0');
+      }
+
+      var meses = { ene:'01', feb:'02', mar:'03', abr:'04', may:'05', jun:'06', jul:'07', ago:'08', sep:'09', oct:'10', nov:'11', dic:'12', enero:'01', febrero:'02', marzo:'03', abril:'04', mayo:'05', junio:'06', julio:'07', agosto:'08', septiembre:'09', octubre:'10', noviembre:'11', diciembre:'12' };
+      var mTexto = str.match(/(\d{1,2})\s+de\s+([a-zA-Z]+)(?:\s+de)?\s+(\d{4})/i);
+      if (mTexto) {
+        var dia = mTexto[1].padStart(2, '0');
+        var mesNum = meses[mTexto[2].toLowerCase()] || meses[mTexto[2].toLowerCase().substring(0, 3)];
+        var anioT = (parseInt(mTexto[3]) < 2026) ? "2026" : mTexto[3];
+        if (mesNum) return anioT + "-" + mesNum + "-" + dia;
+      }
+      return null;
+    }
+
+    function extraerHora(textoCompleto) {
+      if (!textoCompleto) return { horaStr: "", minutos: 9999, tieneHora: false };
+      if (textoCompleto instanceof Date) {
+        var h = textoCompleto.getHours();
+        var m = textoCompleto.getMinutes();
+        if (h === 0 && m === 0) return { horaStr: "", minutos: 9999, tieneHora: false };
+        return { horaStr: String(h).padStart(2, '0') + ":" + String(m).padStart(2, '0'), minutos: h * 60 + m, tieneHora: true };
+      }
+      var str = String(textoCompleto);
+      var match = str.match(/\b([01]?\d|2[0-3]):([0-5]\d)\b/);
+      if (match) {
+        var hh = parseInt(match[1]);
+        var mm = parseInt(match[2]);
+        if (hh === 0 && mm === 0) return { horaStr: "", minutos: 9999, tieneHora: false };
+        return { horaStr: String(hh).padStart(2, '0') + ":" + String(mm).padStart(2, '0'), minutos: hh * 60 + mm, tieneHora: true };
+      }
+      return { horaStr: "", minutos: 9999, tieneHora: false };
+    }
+
+    function obtenerFechasRango(fechaInicioStr, fechaFinStr) {
+      const lista = [];
+      if (!fechaInicioStr) return lista;
+      if (!fechaFinStr || fechaFinStr < fechaInicioStr) {
+        lista.push(fechaInicioStr);
+        return lista;
+      }
+      let curr = new Date(fechaInicioStr + "T00:00:00");
+      const fin = new Date(fechaFinStr + "T00:00:00");
+      while (curr <= fin) {
+        lista.push(formatDateKey(curr));
+        curr.setDate(curr.getDate() + 1);
+      }
+      return lista;
+    }
+
+    function esEventoPersonal(row) {
+      const texto = `${row.asunto || row[4] || ''} ${row.remitente || row[5] || ''} ${row.sintesis || row[6] || ''}`.toLowerCase();
+      const palabrasPersonales = ["veterinario", "mascota", "ramon", "ramona", "jackson", "compra personal", "medico personal", "dentista", "casa", "familia"];
+      return palabrasPersonales.some(p => texto.includes(p));
+    }
 
     async function sincronizarDesdeSheets() {
       const btn = document.getElementById("btnSync");
@@ -1077,11 +1049,32 @@
         console.warn("Aviso sync:", err);
       } finally {
         if (btn) btn.innerHTML = "<span class='btn-icon-lg'>🔄</span> Sincronizar";
-        if (lblSub) lblSub.textContent = formatFechaCompleta(new Date());
       }
     }
 
     sincronizarDesdeSheets();
+
+    function solicitarClaveAdminSiEsNecesario() {
+      if (esModoAdmin) return true;
+      const pass = prompt("Acción protegida. Ingresa la clave directiva para editar:");
+      if (pass === CLAVE_ADMIN) {
+        esModoAdmin = true;
+        actualizarModoUI();
+        return true;
+      } else if (pass !== null) {
+        alert("Clave incorrecta. Permaneces en modo Solo lectura.");
+      }
+      return false;
+    }
+
+    function alternarModoEdicion() {
+      if (esModoAdmin) {
+        esModoAdmin = false;
+        actualizarModoUI();
+      } else {
+        solicitarClaveAdminSiEsNecesario();
+      }
+    }
 
     function selectPriority(prio) {
       selectedPriority = prio;
