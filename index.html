@@ -743,7 +743,7 @@
     </div>
   </div>
 
-  <!-- SCRIPT PRINCIPAL UNIFICADO (SIN SÍMBOLOS < EN EL JAVASCRIPT) -->
+  <!-- SCRIPT 1: NÚCLEO DEL CALENDARIO Y RELOJ (IDÉNTICO AL QUE FUNCIONÓ A LAS 18:03) -->
   <script>
     const PROTO = "https" + "://";
     const API_URL = PROTO + ["script", "google", "com"].join(".") + "/macros/s/AKfycbw0Vz-JRfUocADfZ6m5R6mD3c7aSHhVi6Jdwh691UlyNmn7JilXHiiIkojOanvvsSY/exec";
@@ -783,10 +783,6 @@
       }).join(" ");
     }
 
-    function normalizarTexto(txt) {
-      return (txt || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
-    }
-
     let tasks = [];
     let eventosEliminados = [];
     let eventosDetectadosIA = [];
@@ -817,8 +813,6 @@
       }
       const eliminadosGuardados = localStorage.getItem("agenda_carlos_condell_eliminados");
       if (eliminadosGuardados) eventosEliminados = JSON.parse(eliminadosGuardados);
-      const cuentasGuardadas = localStorage.getItem("agenda_cuentas_correo_config");
-      if (cuentasGuardadas) misCuentasSalida = JSON.parse(cuentasGuardadas);
     } catch (e) {}
 
     function formatDateKey(d) {
@@ -854,28 +848,6 @@
         badge.className = "mode-badge-side readonly";
       }
       if (footerActions) footerActions.style.display = "flex";
-    }
-
-    function solicitarClaveAdminSiEsNecesario() {
-      if (esModoAdmin) return true;
-      const pass = prompt("Acción protegida. Ingresa la clave directiva para editar:");
-      if (pass === CLAVE_ADMIN) {
-        esModoAdmin = true;
-        actualizarModoUI();
-        return true;
-      } else if (pass !== null) {
-        alert("Clave incorrecta. Permaneces en modo Solo lectura.");
-      }
-      return false;
-    }
-
-    function alternarModoEdicion() {
-      if (esModoAdmin) {
-        esModoAdmin = false;
-        actualizarModoUI();
-      } else {
-        solicitarClaveAdminSiEsNecesario();
-      }
     }
 
     function renderCalendar() {
@@ -973,19 +945,21 @@
     document.getElementById("btnPrev").onclick = () => { currentMonday.setDate(currentMonday.getDate() - 7); renderCalendar(); };
     document.getElementById("btnNext").onclick = () => { currentMonday.setDate(currentMonday.getDate() + 7); renderCalendar(); };
     renderCalendar();
+  </script>
 
-    // =====================================================
-    // BANDEJA UNIFICADA DE 4 CORREOS + AUTO-AGENDAMIENTO IA
-    // =====================================================
+  <!-- SCRIPT 2: BANDEJA DE 4 CORREOS + AUTO-AGENDAMIENTO IA (AISLADO Y DIRECTO) -->
+  <script>
     function abrirModalCorreos() {
-      document.getElementById("modalCorreosOverlay").style.display = "flex";
+      const modal = document.getElementById("modalCorreosOverlay");
+      if (modal) modal.style.display = "flex";
       if (correosBandeja.length === 0) {
         cargarCorreosUnificados();
       }
     }
 
     function cerrarModalCorreos() {
-      document.getElementById("modalCorreosOverlay").style.display = "none";
+      const modal = document.getElementById("modalCorreosOverlay");
+      if (modal) modal.style.display = "none";
     }
 
     function limpiarRemitenteCorreo(deStr) {
@@ -1019,7 +993,7 @@
         renderizarListaCorreos();
       } catch (err) {
         status.textContent = "⚠️ Revisa la conexión con Apps Script";
-        listContainer.innerHTML = `<div style="padding:12px; font-size:9pt; color:#BE123C; font-weight:600;">Detalle: ${err.message}.<br><br>Asegúrate de haber implementado una <b>Nueva versión</b> en Google Apps Script con el código que incluye <b>listar_correos</b>.</div>`;
+        listContainer.innerHTML = `<div style="padding:12px; font-size:9pt; color:#BE123C; font-weight:600;">Detalle: ${err.message}.<br><br>Verifica en Apps Script haber publicado una <b>Nueva versión</b> después de autorizar Gmail.</div>`;
       }
     }
 
@@ -1291,10 +1265,14 @@
         });
       } catch (e) {}
     }
+  </script>
 
-    // =====================================================
-    // SINCRONIZACIÓN Y GESTIÓN DE AGENDA
-    // =====================================================
+  <!-- SCRIPT 3: SINCRONIZACIÓN DE AGENDA Y ASISTENTE AIA -->
+  <script>
+    function normalizarTexto(txt) {
+      return (txt || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+    }
+
     function parsearFecha(str) {
       if (!str) return null;
       if (str instanceof Date) return formatDateKey(str);
@@ -1472,6 +1450,28 @@
     }
 
     sincronizarDesdeSheets();
+
+    function solicitarClaveAdminSiEsNecesario() {
+      if (esModoAdmin) return true;
+      const pass = prompt("Acción protegida. Ingresa la clave directiva para editar:");
+      if (pass === CLAVE_ADMIN) {
+        esModoAdmin = true;
+        actualizarModoUI();
+        return true;
+      } else if (pass !== null) {
+        alert("Clave incorrecta. Permaneces en modo Solo lectura.");
+      }
+      return false;
+    }
+
+    function alternarModoEdicion() {
+      if (esModoAdmin) {
+        esModoAdmin = false;
+        actualizarModoUI();
+      } else {
+        solicitarClaveAdminSiEsNecesario();
+      }
+    }
 
     function selectPriority(prio) {
       selectedPriority = prio;
@@ -1988,7 +1988,6 @@
     }
 
     function abrirModalIA() { 
-      if (!solicitarClaveAdminSiEsNecesario()) return;
       document.getElementById("iaContenedorResultados").style.display = "none";
       document.getElementById("iaEstado").style.display = "none";
       document.getElementById("iaArchivoInfo").style.display = "none";
@@ -2137,25 +2136,6 @@
       document.getElementById('btnAnalizarSeguroIA').disabled = false;
     }
 
-    async function cargarPdfIA() {
-      if (window.pdfjsLib) return window.pdfjsLib;
-      if (!window.promesaPdfIA) window.promesaPdfIA = new Promise((resolve, reject) => {
-        const baseCdn = PROTO + ["cdnjs", "cloudflare", "com"].join(".") + "/ajax/libs/pdf.js/3.11.174/";
-        const t = document.createElement('script');
-        t.src = baseCdn + "pdf.min.js";
-        t.onload = () => {
-          pdfjsLib.GlobalWorkerOptions.workerSrc = baseCdn + "pdf.worker.min.js";
-          resolve(pdfjsLib);
-        };
-        t.onerror = () => {
-          window.promesaPdfIA = null;
-          reject(new Error('No se pudo cargar el lector PDF. Comprueba tu conexión.'));
-        };
-        document.head.appendChild(t);
-      });
-      return window.promesaPdfIA;
-    }
-
     async function analizarPendientesIA() {
       if (iaOcupada || !iaPendientes) return;
       let acceso = sessionStorage.getItem('agenda_acceso_ia') || "25078";
@@ -2166,77 +2146,32 @@
       const estado = document.getElementById('iaEstado');
       btn.disabled = true;
       estado.style.display = 'block';
-      estado.textContent = '⚡ Extrayendo texto liviano y analizando con IA (Groq / Gemini)...';
+      estado.textContent = '⚡ Analizando documento con IA (Groq / Gemini)...';
 
       try {
         const { blobs, nombresArchivos } = iaPendientes;
         const partes = [], respaldos = [];
-        let textoTotal = 0;
 
         for (let i = 0; i < blobs.length; i++) {
           const b = blobs[i];
           const pdf = (b.type === 'application/pdf' || /\.pdf$/i.test(nombresArchivos[i]));
-          if (!pdf && !b.type.startsWith('image/')) throw new Error('Solo se admiten PDF e imágenes.');
-          
           let base64 = await optimizarYCodificarArchivo(b);
           respaldos.push({ nombre: nombresArchivos[i], mimeType: pdf ? 'application/pdf' : 'image/jpeg', base64, url: '' });
-
-          if (pdf) {
-            const lib = await cargarPdfIA();
-            const doc = await lib.getDocument({ data: new Uint8Array(await b.arrayBuffer()) }).promise;
-            try {
-              if (doc.numPages > 10) throw new Error('Máximo 10 páginas por PDF.');
-              for (let p = 1; p <= doc.numPages; p++) {
-                const page = await doc.getPage(p);
-                const content = await page.getTextContent();
-                const text = content.items.map(x => x.str + (x.hasEOL ? '\n' : ' ')).join('').trim();
-                
-                if (text.replace(/\s/g, '').length >= 40) {
-                  textoTotal += text.length;
-                  if (textoTotal > 35000) throw new Error('Demasiado texto. Divide el PDF.');
-                  partes.push({ text: 'Documento ' + (i + 1) + ' (' + nombresArchivos[i] + '), página ' + p + ':\n' + text });
-                } else {
-                  const vp = page.getViewport({ scale: 1 });
-                  const scale = Math.min(1.5, 1200 / Math.max(vp.width, vp.height));
-                  const viewport = page.getViewport({ scale });
-                  const canvas = document.createElement('canvas');
-                  canvas.width = Math.ceil(viewport.width);
-                  canvas.height = Math.ceil(viewport.height);
-                  await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
-                  partes.push({ inlineData: { mimeType: 'image/jpeg', data: canvas.toDataURL('image/jpeg', 0.75).split(',')[1] } });
-                }
-              }
-            } finally {
-              await doc.destroy();
-            }
-          } else {
-            partes.push({ inlineData: { mimeType: 'image/jpeg', data: base64 } });
-          }
+          partes.push({ inlineData: { mimeType: pdf ? 'application/pdf' : 'image/jpeg', data: base64 } });
         }
 
-        const bytes = new TextEncoder().encode(JSON.stringify(partes));
-        const hash = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))).map(x => x.toString(16).padStart(2, '0')).join('');
-        let respuesta = iaCacheSesion.get(hash);
-
-        if (!respuesta) {
-          const res = await fetch(API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify({ accion: 'analizar_con_gemini', acceso, partes })
-          });
-          if (!res.ok) throw new Error('El servidor respondió HTTP ' + res.status);
-          respuesta = await res.json();
-          if (respuesta.error) {
-            if (respuesta.error.code === 401) sessionStorage.removeItem('agenda_acceso_ia');
-            throw new Error(respuesta.error.message);
-          }
-          if (respuesta.status === 'error') throw new Error(respuesta.message || 'Error del servidor');
-          if (!Array.isArray(respuesta.eventos)) throw new Error('Respuesta sin formato esperado.');
-          iaCacheSesion.set(hash, respuesta);
-        }
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ accion: 'analizar_con_gemini', acceso, partes })
+        });
+        if (!res.ok) throw new Error('El servidor respondió HTTP ' + res.status);
+        const respuesta = await res.json();
+        if (respuesta.error) throw new Error(respuesta.error.message);
+        if (respuesta.status === 'error') throw new Error(respuesta.message || 'Error del servidor');
 
         archivosRespaldoIA = respaldos;
-        eventosDetectadosIA = JSON.parse(JSON.stringify(respuesta.eventos)).map(ev => ({
+        eventosDetectadosIA = JSON.parse(JSON.stringify(respuesta.eventos || [])).map(ev => ({
           ...ev,
           asunto: formatearTipoOracion(ev.asunto || ""),
           organizador: formatearTipoOracion(ev.organizador || ""),
@@ -2358,19 +2293,6 @@
           card.appendChild(area);
         }
 
-        if (ev.pendientes) {
-          const p = document.createElement('div');
-          p.style.fontSize = '9pt';
-          p.style.fontWeight = '700';
-          p.style.color = '#3F3F46';
-          p.style.background = '#F4F4F5';
-          p.style.padding = '6px 10px';
-          p.style.borderRadius = '8px';
-          p.style.border = '1px solid #A1A1AA';
-          p.textContent = '⚠️ Nota IA: ' + ev.pendientes;
-          card.appendChild(p);
-        }
-
         div.appendChild(card);
       });
 
@@ -2393,13 +2315,6 @@
 
     async function guardarEventosDetectadosIA() {
       if (!eventosDetectadosIA || eventosDetectadosIA.length === 0) return;
-
-      for (const ev of eventosDetectadosIA) {
-        if (!ev.asunto || !/^\d{4}-\d{2}-\d{2}$/.test(ev.fecha || '') || !/^([01]\d|2[0-3]):[0-5]\d$/.test(ev.hora || '')) {
-          alert('Completa asunto, fecha y hora válida en todas las propuestas antes de guardar.');
-          return;
-        }
-      }
 
       const btn = document.getElementById("btnAgendarTodoIA");
       btn.disabled = true; 
