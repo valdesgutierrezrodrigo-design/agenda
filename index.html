@@ -410,7 +410,7 @@
       gap: 6px;
     }
 
-    /* ESTILOS DE LA BANDEJA UNIFICADA (3 COLUMNAS EN PARALELO: LISTA | AGENDAMIENTO + RESPUESTA | MENSAJE ORIGINAL) */
+    /* ESTILOS DE LA BANDEJA UNIFICADA */
     .mail-workspace { display: grid; grid-template-columns: 310px 1fr; gap: 12px; flex: 1; min-height: 0; overflow: hidden; }
     .mail-list-col { border: 1.5px solid #D4D4D8; border-radius: 10px; background: #F4F4F5; overflow-y: auto; padding: 6px; display: flex; flex-direction: column; gap: 6px; }
     .mail-card-item {
@@ -520,7 +520,7 @@
     </aside>
   </div>
 
-  <!-- MODAL: BANDEJA UNIFICADA (SIN PESTAÑAS INNECESARIAS + MENSAJE ORIGINAL AL LADO + RESPALDO AUTOMÁTICO) -->
+  <!-- MODAL: BANDEJA UNIFICADA -->
   <div class="modal-overlay" id="modalCorreosOverlay">
     <div class="modal-assistant" style="width:1180px; max-width:98vw; height:91vh; padding:16px;">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-shrink:0; gap:10px; border-bottom:1px solid #E4E4E7; padding-bottom:8px;">
@@ -536,12 +536,10 @@
       </div>
 
       <div class="mail-workspace">
-        <!-- Columna izquierda: Bandeja principal unificada -->
         <div class="mail-list-col" id="mailListContainer">
           <span class="empty-text">Cargando bandeja principal...</span>
         </div>
 
-        <!-- Columna derecha: Dividida en 2 (Izquierda: IA + Responder | Derecha: Correo Original al lado) -->
         <div class="mail-detail-col" id="mailDetailContainer">
           <span class="empty-text" style="margin-top:80px;">👈 Haz clic en cualquier correo de la lista.<br><br>A la izquierda verás el <b>Posible agendamiento IA</b> y al lado derecho el <b>Mensaje original completo</b>.<br>Al aceptar el agendamiento, el correo original se guardará automáticamente como respaldo 📎.</span>
         </div>
@@ -757,6 +755,10 @@
       "pei": "PEI", "demre": "DEMRE", "sige": "SIGE", "cra": "CRA", "atp": "ATP"
     };
 
+    function normalizarTexto(txt) {
+      return String(txt || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+    }
+
     function formatearTipoOracion(texto) {
       if (!texto) return "";
       let s = String(texto).trim();
@@ -939,7 +941,7 @@
     renderCalendar();
   </script>
 
-  <!-- SCRIPT 2: BANDEJA UNIFICADA (ETIQUETA REAL + MENSAJE ORIGINAL AL LADO + RESPALDO AUTOMÁTICO) -->
+  <!-- SCRIPT 2: BANDEJA UNIFICADA (AUTÓNOMO Y CON RESPALDO AUTOMÁTICO) -->
   <script>
     function abrirModalCorreos() {
       const modal = document.getElementById("modalCorreosOverlay");
@@ -1010,11 +1012,11 @@
         status.textContent = `✅ ${correosBandeja.length} correos en bandeja`;
         renderizarListaCorreos();
 
-        if (correosBandeja.length > 0 && indiceCorreoActual === -1) {
+        if (correosBandeja.length > 0) {
           seleccionarCorreoPorIndice(0);
         }
       } catch (err) {
-        status.textContent = "⚠️ Error de conexión";
+        status.textContent = "⚠️ Aviso";
         listContainer.innerHTML = `<div style="padding:12px; font-size:9pt; color:#BE123C; font-weight:600;">Detalle: ${err.message}</div>`;
       }
     }
@@ -1022,14 +1024,14 @@
     function renderizarListaCorreos() {
       const listContainer = document.getElementById("mailListContainer");
       const filtroInput = document.getElementById("mailQuickFilter");
-      const q = filtroInput ? normalizarTexto(filtroInput.value) : "";
+      const q = filtroInput ? String(filtroInput.value || "").toLowerCase().trim() : "";
 
       const indicesValidos = [];
       correosBandeja.forEach((c, idx) => {
         if (!q) {
           indicesValidos.push(idx);
         } else {
-          const textoBusqueda = normalizarTexto(`${c.asunto} ${c.de} ${c.para} ${c.resumen} ${obtenerEtiquetaCorreoReal(c)}`);
+          const textoBusqueda = `${c.asunto || ""} ${c.de || ""} ${c.para || ""} ${c.resumen || ""} ${obtenerEtiquetaCorreoReal(c)}`.toLowerCase();
           if (textoBusqueda.includes(q)) indicesValidos.push(idx);
         }
       });
@@ -1078,7 +1080,6 @@
           <button type="button" class="btn-action-side" style="width:auto; min-height:30px !important; font-size:8pt !important; flex-shrink:0;" onclick="archivarCorreoActual('${c.threadId}')">✓ Archivar correo</button>
         </div>
 
-        <!-- VISTA EN PARALELO: IZQUIERDA (AGENDAMIENTO IA + RESPUESTA) | DERECHA (CORREO ORIGINAL AL LADO) -->
         <div class="mail-split-view">
           <div class="mail-action-pane">
             <div class="mail-ia-box" id="mailPropuestaBox">
@@ -1120,7 +1121,6 @@
             </div>
           </div>
 
-          <!-- COLUMNA DERECHA AL LADO: MENSAJE ORIGINAL COMPLETO -->
           <div class="mail-original-pane">
             <div style="display:flex; justify-content:space-between; align-items:center;">
               <span style="font-size:8.5pt; font-weight:800; color:#18181B;">📄 Mensaje original completo</span>
@@ -1183,7 +1183,6 @@
       const prio = document.getElementById("mIaPrio").value || "Media";
       const accion = formatearTipoOracion(document.getElementById("mIaAccion").value.trim());
 
-      // Construir documento del Correo Original para dejarlo como Respaldo adjunto
       const contenidoCorreoOriginal = [
         "==========================================================",
         "RESPALDO OFICIAL DE CORREO ELECTRÓNICO - AGENDA CARLOS CONDELL",
@@ -1326,10 +1325,6 @@
 
   <!-- SCRIPT 3: SINCRONIZACIÓN DE AGENDA Y ASISTENTE AIA -->
   <script>
-    function normalizarTexto(txt) {
-      return (txt || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
-    }
-
     function parsearFecha(str) {
       if (!str) return null;
       if (str instanceof Date) return formatDateKey(str);
