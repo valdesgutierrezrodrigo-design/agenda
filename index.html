@@ -199,14 +199,14 @@
     }
     
     .btn-quick-check {
-      width: 18px; height: 18px; border-radius: 5px; border: 1.5px solid #CBD5E1;
-      background: #FFFFFF; color: #71717A; font-weight: 800; font-size: 8pt;
+      width: 18px; height: 18px; border-radius: 5px; border: 1.5px solid #93C5FD;
+      background: #EFF6FF; color: #1D4ED8; font-weight: 700; font-size: 8pt;
       display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
       transition: all 0.15s ease; flex-shrink: 0;
       box-shadow: 0 1px 2px rgba(0,0,0,0.04);
     }
-    .btn-quick-check:hover { border-color: #18181B; color: #18181B; transform: scale(1.05); }
-    .btn-quick-check.done { background: #10B981; border-color: #059669; color: #FFFFFF; }
+    .btn-quick-check:hover { border-color: #2563EB; background: #DBEAFE; transform: scale(1.05); }
+    .btn-quick-check.done { background: #2563EB; border-color: #1D4ED8; color: #FFFFFF; }
 
     .card-title { 
       font-size: 9.5pt; font-weight: 600; color: #18181B; line-height: 1.25; 
@@ -225,102 +225,99 @@
     .sidebar-separator { border: 0; border-top: 1px solid #E4E4E7; margin: 3px 0; }
     .sidebar-section-title { font-size: 7.5pt; font-weight: 700; color: #52525B; letter-spacing: 0.2px; margin-bottom: 1px; padding-left: 2px; }
 
+    /* BOTONES EN TONOS AZULES LIMPIOS */
     .btn-action-side {
       width: 100%; min-height: 36px !important; border-radius: 10px;
       font-size: 8.8pt !important; font-weight: 600 !important; cursor: pointer;
       display: inline-flex; align-items: center; justify-content: flex-start; gap: 8px;
       padding: 4px 11px !important; transition: all 0.16s cubic-bezier(0.2, 0.8, 0.2, 1); white-space: nowrap;
-      border: 1.5px solid #CBD5E1 !important;
-      background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%) !important;
-      color: #18181B !important;
-      box-shadow: 0 2px 4px rgba(15, 23, 42, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+      border: 1.5px solid #93C5FD !important;
+      background: linear-gradient(180deg, #FFFFFF 0%, #EFF6FF 100%) !important;
+      color: #1E3A8A !important;
+      box-shadow: 0 2px 4px rgba(37, 99, 235, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
       text-decoration: none;
     }
     .btn-action-side:hover:not(:disabled) { 
-      background: #FFFFFF !important; 
-      border-color: #64748B !important; 
+      background: linear-gradient(180deg, #EFF6FF 0%, #DBEAFE 100%) !important; 
+      border-color: #3B82F6 !important; 
       transform: translateY(-1px);
-      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08), 0 0 0 2px rgba(100, 116, 139, 0.12) !important;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.14), 0 0 0 2px rgba(59, 130, 246, 0.15) !important;
     }
     .btn-action-side:active:not(:disabled) { transform: translateY(0); }
     .btn-action-side:disabled { opacity: 0.45; cursor: not-allowed; }
     .btn-icon-lg { font-size: 10.5pt; line-height: 1; }
     
+    /* BOTÓN PRINCIPAL AZUL INTENSO */
     .btn-side-nuevo { 
-      background: linear-gradient(180deg, #27272A 0%, #18181B 100%) !important; 
-      border: 1.5px solid #3F3F46 !important; 
+      background: linear-gradient(180deg, #2563EB 0%, #1D4ED8 100%) !important; 
+      border: 1.5px solid #1E40AF !important; 
       color: #FFFFFF !important; 
-      font-weight: 700 !important; 
-      box-shadow: 0 3px 8px rgba(24, 24, 27, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+      font-weight: 600 !important; 
+      box-shadow: 0 3px 8px rgba(37, 99, 235, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
     }
     .btn-side-nuevo:hover:not(:disabled) { 
-      background: linear-gradient(180deg, #3F3F46 0%, #27272A 100%) !important; 
-      border-color: #18181B !important;
-      box-shadow: 0 5px 12px rgba(24, 24, 27, 0.25), 0 0 0 2px rgba(39, 39, 42, 0.2) !important;
+      background: linear-gradient(180deg, #3B82F6 0%, #2563EB 100%) !important; 
+      border-color: #1D4ED8 !important;
+      box-shadow: 0 5px 12px rgba(37, 99, 235, 0.35), 0 0 0 2px rgba(37, 99, 235, 0.2) !important;
     }
 
     .btn-side-ia {
-      border-color: #93C5FD !important;
-      background: linear-gradient(180deg, #FFFFFF 0%, #EFF6FF 100%) !important;
-    }
-    .btn-side-ia:hover:not(:disabled) {
-      border-color: #3B82F6 !important;
-      box-shadow: 0 4px 10px rgba(59, 130, 246, 0.14), 0 0 0 2px rgba(59, 130, 246, 0.15) !important;
+      border-color: #60A5FA !important;
+      background: linear-gradient(180deg, #EFF6FF 0%, #DBEAFE 100%) !important;
+      color: #1D4ED8 !important;
     }
 
     .btn-side-mail {
-      border-color: #FCD34D !important;
-      background: linear-gradient(180deg, #FFFFFF 0%, #FEFCE8 100%) !important;
-    }
-    .btn-side-mail:hover:not(:disabled) {
-      border-color: #EAB308 !important;
-      box-shadow: 0 4px 10px rgba(234, 179, 8, 0.18), 0 0 0 2px rgba(234, 179, 8, 0.15) !important;
+      border-color: #3B82F6 !important;
+      background: linear-gradient(180deg, #DBEAFE 0%, #BFDBFE 100%) !important;
+      color: #1E3A8A !important;
     }
 
     .mode-badge-side {
       width: 100%; min-height: 36px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      border-radius: 10px; font-size: 8.8pt; font-weight: 700; 
-      border: 1.5px solid #CBD5E1;
+      border-radius: 10px; font-size: 8.8pt; font-weight: 600; 
+      border: 1.5px solid #93C5FD;
       box-shadow: 0 2px 4px rgba(15, 23, 42, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.9);
       cursor: pointer; user-select: none; transition: all 0.16s ease;
     }
     .mode-badge-side:hover {
       transform: translateY(-1px);
-      border-color: #64748B;
+      border-color: #3B82F6;
     }
     .mode-badge-side.admin { background: linear-gradient(180deg, #ECFDF5 0%, #D1FAE5 100%); color: #065F46; border-color: #34D399; }
-    .mode-badge-side.readonly { background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%); color: #3F3F46; border-color: #CBD5E1; }
+    .mode-badge-side.readonly { background: linear-gradient(180deg, #FFFFFF 0%, #EFF6FF 100%); color: #1E3A8A; border-color: #93C5FD; }
 
     .sidebar-nav-dates {
       display: flex; flex-direction: column; gap: 6px; background: #FFFFFF;
-      border: 1.5px solid #CBD5E1; padding: 7px; border-radius: 10px;
+      border: 1.5px solid #93C5FD; padding: 7px; border-radius: 10px;
       box-shadow: 0 2px 4px rgba(15, 23, 42, 0.03);
     }
-    .date-label-side { font-size: 8.5pt; font-weight: 800; color: #18181B; text-align: center; }
+    .date-label-side { font-size: 8.5pt; font-weight: 700; color: #1E3A8A; text-align: center; }
     .nav-arrow-group { display: flex; gap: 4px; justify-content: space-between; }
     .nav-arrow-group button { 
       flex: 1; min-height: 28px !important; font-size: 8pt !important; padding: 0 !important; 
       justify-content: center !important; border-radius: 7px !important;
-      background: linear-gradient(180deg, #FAFAFA 0%, #F4F4F5 100%) !important;
-      border: 1.5px solid #D4D4D8 !important;
+      background: linear-gradient(180deg, #FFFFFF 0%, #EFF6FF 100%) !important;
+      border: 1.5px solid #93C5FD !important;
+      color: #1E3A8A !important;
     }
     .nav-arrow-group button:hover {
-      border-color: #52525B !important;
-      background: #FFFFFF !important;
+      border-color: #2563EB !important;
+      background: #DBEAFE !important;
     }
 
     .search-wrapper-side { position: relative; width: 100%; }
     .search-input-side { 
-      width: 100%; height: 35px; padding: 0 10px 0 28px; font-size: 8.5pt; font-weight: 600; 
-      color: #18181B; border: 1.5px solid #CBD5E1; border-radius: 10px; outline: none; 
+      width: 100%; height: 35px; padding: 0 10px 0 28px; font-size: 8.5pt; font-weight: 500; 
+      color: #18181B; border: 1.5px solid #93C5FD; border-radius: 10px; outline: none; 
       background: #FFFFFF; transition: all 0.15s ease;
       box-shadow: inset 0 1px 2px rgba(0,0,0,0.03);
     }
-    .search-input-side:focus { border-color: #3F3F46; box-shadow: 0 0 0 3px rgba(63, 63, 70, 0.12); }
+    .search-input-side:focus { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
     .search-icon-side { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); font-size: 8.5pt; color: var(--text-muted); pointer-events: none; }
-    .search-results-side { position: absolute; bottom: calc(100% + 6px); left: 0; right: 0; background: #FFFFFF; border: 1.5px solid #71717A; border-radius: 10px; max-height: 220px; overflow-y: auto; box-shadow: 0 -8px 20px rgba(0,0,0,0.12); z-index: 50; display: none; }
+    .search-results-side { position: absolute; bottom: calc(100% + 6px); left: 0; right: 0; background: #FFFFFF; border: 1.5px solid #3B82F6; border-radius: 10px; max-height: 220px; overflow-y: auto; box-shadow: 0 -8px 20px rgba(0,0,0,0.12); z-index: 50; display: none; }
     .search-item { padding: 7px 10px; border-bottom: 1px solid #E4E4E7; cursor: pointer; display: flex; flex-direction: column; gap: 1px; }
-    .search-item:hover { background: #F4F4F5; }
+    .search-item:hover { background: #EFF6FF; }
 
     .modal-overlay { position: fixed; inset: 0; background: rgba(24, 24, 27, 0.55); display: none; align-items: center; justify-content: center; padding: 6px; z-index: 1000; backdrop-filter: blur(2px); overflow: auto; }
     
@@ -338,20 +335,20 @@
       overflow-x: auto;
     }
 
-    .modal-assistant label { font-size: 9.5pt; color: #27272A; display: block; margin-bottom: 4px; font-weight: 700; }
+    .modal-assistant label { font-size: 9.5pt; color: #27272A; display: block; margin-bottom: 4px; font-weight: 600; }
     .modal-assistant input, .modal-assistant textarea, .modal-assistant select { 
       width: 100%; background: #FAFAFA; color: #18181B; border: 1.5px solid #CBD5E1; 
-      border-radius: 9px; padding: 8px 11px; font-size: 10.5pt; font-weight: 600; outline: none; line-height: 1.35;
+      border-radius: 9px; padding: 8px 11px; font-size: 10.5pt; font-weight: 400; outline: none; line-height: 1.35;
       transition: all 0.15s ease;
     }
-    .modal-assistant input:focus, .modal-assistant textarea:focus, .modal-assistant select:focus { border-color: #27272A; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(39, 39, 42, 0.1); }
+    .modal-assistant input:focus, .modal-assistant textarea:focus, .modal-assistant select:focus { border-color: #2563EB; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12); }
     
     .modal-draggable-header { cursor: move; user-select: none; display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle); flex-shrink: 0; }
 
     .btn-prio { 
       background: #FFFFFF !important; color: #27272A !important; border: 1.5px solid #CBD5E1 !important;
       border-radius: 9px; padding: 0 12px !important; height: 38px !important; cursor: pointer;
-      font-size: 9.5pt !important; font-weight: 700 !important; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      font-size: 9.5pt !important; font-weight: 600 !important; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
       flex: 1; transition: all 0.15s ease;
     }
     .btn-prio.selected-alta { border-color: #FF003C !important; background: #FFE4E6 !important; color: #BE123C !important; border-width: 2px !important; box-shadow: 0 2px 6px rgba(255, 0, 60, 0.18); }
@@ -360,7 +357,7 @@
 
     .checkbox-container { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
     .checkbox-container input { width: 16px; height: 16px; cursor: pointer; }
-    .aviso-duplicado { background: #FFE4E6; border: 1.5px solid var(--prio-alta-elec); color: #BE123C; padding: 7px 11px; border-radius: 8px; font-size: 9pt; font-weight: 700; display: none; margin-top: 4px; }
+    .aviso-duplicado { background: #FFE4E6; border: 1.5px solid var(--prio-alta-elec); color: #BE123C; padding: 7px 11px; border-radius: 8px; font-size: 9pt; font-weight: 600; display: none; margin-top: 4px; }
 
     .ia-results-list { 
       display: flex; flex-direction: column; gap: 10px; 
@@ -374,11 +371,11 @@
     }
 
     .ia-item-card { 
-      background: #FFFFFF; border: 1.5px solid #CBD5E1; border-left: 5px solid #27272A; 
+      background: #FFFFFF; border: 1.5px solid #CBD5E1; border-left: 5px solid #2563EB; 
       padding: 12px 14px; border-radius: 10px; display: flex; flex-direction: column; gap: 7px; 
       min-width: 540px;
     }
-    .ia-edit-input { font-size: 10.5pt !important; font-weight: 600 !important; color: #18181B !important; background: #FFFFFF !important; padding: 7px 10px !important; }
+    .ia-edit-input { font-size: 10.5pt !important; font-weight: 400 !important; color: #18181B !important; background: #FFFFFF !important; padding: 7px 10px !important; }
 
     .modal-detail-card { 
       background: #FFFFFF; max-width: 600px; width: 100%; max-height: 88vh; 
@@ -388,21 +385,21 @@
       resize: both;
     }
     .modal-field { display: flex; flex-direction: column; gap: 4px; }
-    .modal-label { font-size: 9pt; font-weight: 700; color: #52525B; letter-spacing: 0.2px; }
-    .modal-box { background: #F4F4F5; border: 1.5px solid #D4D4D8; padding: 9px 12px; border-radius: 9px; font-size: 10.5pt; font-weight: 600; line-height: 1.45; white-space: pre-wrap; word-break: break-word; color: #18181B; }
+    .modal-label { font-size: 9pt; font-weight: 600; color: #52525B; letter-spacing: 0.2px; }
+    .modal-box { background: #F4F4F5; border: 1.5px solid #D4D4D8; padding: 9px 12px; border-radius: 9px; font-size: 10.5pt; font-weight: 400; line-height: 1.45; white-space: pre-wrap; word-break: break-word; color: #18181B; }
     .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
     .bitacora-modal { max-width: 680px; width: 100%; max-height: 86vh; background: #FFFFFF; border-radius: var(--radius-md); padding: 20px; display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 1001; border: 1.5px solid #71717A; resize: both; overflow: auto; }
     .bitacora-list { flex: 1; overflow-y: auto; overflow-x: auto; display: flex; flex-direction: column; gap: 6px; }
     .bitacora-item { display: flex; justify-content: space-between; align-items: center; padding: 9px 12px; border-radius: 9px; background: #F4F4F5; border: 1.5px solid #D4D4D8; cursor: pointer; min-width: 440px; transition: all 0.12s ease; }
-    .bitacora-item:hover { background: #E4E4E7; border-color: #71717A; }
+    .bitacora-item:hover { background: #EFF6FF; border-color: #3B82F6; }
     
-    .badge-file { display: inline-flex; align-items: center; gap: 5px; background: #F4F4F5; border: 1.5px solid #CBD5E1; color: #18181B; padding: 4px 10px; border-radius: 8px; font-size: 9pt; font-weight: 700; text-decoration: none; }
-    .badge-file:hover { background: #E4E4E7; border-color: #71717A; }
+    .badge-file { display: inline-flex; align-items: center; gap: 5px; background: #EFF6FF; border: 1.5px solid #93C5FD; color: #1E3A8A; padding: 4px 10px; border-radius: 8px; font-size: 9pt; font-weight: 500; text-decoration: none; }
+    .badge-file:hover { background: #DBEAFE; border-color: #2563EB; }
 
     .upload-box {
-      border: 1.5px dashed #A1A1AA;
-      background: #F4F4F5;
+      border: 1.5px dashed #93C5FD;
+      background: #F8FAFC;
       border-radius: 10px;
       padding: 10px;
       display: flex;
@@ -410,7 +407,7 @@
       gap: 6px;
     }
 
-    /* ESTILOS DE LA BANDEJA UNIFICADA: VENTANA GIGANTE Y 2 COLUMNAS (CORREOS | PROPUESTA DE AGENDAMIENTO) */
+    /* ESTILOS DE LA BANDEJA UNIFICADA: TEXTOS SIN NEGRITA Y BOTONES AZULES */
     .mail-modal-max {
       width: 99vw !important;
       max-width: 99vw !important;
@@ -439,7 +436,7 @@
     .mail-card-item {
       background: #FFFFFF;
       border: 1px solid #D4D4D8;
-      border-left: 5px solid #71717A;
+      border-left: 5px solid #94A3B8;
       border-radius: 9px;
       padding: 9px 11px;
       cursor: pointer;
@@ -447,10 +444,14 @@
       flex-direction: column;
       gap: 4px;
       transition: all 0.12s ease;
+      font-weight: 400 !important;
     }
-    .mail-card-item:hover { border-color: #52525B; transform: translateY(-1px); }
-    .mail-card-item.is-work { border-left: 5px solid #10B981; }
-    .mail-card-item.selected { border: 2px solid #18181B; background: #FEFCE8; }
+    .mail-card-item * {
+      font-weight: 400 !important;
+    }
+    .mail-card-item:hover { border-color: #3B82F6; transform: translateY(-1px); }
+    .mail-card-item.is-work { border-left: 5px solid #2563EB; }
+    .mail-card-item.selected { border: 2px solid #2563EB; background: #EFF6FF; }
     .mail-detail-col {
       border: 1.5px solid #D4D4D8;
       border-radius: 12px;
@@ -460,34 +461,35 @@
       display: flex;
       flex-direction: column;
       gap: 14px;
+      font-weight: 400;
     }
     .mail-account-pill {
       font-size: 7.5pt;
-      font-weight: 800;
+      font-weight: 400 !important;
       padding: 2px 8px;
       border-radius: 5px;
-      background: #27272A;
+      background: #1D4ED8;
       color: #FFFFFF;
     }
     .mail-work-pill {
       font-size: 7.2pt;
-      font-weight: 800;
+      font-weight: 400 !important;
       padding: 2px 6px;
       border-radius: 5px;
-      background: #D1FAE5;
-      color: #065F46;
+      background: #DBEAFE;
+      color: #1E40AF;
     }
     .mail-personal-pill {
       font-size: 7.2pt;
-      font-weight: 700;
+      font-weight: 400 !important;
       padding: 2px 6px;
       border-radius: 5px;
       background: #F4F4F5;
       color: #71717A;
     }
     .mail-ia-box {
-      background: #FEFCE8;
-      border: 2px solid #EAB308;
+      background: #EFF6FF;
+      border: 2px solid #60A5FA;
       border-radius: 12px;
       padding: 16px;
       display: flex;
@@ -496,7 +498,7 @@
     }
     .mail-nonwork-box {
       background: #F8FAFC;
-      border: 1.5px dashed #CBD5E1;
+      border: 1.5px dashed #93C5FD;
       border-radius: 12px;
       padding: 18px;
       display: flex;
@@ -602,17 +604,17 @@
     <div class="modal-assistant mail-modal-max">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-shrink:0; gap:10px; border-bottom:1px solid #E4E4E7; padding-bottom:8px;">
         <div style="display:flex; align-items:center; gap:12px;">
-          <span style="font-weight:800; font-size:15pt; color:#18181B;">📧 Bandeja unificada</span>
-          <span id="mailStatusText" style="font-size:9pt; font-weight:700; color:#065F46; background:#D1FAE5; padding:3px 10px; border-radius:6px;">Conectada</span>
+          <span style="font-weight:600; font-size:15pt; color:#1E3A8A;">📧 Bandeja unificada</span>
+          <span id="mailStatusText" style="font-size:9pt; font-weight:400; color:#1E40AF; background:#DBEAFE; padding:3px 10px; border-radius:6px;">Conectada</span>
         </div>
         <div style="display:flex; align-items:center; gap:8px; flex:1; max-width:600px;">
-          <input type="text" id="mailQuickFilter" placeholder="🔍 Buscar correo por remitente, UTP, SLEP o asunto..." oninput="renderizarListaCorreos()" style="height:34px; font-size:9.5pt; padding:0 12px;">
+          <input type="text" id="mailQuickFilter" placeholder="🔍 Buscar correo por remitente, UTP, SLEP o asunto..." oninput="renderizarListaCorreos()" style="height:34px; font-size:9.5pt; padding:0 12px; font-weight:400;">
           <button type="button" class="btn-action-side" style="width:auto; min-height:34px !important;" onclick="cargarCorreosUnificados(80)">🔄 Actualizar</button>
           <button type="button" class="btn-action-side" style="width:auto; min-height:34px !important;" onclick="cerrarModalCorreos()">✕ Cerrar</button>
         </div>
       </div>
 
-      <!-- 2 COLUMNAS: 1) LISTA DE TODOS LOS CORREOS | 2) PROPUESTA DE AGENDAMIENTO -->
+      <!-- 2 COLUMNAS: 1) LISTA DE TODOS LOS CORREOS (SIN NEGRITA) | 2) PROPUESTA DE AGENDAMIENTO -->
       <div class="mail-workspace-2col">
         <div class="mail-list-col" id="mailListContainer">
           <span class="empty-text">Cargando todos tus correos...</span>
@@ -629,26 +631,26 @@
   <div class="modal-overlay" id="modalPanelTecnicoOverlay">
     <div class="modal-assistant" style="height:auto; min-height:320px; width:520px;">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-weight:800; font-size:13pt; color:#18181B;">📊 Panel técnico pedagógico</span>
+        <span style="font-weight:700; font-size:13pt; color:#1E3A8A;">📊 Panel técnico pedagógico</span>
         <button class="btn-action-side" style="width:auto; min-height:30px !important;" onclick="cerrarModalPanelTecnico()">✕</button>
       </div>
-      <p style="font-size:10pt; font-weight:500; color:var(--text-muted); line-height:1.4;">
+      <p style="font-size:10pt; font-weight:400; color:var(--text-muted); line-height:1.4;">
         Módulo modular para enlazar las bases de datos escolares de la Escuela Carlos Condell:
       </p>
 
       <div style="display:flex; flex-direction:column; gap:8px; margin:6px 0;">
-        <div style="padding:10px 14px; background:#F4F4F5; border:1.5px solid #CBD5E1; border-radius:10px; font-weight:700; font-size:10pt; color:#18181B;">
+        <div style="padding:10px 14px; background:#EFF6FF; border:1.5px solid #93C5FD; border-radius:10px; font-weight:500; font-size:10pt; color:#1E3A8A;">
           📅 Horarios de clases y jefaturas
         </div>
-        <div style="padding:10px 14px; background:#F4F4F5; border:1.5px solid #CBD5E1; border-radius:10px; font-weight:700; font-size:10pt; color:#18181B;">
+        <div style="padding:10px 14px; background:#EFF6FF; border:1.5px solid #93C5FD; border-radius:10px; font-weight:500; font-size:10pt; color:#1E3A8A;">
           👥 Registro de asistencia diaria
         </div>
-        <div style="padding:10px 14px; background:#F4F4F5; border:1.5px solid #CBD5E1; border-radius:10px; font-weight:700; font-size:10pt; color:#18181B;">
+        <div style="padding:10px 14px; background:#EFF6FF; border:1.5px solid #93C5FD; border-radius:10px; font-weight:500; font-size:10pt; color:#1E3A8A;">
           📖 Leccionarios y cobertura curricular
         </div>
       </div>
 
-      <div style="font-size:9.5pt; color:#27272A; background:#F4F4F5; border:1.5px solid #A1A1AA; padding:8px 12px; border-radius:10px; font-weight:600;">
+      <div style="font-size:9.5pt; color:#1E3A8A; background:#F8FAFC; border:1.5px solid #93C5FD; padding:8px 12px; border-radius:10px; font-weight:400;">
         ℹ️ Listo para conectar con Google Sheets o la base de datos institucional en la siguiente fase.
       </div>
     </div>
@@ -658,10 +660,10 @@
   <div class="modal-overlay" id="modalRespaldoOverlay">
     <div class="modal-assistant" style="height:auto; min-height:190px; width:460px;">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-weight:800; font-size:13pt; color:#18181B;">💾 Respaldo institucional</span>
+        <span style="font-weight:700; font-size:13pt; color:#1E3A8A;">💾 Respaldo institucional</span>
         <button class="btn-action-side" style="width:auto; min-height:30px !important;" onclick="cerrarModalRespaldo()">✕</button>
       </div>
-      <p style="font-size:10pt; font-weight:500; color:var(--text-muted);">Descarga una copia completa de la agenda laboral en formato seguro JSON.</p>
+      <p style="font-size:10pt; font-weight:400; color:var(--text-muted);">Descarga una copia completa de la agenda laboral en formato seguro JSON.</p>
       <button type="button" class="btn-action-side btn-side-nuevo" style="width:100%; justify-content:center; margin-top:6px; min-height:38px !important; font-size:10pt !important;" onclick="descargarRespaldoJSON()">⬇️ Descargar copia (.json)</button>
     </div>
   </div>
@@ -671,8 +673,8 @@
     <div class="bitacora-modal">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <div>
-          <h3 style="font-size:13pt; font-weight:800; color:#18181B;">📋 Bitácora institucional Carlos Condell</h3>
-          <span id="bitacoraTotal" style="font-size:9pt; font-weight:700; color:var(--text-muted);">0 eventos</span>
+          <h3 style="font-size:13pt; font-weight:700; color:#1E3A8A;">📋 Bitácora institucional Carlos Condell</h3>
+          <span id="bitacoraTotal" style="font-size:9pt; font-weight:500; color:var(--text-muted);">0 eventos</span>
         </div>
         <button class="btn-action-side" style="width:auto; min-height:30px !important;" onclick="cerrarModalBitacora()">✕</button>
       </div>
@@ -693,8 +695,8 @@
       <div style="display:flex; justify-content:space-between; align-items:flex-start;">
         <div>
           <span id="dtPrioBadge" class="badge-tag" style="font-size:8.5pt;">-</span>
-          <span id="dtStateBadge" class="badge-tag" style="margin-left:6px; background:#E4E4E7; color:#18181B; font-size:8.5pt;">-</span>
-          <h3 id="dtTitle" style="font-size:13pt; font-weight:800; margin-top:6px; color:#18181B; line-height:1.3;">-</h3>
+          <span id="dtStateBadge" class="badge-tag" style="margin-left:6px; background:#DBEAFE; color:#1E3A8A; font-size:8.5pt;">-</span>
+          <h3 id="dtTitle" style="font-size:13pt; font-weight:600; margin-top:6px; color:#18181B; line-height:1.3;">-</h3>
         </div>
         <button class="btn-action-side" style="width:auto; min-height:30px !important;" onclick="closeDetailModal()">✕</button>
       </div>
@@ -705,7 +707,7 @@
       </div>
 
       <div class="modal-field"><span class="modal-label">Síntesis</span><div id="dtDetail" class="modal-box">-</div></div>
-      <div class="modal-field"><span class="modal-label">Acción requerida</span><div id="dtAccion" class="modal-box" style="border-left:4px solid #EAB308;">-</div></div>
+      <div class="modal-field"><span class="modal-label">Acción requerida</span><div id="dtAccion" class="modal-box" style="border-left:4px solid #2563EB;">-</div></div>
 
       <div class="modal-field" id="dtRespaldosContainer">
         <span class="modal-label">Documentos y evidencias adjuntas</span>
@@ -724,7 +726,7 @@
   <div class="modal-overlay" id="modalAssistantOverlay">
     <div class="modal-assistant" id="modalNuevoEventoBox">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span id="modalTitleStr" style="font-weight:800; font-size:13pt; color:#18181B;">Nuevo evento laboral</span>
+        <span id="modalTitleStr" style="font-weight:700; font-size:13pt; color:#1E3A8A;">Nuevo evento laboral</span>
         <div style="display:flex; gap:8px;">
           <button type="button" class="btn-action-side" style="width:auto; min-height:30px !important;" onclick="limpiarFormularioManual()">Limpiar</button>
           <button class="btn-action-side" style="width:auto; min-height:30px !important;" onclick="closeModal()">✕</button>
@@ -781,10 +783,10 @@
   <div class="modal-overlay" id="modalIAOverlay">
     <div class="modal-assistant" id="modalIABox" style="width:780px; min-width:480px; height:85vh;">
       <div class="modal-draggable-header" id="dragHeaderIA">
-        <span style="font-weight:800; font-size:13pt; color:#18181B;">★ Asistente inteligente AIA (Groq + Gemini)</span>
+        <span style="font-weight:700; font-size:13pt; color:#1E3A8A;">★ Asistente inteligente AIA (Groq + Gemini)</span>
         <button type="button" class="btn-action-side" style="width:auto; min-height:30px !important;" onclick="cerrarModalIA()">✕</button>
       </div>
-      <p style="font-size:9.5pt; font-weight:500; color:var(--text-muted); line-height:1.35;">
+      <p style="font-size:9.5pt; font-weight:400; color:var(--text-muted); line-height:1.35;">
         Sube un PDF o pega una captura (Ctrl+V). El navegador extrae el texto localmente para no gastar tokens y analiza con <b>Groq (gratis y ultrarrápido)</b> o <b>Gemini</b> de respaldo.
       </p>
       
@@ -797,13 +799,13 @@
 
       <button type="button" id="btnAnalizarSeguroIA" class="btn-action-side btn-side-nuevo" style="justify-content:center; min-height:38px !important; font-size:10pt !important; flex-shrink:0;" disabled onclick="analizarPendientesIA()">⚡ 2. Analizar documento ahora</button>
       
-      <div id="iaArchivoInfo" style="font-size:9pt; color:#18181B; background:#F4F4F5; padding:6px 10px; border-radius:8px; display:none; border:1px solid #A1A1AA; font-weight:700; flex-shrink:0;"></div>
-      <div id="iaEstado" style="font-size:9pt; color:#854D0E; font-weight:700; text-align:center; padding:6px 10px; display:none; background:#FEF9C3; border-radius:8px; border:1px solid #EAB308; flex-shrink:0;"></div>
+      <div id="iaArchivoInfo" style="font-size:9pt; color:#1E3A8A; background:#EFF6FF; padding:6px 10px; border-radius:8px; display:none; border:1px solid #93C5FD; font-weight:500; flex-shrink:0;"></div>
+      <div id="iaEstado" style="font-size:9pt; color:#1E40AF; font-weight:500; text-align:center; padding:6px 10px; display:none; background:#DBEAFE; border-radius:8px; border:1px solid #60A5FA; flex-shrink:0;"></div>
       
       <div id="iaContenedorResultados" style="display:none; flex:1; flex-direction:column; min-height:240px;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:2px; flex-shrink:0;">
-          <span style="font-size:10.5pt; font-weight:800; color:#18181B;">Propuesta de eventos detectados:</span>
-          <span style="font-size:8.5pt; font-weight:600; color:var(--text-muted);">Usa las barras lateral e inferior para revisar</span>
+          <span style="font-size:10.5pt; font-weight:600; color:#1E3A8A;">Propuesta de eventos detectados:</span>
+          <span style="font-size:8.5pt; font-weight:400; color:var(--text-muted);">Usa las barras lateral e inferior para revisar</span>
         </div>
         <div class="ia-results-list" id="iaListaEventos"></div>
         <button type="button" id="btnAgendarTodoIA" class="btn-action-side btn-side-nuevo" style="width:100%; margin-top:6px; justify-content:center; min-height:40px !important; font-size:10.5pt !important; flex-shrink:0;" onclick="guardarEventosDetectadosIA()">Agendar propuesta y subir respaldo</button>
@@ -816,7 +818,9 @@
     const PROTO = "https" + "://";
     const API_URL = PROTO + ["script", "google", "com"].join(".") + "/macros/s/AKfycbw0Vz-JRfUocADfZ6m5R6mD3c7aSHhVi6Jdwh691UlyNmn7JilXHiiIkojOanvvsSY/exec";
     const CLAVE_ADMIN = "25078";
+    const CLAVE_CORREO = "1976";
     let esModoAdmin = false;
+    let correoAutorizado = false;
 
     const holidaysChile = { 
       "2026-01-01": "Año Nuevo", "2026-04-03": "Viernes Santo", "2026-05-01": "Día del Trabajador",
@@ -1024,9 +1028,18 @@
     renderCalendar();
   </script>
 
-  <!-- SCRIPT 2: BANDEJA UNIFICADA (LAS 7 MEJORAS INTEGRADAS) -->
+  <!-- SCRIPT 2: BANDEJA UNIFICADA CON CLAVE 1976, SIN NEGRITAS Y BOTONES AZULES -->
   <script>
     function abrirModalCorreos() {
+      if (!correoAutorizado) {
+        const pin = prompt("🔒 Ingresa la clave de acceso a tu Bandeja unificada:");
+        if (pin !== CLAVE_CORREO) {
+          if (pin !== null) alert("Clave incorrecta.");
+          return;
+        }
+        correoAutorizado = true;
+      }
+
       const modal = document.getElementById("modalCorreosOverlay");
       if (modal) modal.style.display = "flex";
       if (correosBandeja.length === 0) {
@@ -1047,11 +1060,9 @@
       return formatearTipoOracion(base.replace(/"/g, "").trim());
     }
 
-    // Detector inteligente para saber si un correo es de TRABAJO ESCOLAR o Personal/Comercial
     function esCorreoDeTrabajo(c) {
       const texto = `${c.asunto || ""} ${c.de || ""} ${c.para || ""} ${c.resumen || ""}`.toLowerCase();
 
-      // Palabras clave comerciales, bancarias o personales que NO deben proponer agendamiento
       const noLaborales = [
         "apple", "youtube", "suscripcion", "suscripción", "bancoestado", "coopeuch",
         "redsalud", "miredsalud", "doble factor", "autenticacion", "autenticación",
@@ -1062,7 +1073,6 @@
       ];
       if (noLaborales.some(p => texto.includes(p))) return false;
 
-      // Palabras clave de trabajo escolar / directivo
       const laborales = [
         "edudelpino", "slep", "mineduc", "condell", "utp", "upt", "pie", "simce",
         "dia ", "docente", "profesor", "profesora", "director", "directora", "escuela",
@@ -1073,8 +1083,6 @@
         "san bernardo", "rbd", "25078", "sep", "pme", "pei", "convivencia", "inspector"
       ];
       if (laborales.some(p => texto.includes(p))) return true;
-
-      // Si llega directamente al correo institucional del SLEP, es laboral
       if (texto.includes("edudelpino.gob.cl")) return true;
 
       return false;
@@ -1151,13 +1159,12 @@
         renderizarListaCorreos();
 
         if (correosBandeja.length > 0) {
-          // Seleccionar automáticamente el primer correo de trabajo (o el primero de la lista)
           const idxTrabajo = correosBandeja.findIndex(c => esCorreoDeTrabajo(c));
           seleccionarCorreoPorIndice(idxTrabajo >= 0 ? idxTrabajo : 0);
         }
       } catch (err) {
         status.textContent = "⚠️ Aviso";
-        listContainer.innerHTML = `<div style="padding:12px; font-size:9pt; color:#BE123C; font-weight:600;">Detalle: ${err.message}</div>`;
+        listContainer.innerHTML = `<div style="padding:12px; font-size:9pt; color:#BE123C; font-weight:400;">Detalle: ${err.message}</div>`;
       }
     }
 
@@ -1190,7 +1197,7 @@
           ? `<span class="mail-work-pill">💼 Trabajo</span>`
           : `<span class="mail-personal-pill">Personal / Info</span>`;
         const clipAdj = (c.adjuntosNombres && c.adjuntosNombres.length > 0)
-          ? `<span style="font-size:7.5pt; font-weight:800; color:#18181B;">📎${c.adjuntosNombres.length}</span>`
+          ? `<span style="font-size:7.5pt; font-weight:400; color:#1E3A8A;">📎${c.adjuntosNombres.length}</span>`
           : "";
 
         return `
@@ -1201,10 +1208,10 @@
                 ${badgeTipo}
                 ${clipAdj}
               </div>
-              <span style="font-size:7.2pt; color:#52525B; font-weight:700; white-space:nowrap;">${c.fecha}</span>
+              <span style="font-size:7.2pt; color:#52525B; font-weight:400; white-space:nowrap;">${c.fecha}</span>
             </div>
-            <div style="font-size:9.5pt; font-weight:700; color:#18181B; line-height:1.25;">${formatearTipoOracion(c.asunto)}</div>
-            <div style="font-size:8pt; color:#52525B; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">De: ${limpiarRemitenteCorreo(c.de)}</div>
+            <div style="font-size:9.5pt; font-weight:400; color:#18181B; line-height:1.25;">${formatearTipoOracion(c.asunto)}</div>
+            <div style="font-size:8pt; color:#52525B; font-weight:400; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">De: ${limpiarRemitenteCorreo(c.de)}</div>
           </div>
         `;
       }).join("");
@@ -1227,7 +1234,7 @@
       if (box) {
         box.innerHTML = `
           <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span style="font-size:9.5pt; font-weight:700; color:#52525B;">🗑️ Borrador de agendamiento descartado para este correo.</span>
+            <span style="font-size:9.5pt; font-weight:400; color:#52525B;">🗑️ Borrador de agendamiento descartado para este correo.</span>
             <div style="display:flex; gap:8px;">
               <button type="button" class="btn-action-side" style="width:auto; min-height:30px !important;" onclick="seleccionarCorreoPorIndice(${indiceCorreoActual}, true)">↩ Mostrar borrador</button>
               <button type="button" class="btn-action-side btn-side-nuevo" style="width:auto; min-height:30px !important;" onclick="irAlSiguienteCorreo()">⏭️ Siguiente correo ▶</button>
@@ -1267,15 +1274,15 @@
       const esLaboral = forzarTrabajo || esCorreoDeTrabajo(c);
 
       const listaAdjuntosHTML = (c.adjuntosNombres && c.adjuntosNombres.length > 0)
-        ? `<div style="font-size:8.5pt; font-weight:700; color:#065F46; background:#D1FAE5; padding:6px 10px; border-radius:8px;">📎 Se adjuntará el correo original + ${c.adjuntosNombres.length} archivo(s) del correo: <b>${c.adjuntosNombres.join(", ")}</b></div>`
-        : `<div style="font-size:8.5pt; font-weight:700; color:#3F3F46; background:#FFFFFF; border:1px solid #D4D4D8; padding:6px 10px; border-radius:8px;">📎 Al aceptar se adjuntará automáticamente el <b>Correo original completo</b> como respaldo.</div>`;
+        ? `<div style="font-size:8.5pt; font-weight:400; color:#1E40AF; background:#DBEAFE; padding:6px 10px; border-radius:8px;">📎 Se adjuntará el correo original + ${c.adjuntosNombres.length} archivo(s) del correo: ${c.adjuntosNombres.join(", ")}</div>`
+        : `<div style="font-size:8.5pt; font-weight:400; color:#3F3F46; background:#FFFFFF; border:1px solid #93C5FD; padding:6px 10px; border-radius:8px;">📎 Al aceptar se adjuntará automáticamente el Correo original completo como respaldo.</div>`;
 
       const bloquePropuestaHTML = esLaboral ? `
         <div class="mail-ia-box" id="mailPropuestaBox">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
             <div>
-              <strong style="font-size:11pt; color:#854D0E;">⚡ Propuesta de agendamiento laboral</strong>
-              <span id="mailIaLoading" style="font-size:8.5pt; font-weight:700; color:#854D0E; margin-left:8px;">⏳ Analizando con Groq...</span>
+              <span style="font-size:11pt; font-weight:500; color:#1E3A8A;">⚡ Propuesta de agendamiento laboral</span>
+              <span id="mailIaLoading" style="font-size:8.5pt; font-weight:400; color:#1D4ED8; margin-left:8px;">⏳ Analizando con Groq...</span>
             </div>
             <div style="display:flex; gap:6px;">
               <button type="button" class="btn-action-side" style="width:auto; min-height:30px !important; color:#BE123C !important; border-color:#FF003C !important;" onclick="descartarBorradorAgendamiento()">🗑️ Eliminar agendamiento</button>
@@ -1287,22 +1294,22 @@
 
           <div id="mailIaFormFields" style="display:flex; flex-direction:column; gap:8px; margin-top:4px;">
             <div class="grid-2col">
-              <div><label style="font-size:8.5pt;">Compromiso / asunto</label><input type="text" id="mIaAsunto" value="${formatearTipoOracion(c.asunto)}" style="padding:7px 10px; font-size:10pt;"></div>
-              <div><label style="font-size:8.5pt;">Organiza / remitente</label><input type="text" id="mIaOrg" value="${remitenteLimpio}" style="padding:7px 10px; font-size:10pt;"></div>
+              <div><label style="font-size:8.5pt; font-weight:400;">Compromiso / asunto</label><input type="text" id="mIaAsunto" value="${formatearTipoOracion(c.asunto)}" style="padding:7px 10px; font-size:10pt; font-weight:400;"></div>
+              <div><label style="font-size:8.5pt; font-weight:400;">Organiza / remitente</label><input type="text" id="mIaOrg" value="${remitenteLimpio}" style="padding:7px 10px; font-size:10pt; font-weight:400;"></div>
             </div>
             <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
-              <div><label style="font-size:8.5pt;">Fecha</label><input type="date" id="mIaFecha" value="${formatDateKey(new Date())}" style="padding:7px 10px; font-size:10pt;"></div>
-              <div><label style="font-size:8.5pt;">Hora</label><input type="time" id="mIaHora" value="09:00" style="padding:7px 10px; font-size:10pt;"></div>
+              <div><label style="font-size:8.5pt; font-weight:400;">Fecha</label><input type="date" id="mIaFecha" value="${formatDateKey(new Date())}" style="padding:7px 10px; font-size:10pt; font-weight:400;"></div>
+              <div><label style="font-size:8.5pt; font-weight:400;">Hora</label><input type="time" id="mIaHora" value="09:00" style="padding:7px 10px; font-size:10pt; font-weight:400;"></div>
               <div>
-                <label style="font-size:8.5pt;">Prioridad</label>
-                <select id="mIaPrio" style="padding:7px 10px; font-size:10pt;">
+                <label style="font-size:8.5pt; font-weight:400;">Prioridad</label>
+                <select id="mIaPrio" style="padding:7px 10px; font-size:10pt; font-weight:400;">
                   <option value="Alta">Alta (rojo)</option>
                   <option value="Media" selected>Media (amarillo)</option>
                   <option value="Baja">Baja (verde)</option>
                 </select>
               </div>
             </div>
-            <div><label style="font-size:8.5pt;">Acción requerida / síntesis</label><input type="text" id="mIaAccion" value="${formatearTipoOracion(c.resumen || '')}" style="padding:7px 10px; font-size:10pt;"></div>
+            <div><label style="font-size:8.5pt; font-weight:400;">Acción requerida / síntesis</label><input type="text" id="mIaAccion" value="${formatearTipoOracion(c.resumen || '')}" style="padding:7px 10px; font-size:10pt; font-weight:400;"></div>
 
             <div style="display:flex; gap:10px; margin-top:4px;">
               <button type="button" id="btnAgendarCorreoConRespaldo" class="btn-action-side btn-side-nuevo" style="flex:2; justify-content:center; min-height:40px !important; font-size:10pt !important;" onclick="agendarDirectoDesdeCorreo()">
@@ -1316,9 +1323,9 @@
         </div>
       ` : `
         <div class="mail-nonwork-box" id="mailPropuestaBox">
-          <div style="font-size:11pt; font-weight:800; color:#3F3F46;">🛡️ Correo personal, comercial o informativo (Sin agendamiento automático)</div>
-          <p style="font-size:9.5pt; color:#52525B; max-width:560px;">
-            Este mensaje (<b>${limpiarRemitenteCorreo(c.de)}</b>) no corresponde a una tarea escolar, por lo que no se generó borrador de agendamiento.
+          <div style="font-size:11pt; font-weight:500; color:#1E3A8A;">🛡️ Correo personal, comercial o informativo (Sin agendamiento automático)</div>
+          <p style="font-size:9.5pt; font-weight:400; color:#52525B; max-width:560px;">
+            Este mensaje (${limpiarRemitenteCorreo(c.de)}) no corresponde a una tarea escolar, por lo que no se generó borrador de agendamiento.
           </p>
           <div style="display:flex; gap:10px; margin-top:4px;">
             <button type="button" class="btn-action-side" style="width:auto;" onclick="seleccionarCorreoPorIndice(${idx}, true)">⚡ Crear agendamiento de todos modos</button>
@@ -1331,8 +1338,8 @@
         <div style="border-bottom:1px solid #E4E4E7; padding-bottom:10px; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-shrink:0;">
           <div style="min-width:0;">
             <span class="mail-account-pill">${etiquetaReal}</span>
-            <span style="font-size:9pt; color:#52525B; font-weight:700; margin-left:8px;">De: <b>${remitenteLimpio}</b> • ${c.fecha}</span>
-            <h3 style="font-size:13pt; font-weight:800; color:#18181B; margin-top:5px;">${formatearTipoOracion(c.asunto)}</h3>
+            <span style="font-size:9pt; color:#52525B; font-weight:400; margin-left:8px;">De: ${remitenteLimpio} • ${c.fecha}</span>
+            <div style="font-size:13pt; font-weight:400; color:#18181B; margin-top:5px;">${formatearTipoOracion(c.asunto)}</div>
           </div>
           <div style="display:flex; gap:8px; flex-shrink:0;">
             <button type="button" id="btnToggleOriginalMail" class="btn-action-side" style="width:auto; min-height:32px !important;" onclick="alternarVistaMensajeOriginal()">👁️ Abrir mensaje original</button>
@@ -1340,31 +1347,31 @@
           </div>
         </div>
 
-        <!-- MENSAJE ORIGINAL OCULTO POR DEFECTO (SOLO SE ABRE SI LO DESEAS) -->
-        <div id="mailOriginalCollapsible" style="display:none; background:#F8FAFC; border:1.5px solid #CBD5E1; border-radius:10px; padding:12px;">
+        <!-- MENSAJE ORIGINAL OCULTO POR DEFECTO -->
+        <div id="mailOriginalCollapsible" style="display:none; background:#F8FAFC; border:1.5px solid #93C5FD; border-radius:10px; padding:12px;">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-            <strong style="font-size:9pt; color:#18181B;">📄 Mensaje original completo:</strong>
+            <span style="font-size:9pt; font-weight:400; color:#1E3A8A;">📄 Mensaje original completo:</span>
             <button type="button" class="btn-action-side" style="width:auto; min-height:26px !important; font-size:8pt !important;" onclick="alternarVistaMensajeOriginal()">✕ Ocultar</button>
           </div>
-          <div id="mailRawBodyBox" style="max-height:240px; overflow-y:auto; font-size:9.5pt; line-height:1.45; white-space:pre-wrap; background:#FFFFFF; padding:10px; border-radius:8px; border:1px solid #E2E8F0;"></div>
+          <div id="mailRawBodyBox" style="max-height:240px; overflow-y:auto; font-size:9.5pt; font-weight:400; line-height:1.45; white-space:pre-wrap; background:#FFFFFF; padding:10px; border-radius:8px; border:1px solid #E2E8F0;"></div>
         </div>
 
-        <!-- PROPUESTA DE AGENDAMIENTO (SOLO SI ES DE TRABAJO) -->
+        <!-- PROPUESTA DE AGENDAMIENTO -->
         ${bloquePropuestaHTML}
 
         <!-- RESPUESTA CON LOS NOMBRES REALES DE LOS CORREOS -->
-        <div style="background:#F4F4F5; border:1px solid #D4D4D8; border-radius:12px; padding:12px; display:flex; flex-direction:column; gap:8px;">
+        <div style="background:#F8FAFC; border:1px solid #93C5FD; border-radius:12px; padding:12px; display:flex; flex-direction:column; gap:8px;">
           <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
-            <label style="margin:0; font-size:9pt;">↩ Responder desde el correo:</label>
+            <label style="margin:0; font-size:9pt; font-weight:400;">↩ Responder desde el correo:</label>
             <div style="display:flex; gap:6px; flex:1; max-width:520px;">
-              <select id="mailReplyFrom" style="flex:1; padding:6px 10px; font-size:9.5pt;">
+              <select id="mailReplyFrom" style="flex:1; padding:6px 10px; font-size:9.5pt; font-weight:400;">
                 ${opcionesCuentas}
               </select>
               <button type="button" class="btn-action-side" style="width:auto; min-height:34px !important;" title="Personalizar los nombres de mis 4 correos" onclick="configurarNombresCuentasSalida()">⚙️ Mis correos</button>
             </div>
           </div>
-          <textarea id="mailReplyBody" rows="2" placeholder="Escribe tu respuesta aquí..." style="font-size:9.5pt; padding:8px 10px;"></textarea>
-          <button type="button" id="btnEnviarRespuestaMail" class="btn-action-side" style="justify-content:center; min-height:36px !important;" onclick="enviarRespuestaCorreoActual()">📤 Enviar respuesta ahora</button>
+          <textarea id="mailReplyBody" rows="2" placeholder="Escribe tu respuesta aquí..." style="font-size:9.5pt; font-weight:400; padding:8px 10px;"></textarea>
+          <button type="button" id="btnEnviarRespuestaMail" class="btn-action-side btn-side-nuevo" style="justify-content:center; min-height:36px !important;" onclick="enviarRespuestaCorreoActual()">📤 Enviar respuesta ahora</button>
         </div>
       `;
 
@@ -1392,14 +1399,13 @@
         });
         const data = await res.json();
 
-        // Si la IA confirma que NO es laboral y no fue forzado manualmente, ocultar propuesta
         if (data.esLaboral === false && !forzarTrabajo) {
           descartarBorradorAgendamiento();
           return;
         }
 
         const ev = (data.eventos && data.eventos[0]) ? data.eventos[0] : null;
-        if (loading) loading.textContent = "✅ Analizado con IA";
+        if (loading) loading.textContent = "✅ Analizado con Groq";
         if (ev && document.getElementById("mIaAsunto")) {
           document.getElementById("mIaAsunto").value = formatearTipoOracion(ev.asunto || correo.asunto);
           document.getElementById("mIaOrg").value = formatearTipoOracion(ev.organizador || remitenteLimpio);
@@ -1885,7 +1891,7 @@
       const container = document.getElementById("listaArchivosManuales");
       container.innerHTML = "";
       if (archivosManualesTemporales.length === 0) {
-        container.innerHTML = "<span style='font-size:8.5pt; color:var(--text-muted); font-weight:600;'>Ningún archivo adjunto aún.</span>";
+        container.innerHTML = "<span style='font-size:8.5pt; color:var(--text-muted); font-weight:400;'>Ningún archivo adjunto aún.</span>";
         return;
       }
       archivosManualesTemporales.forEach((arch, idx) => {
@@ -2221,12 +2227,12 @@
       }
       const matches = tasks.filter(t => (t.category || "Laboral").toLowerCase() === "laboral" && (normalizarTexto(t.subject).includes(q) || normalizarTexto(t.detail).includes(q) || normalizarTexto(t.sender).includes(q)));
       if (matches.length === 0) {
-        box.innerHTML = '<div style="padding:8px; font-size:8.5pt; color:#71717A; font-weight:600;">Sin coincidencias</div>';
+        box.innerHTML = '<div style="padding:8px; font-size:8.5pt; color:#71717A; font-weight:400;">Sin coincidencias</div>';
       } else {
         box.innerHTML = matches.map(m => `
           <div class="search-item" onclick="openDetail('${m.id}'); document.getElementById('searchResults').style.display='none';">
-            <span style="font-weight:700; font-size:9.5pt; color:#18181B;">${formatearTipoOracion(m.subject)}</span>
-            <span style="font-size:8pt; color:var(--text-muted); font-weight:600;">${m.date} | ${m.time ? m.time + ' hrs' : 'Por definir'} • ${formatearTipoOracion(m.sender || 'General')}</span>
+            <span style="font-weight:500; font-size:9.5pt; color:#18181B;">${formatearTipoOracion(m.subject)}</span>
+            <span style="font-size:8pt; color:var(--text-muted); font-weight:400;">${m.date} | ${m.time ? m.time + ' hrs' : 'Por definir'} • ${formatearTipoOracion(m.sender || 'General')}</span>
           </div>
         `).join("");
       }
@@ -2275,15 +2281,15 @@
       document.getElementById("bitacoraTotal").textContent = `${list.length} evento(s)`;
 
       if (list.length === 0) {
-        container.innerHTML = '<span style="font-size:9.5pt; color:#71717A; text-align:center; padding:12px; font-weight:600;">Sin registros institucionales.</span>';
+        container.innerHTML = '<span style="font-size:9.5pt; color:#71717A; text-align:center; padding:12px; font-weight:400;">Sin registros institucionales.</span>';
         return;
       }
 
       container.innerHTML = list.map(t => `
         <div class="bitacora-item" onclick="cerrarModalBitacora(); openDetail('${t.id}')">
           <div>
-            <div style="font-weight:700; font-size:10pt; color:#18181B;">${formatearTipoOracion(t.subject)}</div>
-            <div style="font-size:8.5pt; color:var(--text-muted); font-weight:600;">${t.date} | ${t.time ? t.time + ' hrs' : 'Por definir'} • ${formatearTipoOracion(t.sender || 'General'}</div>
+            <div style="font-weight:500; font-size:10pt; color:#18181B;">${formatearTipoOracion(t.subject)}</div>
+            <div style="font-size:8.5pt; color:var(--text-muted); font-weight:400;">${t.date} | ${t.time ? t.time + ' hrs' : 'Por definir'} • ${formatearTipoOracion(t.sender || 'General'}</div>
           </div>
           <span style="font-size:11pt;">${t.status === 'managed' ? '✅' : '⏳'}</span>
         </div>
@@ -2514,7 +2520,7 @@
 
       if (!lista.length) {
         const p = document.createElement('p');
-        p.style.fontWeight = '700';
+        p.style.fontWeight = '400';
         p.style.fontSize = '10pt';
         p.textContent = 'No se detectaron tareas o compromisos accionables.';
         div.appendChild(p);
@@ -2536,9 +2542,10 @@
         header.style.justifyContent = 'space-between';
         header.style.alignItems = 'center';
 
-        const titulo = document.createElement('strong');
+        const titulo = document.createElement('span');
         titulo.style.fontSize = '11pt';
-        titulo.style.color = '#18181B';
+        titulo.style.fontWeight = '500';
+        titulo.style.color = '#1E3A8A';
         titulo.textContent = '📌 Propuesta ' + (idx + 1);
         header.appendChild(titulo);
 
