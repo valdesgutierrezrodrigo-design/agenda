@@ -225,7 +225,6 @@
     .sidebar-separator { border: 0; border-top: 1px solid #E4E4E7; margin: 3px 0; }
     .sidebar-section-title { font-size: 7.5pt; font-weight: 700; color: #52525B; letter-spacing: 0.2px; margin-bottom: 1px; padding-left: 2px; }
 
-    /* BOTONES EN TONOS AZULES LIMPIOS */
     .btn-action-side {
       width: 100%; min-height: 36px !important; border-radius: 10px;
       font-size: 8.8pt !important; font-weight: 600 !important; cursor: pointer;
@@ -247,7 +246,6 @@
     .btn-action-side:disabled { opacity: 0.45; cursor: not-allowed; }
     .btn-icon-lg { font-size: 10.5pt; line-height: 1; }
     
-    /* BOTÓN PRINCIPAL AZUL INTENSO */
     .btn-side-nuevo { 
       background: linear-gradient(180deg, #2563EB 0%, #1D4ED8 100%) !important; 
       border: 1.5px solid #1E40AF !important; 
@@ -323,8 +321,8 @@
     
     .modal-assistant { 
       background: #FFFFFF; color: var(--text-main); 
-      width: 760px; min-width: 460px; max-width: 99vw; 
-      height: 85vh; min-height: 460px;
+      width: 760px; min-width: 340px; max-width: 99vw; 
+      height: 85vh; min-height: 200px;
       border-radius: var(--radius-md); padding: 18px; 
       display: flex; flex-direction: column; gap: 10px; 
       position: relative; z-index: 1001; 
@@ -407,7 +405,7 @@
       gap: 6px;
     }
 
-    /* ESTILOS DE LA BANDEJA UNIFICADA: TEXTOS SIN NEGRITA Y BOTONES AZULES */
+    /* ESTILOS DE LA BANDEJA UNIFICADA */
     .mail-modal-max {
       width: 99vw !important;
       max-width: 99vw !important;
@@ -599,6 +597,24 @@
     </aside>
   </div>
 
+  <!-- MODAL NUEVO: INGRESO DE CLAVE (REEMPLAZA A PROMPT BLOQUEADO) -->
+  <div class="modal-overlay" id="modalPinOverlay" style="z-index: 2500;">
+    <div class="modal-assistant" style="height:auto; min-height:190px; width:380px; resize:none;">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span id="pinModalTitulo" style="font-weight:700; font-size:12pt; color:#1E3A8A;">🔒 Acceso protegido</span>
+        <button type="button" class="btn-action-side" style="width:auto; min-height:28px !important;" onclick="cerrarModalPin()">✕</button>
+      </div>
+      <p id="pinModalDescripcion" style="font-size:9.5pt; color:#52525B; margin:0;">Ingresa tu clave de acceso:</p>
+      <input type="password" id="pinModalInput" placeholder="••••" autocomplete="off" onkeydown="if(event.key==='Enter') confirmarModalPin()" style="font-size:14pt; text-align:center; letter-spacing:4px; font-weight:700;">
+      <div id="pinModalError" style="display:none; color:#BE123C; background:#FFE4E6; padding:6px 10px; border-radius:8px; font-size:9pt; font-weight:600; text-align:center;">
+        Clave incorrecta. Intenta nuevamente.
+      </div>
+      <button type="button" class="btn-action-side btn-side-nuevo" style="justify-content:center; min-height:38px !important; font-size:10pt !important;" onclick="confirmarModalPin()">
+        Ingresar
+      </button>
+    </div>
+  </div>
+
   <!-- MODAL: BANDEJA UNIFICADA GIGANTE (99vw x 97vh) Y DE 2 COLUMNAS -->
   <div class="modal-overlay" id="modalCorreosOverlay">
     <div class="modal-assistant mail-modal-max">
@@ -614,7 +630,6 @@
         </div>
       </div>
 
-      <!-- 2 COLUMNAS: 1) LISTA DE TODOS LOS CORREOS (SIN NEGRITA) | 2) PROPUESTA DE AGENDAMIENTO -->
       <div class="mail-workspace-2col">
         <div class="mail-list-col" id="mailListContainer">
           <span class="empty-text">Cargando todos tus correos...</span>
@@ -729,7 +744,7 @@
         <span id="modalTitleStr" style="font-weight:700; font-size:13pt; color:#1E3A8A;">Nuevo evento laboral</span>
         <div style="display:flex; gap:8px;">
           <button type="button" class="btn-action-side" style="width:auto; min-height:30px !important;" onclick="limpiarFormularioManual()">Limpiar</button>
-          <button class="btn-action-side" style="width:auto; min-height:30px !important;" onclick="closeModal()">✕</button>
+          <button type="button" class="btn-action-side" style="width:auto; min-height:30px !important;" onclick="closeModal()">✕</button>
         </div>
       </div>
 
@@ -813,7 +828,7 @@
     </div>
   </div>
 
-  <!-- SCRIPT 1: NÚCLEO DEL CALENDARIO Y RELOJ -->
+  <!-- SCRIPT 1: NÚCLEO DEL CALENDARIO, RELOJ Y MODAL DE CONTRASEÑA -->
   <script>
     const PROTO = "https" + "://";
     const API_URL = PROTO + ["script", "google", "com"].join(".") + "/macros/s/AKfycbw0Vz-JRfUocADfZ6m5R6mD3c7aSHhVi6Jdwh691UlyNmn7JilXHiiIkojOanvvsSY/exec";
@@ -821,6 +836,39 @@
     const CLAVE_CORREO = "1976";
     let esModoAdmin = false;
     let correoAutorizado = false;
+
+    let pinCallbackActual = null;
+    let pinClaveEsperada = "";
+
+    function pedirClaveEnModal(titulo, descripcion, claveCorrecta, onExito) {
+      pinClaveEsperada = claveCorrecta;
+      pinCallbackActual = onExito;
+      document.getElementById("pinModalTitulo").textContent = titulo;
+      document.getElementById("pinModalDescripcion").textContent = descripcion;
+      const inp = document.getElementById("pinModalInput");
+      inp.value = "";
+      document.getElementById("pinModalError").style.display = "none";
+      document.getElementById("modalPinOverlay").style.display = "flex";
+      setTimeout(() => inp.focus(), 60);
+    }
+
+    function cerrarModalPin() {
+      document.getElementById("modalPinOverlay").style.display = "none";
+      pinCallbackActual = null;
+    }
+
+    function confirmarModalPin() {
+      const inp = document.getElementById("pinModalInput");
+      if (inp.value.trim() === pinClaveEsperada) {
+        const cb = pinCallbackActual;
+        cerrarModalPin();
+        if (cb) cb();
+      } else {
+        document.getElementById("pinModalError").style.display = "block";
+        inp.value = "";
+        inp.focus();
+      }
+    }
 
     const holidaysChile = { 
       "2026-01-01": "Año Nuevo", "2026-04-03": "Viernes Santo", "2026-05-01": "Día del Trabajador",
@@ -1028,18 +1076,25 @@
     renderCalendar();
   </script>
 
-  <!-- SCRIPT 2: BANDEJA UNIFICADA CON CLAVE 1976, SIN NEGRITAS Y BOTONES AZULES -->
+  <!-- SCRIPT 2: BANDEJA UNIFICADA CON CLAVE EN MODAL -->
   <script>
     function abrirModalCorreos() {
       if (!correoAutorizado) {
-        const pin = prompt("🔒 Ingresa la clave de acceso a tu Bandeja unificada:");
-        if (pin !== CLAVE_CORREO) {
-          if (pin !== null) alert("Clave incorrecta.");
-          return;
-        }
-        correoAutorizado = true;
+        pedirClaveEnModal(
+          "🔒 Acceso a Bandeja unificada",
+          "Ingresa la clave de acceso para revisar tus correos:",
+          CLAVE_CORREO,
+          () => {
+            correoAutorizado = true;
+            ejecutarAperturaCorreos();
+          }
+        );
+        return;
       }
+      ejecutarAperturaCorreos();
+    }
 
+    function ejecutarAperturaCorreos() {
       const modal = document.getElementById("modalCorreosOverlay");
       if (modal) modal.style.display = "flex";
       if (correosBandeja.length === 0) {
@@ -1347,7 +1402,6 @@
           </div>
         </div>
 
-        <!-- MENSAJE ORIGINAL OCULTO POR DEFECTO -->
         <div id="mailOriginalCollapsible" style="display:none; background:#F8FAFC; border:1.5px solid #93C5FD; border-radius:10px; padding:12px;">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
             <span style="font-size:9pt; font-weight:400; color:#1E3A8A;">📄 Mensaje original completo:</span>
@@ -1356,10 +1410,8 @@
           <div id="mailRawBodyBox" style="max-height:240px; overflow-y:auto; font-size:9.5pt; font-weight:400; line-height:1.45; white-space:pre-wrap; background:#FFFFFF; padding:10px; border-radius:8px; border:1px solid #E2E8F0;"></div>
         </div>
 
-        <!-- PROPUESTA DE AGENDAMIENTO -->
         ${bloquePropuestaHTML}
 
-        <!-- RESPUESTA CON LOS NOMBRES REALES DE LOS CORREOS -->
         <div style="background:#F8FAFC; border:1px solid #93C5FD; border-radius:12px; padding:12px; display:flex; flex-direction:column; gap:8px;">
           <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
             <label style="margin:0; font-size:9pt; font-weight:400;">↩ Responder desde el correo:</label>
@@ -1770,17 +1822,21 @@
 
     sincronizarDesdeSheets();
 
-    function solicitarClaveAdminSiEsNecesario() {
-      if (esModoAdmin) return true;
-      const pass = prompt("Acción protegida. Ingresa la clave directiva para editar:");
-      if (pass === CLAVE_ADMIN) {
-        esModoAdmin = true;
-        actualizarModoUI();
-        return true;
-      } else if (pass !== null) {
-        alert("Clave incorrecta. Permaneces en modo Solo lectura.");
+    function ejecutarConClaveAdmin(accionDespuesDeClave) {
+      if (esModoAdmin) {
+        accionDespuesDeClave();
+        return;
       }
-      return false;
+      pedirClaveEnModal(
+        "🔒 Modo edición protegido",
+        "Ingresa la clave directiva para habilitar la edición:",
+        CLAVE_ADMIN,
+        () => {
+          esModoAdmin = true;
+          actualizarModoUI();
+          accionDespuesDeClave();
+        }
+      );
     }
 
     function alternarModoEdicion() {
@@ -1788,7 +1844,7 @@
         esModoAdmin = false;
         actualizarModoUI();
       } else {
-        solicitarClaveAdminSiEsNecesario();
+        ejecutarConClaveAdmin(() => {});
       }
     }
 
@@ -1908,16 +1964,17 @@
     }
 
     function abrirModalNuevo() {
-      if (!solicitarClaveAdminSiEsNecesario()) return;
-      isEditing = false;
-      editEventId = null;
-      document.getElementById("modalTitleStr").textContent = "Nuevo evento laboral";
-      document.getElementById("btnGuardarEvento").textContent = "Guardar evento";
-      limpiarFormularioManual();
-      const hoyKey = formatDateKey(new Date());
-      document.getElementById("fFechaInicio").value = hoyKey;
-      document.getElementById("fFechaFin").value = hoyKey;
-      document.getElementById("modalAssistantOverlay").style.display = "flex";
+      ejecutarConClaveAdmin(() => {
+        isEditing = false;
+        editEventId = null;
+        document.getElementById("modalTitleStr").textContent = "Nuevo evento laboral";
+        document.getElementById("btnGuardarEvento").textContent = "Guardar evento";
+        limpiarFormularioManual();
+        const hoyKey = formatDateKey(new Date());
+        document.getElementById("fFechaInicio").value = hoyKey;
+        document.getElementById("fFechaFin").value = hoyKey;
+        document.getElementById("modalAssistantOverlay").style.display = "flex";
+      });
     }
 
     function autoCompletarFechaFin() {
@@ -2090,131 +2147,135 @@
     }
 
     function prepararEdicionActual() {
-      if (!solicitarClaveAdminSiEsNecesario()) return;
-      if (!currentEventId) return;
-      const t = tasks.find(x => x.id === currentEventId);
-      if (!t) return;
+      ejecutarConClaveAdmin(() => {
+        if (!currentEventId) return;
+        const t = tasks.find(x => x.id === currentEventId);
+        if (!t) return;
 
-      isEditing = true;
-      editEventId = t.id;
-      document.getElementById("modalTitleStr").textContent = "Editar evento";
-      document.getElementById("btnGuardarEvento").textContent = "Actualizar evento";
+        isEditing = true;
+        editEventId = t.id;
+        document.getElementById("modalTitleStr").textContent = "Editar evento";
+        document.getElementById("btnGuardarEvento").textContent = "Actualizar evento";
 
-      document.getElementById("fAsunto").value = formatearTipoOracion(t.subject || "");
-      document.getElementById("fFechaInicio").value = t.startDate || t.date || "";
-      document.getElementById("fFechaFin").value = t.endDate || t.date || "";
-      document.getElementById("fHora").value = (t.time && t.time !== "00:00") ? t.time : "";
-      document.getElementById("fOrganizador").value = formatearTipoOracion(t.sender || "");
-      document.getElementById("fDetalle").value = formatearTipoOracion(t.detail || "");
-      document.getElementById("fAccion").value = formatearTipoOracion(t.accion || "");
+        document.getElementById("fAsunto").value = formatearTipoOracion(t.subject || "");
+        document.getElementById("fFechaInicio").value = t.startDate || t.date || "";
+        document.getElementById("fFechaFin").value = t.endDate || t.date || "";
+        document.getElementById("fHora").value = (t.time && t.time !== "00:00") ? t.time : "";
+        document.getElementById("fOrganizador").value = formatearTipoOracion(t.sender || "");
+        document.getElementById("fDetalle").value = formatearTipoOracion(t.detail || "");
+        document.getElementById("fAccion").value = formatearTipoOracion(t.accion || "");
 
-      archivosManualesTemporales = t.respaldos ? [...t.respaldos] : [];
-      renderizarListaArchivosManuales();
-      selectPriority(t.priority || "Media");
+        archivosManualesTemporales = t.respaldos ? [...t.respaldos] : [];
+        renderizarListaArchivosManuales();
+        selectPriority(t.priority || "Media");
 
-      closeDetailModal();
-      document.getElementById("modalAssistantOverlay").style.display = "flex";
+        closeDetailModal();
+        document.getElementById("modalAssistantOverlay").style.display = "flex";
+      });
     }
 
-    async function eliminarEventoActual() {
-      if (!solicitarClaveAdminSiEsNecesario()) return;
-      if (!currentEventId) return;
-      
-      const t = tasks.find(x => x.id === currentEventId);
-      if (!t) return;
+    function eliminarEventoActual() {
+      ejecutarConClaveAdmin(async () => {
+        if (!currentEventId) return;
+        
+        const t = tasks.find(x => x.id === currentEventId);
+        if (!t) return;
 
-      if (!confirm(`¿Eliminar definitivamente "${t.subject}"? Se quitará de todos los días asociados.`)) {
-        return;
-      }
+        if (!confirm(`¿Eliminar definitivamente "${t.subject}"? Se quitará de todos los días asociados.`)) {
+          return;
+        }
 
-      const idEliminado = currentEventId;
-      const filaRemota = t.fila || "";
-      const claveUnica = `${t.startDate || t.date}_${normalizarTexto(t.subject)}`;
-      const grupoId = t.groupId || null;
-      const subjectEliminado = t.subject;
-      const startDateEliminado = t.startDate || t.date;
+        const idEliminado = currentEventId;
+        const filaRemota = t.fila || "";
+        const claveUnica = `${t.startDate || t.date}_${normalizarTexto(t.subject)}`;
+        const grupoId = t.groupId || null;
+        const subjectEliminado = t.subject;
+        const startDateEliminado = t.startDate || t.date;
 
-      eventosEliminados.push({ 
-        clave: claveUnica, 
-        fila: filaRemota, 
-        fecha: startDateEliminado, 
-        asunto: t.subject 
-      });
-      localStorage.setItem("agenda_carlos_condell_eliminados", JSON.stringify(eventosEliminados));
-
-      tasks = tasks.filter(x => {
-        if (grupoId && x.groupId === grupoId) return false;
-        if (x.subject === subjectEliminado && (x.startDate || x.date) === startDateEliminado) return false;
-        return x.id !== idEliminado;
-      });
-      localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
-      
-      currentEventId = null;
-      closeDetailModal();
-      renderCalendar();
-
-      try {
-        await fetch(API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({
-            accion: "eliminar_evento",
-            fila: filaRemota,
-            fechaDoc: startDateEliminado,
-            asunto: subjectEliminado
-          })
+        eventosEliminados.push({ 
+          clave: claveUnica, 
+          fila: filaRemota, 
+          fecha: startDateEliminado, 
+          asunto: t.subject 
         });
-      } catch (err) {
-        console.warn("Aviso al eliminar en Sheets:", err);
-      }
-    }
+        localStorage.setItem("agenda_carlos_condell_eliminados", JSON.stringify(eventosEliminados));
 
-    async function toggleRealizadoDirecto(id) {
-      if (!solicitarClaveAdminSiEsNecesario()) return;
-      currentEventId = id;
-      await toggleRealizadoActual(false);
-    }
+        tasks = tasks.filter(x => {
+          if (grupoId && x.groupId === grupoId) return false;
+          if (x.subject === subjectEliminado && (x.startDate || x.date) === startDateEliminado) return false;
+          return x.id !== idEliminado;
+        });
+        localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
+        
+        currentEventId = null;
+        closeDetailModal();
+        renderCalendar();
 
-    async function toggleRealizadoActual(reabrirModal = true) {
-      if (!solicitarClaveAdminSiEsNecesario()) return;
-      if (!currentEventId) return;
-      const t = tasks.find(x => x.id === currentEventId);
-      if (!t) return;
-
-      const nuevoEstado = (t.status === "managed") ? "pending" : "managed";
-      const textoSheet = (nuevoEstado === "managed") ? "Realizado" : "Pendiente";
-      const grupoId = t.groupId;
-      const sub = t.subject;
-      const startD = t.startDate || t.date;
-      const filaRemota = t.fila || "";
-
-      tasks.forEach(item => {
-        if ((grupoId && item.groupId === grupoId) || (item.subject === sub && (item.startDate || item.date) === startD)) {
-          item.status = nuevoEstado;
+        try {
+          await fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify({
+              accion: "eliminar_evento",
+              fila: filaRemota,
+              fechaDoc: startDateEliminado,
+              asunto: subjectEliminado
+            })
+          });
+        } catch (err) {
+          console.warn("Aviso al eliminar en Sheets:", err);
         }
       });
+    }
 
-      localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
-      if (reabrirModal && document.getElementById("modalDetailOverlay").style.display === "flex") {
-        openDetail(currentEventId);
-      }
-      renderCalendar();
+    function toggleRealizadoDirecto(id) {
+      ejecutarConClaveAdmin(() => {
+        currentEventId = id;
+        toggleRealizadoActual(false);
+      });
+    }
 
-      try {
-        await fetch(API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({
-            accion: "actualizar_estado",
-            fila: filaRemota,
-            fechaDoc: startD,
-            asunto: sub,
-            nuevo_estado: textoSheet
-          })
+    function toggleRealizadoActual(reabrirModal = true) {
+      ejecutarConClaveAdmin(async () => {
+        if (!currentEventId) return;
+        const t = tasks.find(x => x.id === currentEventId);
+        if (!t) return;
+
+        const nuevoEstado = (t.status === "managed") ? "pending" : "managed";
+        const textoSheet = (nuevoEstado === "managed") ? "Realizado" : "Pendiente";
+        const grupoId = t.groupId;
+        const sub = t.subject;
+        const startD = t.startDate || t.date;
+        const filaRemota = t.fila || "";
+
+        tasks.forEach(item => {
+          if ((grupoId && item.groupId === grupoId) || (item.subject === sub && (item.startDate || item.date) === startD)) {
+            item.status = nuevoEstado;
+          }
         });
-      } catch (err) {
-        console.warn("Aviso al sincronizar estado con Sheets:", err);
-      }
+
+        localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
+        if (reabrirModal && document.getElementById("modalDetailOverlay").style.display === "flex") {
+          openDetail(currentEventId);
+        }
+        renderCalendar();
+
+        try {
+          await fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify({
+              accion: "actualizar_estado",
+              fila: filaRemota,
+              fechaDoc: startD,
+              asunto: sub,
+              nuevo_estado: textoSheet
+            })
+          });
+        } catch (err) {
+          console.warn("Aviso al sincronizar estado con Sheets:", err);
+        }
+      });
     }
 
     function ejecutarBusqueda() {
@@ -2289,7 +2350,7 @@
         <div class="bitacora-item" onclick="cerrarModalBitacora(); openDetail('${t.id}')">
           <div>
             <div style="font-weight:500; font-size:10pt; color:#18181B;">${formatearTipoOracion(t.subject)}</div>
-            <div style="font-size:8.5pt; color:var(--text-muted); font-weight:400;">${t.date} | ${t.time ? t.time + ' hrs' : 'Por definir'} • ${formatearTipoOracion(t.sender || 'General'}</div>
+            <div style="font-size:8.5pt; color:var(--text-muted); font-weight:400;">${t.date} | ${t.time ? t.time + ' hrs' : 'Por definir'} • ${formatearTipoOracion(t.sender || 'General')}</div>
           </div>
           <span style="font-size:11pt;">${t.status === 'managed' ? '✅' : '⏳'}</span>
         </div>
