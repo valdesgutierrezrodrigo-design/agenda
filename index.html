@@ -597,7 +597,7 @@
     </aside>
   </div>
 
-  <!-- MODAL NUEVO: INGRESO DE CLAVE (REEMPLAZA A PROMPT BLOQUEADO) -->
+  <!-- MODAL NUEVO: INGRESO DE CLAVE -->
   <div class="modal-overlay" id="modalPinOverlay" style="z-index: 2500;">
     <div class="modal-assistant" style="height:auto; min-height:190px; width:380px; resize:none;">
       <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -615,7 +615,7 @@
     </div>
   </div>
 
-  <!-- MODAL: BANDEJA UNIFICADA GIGANTE (99vw x 97vh) Y DE 2 COLUMNAS -->
+  <!-- MODAL: BANDEJA UNIFICADA GIGANTE -->
   <div class="modal-overlay" id="modalCorreosOverlay">
     <div class="modal-assistant mail-modal-max">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-shrink:0; gap:10px; border-bottom:1px solid #E4E4E7; padding-bottom:8px;">
@@ -666,7 +666,7 @@
       </div>
 
       <div style="font-size:9.5pt; color:#1E3A8A; background:#F8FAFC; border:1.5px solid #93C5FD; padding:8px 12px; border-radius:10px; font-weight:400;">
-        ℹ️ Listo para conectar con Google Sheets o la base de datos institucional en la siguiente fase.
+        ℹ️ Cronograma escolar conectado automáticamente a esta agenda.
       </div>
     </div>
   </div>
@@ -721,7 +721,7 @@
         <div class="modal-field"><span class="modal-label">Fecha y hora</span><div id="dtDateTime" class="modal-box">-</div></div>
       </div>
 
-      <div class="modal-field"><span class="modal-label">Síntesis</span><div id="dtDetail" class="modal-box">-</div></div>
+      <div class="modal-field"><span class="modal-label">Síntesis / observaciones</span><div id="dtDetail" class="modal-box">-</div></div>
       <div class="modal-field"><span class="modal-label">Acción requerida</span><div id="dtAccion" class="modal-box" style="border-left:4px solid #2563EB;">-</div></div>
 
       <div class="modal-field" id="dtRespaldosContainer">
@@ -832,6 +832,7 @@
   <script>
     const PROTO = "https" + "://";
     const API_URL = PROTO + ["script", "google", "com"].join(".") + "/macros/s/AKfycbw0Vz-JRfUocADfZ6m5R6mD3c7aSHhVi6Jdwh691UlyNmn7JilXHiiIkojOanvvsSY/exec";
+    const CRONOGRAMA_CSV_URL = "https://docs.google.com/spreadsheets/d/1_aqo98x_q2YSwZynTorhcqM7U7P6LZbZFBl0FdO58B8/gviz/tq?tqx=out:csv&gid=0";
     const CLAVE_ADMIN = "25078";
     const CLAVE_CORREO = "1976";
     let esModoAdmin = false;
@@ -1032,7 +1033,7 @@
             
             let badgeHora = (t.time && t.time !== "00:00")
               ? `<span class="card-time">${t.time}</span>`
-              : `<span class="card-time">Por definir</span>`;
+              : `<span class="card-time">Cronograma</span>`;
 
             const badgeClip = (t.respaldos && t.respaldos.length > 0)
               ? `<span class="card-files-badge" title="${t.respaldos.length} adjunto(s)">📎${t.respaldos.length}</span>`
@@ -1076,7 +1077,7 @@
     renderCalendar();
   </script>
 
-  <!-- SCRIPT 2: BANDEJA UNIFICADA CON CLAVE EN MODAL -->
+  <!-- SCRIPT 2: BANDEJA UNIFICADA -->
   <script>
     function abrirModalCorreos() {
       if (!correoAutorizado) {
@@ -1642,7 +1643,7 @@
     }
   </script>
 
-  <!-- SCRIPT 3: SINCRONIZACIÓN DE AGENDA Y ASISTENTE AIA -->
+  <!-- SCRIPT 3: SINCRONIZACIÓN DE AGENDA + CRONOGRAMA ESCUELA + ASISTENTE AIA -->
   <script>
     function parsearFecha(str) {
       if (!str) return null;
@@ -1710,109 +1711,213 @@
       return palabrasPersonales.some(p => texto.includes(p));
     }
 
+    function parsearCSVFilas(textoCSV) {
+      const filas = [];
+      let filaActual = [];
+      let campo = "";
+      let enComillas = false;
+      for (let i = 0; i < textoCSV.length; i++) {
+        const c = textoCSV[i];
+        const sig = textoCSV[i + 1];
+        if (enComillas) {
+          if (c === '"' && sig === '"') { campo += '"'; i++; }
+          else if (c === '"') { enComillas = false; }
+          else { campo += c; }
+        } else {
+          if (c === '"') { enComillas = true; }
+          else if (c === ',') { filaActual.push(campo.trim()); campo = ""; }
+          else if (c === '\r' && sig === '\n') { filaActual.push(campo.trim()); filas.push(filaActual); filaActual = []; campo = ""; i++; }
+          else if (c === '\n' || c === '\r') { filaActual.push(campo.trim()); filas.push(filaActual); filaActual = []; campo = ""; }
+          else { campo += c; }
+        }
+      }
+      if (campo !== "" || filaActual.length > 0) {
+        filaActual.push(campo.trim());
+        filas.push(filaActual);
+      }
+      return filas;
+    }
+
+    async function obtenerEventosCronogramaCSV(vistos) {
+      const eventosCrono = [];
+      try {
+        const res = await fetch(CRONOGRAMA_CSV_URL);
+        if (!res.ok) return eventosCrono;
+        const csvText = await res.text();
+        const filas = parsearCSVFilas(csvText);
+
+        filas.forEach((cols, idx) => {
+          if (cols.length < 2) return;
+          const fechaRaw = cols[0] || "";
+          const actividadRaw = cols[1] || "";
+          const responsablesRaw = cols[2] || "Cronograma Escolar";
+          const observacionesRaw = cols[3] || "";
+
+          if (normalizarTexto(fechaRaw) === "fecha" || !actividadRaw) return;
+          const fValida = parsearFecha(fechaRaw);
+          if (!fValida) return;
+
+          const asunto = formatearTipoOracion(actividadRaw);
+          const claveUnica = `${fValida}_${normalizarTexto(asunto)}`;
+
+          const yaFueEliminado = eventosEliminados.some(e =>
+            (e.clave && e.clave === claveUnica) ||
+            (e.asunto && normalizarTexto(e.asunto) === normalizarTexto(asunto) && e.fecha === fValida)
+          );
+          if (yaFueEliminado || vistos.has(claveUnica)) return;
+          vistos.add(claveUnica);
+
+          let fFinValida = fValida;
+          const matchRango = observacionesRaw.match(/(\d{1,2})\s+al\s+(\d{1,2})\s+de\s+([a-zA-Z]+)/i);
+          if (matchRango) {
+            const diaFin = matchRango[2].padStart(2, '0');
+            const anioBase = fValida.split("-")[0];
+            const mesBase = fValida.split("-")[1];
+            const candidataFin = `${anioBase}-${mesBase}-${diaFin}`;
+            if (candidataFin >= fValida) fFinValida = candidataFin;
+          }
+
+          const infoHora = extraerHora(`${actividadRaw} ${observacionesRaw}`);
+          const grupoId = `crono_grp_${idx}`;
+          const rangoFechas = obtenerFechasRango(fValida, fFinValida);
+
+          rangoFechas.forEach((diaRango, rIdx) => {
+            eventosCrono.push({
+              id: `crono_${idx}_${rIdx}`,
+              groupId: grupoId,
+              date: diaRango,
+              startDate: fValida,
+              endDate: fFinValida,
+              isAnnual: false,
+              time: infoHora.tieneHora ? infoHora.horaStr : "",
+              timeMinutos: infoHora.tieneHora ? infoHora.minutos : 500,
+              tieneHora: infoHora.tieneHora,
+              subject: asunto,
+              sender: formatearTipoOracion(responsablesRaw || "Cronograma"),
+              detail: formatearTipoOracion(observacionesRaw || "Actividad programada en Cronograma Escuela Carlos Condell."),
+              accion: formatearTipoOracion(observacionesRaw || "Ejecutar actividad según cronograma."),
+              priority: "Media",
+              category: "Laboral",
+              status: "pending",
+              respaldos: []
+            });
+          });
+        });
+      } catch (e) {
+        console.warn("Aviso al leer Cronograma CSV:", e);
+      }
+      return eventosCrono;
+    }
+
     async function sincronizarDesdeSheets() {
       const btn = document.getElementById("btnSync");
       if (btn) btn.innerHTML = "<span class='btn-icon-lg'>⏳</span> Sincronizando...";
       try {
-        const res = await fetch(API_URL);
-        const data = await res.json();
-        const rawRows = Array.isArray(data) ? data : (data.datos || []);
-        
-        if (Array.isArray(rawRows)) {
-          const remoteTasks = [];
-          const vistos = new Set();
+        const vistos = new Set();
+        const remoteTasks = [];
 
-          rawRows.forEach((row, idx) => {
-            if (esEventoPersonal(row)) return;
+        try {
+          const res = await fetch(API_URL);
+          const data = await res.json();
+          const rawRows = Array.isArray(data) ? data : (data.datos || []);
+          
+          if (Array.isArray(rawRows)) {
+            rawRows.forEach((row, idx) => {
+              if (esEventoPersonal(row)) return;
 
-            const filaNum = row.fila || (Array.isArray(row) ? row[0] : (idx + 2));
-            const asuntoRaw = String(row.asunto || (Array.isArray(row) ? row[4] : "(Sin asunto)")).trim();
-            const asunto = formatearTipoOracion(asuntoRaw);
-            const fDoc = row.fechaDoc || (Array.isArray(row) ? row[1] : null);
-            const fFinDoc = row.fechaTermino || null;
-            const fValida = parsearFecha(fDoc);
-            if (!fValida) return;
-            const fFinValida = parsearFecha(fFinDoc) || fValida;
+              const filaNum = row.fila || (Array.isArray(row) ? row[0] : (idx + 2));
+              const asuntoRaw = String(row.asunto || (Array.isArray(row) ? row[4] : "(Sin asunto)")).trim();
+              const asunto = formatearTipoOracion(asuntoRaw);
+              const fDoc = row.fechaDoc || (Array.isArray(row) ? row[1] : null);
+              const fFinDoc = row.fechaTermino || null;
+              const fValida = parsearFecha(fDoc);
+              if (!fValida) return;
+              const fFinValida = parsearFecha(fFinDoc) || fValida;
 
-            const claveUnica = `${fValida}_${normalizarTexto(asunto)}`;
-            
-            const yaFueEliminado = eventosEliminados.some(e => {
-              if (e.clave && e.clave === claveUnica) return true;
-              if (e.asunto && normalizarTexto(e.asunto) === normalizarTexto(asunto) && e.fecha === fValida) return true;
-              if (e.fila && String(e.fila) === String(filaNum)) return true;
-              return false;
-            });
+              const claveUnica = `${fValida}_${normalizarTexto(asunto)}`;
+              
+              const yaFueEliminado = eventosEliminados.some(e => {
+                if (e.clave && e.clave === claveUnica) return true;
+                if (e.asunto && normalizarTexto(e.asunto) === normalizarTexto(asunto) && e.fecha === fValida) return true;
+                if (e.fila && String(e.fila) === String(filaNum)) return true;
+                return false;
+              });
 
-            if (yaFueEliminado) return;
-            if (vistos.has(claveUnica)) return;
-            vistos.add(claveUnica);
+              if (yaFueEliminado) return;
+              if (vistos.has(claveUnica)) return;
+              vistos.add(claveUnica);
 
-            let horaParam = row.hora || null;
-            let infoHora = extraerHora(horaParam);
-            if (!infoHora.tieneHora) infoHora = extraerHora(fDoc);
-            if (!infoHora.tieneHora) {
-              const infoExtra = `${asuntoRaw} ${row.sintesis || (Array.isArray(row) ? row[6] : '')}`;
-              infoHora = extraerHora(infoExtra);
-            }
-
-            const tieneHoraReal = infoHora.tieneHora;
-            const horaFinal = tieneHoraReal ? infoHora.horaStr : "";
-            const minutosFinales = tieneHoraReal ? infoHora.minutos : 9999;
-
-            const estado = String(row.estado || (Array.isArray(row) ? row[3] : "")).trim().toLowerCase();
-            const isManaged = (estado === "finalizado" || estado === "gestionado" || estado === "realizado");
-
-            let adjuntos = [];
-            const rawRespaldos = row.respaldos || (Array.isArray(row) ? row[8] : null);
-            if (rawRespaldos) {
-              try {
-                adjuntos = typeof rawRespaldos === "string" ? JSON.parse(rawRespaldos) : rawRespaldos;
-                if (!Array.isArray(adjuntos)) adjuntos = [adjuntos];
-              } catch (e) {
-                adjuntos = [{ url: String(rawRespaldos).trim(), nombre: "Documento" }];
+              let horaParam = row.hora || null;
+              let infoHora = extraerHora(horaParam);
+              if (!infoHora.tieneHora) infoHora = extraerHora(fDoc);
+              if (!infoHora.tieneHora) {
+                const infoExtra = `${asuntoRaw} ${row.sintesis || (Array.isArray(row) ? row[6] : '')}`;
+                infoHora = extraerHora(infoExtra);
               }
-            }
 
-            const remitenteRaw = row.remitente || (Array.isArray(row) ? row[5] : "General");
-            const sintesisRaw = row.sintesis || (Array.isArray(row) ? row[6] : "");
-            const accionRaw = row.accionReq || (Array.isArray(row) ? row[7] : "");
+              const tieneHoraReal = infoHora.tieneHora;
+              const horaFinal = tieneHoraReal ? infoHora.horaStr : "";
+              const minutosFinales = tieneHoraReal ? infoHora.minutos : 9999;
 
-            const grupoId = `remote_grp_${filaNum}`;
-            const rangoFechas = obtenerFechasRango(fValida, fFinValida);
-            rangoFechas.forEach((diaRango, rIdx) => {
-              remoteTasks.push({
-                id: `remote_${filaNum}_${rIdx}`,
-                groupId: grupoId,
-                fila: filaNum,
-                date: diaRango,
-                startDate: fValida,
-                endDate: fFinValida,
-                isAnnual: false,
-                time: horaFinal,
-                timeMinutos: minutosFinales,
-                tieneHora: tieneHoraReal,
-                subject: asunto,
-                sender: formatearTipoOracion(remitenteRaw),
-                detail: formatearTipoOracion(sintesisRaw),
-                accion: formatearTipoOracion(accionRaw),
-                priority: row.prioridad || (Array.isArray(row) ? row[2] : "Media"),
-                category: "Laboral",
-                status: isManaged ? "managed" : "pending",
-                respaldos: adjuntos
+              const estado = String(row.estado || (Array.isArray(row) ? row[3] : "")).trim().toLowerCase();
+              const isManaged = (estado === "finalizado" || estado === "gestionado" || estado === "realizado");
+
+              let adjuntos = [];
+              const rawRespaldos = row.respaldos || (Array.isArray(row) ? row[8] : null);
+              if (rawRespaldos) {
+                try {
+                  adjuntos = typeof rawRespaldos === "string" ? JSON.parse(rawRespaldos) : rawRespaldos;
+                  if (!Array.isArray(adjuntos)) adjuntos = [adjuntos];
+                } catch (e) {
+                  adjuntos = [{ url: String(rawRespaldos).trim(), nombre: "Documento" }];
+                }
+              }
+
+              const remitenteRaw = row.remitente || (Array.isArray(row) ? row[5] : "General");
+              const sintesisRaw = row.sintesis || (Array.isArray(row) ? row[6] : "");
+              const accionRaw = row.accionReq || (Array.isArray(row) ? row[7] : "");
+
+              const grupoId = `remote_grp_${filaNum}`;
+              const rangoFechas = obtenerFechasRango(fValida, fFinValida);
+              rangoFechas.forEach((diaRango, rIdx) => {
+                remoteTasks.push({
+                  id: `remote_${filaNum}_${rIdx}`,
+                  groupId: grupoId,
+                  fila: filaNum,
+                  date: diaRango,
+                  startDate: fValida,
+                  endDate: fFinValida,
+                  isAnnual: false,
+                  time: horaFinal,
+                  timeMinutos: minutosFinales,
+                  tieneHora: tieneHoraReal,
+                  subject: asunto,
+                  sender: formatearTipoOracion(remitenteRaw),
+                  detail: formatearTipoOracion(sintesisRaw),
+                  accion: formatearTipoOracion(accionRaw),
+                  priority: row.prioridad || (Array.isArray(row) ? row[2] : "Media"),
+                  category: "Laboral",
+                  status: isManaged ? "managed" : "pending",
+                  respaldos: adjuntos
+                });
               });
             });
-          });
-
-          const tareasLocalesNoSincronizadas = tasks.filter(t => 
-            !t.fila && String(t.id).startsWith("local_") && 
-            !vistos.has(`${t.startDate || t.date}_${normalizarTexto(t.subject)}`) &&
-            !eventosEliminados.some(e => e.clave === `${t.date}_${normalizarTexto(t.subject)}`)
-          );
-
-          tasks = [...remoteTasks, ...tareasLocalesNoSincronizadas];
-          localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
-          renderCalendar();
+          }
+        } catch (errApi) {
+          console.warn("Aviso sync API principal:", errApi);
         }
+
+        const eventosCronograma = await obtenerEventosCronogramaCSV(vistos);
+
+        const tareasLocalesNoSincronizadas = tasks.filter(t => 
+          !t.fila && String(t.id).startsWith("local_") && 
+          !vistos.has(`${t.startDate || t.date}_${normalizarTexto(t.subject)}`) &&
+          !eventosEliminados.some(e => e.clave === `${t.date}_${normalizarTexto(t.subject)}`)
+        );
+
+        tasks = [...remoteTasks, ...eventosCronograma, ...tareasLocalesNoSincronizadas];
+        localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
+        renderCalendar();
       } catch (err) {
         console.warn("Aviso sync:", err);
       } finally {
@@ -1866,7 +1971,7 @@
       const fIni = t.startDate || t.date;
       const fFin = t.endDate || t.date;
       const textoFecha = (fFin && fFin !== fIni) ? `${fIni} al ${fFin}` : t.date;
-      document.getElementById("dtDateTime").textContent = `${textoFecha} | ${t.time && t.time !== '00:00' ? t.time + ' hrs' : 'Horario por definir'}`;
+      document.getElementById("dtDateTime").textContent = `${textoFecha} | ${t.time && t.time !== '00:00' ? t.time + ' hrs' : 'Cronograma escolar'}`;
       document.getElementById("dtDetail").textContent = formatearTipoOracion(t.detail) || "Sin síntesis.";
       document.getElementById("dtAccion").textContent = formatearTipoOracion(t.accion) || "Revisar y gestionar.";
 
@@ -2293,7 +2398,7 @@
         box.innerHTML = matches.map(m => `
           <div class="search-item" onclick="openDetail('${m.id}'); document.getElementById('searchResults').style.display='none';">
             <span style="font-weight:500; font-size:9.5pt; color:#18181B;">${formatearTipoOracion(m.subject)}</span>
-            <span style="font-size:8pt; color:var(--text-muted); font-weight:400;">${m.date} | ${m.time ? m.time + ' hrs' : 'Por definir'} • ${formatearTipoOracion(m.sender || 'General')}</span>
+            <span style="font-size:8pt; color:var(--text-muted); font-weight:400;">${m.date} | ${m.time ? m.time + ' hrs' : 'Cronograma'} • ${formatearTipoOracion(m.sender || 'General')}</span>
           </div>
         `).join("");
       }
@@ -2350,7 +2455,7 @@
         <div class="bitacora-item" onclick="cerrarModalBitacora(); openDetail('${t.id}')">
           <div>
             <div style="font-weight:500; font-size:10pt; color:#18181B;">${formatearTipoOracion(t.subject)}</div>
-            <div style="font-size:8.5pt; color:var(--text-muted); font-weight:400;">${t.date} | ${t.time ? t.time + ' hrs' : 'Por definir'} • ${formatearTipoOracion(t.sender || 'General')}</div>
+            <div style="font-size:8.5pt; color:var(--text-muted); font-weight:400;">${t.date} | ${t.time ? t.time + ' hrs' : 'Cronograma'} • ${formatearTipoOracion(t.sender || 'General')}</div>
           </div>
           <span style="font-size:11pt;">${t.status === 'managed' ? '✅' : '⏳'}</span>
         </div>
