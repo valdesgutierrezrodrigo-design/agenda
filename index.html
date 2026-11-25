@@ -405,6 +405,147 @@
       gap: 6px;
     }
 
+    /* ESTILOS DEL CALENDARIO MENSUAL (DOMINGOS Y FESTIVOS EN ROJO) */
+    .cal-mensual-modal {
+      width: 920px;
+      max-width: 97vw;
+      height: 90vh;
+      max-height: 94vh;
+      background: #FFFFFF;
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      z-index: 1001;
+      border: 1.5px solid #71717A;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.28);
+    }
+    .cal-mensual-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #F4F4F5;
+      border: 1.5px solid #D4D4D8;
+      border-radius: 10px;
+      padding: 7px 12px;
+      flex-shrink: 0;
+    }
+    .cal-mensual-mes-titulo {
+      font-size: 13.5pt;
+      font-weight: 800;
+      color: #18181B;
+      letter-spacing: -0.2px;
+    }
+    .cal-mensual-weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .cal-wd-pill {
+      text-align: center;
+      padding: 6px 4px;
+      border-radius: 8px;
+      font-size: 9.5pt;
+      font-weight: 700;
+      background: #27272A;
+      color: #FFFFFF;
+    }
+    .cal-wd-pill.is-sunday-hdr {
+      background: #991B1B;
+      color: #FECACA;
+    }
+    .cal-mensual-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      grid-auto-rows: minmax(78px, 1fr);
+      gap: 6px;
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      padding-right: 2px;
+    }
+    .cal-day-cell {
+      background: #FFFFFF;
+      border: 1.5px solid #D4D4D8;
+      border-radius: 9px;
+      padding: 5px 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      cursor: pointer;
+      transition: all 0.14s ease;
+      overflow: hidden;
+    }
+    .cal-day-cell:hover {
+      border-color: #2563EB;
+      transform: translateY(-1px);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+    }
+    .cal-day-cell.is-empty {
+      background: #F4F4F5;
+      border: 1px dashed #D4D4D8;
+      cursor: default;
+    }
+    .cal-day-cell.is-empty:hover {
+      transform: none;
+      box-shadow: none;
+      border-color: #D4D4D8;
+    }
+    .cal-day-cell.is-red-day {
+      background: #FEF2F2;
+      border-color: #FCA5A5;
+    }
+    .cal-day-cell.is-red-day:hover {
+      border-color: #DC2626;
+    }
+    .cal-day-cell.is-today-cell {
+      border: 2px solid #EAB308 !important;
+      box-shadow: 0 0 0 2px rgba(234, 179, 8, 0.35);
+    }
+    .cal-day-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 3px;
+    }
+    .cal-day-num {
+      font-size: 10.5pt;
+      font-weight: 800;
+      color: #18181B;
+    }
+    .cal-day-num.red-num {
+      color: #DC2626 !important;
+    }
+    .cal-holiday-tag {
+      font-size: 7pt;
+      font-weight: 700;
+      color: #991B1B;
+      background: #FEE2E2;
+      border: 1px solid #FECACA;
+      padding: 1px 5px;
+      border-radius: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .cal-mini-ev {
+      font-size: 7.4pt;
+      font-weight: 600;
+      color: #18181B;
+      background: #F4F4F5;
+      border-left: 3.5px solid #EAB308;
+      padding: 1px 4px;
+      border-radius: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .cal-mini-ev.alta { border-left-color: #FF003C; background: #FFF1F2; }
+    .cal-mini-ev.baja { border-left-color: #00E676; background: #ECFDF5; }
+
     /* ESTILOS DE LA BANDEJA UNIFICADA */
     .mail-modal-max {
       width: 99vw !important;
@@ -519,7 +660,7 @@
     </div>
 
     <div class="time-module">
-      <span class="date-display-text" id="full-date-subtitle">Sábado, 14 de noviembre de 2026</span>
+      <span class="date-display-text" id="full-date-subtitle">Miércoles, 25 de noviembre de 2026</span>
       <div class="flip-clock-container">
         <div class="flip-card" id="fc-hour">00</div>
         <div class="flip-colon">:</div>
@@ -555,6 +696,9 @@
           <button class="btn-action-side" id="btnToday">Hoy</button>
           <button class="btn-action-side" id="btnNext">Sig ▶</button>
         </div>
+        <button type="button" class="btn-action-side" style="min-height:31px !important; font-size:8.4pt !important; justify-content:center !important;" onclick="abrirModalCalendarioMensual()">
+          <span class="btn-icon-lg">📅</span> Calendario mensual
+        </button>
       </div>
 
       <hr class="sidebar-separator">
@@ -595,6 +739,46 @@
         </div>
       </div>
     </aside>
+  </div>
+
+  <!-- MODAL CALENDARIO MENSUAL (DOMINGOS Y FESTIVOS EN ROJO) -->
+  <div class="modal-overlay" id="modalCalendarioMensualOverlay">
+    <div class="cal-mensual-modal">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-shrink:0;">
+        <div>
+          <span style="font-weight:800; font-size:14pt; color:#18181B;">📅 Calendario anual y festivos de Chile</span>
+          <div style="display:flex; align-items:center; gap:12px; margin-top:3px; font-size:8.5pt; font-weight:600; color:#52525B; flex-wrap:wrap;">
+            <span style="color:#DC2626;">🔴 Domingo y festivos en Chile</span>
+            <span>•</span>
+            <span>🟡 Día de hoy</span>
+            <span>•</span>
+            <span>Haz clic en un día para ir a esa semana</span>
+          </div>
+        </div>
+        <button type="button" class="btn-action-side" style="width:auto; min-height:32px !important;" onclick="cerrarModalCalendarioMensual()">✕ Cerrar</button>
+      </div>
+
+      <div class="cal-mensual-nav">
+        <button type="button" class="btn-action-side" style="width:auto; min-height:32px !important;" onclick="cambiarMesCalendario(-1)">◀ Anterior</button>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span class="cal-mensual-mes-titulo" id="calMensualTitulo">Noviembre de 2026</span>
+          <button type="button" class="btn-action-side" style="width:auto; min-height:28px !important; font-size:8pt !important;" onclick="irHoyCalendarioMensual()">Hoy</button>
+        </div>
+        <button type="button" class="btn-action-side" style="width:auto; min-height:32px !important;" onclick="cambiarMesCalendario(1)">Siguiente ▶</button>
+      </div>
+
+      <div class="cal-mensual-weekdays">
+        <div class="cal-wd-pill">Lun</div>
+        <div class="cal-wd-pill">Mar</div>
+        <div class="cal-wd-pill">Mié</div>
+        <div class="cal-wd-pill">Jue</div>
+        <div class="cal-wd-pill">Vie</div>
+        <div class="cal-wd-pill">Sáb</div>
+        <div class="cal-wd-pill is-sunday-hdr">Dom</div>
+      </div>
+
+      <div class="cal-mensual-grid" id="calMensualGrid"></div>
+    </div>
   </div>
 
   <!-- MODAL NUEVO: INGRESO DE CLAVE -->
@@ -832,6 +1016,7 @@
   <script>
     const PROTO = "https" + "://";
     const API_URL = PROTO + ["script", "google", "com"].join(".") + "/macros/s/AKfycbw0Vz-JRfUocADfZ6m5R6mD3c7aSHhVi6Jdwh691UlyNmn7JilXHiiIkojOanvvsSY/exec";
+    const CRONOGRAMA_API_URL = PROTO + ["script", "google", "com"].join(".") + "/macros/s/AKfycbyGdPdKqoNU-VsRcAmv77yhd8kB5XazlhjHqrexVeiBqxvqyaV5xEtuyzpJVPivCrBX/exec";
     const CRONOGRAMA_CSV_URL = "https://docs.google.com/spreadsheets/d/1_aqo98x_q2YSwZynTorhcqM7U7P6LZbZFBl0FdO58B8/gviz/tq?tqx=out:csv&gid=0";
     const CLAVE_ADMIN = "25078";
     const CLAVE_CORREO = "1976";
@@ -872,11 +1057,38 @@
     }
 
     const holidaysChile = { 
-      "2026-01-01": "Año Nuevo", "2026-04-03": "Viernes Santo", "2026-05-01": "Día del Trabajador",
-      "2026-05-21": "Glorias Navales", "2026-06-21": "Pueblos Indígenas", "2026-06-29": "San Pedro y San Pablo",
-      "2026-07-16": "Virgen del Carmen", "2026-08-15": "Asunción", "2026-09-18": "Independencia",
-      "2026-09-19": "Glorias del Ejército", "2026-10-12": "Encuentro de Dos Mundos", "2026-10-31": "Iglesias Evangélicas",
-      "2026-11-01": "Todos los Santos", "2026-12-08": "Inmaculada Concepción", "2026-12-25": "Navidad"
+      "2026-01-01": "Año Nuevo",
+      "2026-04-03": "Viernes Santo",
+      "2026-04-04": "Sábado Santo",
+      "2026-05-01": "Día del Trabajador",
+      "2026-05-21": "Glorias Navales",
+      "2026-06-21": "Pueblos Indígenas",
+      "2026-06-29": "San Pedro y San Pablo",
+      "2026-07-16": "Virgen del Carmen",
+      "2026-08-15": "Asunción de la Virgen",
+      "2026-09-18": "Independencia Nacional",
+      "2026-09-19": "Glorias del Ejército",
+      "2026-10-12": "Encuentro de Dos Mundos",
+      "2026-10-31": "Iglesias Evangélicas",
+      "2026-11-01": "Todos los Santos",
+      "2026-12-08": "Inmaculada Concepción",
+      "2026-12-25": "Navidad",
+      "2027-01-01": "Año Nuevo",
+      "2027-03-26": "Viernes Santo",
+      "2027-03-27": "Sábado Santo",
+      "2027-05-01": "Día del Trabajador",
+      "2027-05-21": "Glorias Navales",
+      "2027-06-21": "Pueblos Indígenas",
+      "2027-06-28": "San Pedro y San Pablo",
+      "2027-07-16": "Virgen del Carmen",
+      "2027-08-15": "Asunción de la Virgen",
+      "2027-09-18": "Independencia Nacional",
+      "2027-09-19": "Glorias del Ejército",
+      "2027-10-11": "Encuentro de Dos Mundos",
+      "2027-10-31": "Iglesias Evangélicas",
+      "2027-11-01": "Todos los Santos",
+      "2027-12-08": "Inmaculada Concepción",
+      "2027-12-25": "Navidad"
     };
 
     const MAPA_SIGLAS = {
@@ -1075,6 +1287,98 @@
     document.getElementById("btnPrev").onclick = () => { currentMonday.setDate(currentMonday.getDate() - 7); renderCalendar(); };
     document.getElementById("btnNext").onclick = () => { currentMonday.setDate(currentMonday.getDate() + 7); renderCalendar(); };
     renderCalendar();
+
+    /* LÓGICA DEL CALENDARIO MENSUAL CON DOMINGOS Y FESTIVOS DE CHILE EN ROJO */
+    let mesCalendarioActual = new Date();
+    const mesesLargos = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+
+    function abrirModalCalendarioMensual() {
+      mesCalendarioActual = new Date(currentMonday.getFullYear(), currentMonday.getMonth(), 1);
+      renderizarCalendarioMensual();
+      document.getElementById("modalCalendarioMensualOverlay").style.display = "flex";
+    }
+
+    function cerrarModalCalendarioMensual() {
+      document.getElementById("modalCalendarioMensualOverlay").style.display = "none";
+    }
+
+    function cambiarMesCalendario(delta) {
+      mesCalendarioActual.setMonth(mesCalendarioActual.getMonth() + delta);
+      renderizarCalendarioMensual();
+    }
+
+    function irHoyCalendarioMensual() {
+      mesCalendarioActual = new Date();
+      renderizarCalendarioMensual();
+    }
+
+    function irASemanaDesdeCalendario(dateKey) {
+      const partes = dateKey.split("-");
+      const fechaObj = new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2]));
+      currentMonday = getMonday(fechaObj);
+      renderCalendar();
+      cerrarModalCalendarioMensual();
+    }
+
+    function renderizarCalendarioMensual() {
+      const grid = document.getElementById("calMensualGrid");
+      const titulo = document.getElementById("calMensualTitulo");
+      if (!grid || !titulo) return;
+
+      const year = mesCalendarioActual.getFullYear();
+      const month = mesCalendarioActual.getMonth();
+      titulo.textContent = `${mesesLargos[month]} de ${year}`;
+
+      grid.innerHTML = "";
+      const todayKey = formatDateKey(new Date());
+      const primerDiaMes = new Date(year, month, 1);
+      const offsetLunes = (primerDiaMes.getDay() + 6) % 7;
+      const totalDiasMes = new Date(year, month + 1, 0).getDate();
+
+      for (let i = 0; i < offsetLunes; i++) {
+        const emptyCell = document.createElement("div");
+        emptyCell.className = "cal-day-cell is-empty";
+        grid.appendChild(emptyCell);
+      }
+
+      for (let dia = 1; dia <= totalDiasMes; dia++) {
+        const fechaObj = new Date(year, month, dia);
+        const key = formatDateKey(fechaObj);
+        const esDomingo = (fechaObj.getDay() === 0);
+        const nombreFestivo = holidaysChile[key] || "";
+        const esDiaRojo = esDomingo || Boolean(nombreFestivo);
+        const esHoy = (key === todayKey);
+
+        const cell = document.createElement("div");
+        cell.className = `cal-day-cell ${esDiaRojo ? "is-red-day" : ""} ${esHoy ? "is-today-cell" : ""}`;
+        cell.onclick = () => irASemanaDesdeCalendario(key);
+
+        const eventosDia = tasks.filter(t => t.date === key && (t.category || "Laboral").toLowerCase() === "laboral");
+        eventosDia.sort((a, b) => (a.timeMinutos || 0) - (b.timeMinutos || 0));
+
+        let htmlEventos = "";
+        eventosDia.slice(0, 2).forEach(ev => {
+          const prio = (ev.priority || "Media").toLowerCase();
+          htmlEventos += `<div class="cal-mini-ev ${prio}" title="${formatearTipoOracion(ev.subject)}">${formatearTipoOracion(ev.subject)}</div>`;
+        });
+        if (eventosDia.length > 2) {
+          htmlEventos += `<div style="font-size:7pt; font-weight:700; color:#1E3A8A; padding-left:3px;">+${eventosDia.length - 2} más</div>`;
+        }
+
+        const badgeFestivo = nombreFestivo
+          ? `<span class="cal-holiday-tag" title="${nombreFestivo}">${nombreFestivo}</span>`
+          : (esHoy ? `<span class="badge-today">Hoy</span>` : "");
+
+        cell.innerHTML = `
+          <div class="cal-day-top">
+            <span class="cal-day-num ${esDiaRojo ? "red-num" : ""}">${dia}</span>
+            ${badgeFestivo}
+          </div>
+          ${htmlEventos}
+        `;
+        grid.appendChild(cell);
+      }
+    }
   </script>
 
   <!-- SCRIPT 2: BANDEJA UNIFICADA -->
@@ -1738,6 +2042,79 @@
       return filas;
     }
 
+    async function obtenerEventosCronogramaAPI(vistos) {
+      const eventosCrono = [];
+      try {
+        const res = await fetch(CRONOGRAMA_API_URL + "?t=" + Date.now());
+        if (!res.ok) return null;
+        const data = await res.json();
+        const lista = Array.isArray(data) ? data : (data.datos || data.eventos || []);
+        if (!Array.isArray(lista)) return null;
+
+        lista.forEach((item, idx) => {
+          const fechaRaw = item.fecha || "";
+          const actividadRaw = item.titulo || item.actividad || "";
+          const responsablesRaw = item.responsables || "Cronograma Escolar";
+          const observacionesRaw = item.observaciones || "";
+
+          if (!fechaRaw || !actividadRaw) return;
+          const fValida = parsearFecha(fechaRaw);
+          if (!fValida) return;
+
+          const asunto = formatearTipoOracion(actividadRaw);
+          const claveUnica = `${fValida}_${normalizarTexto(asunto)}`;
+
+          const yaFueEliminado = eventosEliminados.some(e =>
+            (e.clave && e.clave === claveUnica) ||
+            (e.asunto && normalizarTexto(e.asunto) === normalizarTexto(asunto) && e.fecha === fValida)
+          );
+          if (yaFueEliminado || vistos.has(claveUnica)) return;
+          vistos.add(claveUnica);
+
+          let fFinValida = fValida;
+          const matchRango = observacionesRaw.match(/(\d{1,2})\s+al\s+(\d{1,2})\s+de\s+([a-zA-Záéíóú]+)/i);
+          if (matchRango) {
+            const diaFin = matchRango[2].padStart(2, '0');
+            const anioBase = fValida.split("-")[0];
+            const mesBase = fValida.split("-")[1];
+            const candidataFin = `${anioBase}-${mesBase}-${diaFin}`;
+            if (candidataFin >= fValida) fFinValida = candidataFin;
+          }
+
+          const infoHora = extraerHora(`${actividadRaw} ${observacionesRaw}`);
+          const grupoId = `crono_api_grp_${idx}`;
+          const rangoFechas = obtenerFechasRango(fValida, fFinValida);
+
+          rangoFechas.forEach((diaRango, rIdx) => {
+            eventosCrono.push({
+              id: `${item.id || ('crono_api_' + idx)}_${rIdx}`,
+              groupId: grupoId,
+              date: diaRango,
+              startDate: fValida,
+              endDate: fFinValida,
+              isAnnual: false,
+              time: infoHora.tieneHora ? infoHora.horaStr : "",
+              timeMinutos: infoHora.tieneHora ? infoHora.minutos : 500,
+              tieneHora: infoHora.tieneHora,
+              subject: asunto,
+              sender: formatearTipoOracion(responsablesRaw || "Cronograma"),
+              detail: formatearTipoOracion(observacionesRaw || "Actividad programada en Cronograma Escuela Carlos Condell."),
+              accion: formatearTipoOracion(observacionesRaw || "Ejecutar actividad según cronograma."),
+              priority: "Media",
+              category: "Laboral",
+              status: "pending",
+              respaldos: []
+            });
+          });
+        });
+
+        return eventosCrono;
+      } catch (e) {
+        console.warn("Aviso al leer Cronograma vía Apps Script:", e);
+        return null;
+      }
+    }
+
     async function obtenerEventosCronogramaCSV(vistos) {
       const eventosCrono = [];
       try {
@@ -1768,7 +2145,7 @@
           vistos.add(claveUnica);
 
           let fFinValida = fValida;
-          const matchRango = observacionesRaw.match(/(\d{1,2})\s+al\s+(\d{1,2})\s+de\s+([a-zA-Z]+)/i);
+          const matchRango = observacionesRaw.match(/(\d{1,2})\s+al\s+(\d{1,2})\s+de\s+([a-zA-Záéíóú]+)/i);
           if (matchRango) {
             const diaFin = matchRango[2].padStart(2, '0');
             const anioBase = fValida.split("-")[0];
@@ -1907,7 +2284,10 @@
           console.warn("Aviso sync API principal:", errApi);
         }
 
-        const eventosCronograma = await obtenerEventosCronogramaCSV(vistos);
+        let eventosCronograma = await obtenerEventosCronogramaAPI(vistos);
+        if (!eventosCronograma) {
+          eventosCronograma = await obtenerEventosCronogramaCSV(vistos);
+        }
 
         const tareasLocalesNoSincronizadas = tasks.filter(t => 
           !t.fila && String(t.id).startsWith("local_") && 
@@ -1918,6 +2298,9 @@
         tasks = [...remoteTasks, ...eventosCronograma, ...tareasLocalesNoSincronizadas];
         localStorage.setItem("agenda_carlos_condell_local", JSON.stringify(tasks));
         renderCalendar();
+        if (document.getElementById("modalCalendarioMensualOverlay").style.display === "flex") {
+          renderizarCalendarioMensual();
+        }
       } catch (err) {
         console.warn("Aviso sync:", err);
       } finally {
@@ -1926,6 +2309,12 @@
     }
 
     sincronizarDesdeSheets();
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") {
+        sincronizarDesdeSheets();
+      }
+    });
 
     function ejecutarConClaveAdmin(accionDespuesDeClave) {
       if (esModoAdmin) {
