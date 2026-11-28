@@ -405,7 +405,6 @@
       gap: 6px;
     }
 
-    /* ESTILOS DE BIBLIOTECA PANEL TÉCNICO (LISTA VERTICAL ANCHO COMPLETO + ÍNDICE ALFABÉTICO) */
     .biblio-search-bar {
       display: flex;
       align-items: center;
@@ -592,7 +591,6 @@
       transform: scale(1.08);
     }
 
-    /* ESTILOS DEL CALENDARIO MENSUAL (DOMINGOS Y FESTIVOS EN ROJO) */
     .cal-mensual-modal {
       width: 920px;
       max-width: 97vw;
@@ -733,7 +731,6 @@
     .cal-mini-ev.alta { border-left-color: #FF003C; background: #FFF1F2; }
     .cal-mini-ev.baja { border-left-color: #00E676; background: #ECFDF5; }
 
-    /* ESTILOS DE LA BANDEJA UNIFICADA */
     .mail-modal-max {
       width: 99vw !important;
       max-width: 99vw !important;
@@ -847,7 +844,7 @@
     </div>
 
     <div class="time-module">
-      <span class="date-display-text" id="full-date-subtitle">Miércoles, 25 de noviembre de 2026</span>
+      <span class="date-display-text" id="full-date-subtitle">Sábado, 28 de noviembre de 2026</span>
       <div class="flip-clock-container">
         <div class="flip-card" id="fc-hour">00</div>
         <div class="flip-colon">:</div>
@@ -962,7 +959,7 @@
     </div>
   </div>
 
-  <!-- MODAL CREAR / EDITAR BOTÓN EN PANEL TÉCNICO (PERMITE SUBIR VARIOS ARCHIVOS A LA VEZ) -->
+  <!-- MODAL CREAR / EDITAR BOTÓN EN PANEL TÉCNICO -->
   <div class="modal-overlay" id="modalEditorBibliotecaOverlay" style="z-index: 1200;">
     <div class="modal-assistant" style="width:520px; height:auto; max-height:92vh; min-height:360px; resize:none;">
       <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #E4E4E7; padding-bottom:8px;">
@@ -1056,7 +1053,7 @@
     </div>
   </div>
 
-  <!-- MODAL CALENDARIO MENSUAL (DOMINGOS Y FESTIVOS EN ROJO) -->
+  <!-- MODAL CALENDARIO MENSUAL -->
   <div class="modal-overlay" id="modalCalendarioMensualOverlay">
     <div class="cal-mensual-modal">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-shrink:0;">
@@ -1575,7 +1572,6 @@
     document.getElementById("btnNext").onclick = () => { currentMonday.setDate(currentMonday.getDate() + 7); renderCalendar(); };
     renderCalendar();
 
-    /* LÓGICA DEL CALENDARIO MENSUAL CON DOMINGOS Y FESTIVOS DE CHILE EN ROJO */
     let mesCalendarioActual = new Date();
     const mesesLargos = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
@@ -3302,7 +3298,7 @@
       const estado = document.getElementById('iaEstado');
       btn.disabled = true;
       estado.style.display = 'block';
-      estado.textContent = '⚡ Analizando documento con IA (Groq / Gemini)...';
+      estado.textContent = '⚡ Extrayendo texto y analizando con Groq...';
 
       try {
         const { blobs, nombresArchivos } = iaPendientes;
@@ -3313,7 +3309,17 @@
           const pdf = (b.type === 'application/pdf' || /\.pdf$/i.test(nombresArchivos[i]));
           let base64 = await optimizarYCodificarArchivo(b);
           respaldos.push({ nombre: nombresArchivos[i], mimeType: pdf ? 'application/pdf' : 'image/jpeg', base64, url: '' });
-          partes.push({ inlineData: { mimeType: pdf ? 'application/pdf' : 'image/jpeg', data: base64 } });
+
+          if (pdf) {
+            const textoPdf = await extraerTextoEscritoDeArchivo(b);
+            if (textoPdf && textoPdf.trim().length > 0) {
+              partes.push({ text: "Archivo PDF (" + nombresArchivos[i] + "):\n" + textoPdf });
+            } else {
+              partes.push({ inlineData: { mimeType: 'application/pdf', data: base64 } });
+            }
+          } else {
+            partes.push({ inlineData: { mimeType: 'image/jpeg', data: base64 } });
+          }
         }
 
         const res = await fetch(API_URL, {
@@ -3576,7 +3582,7 @@
     }
   </script>
 
-  <!-- SCRIPT 4: BIBLIOTECA PANEL TÉCNICO (LISTA VERTICAL ANCHO COMPLETO + ÍNDICE ALFABÉTICO + BÚSQUEDA UNIVERSAL) -->
+  <!-- SCRIPT 4: BIBLIOTECA PANEL TÉCNICO -->
   <script>
     const CACHE_BIBLIO_KEY = "agenda_panel_tecnico_drive_cache";
     const INDEX_BIBLIO_KEY = "agenda_panel_tecnico_search_index";
@@ -4004,7 +4010,7 @@
         row.className = "biblio-file-row";
         const kb = Math.max(1, Math.round(f.size / 1024));
         row.innerHTML = `
-          <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">📄 ${f.name} <span style="color:#71717A; font-size:7.5pt;">(${kb} KB)</span></span>
+          <span style="white:nowrap; overflow:hidden; text-overflow:ellipsis;">📄 ${f.name} <span style="color:#71717A; font-size:7.5pt;">(${kb} KB)</span></span>
           <b style="cursor:pointer; color:#BE123C; padding:0 4px;" title="Quitar de la lista" onclick="quitarArchivoNuevoDeColaBiblio(${idx})">✕</b>
         `;
         colaEl.appendChild(row);
@@ -4025,7 +4031,7 @@
         const row = document.createElement("div");
         row.className = "biblio-file-row";
         row.innerHTML = `
-          <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">📎 ${arch.archivoNombre}</span>
+          <span style="white:nowrap; overflow:hidden; text-overflow:ellipsis;">📎 ${arch.archivoNombre}</span>
           <button type="button" style="border:none; background:#FFE4E6; color:#BE123C; border-radius:6px; padding:2px 7px; font-size:7.8pt; font-weight:700; cursor:pointer;" onclick="eliminarArchivoIndividualEnEdicion('${arch.id}')">🗑️ Quitar</button>
         `;
         list.appendChild(row);
